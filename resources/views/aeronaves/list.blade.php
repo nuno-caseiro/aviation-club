@@ -1,16 +1,34 @@
 @extends('master')
 @section('content')
 
-    <!doctype html>
-    <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport"
-              content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-        <meta http-equiv="X-UA-Compatible" content="ie=edge">
-        <title>Document</title>
-    </head>
-    <body>
-        <h1>"Aeronaves"</h1>
-    </body>
-    </html>
+   <table class>
+       <thead>
+           <tr>
+               <th>Matricula</th>
+               <th>Marca</th>
+               <th>Modelo</th>
+               <th>Numero de lugares</th>
+               <th>Contador de horas</th>
+               <th>Preço por hora</th>
+               <th>Criado em</th>
+               <th>Atualizado em</th>
+               <th>Apagado em</th>
+           </tr>
+       </thead>
+       @foreach($aeronaves as $aeronave)
+           <tr>
+               <td>{{$aeronave->matricula}}</td>
+               <td>{{$aeronave->marca}}</td>
+               <td>{{$aeronave->modelo}}</td>
+               <td>{{$aeronave->num_lugares}}</td>
+               <td>{{$aeronave->conta_horas}}</td>
+               <td>{{$aeronave->preco_hora}}</td>
+               <td>{{$aeronave->created_at}}</td>
+               <td>{{$aeronave->updated_at}}</td>
+               <td>{{$aeronave->deleted_at}}</td>
+           </tr>
+           @endforeach
+
+          </table>
+
+    @endsection

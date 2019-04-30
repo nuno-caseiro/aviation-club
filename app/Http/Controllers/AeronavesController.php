@@ -2,14 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\AeronavesModel;
+use App\Aeronave;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
 class AeronavesController extends Controller
 {
     public function index(){
-        $aeronaves= "AERONAVES";
+        $aeronaves= Aeronave::all();
         $title= "Lista de Aeronaves";
         return view('aeronaves.list', compact('aeronaves', 'title'));
 
