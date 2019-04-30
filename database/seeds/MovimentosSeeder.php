@@ -56,7 +56,7 @@ class MovimentosSeeder extends Seeder
             'G-CKIP' => DB::table('aeronaves_pilotos')->where('matricula' , 'G-CKIP')->pluck('piloto_id')->all(),
             'CS-AQN' => DB::table('aeronaves_pilotos')->where('matricula' , 'CS-AQN')->pluck('piloto_id')->all(),
             ];
-        $this->aeronaves = DB::table('aeronaves')->whereNull('deleted_at')->pluck('conta_horas', 'matricula')->all();
+        $this->aeronaves = DB::table('aeronavesController')->whereNull('deleted_at')->pluck('conta_horas', 'matricula')->all();
         $this->aeronaves_minutos = [
             'D-EAYV' => DB::table('aeronaves_valores')->where('matricula' , 'D-EAYV')->pluck('minutos', 'unidade_conta_horas')->all(),
             'G-CKIP' => DB::table('aeronaves_valores')->where('matricula' , 'G-CKIP')->pluck('minutos', 'unidade_conta_horas')->all(),
@@ -99,7 +99,7 @@ class MovimentosSeeder extends Seeder
         }
 
         foreach ($this->aeronaves as $matricula => $conta_horas) {
-            DB::table('aeronaves')->where('matricula', $matricula)->update(['conta_horas' => $conta_horas]);
+            DB::table('aeronavesController')->where('matricula', $matricula)->update(['conta_horas' => $conta_horas]);
         }
         // Ultimos voos (ultimos 5 dias) ainda não estão confirmados
         $ultimos5dias = Carbon\Carbon::today()->subDays(5)->format('Y-m-d');

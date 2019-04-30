@@ -73,7 +73,7 @@ class CreateInitialTables extends Migration
             $table->boolean('certificado_confirmado')->nullable();
         });
 
-        Schema::create('aeronaves', function (Blueprint $table) {
+        Schema::create('aeronavesController', function (Blueprint $table) {
             $table->string('matricula', 8)->primary();
             $table->string('marca', 40);
             $table->string('modelo', 40);
@@ -90,7 +90,7 @@ class CreateInitialTables extends Migration
             $table->string('matricula', 8)->index();
             $table->unsignedBigInteger('piloto_id');
             $table->unique(['matricula', 'piloto_id']);
-            $table->foreign('matricula')->references('matricula')->on('aeronaves')->onDelete('cascade');
+            $table->foreign('matricula')->references('matricula')->on('aeronavesController')->onDelete('cascade');
             $table->foreign('piloto_id')->references('id')->on('users')->onDelete('cascade');
         });
 
@@ -103,7 +103,7 @@ class CreateInitialTables extends Migration
             $table->integer('minutos');
             $table->decimal('preco', 13, 2);
             $table->unique(['matricula', 'unidade_conta_horas']);
-            $table->foreign('matricula')->references('matricula')->on('aeronaves')->onDelete('cascade');
+            $table->foreign('matricula')->references('matricula')->on('aeronavesController')->onDelete('cascade');
         });
 
         Schema::create('movimentos', function (Blueprint $table) {
@@ -112,7 +112,7 @@ class CreateInitialTables extends Migration
             $table->datetime('hora_descolagem');
             $table->datetime('hora_aterragem');
             $table->string('aeronave', 8);
-            $table->foreign('aeronave')->references('matricula')->on('aeronaves');
+            $table->foreign('aeronave')->references('matricula')->on('aeronavesController');
             $table->integer('num_diario');
             $table->integer('num_servico');
             $table->unsignedBigInteger('piloto_id');
@@ -169,7 +169,7 @@ class CreateInitialTables extends Migration
         Schema::dropIfExists('movimentos');
         Schema::dropIfExists('aeronaves_valores');
         Schema::dropIfExists('aeronaves_pilotos');
-        Schema::dropIfExists('aeronaves');
+        Schema::dropIfExists('aeronavesController');
         Schema::dropIfExists('users');
         Schema::dropIfExists('aerodromos');
         Schema::dropIfExists('classes_certificados');

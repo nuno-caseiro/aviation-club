@@ -11,8 +11,8 @@ class AeronavesSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('aeronaves')->truncate();
-        DB::table('aeronaves')->insert([
+        DB::table('aeronavesController')->truncate();
+        DB::table('aeronavesController')->insert([
             [   
                 'matricula'  => 'CS-AYV',
                 'marca'  => 'Cessna',
