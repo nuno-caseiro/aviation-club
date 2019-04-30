@@ -9,7 +9,7 @@ use App\Http\Controllers\Controller;
 class AeronavesController extends Controller
 {
     public function index(){
-        $aeronaves= AeronavesModel::All();
+        $aeronaves= "AERONAVES";
         $title= "Lista de Aeronaves";
         return view('aeronaves.list', compact('aeronaves', 'title'));
 
