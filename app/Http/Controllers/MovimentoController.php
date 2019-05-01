@@ -15,4 +15,29 @@ $title = "List of Movimentos";
 return view('movimentos.list', compact('movimentos', 'title'));
 }
 
+
+
+
+
+    public function edit($id)
+    {
+
+      
+        
+
+        $title = "Editar movimentos ";
+       $movimento= Movimento::find($id);
+        // $aeronave = Aeronave::where('matricula', '=', $matricula)->first();
+
+        return view('movimentos.edit', compact('title', 'movimento'));
+    }
+
+
+
+
+
+
+  
+
+
 }

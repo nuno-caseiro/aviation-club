@@ -25,4 +25,5 @@ Route::get('aeronaves/{aeronave}/edit','AeronaveController@edit');
 Route::put('/aeronaves/{aeronave}','AeronaveController@update');
 Route::delete('/aeronaves/{aeronave}', 'AeronaveController@destroy');
 Route::get('movimentos', 'MovimentoController@index');
-
+Route::get('movimentos/{movimento}/edit', 'MovimentoController@edit');
+Route::put('/movimento/{movimento}','MovimentoController@update');
