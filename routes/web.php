@@ -18,4 +18,5 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
-Route::get('aeronaves', 'AeronavesController@index');
+Route::get('aeronaves', 'AeronaveController@index');
+Route::get('aeronaves/{aeronave}/edit','AeronaveController@edit');

@@ -27,7 +27,7 @@
                <td>{{$aeronave->created_at}}</td>
                <td>{{$aeronave->updated_at}}</td>
                <td>{{$aeronave->deleted_at}}</td>
-
+               <td><a class="btn btn-xs btn-primary" href="{{ action('AeronaveController@edit', $aeronave->matricula) }}">Edit</a></td>
            </tr>
            @endforeach
 
