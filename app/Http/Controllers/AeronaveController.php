@@ -19,6 +19,30 @@ class AeronaveController extends Controller
 
     }
 
+    public function create(){
+        $title= "Adicionar aeronave";
+        return view('aeronaves.create', compact('title'));
+    }
+
+    public function store(Request $request)
+    {
+        if ($request->has('cancel')) {
+            return redirect()->action('AeronaveController@index');
+        }
+      /*  $user = $request->validate([
+            'name' => 'required|regex:/^[\pL\s]+$/u',
+            'age' => 'required|integer|between:1,120',
+        ], [ // Custom Messages
+            'name.regex' => 'Name must only contain letters and spaces.',
+        ]);*/
+
+        $aeronave=$request->all()+['conta_horas'=>'0', 'preco_hora'=>'0'];
+
+        Aeronave::create($aeronave);
+        return redirect()->action('AeronaveController@index');
+    }
+
+
     public function edit($matricula)
     {
 
@@ -43,7 +67,13 @@ class AeronaveController extends Controller
         $aeronaveModel= Aeronave::where('matricula','=', $matricula)->first();
         $aeronaveModel->num_lugares= $request->nrlugares;
         $aeronaveModel->save();
+        return redirect()->action('AeronaveController@index');
+        //podemos dar nomes às rotas
+    }
 
+    public function destroy($matricula){
+        $aeronave= Aeronave::find($matricula);
+        $aeronave->delete();
     }
 
 
