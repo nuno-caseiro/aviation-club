@@ -19,7 +19,7 @@
            </tr>
        </thead>
        @foreach($aeronaves as $aeronave)
-           @dump($aeronave)
+
            <tr>
                <td>{{$aeronave->matricula}}</td>
                <td>{{$aeronave->marca}}</td>

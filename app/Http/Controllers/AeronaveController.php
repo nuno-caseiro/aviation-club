@@ -74,6 +74,8 @@ class AeronaveController extends Controller
     public function destroy($matricula){
         $aeronave= Aeronave::find($matricula);
         $aeronave->delete();
+        return redirect()->action('AeronaveController@index');
+
     }
 
 
