@@ -1,4 +1,5 @@
-
+@extends('master')
+@section('content')
 
     <form action="{{--action('AeronaveController@update', $aeronave->matricula)--}}" method="post">
         @method('put')
@@ -14,3 +15,4 @@
         </div>
     </form>
 
+    @endsection
