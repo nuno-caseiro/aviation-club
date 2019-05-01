@@ -1,5 +1,6 @@
 <?php
 
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -20,3 +21,5 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('aeronaves', 'AeronaveController@index');
 Route::get('aeronaves/{aeronave}/edit','AeronaveController@edit');
+Route::get('utilizadores','UserController@index');
+Route::get('utilizadores/{user}/edit','UserController@edit');

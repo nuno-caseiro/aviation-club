@@ -21,7 +21,7 @@ class AeronaveController extends Controller
 
     public function edit($matricula)
     {
-        $title = "Editar Aeronava ";
+        $title = "Editar Aeronave ";
         $aeronave = Aeronave::where('matricula', '=', $matricula)->first();
         return view('aeronaves.edit', compact('title', 'aeronave'));
     }
