@@ -19,36 +19,70 @@ class AeronaveController extends Controller
 
     }
 
-    public function edit($matricula)
+    public function create(){
+        $title= "Adicionar aeronave";
+        return view('aeronaves.create', compact('title'));
+    }
+
+    public function store(Request $request)
     {
+<<<<<<< HEAD
         $title = "Editar Aeronave ";
         $aeronave = Aeronave::where('matricula', '=', $matricula)->first();
         return view('aeronaves.edit', compact('title', 'aeronave'));
-    }
-
-
-
-
-
-
-
- /*   public function update(Request $request, $matricula){
-
+=======
         if ($request->has('cancel')) {
             return redirect()->action('AeronaveController@index');
         }
-        $user = $request->validate([
+      /*  $user = $request->validate([
             'name' => 'required|regex:/^[\pL\s]+$/u',
             'age' => 'required|integer|between:1,120',
         ], [ // Custom Messages
             'name.regex' => 'Name must only contain letters and spaces.',
-        ]);
-//testes
+        ]);*/
 
-        $aeronave = DB::table('aeronavesController')->where('matricula','==', $matricula)->get();
+        $aeronave=$request->all()+['conta_horas'=>'0', 'preco_hora'=>'0'];
+
+        Aeronave::create($aeronave);
+        return redirect()->action('AeronaveController@index');
+>>>>>>> c0b07783adb312384d4dc97a8b3219b6e7ddd6f4
+    }
 
 
-    }*/
+    public function edit($matricula)
+    {
+
+        $title = "Editar Aeronave";
+        $aeronave = Aeronave::where('matricula', '=', $matricula)->first();
+
+        $title = "Editar Aeronava ";
+       $aeronave= Aeronave::find($matricula);
+        // $aeronave = Aeronave::where('matricula', '=', $matricula)->first();
+
+        return view('aeronaves.edit', compact('title', 'aeronave'));
+    }
+
+
+    public function update(Request $request, $matricula){
+
+        if ($request->has('cancel')) {
+            return redirect()->action('AeronaveController@index');
+        }
+        //falta validacao
+
+        $aeronaveModel= Aeronave::where('matricula','=', $matricula)->first();
+        $aeronaveModel->num_lugares= $request->nrlugares;
+        $aeronaveModel->save();
+        return redirect()->action('AeronaveController@index');
+        //podemos dar nomes às rotas
+    }
+
+    public function destroy($matricula){
+        $aeronave= Aeronave::find($matricula);
+        $aeronave->delete();
+        return redirect()->action('AeronaveController@index');
+
+    }
 
 
 }
