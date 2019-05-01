@@ -22,33 +22,24 @@ class AeronaveController extends Controller
     public function edit($matricula)
     {
         $title = "Editar Aeronava ";
-        $aeronave = Aeronave::where('matricula', '=', $matricula)->first();
+       $aeronave= Aeronave::find($matricula);
+        // $aeronave = Aeronave::where('matricula', '=', $matricula)->first();
         return view('aeronaves.edit', compact('title', 'aeronave'));
     }
 
 
-
-
-
-
-
- /*   public function update(Request $request, $matricula){
+    public function update(Request $request, $matricula){
 
         if ($request->has('cancel')) {
             return redirect()->action('AeronaveController@index');
         }
-        $user = $request->validate([
-            'name' => 'required|regex:/^[\pL\s]+$/u',
-            'age' => 'required|integer|between:1,120',
-        ], [ // Custom Messages
-            'name.regex' => 'Name must only contain letters and spaces.',
-        ]);
-//testes
+        //falta validacao
 
-        $aeronave = DB::table('aeronavesController')->where('matricula','==', $matricula)->get();
+        $aeronaveModel= Aeronave::where('matricula','=', $matricula)->first();
+        $aeronaveModel->num_lugares= $request->nrlugares;
+        $aeronaveModel->save();
 
-
-    }*/
+    }
 
 
 }
