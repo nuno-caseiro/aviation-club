@@ -21,4 +21,5 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::get('aeronaves', 'AeronaveController@index');
 Route::get('aeronaves/{aeronave}/edit','AeronaveController@edit');
 Route::put('/aeronaves/{aeronave}','AeronaveController@update');
+Route::get('movimentos', 'MovimentoController@index');
 
