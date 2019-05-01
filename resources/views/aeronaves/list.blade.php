@@ -1,6 +1,7 @@
 @extends('master')
 @section('content')
 
+
    <table class>
        <thead>
            <tr>
@@ -26,6 +27,7 @@
                <td>{{$aeronave->created_at}}</td>
                <td>{{$aeronave->updated_at}}</td>
                <td>{{$aeronave->deleted_at}}</td>
+
            </tr>
            @endforeach
 
