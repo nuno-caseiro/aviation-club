@@ -1,7 +1,6 @@
-@extends(master)
-@section('content')
 
-    <form action="{{-- action('AeronaveController@update', $aeronave->matricula) --}}" method="post">
+
+    <form action="{{--action('AeronaveController@update', $aeronave->matricula)--}}" method="post">
         @method('put')
         @csrf
         <div>
@@ -14,4 +13,4 @@
             <button type="submit" name="cancel">Cancel</button>
         </div>
     </form>
-@endsection
+
