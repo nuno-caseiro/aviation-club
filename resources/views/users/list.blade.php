@@ -30,7 +30,7 @@
                 <th>Direção</th>
                 <th>Foto</th>
                 <th>Número de licença</th>
-                <th>Tipo de licença/th>
+                <th>Tipo de licença</th>
                 <th>Instrutor</th>
                 <th>Aluno</th>
                 <th>Validade da licença</th>
