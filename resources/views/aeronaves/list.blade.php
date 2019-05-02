@@ -3,7 +3,7 @@
 
 
   <table class="table table-striped table-bordered" style="width: 100%" id="mydatatable">
-      <a href="{{ action('AeronaveController@create') }}">Add User</a>
+      <a href="{{ action('AeronaveController@create') }}">Add Aeronave</a>
 
       <thead>
            <tr>

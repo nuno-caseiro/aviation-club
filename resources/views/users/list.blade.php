@@ -7,7 +7,8 @@
 
 
 <table class="table table-striped table-bordered" style="width: 100%" id="mydatatable">
-        <thead>
+    <a href="{{ action('UserController@create') }}">Add User</a>  
+    <thead>
             <tr>
                 <th>Id</th>
                 <th>Nome</th>

@@ -21,6 +21,12 @@ class UserController extends Controller
 
 	}
 
+	public function create(){
+		$title= "Adicionar Utilizadores";
+        return view('users.create', compact('title'));
+
+	}
+
 	/*public function destroy($id){
 		$utilizador= User::find($id);
         $utilizador->delete();

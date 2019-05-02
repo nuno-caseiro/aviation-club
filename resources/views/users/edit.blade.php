@@ -10,20 +10,20 @@
                    value="{{ $user->name }}">
             <br></br>       
             <label for="inputNomeInformal">Nome Informal</label>
-            <input type="text" name="nomeInformal" id="inputNomeInformal" placeholder="NomeInformal" value="{{$user->nome_informal}}">    
+            <input type="text" name="nome_informal" id="inputNomeInformal" placeholder="NomeInformal" value="{{$user->nome_informal}}">    
             <br></br>       
             <label for="inputEmail">Email</label>
             <input type="email" name="email" id="inputEmail" placeholder="Email" value="{{$user->email}}">    
         
             <br></br>       
             <label for="inputNif">NIF</label>
-            <input type="text" name="nif" id="inputNif" placeholder="Nif" value="{{$user->nif}}">
+            <input type="number" name="nif" id="inputNif" placeholder="Nif" value="{{$user->nif}}">
             <br></br>       
             <label for="inputTelefone">Telefone</label>
-            <input type="text" name="telefone" id="inputTelefone" placeholder="Telefone" value="{{$user->telefone}}">  
+            <input type="number" name="telefone" id="inputTelefone" placeholder="Telefone" value="{{$user->telefone}}">  
             <br></br>       
             <label for="inputDataNascimento">Data Nascimento</label>
-            <input type="text" name="dataNascimento" id="inputDataNascimento" placeholder="DataNascimento" value="{{$user->data_nascimento}}">
+            <input type="date" name="data_nascimento" id="inputDataNascimento" placeholder="DataNascimento" value="{{$user->data_nascimento}}">
             <br></br>       
             <label for="inputEndereco">Endereço</label>
             <input type="text" name="endereco" id="inputEndereco" placeholder="Endereco" value="{{$user->endereco}}">   
