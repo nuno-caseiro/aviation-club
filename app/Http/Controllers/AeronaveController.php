@@ -26,9 +26,6 @@ class AeronaveController extends Controller
 
     public function store(Request $request)
     {
-        $title = "Editar Aeronave ";
-        $aeronave = Aeronave::where('matricula', '=', $matricula)->first();
-        return view('aeronaves.edit', compact('title', 'aeronave'));
         if ($request->has('cancel')) {
             return redirect()->action('AeronaveController@index');
         }
