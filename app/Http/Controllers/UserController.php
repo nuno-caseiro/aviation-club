@@ -14,12 +14,18 @@ class UserController extends Controller
 		return view('users.list', compact('users', 'title'));
 	}
 	
-	public function edit($name){
+	public function edit($id){
 		$title = "Editar Utilizador ";
-        $user = User::where('name', '=', $name)->first();
+        $user= User::find($id);
         return view('users.edit', compact('title', 'user'));
 
 	}
-    
 
+	/*public function destroy($id){
+		$utilizador= User::find($id);
+        $utilizador->delete();
+        return redirect()->action('UserController@index');
+	}
+    */
+	
 }

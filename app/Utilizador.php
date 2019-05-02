@@ -10,6 +10,6 @@ class Utilizador extends Model
     protected $primaryKey = 'id';
 
 
-   // protected $fillable = ['nome_informal','name','email','foto_url','data_nascimento','nif','telefone','endereco'];
+   // protected $fillable = ['num_socio','nome_informal','email','tipo','direcao','quotas_pagas','ativo'];
     public $incrementing = false;
 }

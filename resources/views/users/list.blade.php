@@ -80,7 +80,9 @@
                 <td>{{$utilizador->classe_certificado}}</td>
                 <td>{{$utilizador->validade_certificado}}</td>
                 <td>{{$utilizador->certificado_confirmado}}</td>
-                <td><a class="btn btn-xs btn-primary" href="{{ action('UserController@edit', $utilizador->name,$utilizador->nome_informal) }}">Edit</a></td>
+                <td><a class="btn btn-xs btn-primary" href="{{ action('UserController@edit', $utilizador->id) }}">Edit</a></td>
+              
+               
 
             </tr>
             @endforeach
