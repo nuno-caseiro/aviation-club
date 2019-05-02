@@ -18,6 +18,7 @@ class UserController extends Controller
 		$title = "Editar Utilizador ";
         $user = User::where('name', '=', $name)->first();
         return view('users.edit', compact('title', 'user'));
+
 	}
     
 
