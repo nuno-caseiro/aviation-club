@@ -10,7 +10,7 @@ class MovimentoController extends Controller
     //
     public function index()
 {
-$movimentos = Movimento::all();
+$movimentos = Movimento::paginate(15);
 $title = "List of Movimentos";
 return view('movimentos.list', compact('movimentos', 'title'));
 }
