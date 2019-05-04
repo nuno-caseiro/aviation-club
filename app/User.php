@@ -17,10 +17,11 @@ class User extends Authenticatable
      */
 
     
-
+    //protected $table= 'usersController';
+    protected $primaryKey = 'id';
     protected $fillable = [
-        'name', 'email', 'password',
-    ];
+        'name', 'email', 'password','num_socio','nome_informal','tipo','direcao','quotas_pagas','ativo'
+    ]; //nome,email,password , ja vem por defeito da autenticacao
 
     /**
      * The attributes that should be hidden for arrays.

@@ -46,10 +46,31 @@ class UserController extends Controller
 		
 		//return redirect()->route('users.list')->with('success', 'User deleted successfully'); -- testar
 	}
+/*
+	public function store(Request $request){
+		if ($request->has('cancel')) {
+            return redirect()->action('UserController@index');
+		}
+		
+		$user=$request->all();
 
-	public function store($id){
+       User::create($user);
+        return redirect()->action('UserController@index');
 
 
+	}
+	*/
+
+	public function store(Request $request){
+		$user = new User();
+        $user->fill($request->all());
+        $user->password = Hash::make($request->password);
+		$user->save();
+		
+
+		return redirect()
+		->route('users.list')
+		->with('success', 'User added successfully!');
 	}
 
 	public function update(Request $request,$socio){
@@ -57,18 +78,22 @@ class UserController extends Controller
             return redirect()->action('UserController@index');
 		}
 		
-		$this->validate($request, [
+		/*$this->validate($request, [
 			'num_socio'=>'required|',
             'name' => 'required|alpha_dash',
             'email' => 'required|email',
             'type' => 'required|between:0,2'
 		]);
 		
-		$user = User::findOrFail($socio);
+		*/
+
+		$user = User::find($socio);
         $user->fill($request->except('password'));
         $user->save();
 
 	}
+
+
     
 	
 }

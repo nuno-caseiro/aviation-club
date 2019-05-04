@@ -2,7 +2,7 @@
 @section('content')
 
 
-<form action="{{action('AeronaveController@store')}}" method="post">
+<form action="{{action('UserController@store')}}" method="post">
     @csrf
     <div>
         <label for="inputNumSocio">Numero de Sócio</label>
@@ -60,17 +60,21 @@
 
     <div>
         <label for="inputQuotaPaga">Quota Paga</label>
-        <input type="checkbox" name="quota_paga" value="quota_paga">
+        <input type="checkbox" name="quota_paga" value="1"> Sim 
+        <input type="checkbox" name="quota_paga" value="0"> Nao 
+        
     </div>
 
     <div>
         <label for="inputAtivo">Ativo</label>
-        <input type="checkbox" name="ativo" value="ativo">
+        <input type="checkbox" name="ativo" value="1"> Sim 
+        <input type="checkbox" name="ativo" value="0"> Nao 
     </div>
 
     <div>
         <label for="inputDirecao">Direção</label>
-        <input type="checkbox" name="direcao" value="direcao">
+        <input type="checkbox" name="direcao" value="1"> Sim 
+        <input type="checkbox" name="direcao" value="0"> Nao 
     </div>
     <div>
         <label for="inputAluno">Aluno</label>
@@ -100,7 +104,8 @@
 
     <div>
         <label for="inputLicencaConfirmada">Licença confirmada</label>
-        <input type="checkbox" name="licenca_confirmada" value="licenca_confirmada">
+        <input type="checkbox" name="licenca_confirmada" value="1"> Sim 
+        <input type="checkbox" name="licenca_confirmada" value="0"> Nao 
 
     </div>
 
@@ -123,7 +128,8 @@
 
     <div>
         <label for="inputCertificadoConfirmado">Certificado confirmado</label>
-        <input type="checkbox" name="certificado_confirmado" value="certificado_confirmado">
+        <input type="checkbox" name="certificado_confirmado" value="1"> Sim 
+        <input type="checkbox" name="certificado_confirmado" value="0"> Nao 
 
     </div>
 
