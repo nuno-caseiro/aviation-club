@@ -83,8 +83,8 @@ tipo_instrucao, instrutor_id
 
 
          <div>
-            <label for="inputNumAterragens">Numero Aterragens</label>
-            <input type="text" name="num_aterragens" id="inputNumAterragens"  placeholder="Numero de Aterragens" >
+            <label for="num_aterragens">Numero Aterragens</label>
+            <input type="text" name="num_aterragens" id="num_aterragens"  placeholder="Numero de Aterragens" >
         </div>
 
 
@@ -126,7 +126,7 @@ tipo_instrucao, instrutor_id
 
          <div>
             <label for="inputDescolagens">Tempo de voo</label>
-            <input type="text" name="preco_voo" id="inputNumDescolagens"  placeholder="Tempo de Voo" >
+            <input type="text" name="tempo_voo" id="inputNumDescolagens"  placeholder="Tempo de Voo" >
         </div>
 
 
@@ -136,8 +136,9 @@ tipo_instrucao, instrutor_id
 
          <div>
             <label for="inputDescolagens">Preço de voo</label>
-            <input type="text" name="descolagens" id="inputNumDescolagens"  placeholder="Preço do Voo" >
+            <input type="text" name="preco_voo" id="inputNumDescolagens"  placeholder="Preço do Voo" >
         </div>
+
 
 
 

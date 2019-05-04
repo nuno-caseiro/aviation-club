@@ -48,8 +48,8 @@ return view('movimentos.list', compact('movimentos', 'title'));
         //dd($request->all());
 //protected $fillable = ['id', 'aeronave', 'data_inf??', ' data_sup??', 'natureza', 'confirmado???','piloto??','instrutor??','meus_movimentos??'];
         $movimentoModel->id=$request->id;
-         $movimentoModel->aeronave=$request->members;
-          $movimentoModel->natureza= $request->natureza;
+        $movimentoModel->aeronave=$request->members;
+        $movimentoModel->natureza= $request->natureza;
         $movimentoModel->confirmado=$request->confirmado;
         $movimentoModel->piloto_id=$request->piloto;
         $movimentoModel->instrutor_id=$request->instrutor;
@@ -75,7 +75,10 @@ return view('movimentos.list', compact('movimentos', 'title'));
         }
       
      
-        $movimento=['id'=>1]+$request->all(); //estou a morrer por dentro nao percebo o erro so quero por um id ao calhas pq o meu delete tb nao da update nos meus ids tenho de fazer isso
+        $movimento=$request->all()+['num_licenca_piloto'=>'5202','validade_licenca_piloto'=>'2020-05-28','tipo_licenca_piloto' =>'PPL(A)','num_certificado_piloto'=>'PT.19357','confirmado'=>'1','validade_certificado_piloto'=>'2020-05-29','classe_certificado_piloto'=>'Class 1','instrutor_id'=>'10004'
+   ]; 
+
+         //estou a morrer por dentro nao percebo o erro so quero por um id ao calhas pq o meu delete tb nao da update nos meus ids tenho de fazer isso
        /*     data,
 hora_descolagem, hora_aterragem, aeronave, num_diario,
 num_servico, piloto_id, natureza, aerodromo_partida,
@@ -107,7 +110,8 @@ tipo_instrucao, instrutor_id*/
         $movimentoModel->natureza= $request->tipo_instrucao;
         $movimentoModel->natureza= $request->instrutor_id;
             */
-       //   dd($movimento)  ;
+      // dd($movimento)  ;
+
         Movimento::create($movimento);
         return redirect()->action('MovimentoController@index');
     }
