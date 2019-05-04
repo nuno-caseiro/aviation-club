@@ -21,6 +21,34 @@
             <input type="text" name="nrlugares" id="inputNrLugares" value="{{ $aeronave->num_lugares }}" placeholder="Numero de lugares" >
         </div>
         <div>
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>Unidade conta horas</th>
+                    <th>Minutos</th>
+                    <th>Preco</th>
+                </tr>
+                </thead>
+
+                <tbody>
+                @for($i=0; $i<=count($aeronaveValores)-1; $i++)
+                    <tr>
+                        <th>{{$aeronaveValores[$i]['unidade_conta_horas']}}</th>
+                        <th>{{$aeronaveValores[$i]['minutos']}}</th>
+
+
+                        <th> <input type="text" name="preco{{$i}}" id="inputPreco" value="{{$aeronaveValores[$i]['preco']}}" placeholder={{$aeronaveValores[$i]['preco']}} >    </th>
+                    </tr>
+
+                @endfor
+
+                </tbody>
+            </table>
+
+        </div>
+
+
+        <div>
             <button type="submit" name="ok">Save</button>
 
         </div>

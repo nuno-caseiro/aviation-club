@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Aeronave;
+use App\AeronaveValores;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -13,7 +14,16 @@ class AeronaveController extends Controller
 
     public function index(){
         $aeronaves= Aeronave::all();
+        foreach ($aeronaves as $aeronave){
+            $aeronaveValores1= Aeronave::find($aeronave->matricula)->aeronaveValores()->get()->toArray();
+            if(!empty($aeronaveValores1)){
+                if($aeronaveValores1[count($aeronaveValores1)-1]['unidade_conta_horas']==10)
+                $aeronave->preco_hora= $aeronaveValores1[count($aeronaveValores1)-1]['preco'];
+            }
+        }
+
         $title= "Lista de Aeronaves";
+
         return view('aeronaves.list', compact('aeronaves', 'title'));
 
 
@@ -47,13 +57,16 @@ class AeronaveController extends Controller
     {
 
         $title = "Editar Aeronave";
-        $aeronave = Aeronave::where('matricula', '=', $matricula)->first();
+        $aeronave = Aeronave::find($matricula);
+
+          $aeronaveValores= Aeronave::find($matricula)->aeronaveValores()->get()->toArray();
+
 
         $title = "Editar Aeronava ";
        $aeronave= Aeronave::find($matricula);
         // $aeronave = Aeronave::where('matricula', '=', $matricula)->first();
 
-        return view('aeronaves.edit', compact('title', 'aeronave'));
+        return view('aeronaves.edit', compact('title', 'aeronave', 'aeronaveValores'));
     }
 
 
@@ -64,7 +77,20 @@ class AeronaveController extends Controller
         }
         //falta validacao
 
-        $aeronaveModel= Aeronave::where('matricula','=', $matricula)->first();
+        $aeronaveModel= Aeronave::find($matricula);
+/*
+        $preco[]=null;
+       array_push($preco, $request->preco0, $request->preco1, $request->preco2, $request->preco3, $request->preco4, $request->preco5, $request->preco6, $request->preco7,$request->preco8, $request->preco9);
+
+        dump($request);
+        $aeronaveValores= Aeronave::find($matricula)->aeronaveValores()->get();
+        $aeronaveValores->preco= $preco;
+        $aeronaveModel->$aeronaveValores->save($preco);
+*/
+        dump($request);
+
+        $aeronaveModel->marca=$request->marca;
+        $aeronaveModel->modelo=$request->modelo;
         $aeronaveModel->num_lugares= $request->nrlugares;
         $aeronaveModel->save();
         return redirect()->action('AeronaveController@index');
