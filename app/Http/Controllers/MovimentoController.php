@@ -74,8 +74,40 @@ return view('movimentos.list', compact('movimentos', 'title'));
             return redirect()->action('MovimentoController@index');
         }
       
-        $movimento=$request->data();
-        $movimento=$request->all();
+     
+        $movimento=['id'=>1]+$request->all(); //estou a morrer por dentro nao percebo o erro so quero por um id ao calhas pq o meu delete tb nao da update nos meus ids tenho de fazer isso
+       /*     data,
+hora_descolagem, hora_aterragem, aeronave, num_diario,
+num_servico, piloto_id, natureza, aerodromo_partida,
+aerodromo_chegada, num_aterragens, num_descolagens,
+num_pessoas, conta_horas_inicio, conta_horas_fim, tempo_voo,
+preco_voo, modo_pagamento, num_recibo, observacoes,
+tipo_instrucao, instrutor_id*/
+//dd($request);
+		/* 
+		$movimento->id=1;
+        $movimentoModel->data=$request->data;
+        $movimentoModel->hora_aterragem=$request->hora_aterragem;
+        $movimentoModel->hora_descolagem=$request->hora_descolagem;
+        $movimentoModel->aeronave=$request->aeronave;
+        $movimentoModel->confirmado=$request->num_servico;
+        $movimentoModel->confirmado=$request->piloto_id;
+        $movimentoModel->natureza= $request->aerodromo_partida;
+        $movimentoModel->natureza= $request->aerodromo_chegada;
+        $movimentoModel->natureza= $request->num_aterragens;
+        $movimentoModel->natureza= $request->num_descolagens;
+        $movimentoModel->natureza= $request->num_pessoas;
+   	    $movimentoModel->natureza= $request->conta_horas_inicio;
+        $movimentoModel->natureza= $request->conta_horas_fim;
+        $movimentoModel->natureza= $request->tempo_voo; 
+        $movimentoModel->natureza= $request->preco_voo;
+        $movimentoModel->natureza= $request->modo_pagamento;
+        $movimentoModel->natureza= $request->num_recibo;
+        $movimentoModel->natureza= $request->observacoes;
+        $movimentoModel->natureza= $request->tipo_instrucao;
+        $movimentoModel->natureza= $request->instrutor_id;
+            */
+       //   dd($movimento)  ;
         Movimento::create($movimento);
         return redirect()->action('MovimentoController@index');
     }

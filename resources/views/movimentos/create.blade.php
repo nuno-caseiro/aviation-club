@@ -21,13 +21,35 @@ tipo_instrucao, instrutor_id
 
     
          <label >Aeronave</label>
-         <select name="members">       
+         <select name="aeronave">       
               
               @foreach ($aeronaves as $aeronave) 
                  <option value="{{ $aeronave->matricula }}"> {{ $aeronave->matricula }} </option>
               @endforeach    </select> 
          <br>
-         
+
+
+              <div>
+            <label for="inputNumDiario">Numero Diario</label>
+            <input type="text" name="num_diario" id="inputNumDiario"  placeholder="Numero Diario" >
+        </div>
+
+                 <div>
+            <label for="inputServico">Numero Servico</label>
+            <input type="text" name="num_servico" id="inputNumServico"  placeholder="Numero Servico" >
+        </div>
+
+
+           <div>
+            <label for="piloto_id">ID piloto</label>
+            <input type="text" name="piloto_id" id="piloto_id"  placeholder="Pilot ID" >
+        </div>
+
+        
+
+
+     
+
        
             <label>Natureza</label>    
                 <select name="natureza">                 
@@ -42,29 +64,18 @@ tipo_instrucao, instrutor_id
 
 
 
-        <div>
-            <label for="inputNumDiario">Numero Diario</label>
-            <input type="text" name="numDiario" id="inputNumDiario"  placeholder="Numero Diario" >
-        </div>
-
-
-          <div>
-            <label for="inputServico">Numero Servico</label>
-            <input type="text" name="numSerivco" id="inputNumServico"  placeholder="Numero Servico" >
-        </div>
-
-
+       
 
 
           <div>
             <label for="inputPartida">Aerodromo de Partida</label>
-            <input type="text" name="partida" id="inputPartida"  placeholder="Aerodromo de Partida" >
+            <input type="text" name="aerodromo_partida" id="inputPartida"  placeholder="Aerodromo de Partida" >
         </div>
 
 
           <div>
             <label for="inputChegada">Aerodromo de Chegada</label>
-            <input type="text" name="chegada" id="inputChegada"  placeholder="Aerodromo de Chegada" >
+            <input type="text" name="aerodromo_chegada" id="inputChegada"  placeholder="Aerodromo de Chegada" >
         </div>
 
 
@@ -73,7 +84,7 @@ tipo_instrucao, instrutor_id
 
          <div>
             <label for="inputNumAterragens">Numero Aterragens</label>
-            <input type="text" name="aterragens" id="inputNumAterragens"  placeholder="Numero de Aterragens" >
+            <input type="text" name="num_aterragens" id="inputNumAterragens"  placeholder="Numero de Aterragens" >
         </div>
 
 
@@ -81,9 +92,14 @@ tipo_instrucao, instrutor_id
 
          <div>
             <label for="inputDescolagens">Numero de Descolagens</label>
-            <input type="text" name="descolagens" id="inputNumDescolagens"  placeholder="Numero de Descolagens" >
+            <input type="text" name="num_descolagens" id="inputNumDescolagens"  placeholder="Numero de Descolagens" >
         </div>
 
+
+               <div>
+            <label for="inputDescolagens">Numero de Pessoas</label>
+            <input type="text" name="num_pessoas" id="num_pessoas"  placeholder="Numero de Pessoas" >
+        </div>
 
 
 
@@ -91,7 +107,7 @@ tipo_instrucao, instrutor_id
 
          <div>
             <label for="inputDescolagens">Conta Horas Inicio</label>
-            <input type="text" name="descolagens" id="inputNumDescolagens"  placeholder="Conta Horas Inicio" >
+            <input type="text" name="conta_horas_inicio" id="inputNumDescolagens"  placeholder="Conta Horas Inicio" >
         </div>
 
 
@@ -101,7 +117,7 @@ tipo_instrucao, instrutor_id
 
          <div>
             <label for="inputDescolagens">Conta Horas Fim</label>
-            <input type="text" name="descolagens" id="inputNumDescolagens"  placeholder="Conta Horas Fim" >
+            <input type="text" name="conta_horas_fim" id="inputNumDescolagens"  placeholder="Conta Horas Fim" >
         </div>
 
 
@@ -110,7 +126,7 @@ tipo_instrucao, instrutor_id
 
          <div>
             <label for="inputDescolagens">Tempo de voo</label>
-            <input type="text" name="descolagens" id="inputNumDescolagens"  placeholder="Tempo de Voo" >
+            <input type="text" name="preco_voo" id="inputNumDescolagens"  placeholder="Tempo de Voo" >
         </div>
 
 
@@ -127,7 +143,7 @@ tipo_instrucao, instrutor_id
 
        
           <label>Forma de Pagamento</label>    
-                <select name="pagamento">                 
+                <select name="modo_pagamento">                 
                 <option value="N">N</option>   
                 <option value="M">M</option>
                 <option value="T">T</option>
@@ -139,7 +155,7 @@ tipo_instrucao, instrutor_id
 
          <div>
             <label for="inputDescolagens">Numero de Recibo</label>
-            <input type="text" name="descolagens" id="inputNumDescolagens"  placeholder="Numero de Recibo" >
+            <input type="text" name="num_recibo" id="inputNumDescolagens"  placeholder="Numero de Recibo" >
         </div>
 
 
@@ -162,7 +178,7 @@ tipo_instrucao, instrutor_id
 
          <div>
             <label for="inputDescolagens">ID  do instrutor</label>
-            <input type="text" name="descolagens" id="inputNumDescolagens"  placeholder="ID do instrutor" >
+            <input type="text" name="instrutor_id" id="inputNumDescolagens"  placeholder="ID do instrutor" >
         </div>
 
 
