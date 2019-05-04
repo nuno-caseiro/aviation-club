@@ -1,6 +1,13 @@
 @extends('master')
 @section('content')
 
+<?php
+
+function is_selected($current, $expected)
+{
+    return $current === $expected ? 'selected' : '';
+}
+?>
 <form action="{{action('AeronaveController@store')}}" method="post">
     @csrf
     <div>
@@ -42,14 +49,14 @@
         <input type="text" name="endereco" id="inputEndereco" placeholder="Endereço">
     </div>
 
-    <div>
-            <label for="inputTipoSocio">Tipo de sócio</label>
-            <select name="tipo_socio" id="inputTipoSocio" class="form-control">
-                    <option disabled selected> -- Escolha uma opção -- </option>
-                    <option value="P"  <?= is_selected($user->tipo_socio,'P')?>>Piloto</option>
-                    <option value="NP" <?= is_selected($user->tipo_socio,'NP')?>>Não Piloto</option>
-                    <option value="A"  <?= is_selected($user->tipo_socio,'A')?>>Aeromodelista</option>
-                </select>    
+    <div class="form-group">
+        <label for="inputType">Type</label>
+        <select name="tipo_socio" id="inputType" class="form-control">
+            <option disabled selected> -- select an option -- </option>
+            <option <?= is_selected(old('tipo_socio', $user->tipo_socio), 'P') ?> value="P">Administrator</option>
+            <option <?= is_selected(old('tipo_socio', $user->tipo_socio), 'PN') ?> value="PN">Publisher</option>
+            <option <?= is_selected(old('tipo_socio', $user->tipo_socio), 'A') ?> value="A">Client</option>
+        </select>
     </div>
 
 
