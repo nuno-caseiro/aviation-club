@@ -62,7 +62,7 @@ class AeronaveController extends Controller
           $aeronaveValores= Aeronave::find($matricula)->aeronaveValores()->get()->toArray();
 
 
-        $title = "Editar Aeronava ";
+        $title = "Editar Aeronave ";
        $aeronave= Aeronave::find($matricula);
         // $aeronave = Aeronave::where('matricula', '=', $matricula)->first();
 
@@ -78,23 +78,23 @@ class AeronaveController extends Controller
         //falta validacao
 
         $aeronaveModel= Aeronave::find($matricula);
-/*
+
         $preco[]=null;
        array_push($preco, $request->preco0, $request->preco1, $request->preco2, $request->preco3, $request->preco4, $request->preco5, $request->preco6, $request->preco7,$request->preco8, $request->preco9);
 
-        dump($request);
-        $aeronaveValores= Aeronave::find($matricula)->aeronaveValores()->get();
-        $aeronaveValores->preco= $preco;
-        $aeronaveModel->$aeronaveValores->save($preco);
-*/
-        dump($request);
+        for($i=1; $i<count($preco); $i++){
+            $aeronaveValores= Aeronave::find($matricula)->aeronaveValores()->where('unidade_conta_horas',$i)->update(['preco'=> $preco[$i]]);
+        }
+
+      //falta
+
 
         $aeronaveModel->marca=$request->marca;
         $aeronaveModel->modelo=$request->modelo;
         $aeronaveModel->num_lugares= $request->nrlugares;
         $aeronaveModel->save();
         return redirect()->action('AeronaveController@index');
-        //podemos dar nomes às rotas
+
     }
 
     public function destroy($matricula){

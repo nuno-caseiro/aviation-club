@@ -39,6 +39,11 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+    //protected $table= 'UserController';
+    //protected $primaryKey = 'id';
 
+
+    //protected $fillable = ['num_socio','nome_informal','email','tipo','direcao','quotas_pagas','ativo']; -- ir la p cima??
+   // public $incrementing = false;
 
 }

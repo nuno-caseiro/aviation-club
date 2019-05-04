@@ -4,6 +4,7 @@
     <form action="{{--action('AeronaveController@update', $aeronave->matricula)--}}" method="post">
         @method('put')
         @csrf
+
         <div>
             <label for="inputName">Nome Completo</label>
             <input type="text" name="name" id="inputName" placeholder="Name"
