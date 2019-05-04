@@ -24,7 +24,6 @@ Route::get('aeronaves', 'AeronaveController@index');
 Route::get('aeronaves/create', 'AeronaveController@create');
 Route::post('aeronaves', 'AeronaveController@store');
 Route::get('aeronaves/{aeronave}/edit','AeronaveController@edit');
-
 Route::put('/aeronaves/{aeronave}','AeronaveController@update');
 Route::delete('/aeronaves/{aeronave}', 'AeronaveController@destroy');
 
