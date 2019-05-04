@@ -70,7 +70,14 @@ return view('movimentos.list', compact('movimentos', 'title'));
 
         public function store(Request $request)
     {
-       
+        if ($request->has('cancel')) {
+            return redirect()->action('MovimentoController@index');
+        }
+      
+        $movimento=$request->data();
+        $movimento=$request->all();
+        Movimento::create($movimento);
+        return redirect()->action('MovimentoController@index');
     }
 
 
