@@ -12,8 +12,7 @@ class Movimento extends Model
      protected $table= 'movimentos';
       protected $primaryKey = 'id';
     //pouuurra estava complicado
-
+    public $incrementing = true;
     protected $fillable = ['id', 'aeronave', 'data_inf', ' data_sup', 'natureza', 'confirmado','piloto','instrutor','meus_movimentos'];
-    public $incrementing = false;
-
+   
 }

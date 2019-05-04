@@ -19,18 +19,27 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+//aeronaves
 Route::get('aeronaves', 'AeronaveController@index');
 Route::get('aeronaves/create', 'AeronaveController@create');
 Route::post('aeronaves', 'AeronaveController@store');
 Route::get('aeronaves/{aeronave}/edit','AeronaveController@edit');
-Route::get('utilizadores','UserController@index');
-Route::get('utilizadores/{utilizador}/edit','UserController@edit');
 Route::put('/aeronaves/{aeronave}','AeronaveController@update');
 Route::delete('/aeronaves/{aeronave}', 'AeronaveController@destroy');
-Route::get('movimentos', 'MovimentoController@index');
-Route::get('movimentos/{movimento}/edit', 'MovimentoController@edit');
-Route::put('/movimento/{movimento}','MovimentoController@update');
+
+//utilizadores
 Route::get('utilizadores/create','UserController@create');
 Route::post('utilizadores','UserController@store');
 Route::put('utilizadores/{utilizador}','UserController@update');
 Route::delete('utilizadores{utilizador}','UserController@delete');
+Route::get('utilizadores','UserController@index');
+Route::get('utilizadores/{utilizador}/edit','UserController@edit');
+
+
+//movimentos
+Route::get('movimentos', 'MovimentoController@index');
+Route::get('movimentos/{movimento}/edit', 'MovimentoController@edit');
+Route::put('movimentos/{movimento}', 'MovimentoController@update');
+Route::delete('/movimentos/{movimento}', 'MovimentoController@destroy');
+Route::get('/movimentos/create', 'MovimentoController@create');
+Route::post('/movimentos', 'MovimentoController@store');
