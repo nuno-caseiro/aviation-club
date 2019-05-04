@@ -62,7 +62,7 @@ class AeronaveController extends Controller
           $aeronaveValores= Aeronave::find($matricula)->aeronaveValores()->get()->toArray();
 
 
-        $title = "Editar Aeronava ";
+        $title = "Editar Aeronave ";
        $aeronave= Aeronave::find($matricula);
         // $aeronave = Aeronave::where('matricula', '=', $matricula)->first();
 
