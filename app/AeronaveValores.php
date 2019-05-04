@@ -8,11 +8,12 @@ use Illuminate\Support\Facades\App;
 class AeronaveValores extends Model
 {
     protected $table= 'aeronaves_valores';
+    protected $fillable= ['preco'];
 
-    protected $fillable= ['minutos','preco'];
+    public $timestamps=false;
 
 
     public function aeronaves(){
-        return $this->belongsToMany('App\Aeronave');
+        return $this->belongsToMany('App\Aeronave' );
     }
 }
