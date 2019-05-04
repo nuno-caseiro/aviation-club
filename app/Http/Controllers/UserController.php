@@ -39,11 +39,36 @@ class UserController extends Controller
 	}
 */
 
-	/*public function destroy($id){
-		$utilizador= User::find($id);
-        $utilizador->delete();
-        return redirect()->action('UserController@index');
+	public function destroy($id){
+		$user= User::find($id);
+        $user->delete();
+		return redirect()->action('UserController@index');
+		
+		//return redirect()->route('users.list')->with('success', 'User deleted successfully'); -- testar
 	}
-    */
+
+	public function store($id){
+
+
+	}
+
+	public function update(Request $request,$socio){
+		if ($request->has('cancel')) {
+            return redirect()->action('UserController@index');
+		}
+		
+		$this->validate($request, [
+			'num_socio'=>'required|',
+            'name' => 'required|alpha_dash',
+            'email' => 'required|email',
+            'type' => 'required|between:0,2'
+		]);
+		
+		$user = User::findOrFail($socio);
+        $user->fill($request->except('password'));
+        $user->save();
+
+	}
+    
 	
 }

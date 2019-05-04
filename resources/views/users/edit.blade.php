@@ -1,7 +1,7 @@
 @extends('master')
 @section('content')
 
-    <form action="{{--action('AeronaveController@update', $aeronave->matricula)--}}" method="post">
+    <form action="{{action('UserController@update', $user->id)--}}" method="post">
         @method('put')
         @csrf
 

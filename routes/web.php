@@ -32,5 +32,5 @@ Route::get('movimentos/{movimento}/edit', 'MovimentoController@edit');
 Route::put('/movimento/{movimento}','MovimentoController@update');
 Route::get('socios/create','UserController@create');
 Route::post('socios','UserController@store');
-Route::put('socios{socio}','UserController@update');
-Route::delete('socios{socio}','UserController@delete');
+Route::put('socios/{socio}','UserController@update');
+Route::delete('socios/{socio}','UserController@destroy');

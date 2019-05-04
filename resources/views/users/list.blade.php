@@ -82,6 +82,13 @@
                 <td>{{$utilizador->validade_certificado}}</td>
                 <td>{{$utilizador->certificado_confirmado}}</td>
                 <td><a class="btn btn-xs btn-primary" href="{{ action('UserController@edit', $utilizador->id) }}">Edit</a></td>
+                <td><form action="{{ action('UserController@destroy', $utilizador->id) }}"
+                    method="post">
+                  @csrf
+                  @method('delete')
+                  <input type="hidden" name="id" value="{{$utilizador->id}}">
+                  <input type="submit" value="Delete">
+              </form>
               
                
 
