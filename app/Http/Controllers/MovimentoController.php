@@ -84,7 +84,7 @@ num_pessoas, conta_horas_inicio, conta_horas_fim, tempo_voo,
 preco_voo, modo_pagamento, num_recibo, observacoes,
 tipo_instrucao, instrutor_id*/
 //dd($request);
-		/* 
+		/*   deu erro tb
 		$movimento->id=1;
         $movimentoModel->data=$request->data;
         $movimentoModel->hora_aterragem=$request->hora_aterragem;
