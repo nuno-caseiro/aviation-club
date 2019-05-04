@@ -93,8 +93,15 @@
                <td>{{$movimento->classe_certificado_instrutor}}</td>    
                <td>{{$movimento->created_at}}</td>    
                <td>{{$movimento->updated_at}}</td>       
-              
-              
+                <td><a class="btn btn-xs btn-primary" href="{{ action('MovimentoController@edit', $movimento->id) }}">Edit</a></td>
+               <td><form action="{{ action('MovimentoController@destroy', $movimento->id) }}"
+                     method="post">
+                   @csrf
+                   @method('delete')
+                   <input type="hidden" name="id" value="{{$movimento->id}}">
+                   <input type="submit" value="Delete">
+               </form>
+                
                
           
 
@@ -113,7 +120,7 @@
           </table>
           
     <div class="text-center">
-      {!! $movimentos->links(); !!}
-
+      {!! $movimentos->links(); !!} 
     </div>
+         <a href="{{ action('MovimentoController@create') }}"class="btn btn-primary">Adicionar Movimento</a>
     @endsection

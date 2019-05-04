@@ -37,7 +37,52 @@ return view('movimentos.list', compact('movimentos', 'title'));
 
 
 
+    public function update(Request $request, $id){
+
+        if ($request->has('cancel')) {
+            return redirect()->action('MovimentoController@index');
+        }
+        //falta validacao
+        $movimentoModel= Movimento::find($id);
+
+        //dd($request->all());
+//protected $fillable = ['id', 'aeronave', 'data_inf??', ' data_sup??', 'natureza', 'confirmado???','piloto??','instrutor??','meus_movimentos??'];
+        $movimentoModel->id=$request->id;
+         $movimentoModel->aeronave=$request->members;
+          $movimentoModel->natureza= $request->natureza;
+        $movimentoModel->confirmado=$request->confirmado;
+        $movimentoModel->piloto_id=$request->piloto;
+        $movimentoModel->instrutor_id=$request->instrutor;
+
+        $movimentoModel->save();
+        return redirect()->action('MovimentoController@index');
+        //podemos dar nomes às rotas
+    }
   
+
+
+       public function create(){
+        $title= "Adicionar Movimento";
+        return view('movimentos.create', compact('title'));
+    }
+
+
+
+        public function store(Request $request)
+    {
+       
+    }
+
+
+
+   public function destroy($id){
+        $movimento= Movimento::find($id);
+        $movimento->delete();
+       
+
+        return redirect()->action('MovimentoController@index');
+
+    }
 
 
 }
