@@ -39,9 +39,9 @@
                    <input type="submit" value="Delete">
                </form>
                </td>
-               <td>
+
                <td><a class="btn btn-xs btn-primary" href="{{ action('AeronaveController@pilotosAutorizados', $aeronave->matricula) }}">Pilotos autorizados</a></td>
-               </td>
+
               </tr>
            @endforeach
 
