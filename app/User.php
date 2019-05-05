@@ -48,4 +48,5 @@ class User extends Authenticatable
     //protected $fillable = ['num_socio','nome_informal','email','tipo','direcao','quotas_pagas','ativo']; -- ir la p cima??
    // public $incrementing = false;
 
+
 }

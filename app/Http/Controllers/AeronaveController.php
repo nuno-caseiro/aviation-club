@@ -104,5 +104,14 @@ class AeronaveController extends Controller
 
     }
 
+    public function pilotosAutorizados($matricula){
+        $title = "Pilotos autorizados";
+        $pilotosAutorizados= Aeronave::find($matricula)->pilotosAutorizados()->where('matricula',$matricula)->get();
+        return view('aeronaves.pilotosautorizados_list', compact('title', 'pilotosAutorizados', 'matricula'));
+
+
+
+    }
+
 
 }
