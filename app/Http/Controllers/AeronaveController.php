@@ -72,7 +72,8 @@ class AeronaveController extends Controller
 
 
     public function update(Request $request, $matricula){
-        dd($request->precos);
+        //dd($request->precos);
+
         if ($request->has('cancel')) {
             return redirect()->action('AeronaveController@index');
         }
@@ -80,15 +81,12 @@ class AeronaveController extends Controller
 
         $aeronaveModel= Aeronave::find($matricula);
 
-        $preco[]=null;
-       array_push($preco, $request->preco0, $request->preco1, $request->preco2, $request->preco3, $request->preco4, $request->preco5, $request->preco6, $request->preco7,$request->preco8, $request->preco9);
-
-        for($i=1; $i<count($preco); $i++){
-            $aeronaveValores= Aeronave::find($matricula)->aeronaveValores()->where('unidade_conta_horas',$i)->update(['preco'=> $preco[$i]]);
+        foreach ($request->precos as $preco){
+            $i=0;
+            Aeronave::find($matricula)->aeronaveValores()->where('unidade_conta_horas',$i+1)->update(['preco'=> $request->precos[$i]]);
+            Aeronave::find($matricula)->aeronaveValores()->where('unidade_conta_horas',$i+1)->update(['minutos'=> $request->minutos[$i]]);
+            $i++;
         }
-
-      //falta
-
 
         $aeronaveModel->marca=$request->marca;
         $aeronaveModel->modelo=$request->modelo;
