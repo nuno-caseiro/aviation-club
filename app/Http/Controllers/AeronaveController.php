@@ -53,11 +53,14 @@ class AeronaveController extends Controller
         $aeronave=$request->all()+['conta_horas'=>'0', 'preco_hora'=>$request->precos[9]];
 
         Aeronave::create($aeronave);
-
+//n funciona
         foreach(range(1,10) as $i){
-            $aeronaveValor[]= ['matricula'=>$request->matricula, 'unidade_conta_horas' => $i,
+
+            $aeronaveValor[]= ['unidade_conta_horas' => $i,
                 'minutos' => $request->minutos[$i-1], 'preco' => $request->precos[$i-1]];
-            AeronaveValores::create($aeronaveValor);
+
+            Aeronave::find($request->matricula)->aeronaveValores()->create(['unidade_conta_horas' => $i,
+                'minutos' => $request->minutos[$i-1], 'preco' => $request->precos[$i-1]]);
         }
         return redirect()->action('AeronaveController@index');
     }
