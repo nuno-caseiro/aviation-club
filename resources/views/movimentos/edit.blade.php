@@ -4,6 +4,13 @@
       <form action="{{action('MovimentoController@update', $movimento->id)}}" method="post">
           @method('put')
           @csrf
+
+
+          <div class="card-header">Editar Movimento</div>
+
+
+
+
           <div>
               <label for="inputID">ID</label>
               <input type="text" name="id" id="inputID" value="{{ $movimento->id }}" placeholder="id" >
@@ -12,7 +19,7 @@
   <label >Aeronave</label>
        <select name="members">       
               
-              @foreach ($aeronaves as $aeronave)//contem todos os dados das aeronaves para se for adicionada mais uma a sua matricula tb aparecer para ser selecionada
+      @foreach ($aeronaves as $aeronave)//contem todos os dados das aeronaves para se for adicionada mais uma a sua matricula tb aparecer para ser selecionada
       <option value="{{ $aeronave->matricula }}" {{ ( $aeronave->matricula == $movimento->aeronave) ? 'selected' : $movimento->aeronave }}> {{ $aeronave->matricula }} </option>
     @endforeach    </select>
 
@@ -41,22 +48,9 @@
 
       @if ($movimento->natureza!='E')
        <option value="E">E</option>
-      @endif
+      @endif 
 
-
-
-
-
- 
-
-
-
-
-
-
-              </select>
-
-
+      </select>
         <div>
               <label for="inputID">Confirmado</label>
               <input type="text" name="confirmado" id="inputConfirmado" value="{{ $movimento->confirmado }}" >
