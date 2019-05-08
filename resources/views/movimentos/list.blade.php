@@ -115,8 +115,6 @@
 
      
 
-           </script>
-
           </table>
           
     <div class="text-center">

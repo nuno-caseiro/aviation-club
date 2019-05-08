@@ -15,7 +15,7 @@
                <th>Preço por hora</th>
                <th>Criado em</th>
                <th>Atualizado em</th>
-               <th>Apagado em</th>
+               <th>Apagado em </th>
            </tr>
        </thead>
        @foreach($aeronaves as $aeronave)
