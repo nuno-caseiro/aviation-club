@@ -47,9 +47,18 @@ class AeronaveController extends Controller
             'name.regex' => 'Name must only contain letters and spaces.',
         ]);*/
 
-        $aeronave=$request->all()+['conta_horas'=>'0', 'preco_hora'=>'0'];
+
+
+
+        $aeronave=$request->all()+['conta_horas'=>'0', 'preco_hora'=>$request->precos[9]];
 
         Aeronave::create($aeronave);
+
+        foreach(range(1,10) as $i){
+            $aeronaveValor[]= ['matricula'=>$request->matricula, 'unidade_conta_horas' => $i,
+                'minutos' => $request->minutos[$i-1], 'preco' => $request->precos[$i-1]];
+            AeronaveValores::create($aeronaveValor);
+        }
         return redirect()->action('AeronaveController@index');
     }
 
@@ -71,7 +80,7 @@ class AeronaveController extends Controller
 
 
     public function update(Request $request, $matricula){
-        //dd($request->precos);
+
 
         if ($request->has('cancel')) {
             return redirect()->action('AeronaveController@index');

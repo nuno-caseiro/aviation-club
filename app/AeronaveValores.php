@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\App;
 class AeronaveValores extends Model
 {
     protected $table= 'aeronaves_valores';
-    protected $fillable= ['minutos','preco'];
+    protected $fillable= ['matricula','unidade_conta_horas','minutos','preco'];
 
     public $timestamps=false;
 
