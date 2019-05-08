@@ -93,8 +93,9 @@ class AeronaveController extends Controller
         $aeronaveModel= Aeronave::find($matricula);
 
         //request precos??
+        $i=0;
         foreach ($request->precos as $preco){
-            $i=0;
+
             Aeronave::find($matricula)->aeronaveValores()->where('unidade_conta_horas',$i+1)->update(['preco'=> $request->precos[$i]]);
             Aeronave::find($matricula)->aeronaveValores()->where('unidade_conta_horas',$i+1)->update(['minutos'=> $request->minutos[$i]]);
             $i++;
@@ -109,6 +110,8 @@ class AeronaveController extends Controller
     }
 
     public function destroy($matricula){
+
+        Aeronave::find($matricula)->aeronaveValores()->delete();
         $aeronave= Aeronave::find($matricula);
         $aeronave->delete();
         return redirect()->action('AeronaveController@index');
