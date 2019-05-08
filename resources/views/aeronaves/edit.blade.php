@@ -37,7 +37,7 @@
                         <th>{{$aeronaveValores[$i]['minutos']}}</th>
 
 
-                        <th> <input type="text" name="preco{{$i}}" id="inputPreco" value="{{$aeronaveValores[$i]['preco']}}" placeholder={{$aeronaveValores[$i]['preco']}} >    </th>
+                        <th> <input type="text" name="precos[]" id="inputPreco" value="{{$aeronaveValores[$i]['preco']}}" placeholder={{$aeronaveValores[$i]['preco']}} >    </th>
                     </tr>
 
                 @endfor

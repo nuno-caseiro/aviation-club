@@ -5,15 +5,15 @@ namespace App\Http\Controllers;
 use App\Aeronave;
 use App\AeronaveValores;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
-
 
 class AeronaveController extends Controller
 {
 
 
     public function index(){
-        $aeronaves= Aeronave::all();
+
+        $aeronaves=Aeronave::all();
+
         foreach ($aeronaves as $aeronave){
             $aeronaveValores1= Aeronave::find($aeronave->matricula)->aeronaveValores()->get()->toArray();
             if(!empty($aeronaveValores1)){
@@ -25,6 +25,7 @@ class AeronaveController extends Controller
         $title= "Lista de Aeronaves";
 
         return view('aeronaves.list', compact('aeronaves', 'title'));
+
 
 
     }
@@ -71,7 +72,7 @@ class AeronaveController extends Controller
 
 
     public function update(Request $request, $matricula){
-
+        dd($request->precos);
         if ($request->has('cancel')) {
             return redirect()->action('AeronaveController@index');
         }
