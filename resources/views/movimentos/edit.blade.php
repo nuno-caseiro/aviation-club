@@ -1,7 +1,7 @@
   @extends('master')
   @section('content')
 
-      <form action="{{action('MovimentoController@update', $movimento->id)}}" method="post">
+      <form action="{{action('MovimentoController@update', $movimento->id)}}" method="post" >
           @method('put')
           @csrf
 
@@ -11,10 +11,7 @@
 
 
 
-          <div>
-              <label for="inputID">ID</label>
-              <input type="text" name="id" id="inputID" value="{{ $movimento->id }}" placeholder="id" >
-          </div>
+          
           <div>
   <label >Aeronave</label>
        <select name="members">       
@@ -39,15 +36,15 @@
               <option value="{{ $movimento->natureza}}">{{$movimento->natureza}}</option>
       
       @if ($movimento->natureza!='I')
-       <option value="I">I</option>
+       <option value="I">Instruçao</option>
       @endif
 
       @if ($movimento->natureza!='T')
-       <option value="T">T</option>
+       <option value="T">Treino</option>
       @endif
 
       @if ($movimento->natureza!='E')
-       <option value="E">E</option>
+       <option value="E">Especial</option>
       @endif 
 
       </select>
