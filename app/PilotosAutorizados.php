@@ -13,4 +13,9 @@ class PilotosAutorizados extends Model
         return $this->belongsToMany('App\Aeronave' );
     }
 
+    public function pilotosNaoAutorizados(){
+        return $this->belongsToMany('App\User' );
+    }
+
+
 }

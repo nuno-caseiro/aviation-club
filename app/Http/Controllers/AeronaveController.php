@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Aeronave;
 use App\AeronaveValores;
+use App\User;
 use Illuminate\Http\Request;
+use function Sodium\add;
 
 class AeronaveController extends Controller
 {
@@ -53,12 +55,12 @@ class AeronaveController extends Controller
         $aeronave=$request->all()+['conta_horas'=>'0', 'preco_hora'=>$request->precos[9]];
 
         Aeronave::create($aeronave);
-//n funciona
-        foreach(range(1,10) as $i){
 
+        foreach(range(1,10) as $i){
+/*
             $aeronaveValor[]= ['unidade_conta_horas' => $i,
                 'minutos' => $request->minutos[$i-1], 'preco' => $request->precos[$i-1]];
-
+*/
             Aeronave::find($request->matricula)->aeronaveValores()->create(['unidade_conta_horas' => $i,
                 'minutos' => $request->minutos[$i-1], 'preco' => $request->precos[$i-1]]);
         }
@@ -120,7 +122,17 @@ class AeronaveController extends Controller
 
     public function pilotosAutorizados($matricula){
         $title = "Pilotos autorizados";
-        $pilotosAutorizados= Aeronave::find($matricula)->pilotosAutorizados()->where('matricula',$matricula)->get();
+
+        $pilotosAutorizados= Aeronave::find($matricula)->pilotosAutorizados()->where('matricula','=',$matricula)->get();
+
+        //ou faz se array ou faz se pesquisa com join
+
+        //$pilotosNaoAutorizados= User::all()->where('tipo_piloto', '=', 'P')->pilotosNaoAutorizados()->where('piloto_id', '!=', '$pilotosAutorizados->id');
+
+
+
+
+        //posso ir buscar os nomes de cada um deles
         return view('aeronaves.pilotosautorizados_list', compact('title', 'pilotosAutorizados', 'matricula'));
 
 

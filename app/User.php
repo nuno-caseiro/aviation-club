@@ -6,6 +6,7 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
+
 class User extends Authenticatable
 {
     use Notifiable;
@@ -48,5 +49,8 @@ class User extends Authenticatable
     //protected $fillable = ['num_socio','nome_informal','email','tipo','direcao','quotas_pagas','ativo']; -- ir la p cima??
    // public $incrementing = false;
 
+    public function pilotosNaoAutorizados(){
+        return $this->hasMany('App\PilotosAutorizados', 'piloto_id');
+    }
 
 }
