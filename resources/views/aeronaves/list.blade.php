@@ -3,7 +3,6 @@
 
 
   <table class="table table-striped table-bordered" style="width: 100%" id="mydatatable">
-      <a href="{{ action('AeronaveController@create') }}">Add Aeronave</a>
 
       <thead>
            <tr>
@@ -36,7 +35,7 @@
                    @csrf
                    @method('delete')
                    <input type="hidden" name="id" value="{{$aeronave->matricula}}">
-                   <input type="submit" value="Delete">
+                   <input  class="btn btn-xs btn-primary" type="submit" value="Delete">
                </form>
                </td>
 
@@ -48,9 +47,10 @@
 
           </table>
 
-
-          
-
+  <a  class="btn btn-xs btn-primary" href="{{ action('AeronaveController@create') }}">Add Aeronave</a>
 
 
-    @endsection
+
+
+
+@endsection
