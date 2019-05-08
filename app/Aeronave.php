@@ -21,6 +21,11 @@ class Aeronave extends Model
     }
 
 
+    public function pilotosAutorizados(){
+        return $this->hasMany('App\PilotosAutorizados', 'matricula');
+    }
+
+
 
 
 

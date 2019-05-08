@@ -26,6 +26,7 @@ Route::post('aeronaves', 'AeronaveController@store');
 Route::get('aeronaves/{aeronave}/edit','AeronaveController@edit');
 Route::put('/aeronaves/{aeronave}','AeronaveController@update');
 Route::delete('/aeronaves/{aeronave}', 'AeronaveController@destroy');
+Route::get('/aeronaves/{aeronave}/pilotos', 'AeronaveController@pilotosAutorizados');
 
 
 //movimentos
