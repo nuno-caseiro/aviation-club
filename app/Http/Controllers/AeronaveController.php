@@ -65,7 +65,6 @@ class AeronaveController extends Controller
 
         $title = "Editar Aeronave ";
        $aeronave= Aeronave::find($matricula);
-        // $aeronave = Aeronave::where('matricula', '=', $matricula)->first();
 
         return view('aeronaves.edit', compact('title', 'aeronave', 'aeronaveValores'));
     }
@@ -81,6 +80,7 @@ class AeronaveController extends Controller
 
         $aeronaveModel= Aeronave::find($matricula);
 
+        //request precos??
         foreach ($request->precos as $preco){
             $i=0;
             Aeronave::find($matricula)->aeronaveValores()->where('unidade_conta_horas',$i+1)->update(['preco'=> $request->precos[$i]]);

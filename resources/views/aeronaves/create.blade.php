@@ -22,6 +22,32 @@
         <div>
             <button type="submit" name="ok">Save</button>
         </div>
+
+        <div>
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>Unidade conta horas</th>
+                    <th>Minutos</th>
+                    <th>Preco</th>
+                </tr>
+                </thead>
+
+                <tbody>
+                @for($i=0; $i<=9; $i++)
+                    <tr>
+                        <th>{{$i+1}}</th>
+                        <th> <input type="text" name="minutos[]" id="inputMinuto" value="" placeholder="" >    </th>
+                        <th> <input type="text" name="precos[]" id="inputPreco" value="" placeholder="" >    </th>
+
+                    </tr>
+
+                @endfor
+
+                </tbody>
+            </table>
+
+        </div>
     </form>
 
 @endsection

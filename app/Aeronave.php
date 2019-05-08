@@ -11,7 +11,6 @@ class Aeronave extends Model
     protected $table= 'aeronaves';
     protected $primaryKey = 'matricula';
 
-    //pouuurra estava complicado
 
     protected $fillable = ['matricula', 'marca', 'modelo', 'num_lugares', 'conta_horas', 'preco_hora'];
     public $incrementing = false;
