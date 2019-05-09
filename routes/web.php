@@ -27,6 +27,10 @@ Route::get('aeronaves/{aeronave}/edit','AeronaveController@edit');
 Route::put('/aeronaves/{aeronave}','AeronaveController@update');
 Route::delete('/aeronaves/{aeronave}', 'AeronaveController@destroy');
 Route::get('/aeronaves/{aeronave}/pilotos', 'AeronaveController@pilotosAutorizados');
+Route::post('/aeronaves/{aeronave}/pilotos/{piloto}', 'AeronaveController@addPilotoAutorizado');
+Route::delete('/aeronaves/{aeronave}/pilotos/{piloto}', 'AeronaveController@removePilotoAutorizado');
+Route::get('/aeronaves/{aeronave}/precos_tempos', 'AeronaveController@precosTempos');
+
 
 
 //movimentos

@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class PilotosAutorizados extends Model
+class AeronavePilotos extends Model
 {
 
     protected $table='aeronaves_pilotos';
@@ -13,9 +13,9 @@ class PilotosAutorizados extends Model
         return $this->belongsToMany('App\Aeronave' );
     }
 
-    public function pilotosNaoAutorizados(){
+  /*  public function pilotosNaoAutorizados(){
         return $this->belongsToMany('App\User' );
     }
-
+*/
 
 }

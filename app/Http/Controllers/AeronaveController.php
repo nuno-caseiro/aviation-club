@@ -127,17 +127,31 @@ class AeronaveController extends Controller
 
         //ou faz se array ou faz se pesquisa com join
 
-        //$pilotosNaoAutorizados= User::all()->where('tipo_piloto', '=', 'P')->pilotosNaoAutorizados()->where('piloto_id', '!=', '$pilotosAutorizados->id');
-
+        //$pilotosNaoAutorizados= User::all(['id','tipo_socio'])->where('tipo_socio', '=','P')->toArray();
 
 
 
         //posso ir buscar os nomes de cada um deles
-        return view('aeronaves.pilotosautorizados_list', compact('title', 'pilotosAutorizados', 'matricula'));
+        return view('aeronaves.pilotosautorizados_list', compact('title', 'pilotosAutorizados', 'matricula', 'pilotosNaoAutorizados'));
 
 
 
     }
+
+    public function addPilotoAutorizado(Request $request){
+
+        $piloto_id= $request->addPilotoNaoAutorizado;
+        $pilotosAutorizados= Aeronave::find($piloto_id)->pilotosAutorizados()->create(['piloto_id' => $piloto_id, 'matricula' => $request->matricula]);
+
+
+    }
+
+    public function removePilotoAutorizado(Request $request){
+        Aeronave::find($request->id)->pilotosAutorizados()->delete();
+    }
+
+
+
 
 
 }
