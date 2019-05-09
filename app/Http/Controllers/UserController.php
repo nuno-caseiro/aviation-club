@@ -19,6 +19,7 @@ class UserController extends Controller
 */
     public function index()
 	{
+       // $this->authorize('list', User::class);
 		$users = User::paginate(15);
 		$title = "Lista de utilizadores";
 		return view('users.list', compact('users', 'title'));
@@ -30,6 +31,36 @@ class UserController extends Controller
         return view('users.edit', compact('title', 'user'));
 
 	}
+
+/*    public function edit(User $id) testar este
+    {
+        $this->authorize('update', $id);
+        return view('users.edit', compact('user'));
+    }
+*/
+/*
+    public function update(UpdateUserRequest $request, User $user)
+    {
+        $this->authorize('update', $user);
+        $user->fill($request->validated());
+        $user->save();
+
+        return redirect()
+            ->route('users.index')
+            ->with('success', 'User updated successfully!');
+    }
+
+    public function destroy(User $user)
+    {
+        $this->authorize('delete', $user);
+
+        $user->delete();
+        return redirect()
+            ->route('users.index')
+            ->with('success', 'User deleted successfully!');
+    }
+
+*/
 
 	public function create(){
         //$this->authorize('create', User::class);
