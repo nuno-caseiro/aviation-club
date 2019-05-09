@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\UserStoreRequest;
 use Illuminate\Http\Request;
 use App\User;
 use App\Http\Requests\StoreUserRequest;
@@ -10,6 +11,12 @@ use Hash;
 
 class UserController extends Controller
 {
+/*
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+*/
     public function index()
 	{
 		$users = User::paginate(15);
@@ -25,6 +32,7 @@ class UserController extends Controller
 	}
 
 	public function create(){
+        //$this->authorize('create', User::class);
 		$title= "Adicionar Utilizadores";
 
         return view('users.create', compact('title'));
@@ -61,9 +69,11 @@ class UserController extends Controller
 	}
 	*/
 
-	public function store(Request $request){
+	public function store(UserStoreRequest $request){ // depois de login meter ou so Request
 
 	    //$this->validate(request(),[]);// colocar campos para validar aqui
+
+        //$this->authorize('create', User::class); p as permissoes
 		$user = new User();
         $user->fill($request->all());
         $user->password = Hash::make($request->password);

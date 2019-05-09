@@ -17,13 +17,15 @@ class User extends Authenticatable
      * @var array
      */
 
-    
-   // protected $table= 'socios';
-    protected $primaryKey = 'id';
+
+    protected $table= 'users';
+    protected $primaryKey = 'id'; // preciso disto?
   //  protected $fillable = [
       //  'name', 'email', 'password','num_socio','nome_informal','tipo','direcao','quotas_pagas','ativo'
    // ]; //nome,email,password , ja vem por defeito da autenticacao
     protected $fillable=['name','email','password','num_socio','nome_informal','sexo','data_nascimento','nif','telefone','endereco','tipo_socio','quota_paga','ativo','direcao','num_licenca','tipo_licenca','instrutor','aluno','validade_licenca','licenca_confirmada','num_certificado','classe_certificado','validade_certificado','certificado_confirmado'];//???
+
+
 
     /**
      * The attributes that should be hidden for arrays.
