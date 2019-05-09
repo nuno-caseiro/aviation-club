@@ -6,7 +6,7 @@ use App\Aeronave;
 use App\AeronaveValores;
 use App\User;
 use Illuminate\Http\Request;
-use function Sodium\add;
+
 
 class AeronaveController extends Controller
 {
