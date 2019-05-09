@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\ClassesCertificados;
 use App\Http\Requests\UserStoreRequest;
+use App\TiposLicencas;
 use Illuminate\Http\Request;
 use App\User;
 use App\Http\Requests\StoreUserRequest;
@@ -69,7 +70,8 @@ class UserController extends Controller
         //$this->authorize('create', User::class);
 		$title= "Adicionar Utilizadores";
         $classes= ClassesCertificados::all();
-        return view('users.create', compact('title', 'classes'));
+        $licencas =TiposLicencas::all();
+        return view('users.create', compact('title', 'classes', 'licencas'));
 
 	}
 /*

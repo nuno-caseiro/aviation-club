@@ -58,5 +58,8 @@ class User extends Authenticatable
     public function classeCertificados(){
         return $this->belongsToMany('App\ClassesCertificados' );
     }
+    public function tiposLicencas(){
+        return $this->belongsToMany('App\TiposLicencas' );
+    }
 
 }
