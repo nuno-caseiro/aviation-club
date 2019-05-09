@@ -127,7 +127,7 @@ class AeronaveController extends Controller
 
         //ou faz se array ou faz se pesquisa com join
 
-        //$pilotosNaoAutorizados= User::all(['id','tipo_socio'])->where('tipo_socio', '=','P')->toArray();
+        $pilotosNaoAutorizados= User::all(['id','tipo_socio'])->where('tipo_socio', '=','P')->toArray();
 
 
 
@@ -150,6 +150,14 @@ class AeronaveController extends Controller
         Aeronave::find($request->id)->pilotosAutorizados()->delete();
     }
 
+
+    public function precosTempos($matricula){
+        $title= "Tempos e precos";
+        $aeronaveValores= Aeronave::find($matricula)->aeronaveValores()->get()->toJson();
+
+        return view('aeronaves.precoValores',compact('aeronaveValores', 'title', 'matricula'));
+
+    }
 
 
 
