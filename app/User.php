@@ -55,4 +55,8 @@ class User extends Authenticatable
         return $this->hasMany('App\AeronavePilotos', 'id');
     }
 
+    public function classeCertificados(){
+        return $this->belongsToMany('App\ClassesCertificados' );
+    }
+
 }

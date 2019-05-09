@@ -117,7 +117,16 @@
 
     <div>
         <label for="inputClasseCertificado">Classe do certificado </label>
-        <input type="text" name="classe_certificado" id="inputClasseCertificado" placeholder="Classe do Certificado">
+      {{--  <input type="text" name="classe_certificado" id="inputClasseCertificado" placeholder="Classe do Certificado">--}}
+
+
+        <select name="classe_certificado">
+            @foreach($classes as $classe)
+                <option value="$classe->code">{{$classe->nome}}</option>
+
+            @endforeach
+        </select>
+
 
     </div>
 

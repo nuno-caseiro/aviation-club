@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\ClassesCertificados;
 use App\Http\Requests\UserStoreRequest;
 use Illuminate\Http\Request;
 use App\User;
@@ -28,7 +29,9 @@ class UserController extends Controller
 	public function edit($id){
 		$title = "Editar Utilizador ";
         $user= User::find($id);
-        return view('users.edit', compact('title', 'user'));
+
+
+        return view('users.edit', compact('title', 'user' ));
 
 	}
 
@@ -65,8 +68,8 @@ class UserController extends Controller
 	public function create(){
         //$this->authorize('create', User::class);
 		$title= "Adicionar Utilizadores";
-
-        return view('users.create', compact('title'));
+        $classes= ClassesCertificados::all();
+        return view('users.create', compact('title', 'classes'));
 
 	}
 /*
@@ -144,6 +147,8 @@ class UserController extends Controller
         
         return $path= $user->foto_url;
     }
+
+
 
 
 
