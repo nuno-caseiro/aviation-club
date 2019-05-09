@@ -13,12 +13,12 @@ use Hash;
 
 class UserController extends Controller
 {
-/*
+
     public function __construct()
     {
         $this->middleware('auth');
     }
-*/
+
     public function index()
 	{
        // $this->authorize('list', User::class);
@@ -148,6 +148,21 @@ class UserController extends Controller
 		$user=User::find($id);
         
         return $path= $user->foto_url;
+    }
+
+    public function showEditPassword(){
+        return view('users.editPassword');
+    }
+    public function editPassword(Request $request){
+        $user = Auth::user();
+        $password = $request->validate([
+            'oldPassword' => 'required',
+            'newPassword' => 'required|confirmed'
+        ]);
+        if(!Hash::check($request->oldPassword, Auth::user()->password)){
+            return "Password Invalida";
+        }
+        dd($user, $request->oldPassword, $password);
     }
 
 
