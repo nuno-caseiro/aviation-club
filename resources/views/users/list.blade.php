@@ -48,6 +48,7 @@
         </thead>
         @foreach($users as $utilizador)
             <tr>
+               {{--<td><img src="{{route('getfile',['user'=>$user->foto_url])}}"></td>--}}
                 <td>{{$utilizador->id}}</td>
                 <td>{{$utilizador->name}}</td>
                 <td>{{$utilizador->email}}</td>
