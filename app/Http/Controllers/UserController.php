@@ -112,7 +112,7 @@ class UserController extends Controller
 		
 
 		return redirect()
-		->route('users.list')
+		->action('UserController@index')
 		->with('success', 'User added successfully!');
 	}
 
