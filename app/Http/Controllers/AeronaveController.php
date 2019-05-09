@@ -6,7 +6,7 @@ use App\Aeronave;
 use App\AeronaveValores;
 use App\User;
 use Illuminate\Http\Request;
-use function Sodium\add;
+
 
 class AeronaveController extends Controller
 {
@@ -127,17 +127,39 @@ class AeronaveController extends Controller
 
         //ou faz se array ou faz se pesquisa com join
 
-        //$pilotosNaoAutorizados= User::all()->where('tipo_piloto', '=', 'P')->pilotosNaoAutorizados()->where('piloto_id', '!=', '$pilotosAutorizados->id');
-
+        $pilotosNaoAutorizados= User::all(['id','tipo_socio'])->where('tipo_socio', '=','P')->toArray();
 
 
 
         //posso ir buscar os nomes de cada um deles
-        return view('aeronaves.pilotosautorizados_list', compact('title', 'pilotosAutorizados', 'matricula'));
+        return view('aeronaves.pilotosautorizados_list', compact('title', 'pilotosAutorizados', 'matricula', 'pilotosNaoAutorizados'));
 
 
 
     }
+
+    public function addPilotoAutorizado(Request $request){
+
+        $piloto_id= $request->addPilotoNaoAutorizado;
+        $pilotosAutorizados= Aeronave::find($piloto_id)->pilotosAutorizados()->create(['piloto_id' => $piloto_id, 'matricula' => $request->matricula]);
+
+
+    }
+
+    public function removePilotoAutorizado(Request $request){
+        Aeronave::find($request->id)->pilotosAutorizados()->delete();
+    }
+
+
+    public function precosTempos($matricula){
+        $title= "Tempos e precos";
+        $aeronaveValores= Aeronave::find($matricula)->aeronaveValores()->get()->toJson();
+
+        return view('aeronaves.precoValores',compact('aeronaveValores', 'title', 'matricula'));
+
+    }
+
+
 
 
 }

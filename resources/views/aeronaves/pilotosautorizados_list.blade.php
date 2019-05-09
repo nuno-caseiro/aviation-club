@@ -2,44 +2,40 @@
 @section('content')
     <h1>Lista de pilotos autorizados</h1>
     <h2>{{$matricula}}</h2>
-    <ul class="list-group">
 
-        @foreach($pilotosAutorizados as $piloto)
+
+        {{--@foreach($pilotosAutorizados as $piloto)
             <li >{{$piloto->piloto_id}}</li>
         @endforeach
-    </ul>
-
-
+    </ul>--}}
 
 <h3>Pilotos Autorizados</h3>
-    <form action="form-action.php" method="post">
+
         <p>
-            <select size="15"  style="width: 200px;" multiple name="pilotosAutorizados[]">
+            <select size="15"  style="width: 200px;" name="removePilotoAutorizado">
                 @foreach($pilotosAutorizados as $piloto)
                     <option value=""> {{ $piloto->piloto_id}}{{$piloto->name}} </option>
                 @endforeach    </select>
 
             </select>
         </p>
-        <p>
-            <input type="submit" value="Submit me!" />
-        </p>
-    </form>
+      {{--<a class="btn btn-xs btn-primary" href="{{ action('AeronaveController@addPilotoAutorizado', $matricula) }}">Adicionar piloto autorizado</a>
 
- {{--   <h3>Pilotos Não autorizados</h3>
-    <form action="form-action.php" method="post">
-        <p>
-            <select size="15"  style="width: 200px;" multiple name="pilotosNaoAutorizados[]">
-                @foreach($pilotosNaoAutorizados as $piloto)
-                    <option value=""> {{ $piloto->piloto_id}} </option>
-                @endforeach    </select>
 
+        <h3>Pilotos Não autorizados</h3>
+        <p>
+            <select size="15"  style="width: 200px;"  name="addPilotoNaoAutorizado">
+                @for($i=0; $i<=count($pilotosNaoAutorizados)-1; $i++)
+                    {{$i=0}}
+                    @dump($pilotosNaoAutorizados);
+                    <option value=""> {{ $pilotosNaoAutorizados[0]['id']}} </option>
+                @endfor
             </select>
+
+
         </p>
-        <p>
-            <input type="submit" value="Submit me!" />
-        </p>
-    </form>
---}}
+
+    --}}
+
 
 @endsection

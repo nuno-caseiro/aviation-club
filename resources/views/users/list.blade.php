@@ -5,7 +5,6 @@
     <h4>Tabela de Utilizadores </h4>
 
 
-
 <table class="table table-striped table-bordered" style="width: 100%" id="mydatatable">
     <a href="{{ action('UserController@create') }}">Add User</a>  
     <thead>

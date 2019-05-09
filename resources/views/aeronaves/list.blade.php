@@ -40,6 +40,7 @@
                </td>
 
                <td><a class="btn btn-xs btn-primary" href="{{ action('AeronaveController@pilotosAutorizados', $aeronave->matricula) }}">Pilotos autorizados</a></td>
+               <td><a class="btn btn-xs btn-primary" href="{{ action('AeronaveController@precosTempos', $aeronave->matricula) }}">Ver tempos e precos</a></td>
 
               </tr>
            @endforeach
