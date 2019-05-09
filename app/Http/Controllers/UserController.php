@@ -62,6 +62,8 @@ class UserController extends Controller
 	*/
 
 	public function store(Request $request){
+
+	    //$this->validate(request(),[]);// colocar campos para validar aqui
 		$user = new User();
         $user->fill($request->all());
         $user->password = Hash::make($request->password);
@@ -91,7 +93,16 @@ class UserController extends Controller
         $user->fill($request->except('password'));
         $user->save();
 
+
+        return redirect()->action('UserController@index');
+
 	}
+
+	public function getfile($id) {
+		$user=User::find($id);
+        
+        return $path= $user->foto_url;
+    }   
 
 
     

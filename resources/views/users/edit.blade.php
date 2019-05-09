@@ -1,7 +1,7 @@
 @extends('master')
 @section('content')
 
-    <form action="{{--action('UserController@update', $user->id)--}}" method="post">
+    <form action="{{action('UserController@update', $user->id)}}" method="post">
         @method('put')
         @csrf
 
@@ -18,10 +18,10 @@
         
             <br></br>       
             <label for="inputNif">NIF</label>
-            <input type="number" name="nif" id="inputNif" placeholder="Nif" value="{{$user->nif}}">
+            <input type="text" name="nif" id="inputNif" placeholder="Nif" value="{{$user->nif}}">
             <br></br>       
             <label for="inputTelefone">Telefone</label>
-            <input type="number" name="telefone" id="inputTelefone" placeholder="Telefone" value="{{$user->telefone}}">  
+            <input type="text" name="telefone" id="inputTelefone" placeholder="Telefone" value="{{$user->telefone}}">
             <br></br>       
             <label for="inputDataNascimento">Data Nascimento</label>
             <input type="date" name="data_nascimento" id="inputDataNascimento" placeholder="DataNascimento" value="{{$user->data_nascimento}}">
