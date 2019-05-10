@@ -32,7 +32,6 @@
             <label for="inputFoto">Foto</label>
             
             <input type="file" name="foto" accept="image/*">
-            <input type="submit">
             <br></br>
 
           
@@ -40,8 +39,8 @@
                 
         </div>
         <div>
-            <button type="submit" name="ok">Save</button>
-            <button type="submit" name="cancel">Cancel</button>
+            <button class="btn btn-xs btn-primary" type="submit" name="ok">Save</button>
+            <button class="btn btn-xs btn-primary" type="submit" name="cancel">Cancel</button>
         </div>
     </form>
 

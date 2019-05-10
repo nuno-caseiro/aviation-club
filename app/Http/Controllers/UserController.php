@@ -22,11 +22,11 @@ class UserController extends Controller
 */
     public function index()
 	{
-        //$this->authorize('list', User::class);
 
-        if($this->can('list', User::class)){
-            $users = User::paginate(15);
-        }
+
+       // if($this->authorize('list', User::class)){
+          //  $users = User::paginate(15);
+       // }
 
       /*  if($this->authorize('normal_list_ativo',User::class)){
             //$users= User::where('ativo','=', '1');
@@ -34,9 +34,40 @@ class UserController extends Controller
 
         }*/
 
-		$title = "Lista de utilizadores";
-		return view('users.list', compact('users', 'title'));
-	}
+
+
+		//$title = "Lista de utilizadores";
+		//return view('users.list', compact('users', 'title'));
+
+
+
+        $num_socio=request()->query('num_socio');
+        $nome_informal=request()->query('nome_informal');
+        $email=request()->query('email');
+        $tipo_socio=request()->query('tipo_socio');
+        $direcao=request()->query('direcao');
+        $filtro = User::where('id','>','0');
+
+        if (isset($num_socio)) {
+            $filtro = $filtro->where('num_socio', $num_socio);
+        }
+        if ($nome_informal) {
+            $filtro = $filtro->where('nome_informal', 'like', '%'.$nome_informal.'%');
+        }
+        if ($email) {
+            $filtro = $filtro->where('email', $email);
+        }
+        if ($tipo_socio) {
+            $filtro = $filtro->where('tipo_socio', $tipo_socio);
+        }
+        if ($direcao) {
+            $filtro = $filtro->where('direcao', $direcao);
+        }
+
+        $users=$filtro->paginate(15);
+        $title="Lista de utilizadores";
+        return view('users.list', compact('users','title'));
+    }
 	
 	public function edit($id){
 
@@ -184,6 +215,15 @@ class UserController extends Controller
         }
         dd($user, $request->oldPassword, $password);
     }
+
+    public function quota(){
+
+
+
+
+    }
+
+
 
 
 

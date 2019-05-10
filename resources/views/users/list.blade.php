@@ -5,8 +5,36 @@
     <h4>Tabela de Utilizadores </h4>
 
 
+
 <table class="table table-striped table-bordered" style="width: 100%" id="mydatatable">
-    <a href="{{ action('UserController@create') }}">Add User</a>  
+    <a href="{{ action('UserController@create') }}">Add User</a>
+
+
+
+    <form method="GET" action="{{action('UserController@index')}}">
+
+        <legend>Filtrar sócios:</legend>
+        Número sócio:<br>
+        <input id="num_socio" type="text" class="form-control{{ $errors->has('num_socio') ? ' is-invalid' : '' }}" name="num_socio" value="{{ old('num_socio') }}"  autofocus>
+        Nome informal:<br>
+        <input id="nome_informal" type="text" class="form-control{{ $errors->has('nome_informal') ? ' is-invalid' : '' }}" name="nome_informal" value="{{ old('nome_informal') }}"  autofocus>
+        E-mail:<br>
+        <input id="email" type="text" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" name="email" value="{{ old('email') }}"  autofocus>
+        Tipo sócio:<br>
+        <input id="tipo_socio" type="text" class="form-control{{ $errors->has('tipo_socio') ? ' is-invalid' : '' }}" name="tipo_socio" value="{{ old('tipo_socio') }}"  autofocus>
+        Direção:<br>
+        <input id="direcao" type="text" class="form-control{{ $errors->has('direcao') ? ' is-invalid' : '' }}" name="direcao" value="{{ old('direcao') }}" >
+        <div class="form-group row mb-0">
+            <div class="col-md-6 offset-md-5">
+                <br>
+                <button type="submit" class="btn btn-primary">
+                    {{ __('Aplicar filtro') }}
+                </button>
+            </div>
+        </div>
+        <br>
+    </form>
+
     <thead>
             <tr>
                 <th>Id</th>
@@ -87,9 +115,9 @@
                   @csrf
                   @method('delete')
                   <input type="hidden" name="id" value="{{$utilizador->id}}">
-                  <input type="submit" value="Delete">
+                  <input class="btn btn-xs btn-primary" type="submit" value="Delete">
               </form>
-              
+
                
 
             </tr>
@@ -99,8 +127,8 @@
             
            </table>
            <div class="text-center">
-      {!! $users->links(); !!}
 
+               {!! $users->links(); !!}
     </div>
 
 @endsection

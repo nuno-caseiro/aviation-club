@@ -60,8 +60,8 @@
 
     <div>
         <label for="inputQuotaPaga">Quota Paga</label>
-        <input type="radio" name="quota_paga" value="1"> Masculino
-        <input type="radio" name="quota_paga" value="0"> Feminino
+        <input type="radio" name="quota_paga" value="1"> Sim
+        <input type="radio" name="quota_paga" value="0"> Não
         
     </div>
 

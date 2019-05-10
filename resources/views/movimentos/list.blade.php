@@ -118,7 +118,7 @@
           </table>
           
     <div class="text-center">
-      {!! $movimentos->links(); !!} 
+      {!! $movimentos->links(); !!}
     </div>
          <a href="{{ action('MovimentoController@create') }}"class="btn btn-primary">Adicionar Movimento</a>
     @endsection

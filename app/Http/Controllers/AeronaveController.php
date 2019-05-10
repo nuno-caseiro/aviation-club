@@ -74,7 +74,7 @@ class AeronaveController extends Controller
         $title = "Editar Aeronave";
         $aeronave = Aeronave::find($matricula);
 
-          $aeronaveValores= Aeronave::find($matricula)->aeronaveValores()->get()->toArray();
+        $aeronaveValores= Aeronave::find($matricula)->aeronaveValores()->get()->toArray();
 
 
 

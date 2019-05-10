@@ -107,4 +107,5 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->password_inicial===1;
     }
 
+
 }
