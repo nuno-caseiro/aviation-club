@@ -74,7 +74,7 @@
     <div>
         <label for="inputDirecao">Direção</label>
         <input type="radio" name="direcao" value="1"> Sim
-        <input type="radio" name="direcao" value="1"> Não
+        <input type="radio" name="direcao" value="0"> Não
 
 
     </div>
