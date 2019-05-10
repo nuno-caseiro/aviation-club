@@ -27,7 +27,19 @@ class UserPolicy
     }
 
 
-    public function update(User $user, User $model, $auth){
-        return $user->isDirecao() || $user->id == $auth->id;
+    public function update(User $user, User $auth){
+        return $user->isDirecao() || $user->id === $auth->id;
     }
+
+    public function list(User $user)
+    {
+        return $user->isDirecao();
+    }
+
+
+    public function normal_list_ativo(User $user)
+    {
+        return $user->isNormal() || $user->isAeromodelista();
+    }
+
 }

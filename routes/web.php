@@ -20,7 +20,7 @@ Auth::routes(['verify' => true]);
 
 Route::get('/home', 'HomeController@index')->name('home');
 //aeronaves
-Route::get('aeronaves', 'AeronaveController@index');
+Route::get('aeronaves', 'AeronaveController@index')->middleware('auth'); //vê se está autenticado
 Route::get('aeronaves/create', 'AeronaveController@create');
 Route::post('aeronaves', 'AeronaveController@store');
 Route::get('aeronaves/{aeronave}/edit','AeronaveController@edit');
