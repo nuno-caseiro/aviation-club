@@ -1,6 +1,8 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Aeronave;
+use App\User;
 use App\Movimento;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -21,15 +23,13 @@ return view('movimentos.list', compact('movimentos', 'title'));
 
     public function edit($id)
     {
-
-      
-        
-
-        $title = "Editar movimentos ";
+   
+       $title = "Editar movimentos ";
        $movimento= Movimento::find($id);
-        // $aeronave = Aeronave::where('matricula', '=', $matricula)->first();
+       $aeronaves=Aeronave::all();
+       $socios=User::all();
 
-        return view('movimentos.edit', compact('title', 'movimento'));
+        return view('movimentos.edit', compact('title', 'movimento','aeronaves','socios'));
     }
 
 
@@ -46,13 +46,13 @@ return view('movimentos.list', compact('movimentos', 'title'));
         $movimentoModel= Movimento::find($id);
 
         //dd($request->all());
-//protected $fillable = ['id', 'aeronave', 'data_inf??', ' data_sup??', 'natureza', 'confirmado???','piloto??','instrutor??','meus_movimentos??'];
-        $movimentoModel->id=$request->id;
+        //protected $fillable = ['id', 'aeronave', 'data_inf??', ' data_sup??', 'natureza', 'confirmado???','piloto??','instrutor??','meus_movimentos??'];
+        
         $movimentoModel->aeronave=$request->members;
         $movimentoModel->natureza= $request->natureza;
         $movimentoModel->confirmado=$request->confirmado;
-        $movimentoModel->piloto_id=$request->piloto;
-        $movimentoModel->instrutor_id=$request->instrutor;
+        $movimentoModel->piloto_id=$request->piloto_id;
+        $movimentoModel->instrutor_id=$request->instrutor_id;
 
         $movimentoModel->save();
         return redirect()->action('MovimentoController@index');
@@ -75,7 +75,7 @@ return view('movimentos.list', compact('movimentos', 'title'));
         }
       
      
-        $movimento=$request->all()+['num_licenca_piloto'=>'5202','validade_licenca_piloto'=>'2020-05-28','tipo_licenca_piloto' =>'PPL(A)','num_certificado_piloto'=>'PT.19357','confirmado'=>'1','validade_certificado_piloto'=>'2020-05-29','classe_certificado_piloto'=>'Class 1'
+        $movimento=$request->all()+['id'=>'1','num_licenca_piloto'=>'5202','validade_licenca_piloto'=>'2020-05-28','tipo_licenca_piloto' =>'PPL(A)','num_certificado_piloto'=>'PT.19357','confirmado'=>'1','validade_certificado_piloto'=>'2020-05-29','classe_certificado_piloto'=>'Class 1'
    ]; 
 
          //estou a morrer por dentro nao percebo o erro so quero por um id ao calhas pq o meu delete tb nao da update nos meus ids tenho de fazer isso
