@@ -52,7 +52,9 @@
                 <th>Data Nascimento</th>
                 <th>NIF</th>
                 <th>Telefone</th>
+                @cannot('normal_list_ativo', Auth::id())
                 <th>Endereço</th>
+                @endcannot
                 <th>Tipo sócio</th>
                 <th>Quota Paga</th>
                 <th>Ativo</th>
@@ -92,7 +94,9 @@
                 <td>{{$utilizador->data_nascimento}}</td>
                 <td>{{$utilizador->nif}}</td>
                 <td>{{$utilizador->telefone}}</td>
+                @cannot('normal_list_ativo', Auth::id())
                 <td>{{$utilizador->endereco}}</td>
+                @endcannot
                 <td>{{$utilizador->tipo_socio}}</td>
                 <td>{{$utilizador->quota_paga}}</td>
                 <td>{{$utilizador->ativo}}</td>

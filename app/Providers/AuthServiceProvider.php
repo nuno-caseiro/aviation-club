@@ -1,5 +1,7 @@
 <?php
 
+
+
 namespace App\Providers;
 
 use Illuminate\Support\Facades\Gate;
@@ -26,5 +28,22 @@ class AuthServiceProvider extends ServiceProvider
         $this->registerPolicies();
 
         //
+
+
+        Gate::define('normal_list_ativo', function($user){
+            return $user->isNormal() || $user->isAeromodelista();
+        });
+
+
+        Gate::define('list', function($user){
+            return $user->isDirecao();
+        });
+
+        Gate::define('update', function(User $user, User $auth){
+            return $user->isDirecao() || $user->id === $auth->id;
+        });
+
+
+
     }
 }
