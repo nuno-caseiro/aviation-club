@@ -49,3 +49,7 @@ Route::get('socios/create','UserController@create');
 Route::post('socios','UserController@store');
 Route::put('socios/{socio}','UserController@update');
 Route::delete('socios/{socio}','UserController@destroy');
+
+
+
+

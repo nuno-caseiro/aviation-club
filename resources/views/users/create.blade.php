@@ -60,21 +60,23 @@
 
     <div>
         <label for="inputQuotaPaga">Quota Paga</label>
-        <input type="checkbox" name="quota_paga" value="1"> Sim 
-        <input type="checkbox" name="quota_paga" value="0"> Nao 
+        <input type="radio" name="quota_paga" value="1"> Masculino
+        <input type="radio" name="quota_paga" value="0"> Feminino
         
     </div>
 
     <div>
         <label for="inputAtivo">Ativo</label>
-        <input type="checkbox" name="ativo" value="1"> Sim 
-        <input type="checkbox" name="ativo" value="0"> Nao 
+        <input type="radio" name="ativo" value="1"> Sim
+        <input type="radio" name="ativo" value="1"> Não
     </div>
 
     <div>
         <label for="inputDirecao">Direção</label>
-        <input type="checkbox" name="direcao" value="1"> Sim 
-        <input type="checkbox" name="direcao" value="0"> Nao 
+        <input type="radio" name="direcao" value="1"> Sim
+        <input type="radio" name="direcao" value="1"> Não
+
+
     </div>
     <div>
         <label for="inputAluno">Aluno</label>
@@ -108,8 +110,8 @@
 
     <div>
         <label for="inputLicencaConfirmada">Licença confirmada</label>
-        <input type="checkbox" name="licenca_confirmada" value="1"> Sim 
-        <input type="checkbox" name="licenca_confirmada" value="0"> Nao 
+        <input type="radio" name="licenca_confirmada" value="1"> Sim
+        <input type="radio" name="licenca_confirmada" value="0"> Não
 
     </div>
 
@@ -140,8 +142,8 @@
 
     <div>
         <label for="inputCertificadoConfirmado">Certificado confirmado</label>
-        <input type="checkbox" name="certificado_confirmado" value="1"> Sim 
-        <input type="checkbox" name="certificado_confirmado" value="0"> Nao 
+        <input type="radio" name="certificado_confirmado" value="1"> Sim
+        <input type="radio" name="certificado_confirmado" value="0"> Não
 
     </div>
 
