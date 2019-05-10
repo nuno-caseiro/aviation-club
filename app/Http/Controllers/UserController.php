@@ -27,7 +27,7 @@ class UserController extends Controller
         //$this->authorize('list', User::class);
 
          if(Auth::user()->can('list', Auth::user())){
-            $users = User::paginate(15);
+            $users = User::paginate(15);//oi
         }elseif(Auth::user()->can('normal_list_ativo', Auth::user())) {
         //$users = User::where('ativo', '=', '1')->paginate(15);
 
