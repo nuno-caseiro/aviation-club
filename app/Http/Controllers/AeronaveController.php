@@ -77,8 +77,7 @@ class AeronaveController extends Controller
           $aeronaveValores= Aeronave::find($matricula)->aeronaveValores()->get()->toArray();
 
 
-        $title = "Editar Aeronave ";
-       $aeronave= Aeronave::find($matricula);
+
 
         return view('aeronaves.edit', compact('title', 'aeronave', 'aeronaveValores'));
     }

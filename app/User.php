@@ -102,4 +102,9 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->direcao===1;
     }
 
+    public function isPasswordInicial()
+    {
+        return $this->password_inicial===1;
+    }
+
 }

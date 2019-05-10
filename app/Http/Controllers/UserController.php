@@ -14,14 +14,14 @@ use Hash;
 class UserController extends Controller
 {
 
-    public function __construct()
+   /* public function __construct()
     {
         $this->middleware('auth');
     }
-
+*/
     public function index()
 	{
-       // $this->authorize('list', User::class);
+        //$this->authorize('list', User::class);
 		$users = User::paginate(15);
 		$title = "Lista de utilizadores";
 		return view('users.list', compact('users', 'title'));
@@ -112,7 +112,9 @@ class UserController extends Controller
         //$this->authorize('create', User::class); p as permissoes
 		$user = new User();
         $user->fill($request->all());
-        $user->password = Hash::make($request->password);
+        $user->ativo=false;
+        $user->password_inicial=true;
+        $user->password = Hash::make($request->data_nascimento);
 		$user->save();
 		
 
