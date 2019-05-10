@@ -23,15 +23,13 @@ class UserController extends Controller
     public function index()
     {
 
-        $users = User::paginate(15);
-        /*$this->authorize('list', User::class);
+
+        //$this->authorize('list', User::class);
 
          if(Auth::user()->can('list', Auth::user())){
-
+            $users = User::paginate(15);
         }elseif(Auth::user()->can('normal_list_ativo', Auth::user())) {
         //$users = User::where('ativo', '=', '1')->paginate(15);
-
-
 
         $num_socio=request()->query('num_socio');
         $nome_informal=request()->query('nome_informal');
@@ -58,7 +56,7 @@ class UserController extends Controller
 
 
             $users=$filtro->paginate(15);
-        } */
+        }
         $title="Lista de utilizadores";
         return view('users.list', compact('users','title'));
 

@@ -37,31 +37,42 @@
 
     <thead>
             <tr>
+                @cannot('normal_list_ativo', Auth::id())
                 <th>Id</th>
                 <th>Nome</th>
+                @endcannot
                 <th>Email</th>
+                    @cannot('normal_list_ativo', Auth::id())
                 <th>Email Verificado</th>
                 <th>Password</th>
                 <th>Remember Token</th>
                 <th>Criado em </th>
                 <th>Atualizado em</th>
                 <th>Apagado em</th>
+                    @endcannot
                 <th>Numero de sócio</th>
                 <th>Nome informal</th>
+                    @cannot('normal_list_ativo', Auth::id())
                 <th>Sexo</th>
                 <th>Data Nascimento</th>
                 <th>NIF</th>
+                    @endcannot
                 <th>Telefone</th>
                 @cannot('normal_list_ativo', Auth::id())
                 <th>Endereço</th>
                 @endcannot
                 <th>Tipo sócio</th>
+                    @cannot('normal_list_ativo', Auth::id())
                 <th>Quota Paga</th>
                 <th>Ativo</th>
                 <th>Password inicial</th>
+                    @endcannot
                 <th>Direção</th>
                 <th>Foto</th>
+
                 <th>Número de licença</th>
+
+                    @cannot('normal_list_ativo', Auth::id())
                 <th>Tipo de licença</th>
                 <th>Instrutor</th>
                 <th>Aluno</th>
@@ -71,6 +82,7 @@
                 <th>Classe do certificado</th>
                 <th>Validade do certificado</th>
                 <th>Certificado confirmado </th>
+                        @endcannot
 
 
 
@@ -78,39 +90,54 @@
         </thead>
         @foreach($users as $utilizador)
             <tr>
-               {{--<td><img src="{{route('getfile',['user'=>$utilizador->foto_url])}}"></td>--}}
+               {{--<td><img src="{{route('getfile',['user'=>$user->foto_url])}}"></td>--}}
+                @cannot('normal_list_ativo', Auth::id())
                 <td>{{$utilizador->id}}</td>
                 <td>{{$utilizador->name}}</td>
+                @endcannot
                 <td>{{$utilizador->email}}</td>
+                @cannot('normal_list_ativo', Auth::id())
                 <td>{{$utilizador->email_verified_at}}</td>
                 <td>{{$utilizador->password}}</td>
                 <td>{{$utilizador->remember_token}}</td>
                 <td>{{$utilizador->created_at}}</td>
                 <td>{{$utilizador->updated_at}}</td>
                 <td>{{$utilizador->deleted_at}}</td>
+                @endcannot
                 <td>{{$utilizador->num_socio}}</td>
                 <td>{{$utilizador->nome_informal}}</td>
+                @cannot('normal_list_ativo', Auth::id())
                 <td>{{$utilizador->sexo}}</td>
                 <td>{{$utilizador->data_nascimento}}</td>
                 <td>{{$utilizador->nif}}</td>
+                @endcannot
                 <td>{{$utilizador->telefone}}</td>
                 @cannot('normal_list_ativo', Auth::id())
                 <td>{{$utilizador->endereco}}</td>
                 @endcannot
                 <td>{{$utilizador->tipo_socio}}</td>
+                @cannot('normal_list_ativo', Auth::id())
                 <td>{{$utilizador->quota_paga}}</td>
                 <td>{{$utilizador->ativo}}</td>
                 <td>{{$utilizador->password_inicial}}</td>
-                <td>{{$utilizador->direcao}}</td>
+                @endcannot
+                @if($utilizador->direcao==1)
+                    <td>Sim</td>
+                @else
+                    <td>Não</td>
+                @endif
                 @if($utilizador->foto_url!=null)
-
-
-                <td><img src="{{url('storage/fotos/'.$utilizador->foto_url)}}"></td>
-
+                    <td><img src="{{url('storage/fotos/'.$utilizador->foto_url)}}"></td>
                 @else
                     <td></td>
-
                 @endif
+                @if($utilizador->tipo_socio=="P")
+                    <td>{{$utilizador->num_licenca}}</td>
+                @else
+                    <td>Não é piloto</td>
+                @endif
+                @cannot('normal_list_ativo', Auth::id())
+                <td>{{$utilizador->direcao}}</td>
                 <td>{{$utilizador->num_licenca}}</td>
                 <td>{{$utilizador->tipo_licenca}}</td>
                 <td>{{$utilizador->instrutor}}</td>
@@ -121,6 +148,7 @@
                 <td>{{$utilizador->classe_certificado}}</td>
                 <td>{{$utilizador->validade_certificado}}</td>
                 <td>{{$utilizador->certificado_confirmado}}</td>
+                @endcannot
                 <td><a class="btn btn-xs btn-primary" href="{{ action('UserController@edit', $utilizador->id) }}">Edit</a></td>
                 <td><form action="{{ action('UserController@destroy', $utilizador->id) }}"
                     method="post">
