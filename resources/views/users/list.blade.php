@@ -127,7 +127,7 @@
                     <td>Não</td>
                 @endif
                 @if($utilizador->foto_url!=null)
-                    <td><img src="{{url('storage/fotos/').$utilizador->foto_url}}"></td>
+                    <td><img src="{{url('storage/fotos')."/".$utilizador->foto_url}}"></td>
 
                 @else
                     <td></td>
