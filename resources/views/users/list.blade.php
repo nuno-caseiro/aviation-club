@@ -78,7 +78,7 @@
         </thead>
         @foreach($users as $utilizador)
             <tr>
-               {{--<td><img src="{{route('getfile',['user'=>$user->foto_url])}}"></td>--}}
+               {{--<td><img src="{{route('getfile',['user'=>$utilizador->foto_url])}}"></td>--}}
                 <td>{{$utilizador->id}}</td>
                 <td>{{$utilizador->name}}</td>
                 <td>{{$utilizador->email}}</td>
@@ -102,7 +102,15 @@
                 <td>{{$utilizador->ativo}}</td>
                 <td>{{$utilizador->password_inicial}}</td>
                 <td>{{$utilizador->direcao}}</td>
-                <td>{{$utilizador->foto_url}}</td>
+                @if($utilizador->foto_url!=null)
+
+
+                <td><img src="{{url('storage/fotos/'.$utilizador->foto_url)}}"></td>
+
+                @else
+                    <td></td>
+
+                @endif
                 <td>{{$utilizador->num_licenca}}</td>
                 <td>{{$utilizador->tipo_licenca}}</td>
                 <td>{{$utilizador->instrutor}}</td>
