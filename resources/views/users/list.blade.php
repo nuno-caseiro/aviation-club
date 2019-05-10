@@ -127,17 +127,23 @@
                     <td>Não</td>
                 @endif
                 @if($utilizador->foto_url!=null)
-                    <td><img src="{{url('storage/fotos/'.$utilizador->foto_url)}}"></td>
+                                       <td><img src="{{url('storage/fotos/'.$utilizador->foto_url)}}"></td>
+
                 @else
                     <td></td>
+
                 @endif
+
                 @if($utilizador->tipo_socio=="P")
                     <td>{{$utilizador->num_licenca}}</td>
                 @else
                     <td>Não é piloto</td>
                 @endif
+
                 @cannot('normal_list_ativo', Auth::id())
+
                 <td>{{$utilizador->direcao}}</td>
+
                 <td>{{$utilizador->num_licenca}}</td>
                 <td>{{$utilizador->tipo_licenca}}</td>
                 <td>{{$utilizador->instrutor}}</td>
