@@ -19,6 +19,9 @@
 
             </select>
         </p>
+
+
+
       {{--<a class="btn btn-xs btn-primary" href="{{ action('AeronaveController@addPilotoAutorizado', $matricula) }}">Adicionar piloto autorizado</a>
 
 

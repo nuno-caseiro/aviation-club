@@ -131,12 +131,14 @@ class AeronaveController extends Controller
 
         //ou faz se array ou faz se pesquisa com join
 
-        $pilotosNaoAutorizados= User::all(['id','tipo_socio'])->where('tipo_socio', '=','P')->toArray();
+
+          $pilotos= User::all()->pluck('id'); //ids
+
 
 
 
         //posso ir buscar os nomes de cada um deles
-        return view('aeronaves.pilotosautorizados_list', compact('title', 'pilotosAutorizados', 'matricula', 'pilotosNaoAutorizados'));
+        return view('aeronaves.pilotosautorizados_list', compact('title', 'pilotosAutorizados', 'matricula'));
 
 
 
