@@ -30,7 +30,7 @@ class AuthServiceProvider extends ServiceProvider
         //
 
 
-        Gate::define('normal_list_ativo', function($user){
+        Gate::define('normal_ativo', function($user){
             return $user->isNormal() || $user->isAeromodelista();
         });
 

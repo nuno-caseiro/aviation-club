@@ -6,6 +6,7 @@ use App\Aeronave;
 use App\AeronaveValores;
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 
 class AeronaveController extends Controller
@@ -13,9 +14,11 @@ class AeronaveController extends Controller
 
 
     public function index(){
-
-        $aeronaves=Aeronave::all();
-
+        if(Auth::user()->can('list', Auth::user())) {
+            $aeronaves = Aeronave::all();
+        }elseif(Auth::user()->can('normal_ativo', Auth::user())) {
+            $aeronaves = Aeronave::all();
+        }
         foreach ($aeronaves as $aeronave){
             $aeronaveValores1= Aeronave::find($aeronave->matricula)->aeronaveValores()->get()->toArray();
             if(!empty($aeronaveValores1)){
@@ -23,6 +26,8 @@ class AeronaveController extends Controller
                 $aeronave->preco_hora= $aeronaveValores1[count($aeronaveValores1)-1]['preco'];
             }
         }
+
+
 
         $title= "Lista de Aeronaves";
 

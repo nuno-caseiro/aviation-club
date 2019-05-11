@@ -37,12 +37,12 @@
 
     <thead>
             <tr>
-                @cannot('normal_list_ativo', Auth::id())
+                @cannot('normal_ativo', Auth::id())
                 <th>Id</th>
                 <th>Nome</th>
                 @endcannot
                 <th>Email</th>
-                    @cannot('normal_list_ativo', Auth::id())
+                    @cannot('normal_ativo', Auth::id())
                 <th>Email Verificado</th>
                 <th>Password</th>
                 <th>Remember Token</th>
@@ -52,17 +52,17 @@
                     @endcannot
                 <th>Numero de sócio</th>
                 <th>Nome informal</th>
-                    @cannot('normal_list_ativo', Auth::id())
+                    @cannot('normal_ativo', Auth::id())
                 <th>Sexo</th>
                 <th>Data Nascimento</th>
                 <th>NIF</th>
                     @endcannot
                 <th>Telefone</th>
-                @cannot('normal_list_ativo', Auth::id())
+                @cannot('normal_ativo', Auth::id())
                 <th>Endereço</th>
                 @endcannot
                 <th>Tipo sócio</th>
-                    @cannot('normal_list_ativo', Auth::id())
+                    @cannot('normal_ativo', Auth::id())
                 <th>Quota Paga</th>
                 <th>Ativo</th>
                 <th>Password inicial</th>
@@ -72,12 +72,13 @@
 
                 <th>Número de licença</th>
 
-                    @cannot('normal_list_ativo', Auth::id())
+                    @cannot('normal_ativo', Auth::id())
                 <th>Tipo de licença</th>
                 <th>Instrutor</th>
                 <th>Aluno</th>
                 <th>Validade da licença</th>
                 <th>Licença confirmada</th>
+                <th>Número de certificado</th>
                 <th>Número de certificado</th>
                 <th>Classe do certificado</th>
                 <th>Validade do certificado</th>
@@ -91,12 +92,12 @@
         @foreach($users as $utilizador)
             <tr>
                {{--<td><img src="{{route('getfile',['user'=>$user->foto_url])}}"></td>--}}
-                @cannot('normal_list_ativo', Auth::id())
+                @cannot('normal_ativo', Auth::id())
                 <td>{{$utilizador->id}}</td>
                 <td>{{$utilizador->name}}</td>
                 @endcannot
                 <td>{{$utilizador->email}}</td>
-                @cannot('normal_list_ativo', Auth::id())
+                @cannot('normal_ativo', Auth::id())
                 <td>{{$utilizador->email_verified_at}}</td>
                 <td>{{$utilizador->password}}</td>
                 <td>{{$utilizador->remember_token}}</td>
@@ -106,17 +107,17 @@
                 @endcannot
                 <td>{{$utilizador->num_socio}}</td>
                 <td>{{$utilizador->nome_informal}}</td>
-                @cannot('normal_list_ativo', Auth::id())
+                @cannot('normal_ativo', Auth::id())
                 <td>{{$utilizador->sexo}}</td>
                 <td>{{$utilizador->data_nascimento}}</td>
                 <td>{{$utilizador->nif}}</td>
                 @endcannot
                 <td>{{$utilizador->telefone}}</td>
-                @cannot('normal_list_ativo', Auth::id())
+                @cannot('normal_ativo', Auth::id())
                 <td>{{$utilizador->endereco}}</td>
                 @endcannot
                 <td>{{$utilizador->tipo_socio}}</td>
-                @cannot('normal_list_ativo', Auth::id())
+                @cannot('normal_ativo', Auth::id())
                 <td>{{$utilizador->quota_paga}}</td>
                 <td>{{$utilizador->ativo}}</td>
                 <td>{{$utilizador->password_inicial}}</td>
@@ -137,7 +138,7 @@
                 @else
                     <td>Não é piloto</td>
                 @endif
-                @cannot('normal_list_ativo', Auth::id())
+                @cannot('normal_ativo', Auth::id())
                 <td>{{$utilizador->tipo_licenca}}</td>
                 <td>{{$utilizador->instrutor}}</td>
                 <td>{{$utilizador->aluno}}</td>
