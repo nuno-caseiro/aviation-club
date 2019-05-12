@@ -42,6 +42,33 @@
                 @endif
 
             </select>
+
+
+          @if ($movimento->natureza=='I')
+        <div></div>
+          <label>Tipo Instruçao</label>
+          
+          <select name=tipo_instrucao required>
+            <option value="{{$movimento->tipo_instrucao}}">@if ($movimento->tipo_instrucao=='D')
+                       Duplo  
+                  @endif
+                    @if ($movimento->tipo_instrucao=='S')
+                        Solo
+                    @endif
+                  
+                </option>
+
+                <option value="S">  @if ($movimento->tipo_instrucao=='D')
+                        Solo
+                    @endif</option>
+
+                    <option value="D">  @if ($movimento->tipo_instrucao=='S')
+                        Duplo
+                    @endif</option>
+
+          </select>
+         @endif
+
             <div>
                 <label for="input">Estado</label>
                 <select name=confirmado>
@@ -63,39 +90,49 @@
             </div>
 
             <label >Socios</label>
-            <select name="piloto_id"   onchange="location.reload()">
+            <select name="piloto_id"   onchange="return location.reload()">
                 @foreach ($socios as $socio)
                     <option value="{{$socio->id}}" {{(  $socio->id == $movimento->piloto_id) ? 'selected' : $movimento->piloto_id }}> {{ $socio->id }}
                     </option>
 
                     @if ($socio->id==$movimento->piloto_id)
-                        <label>{{$socio->name}}</label>
+                  {{$socioEsp=$socio}}
                     @endif
+
+
                 @endforeach    </select>
 
 
-            <div></div>
-
-            @if ($movimento->instrutor_id!=NULL)
+            <label>{{$socioEsp->name}}</label>
+<div></div>
+            @if ($movimento->natureza=='I')
                 <label >Instrutor</label>
                 <select name="instrutor_id">
                     @foreach ($socios as $socio)
                         @if ($socio->tipo_socio=='P' && $socio->instrutor==1)
-                            <option value="{{$movimento->instrutor_id}}" {{($socio->id == $movimento->instrutor_id) ? 'selected' : $movimento->instrutor_id }}> {{ $socio->id }} </option>
+                            <option value="{{$socio->id}}" {{(  $socio->id == $movimento->instrutor_id) ? 'selected' : $movimento->instrutor_id }}> {{ $socio->id }}
+                    </option>
+                        @endif
+
+
+                    @if ($socio->id==$movimento->instrutor_id)
+                        {{$instrutorEsp=$socio}}
                         @endif
                     @endforeach    </select>
 
             @endif
 
 
+            <label>{{$instrutorEsp->name}}</label>
 
-
-        </div>
 
         <div>
             <button type="submit" name="ok">Save</button>
 
         </div>
     </form>
+
+  
+
 
 @endsection

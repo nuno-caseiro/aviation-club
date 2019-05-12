@@ -13,11 +13,11 @@ class MovimentoController extends Controller
     //
     public function index()
     {
-        if(Auth::user()->can('list', Auth::user())) {
+       // if(Auth::user()->can('list', Auth::user())) {
+       //     $movimentos = Movimento::paginate(15);
+       // }elseif(Auth::user()->can('normal_ativo', Auth::user())) {
             $movimentos = Movimento::paginate(15);
-        }elseif(Auth::user()->can('normal_ativo', Auth::user())) {
-            $movimentos = Movimento::paginate(15);
-        }
+       // }
 
         $users=User::all();
         $title = "List of Movimentos";
@@ -60,6 +60,8 @@ class MovimentoController extends Controller
         $movimentoModel->confirmado=$request->confirmado;
         $movimentoModel->piloto_id=$request->piloto_id;
         $movimentoModel->instrutor_id=$request->instrutor_id;
+         $movimentoModel->tipo_instrucao=$request->tipo_instrucao;
+             //dd($movimentoModel);
 
         $movimentoModel->save();
         return redirect()->action('MovimentoController@index');
