@@ -161,14 +161,13 @@ private $matricula;
 
     public function addPilotoAutorizado($matricula, $piloto){
 
-     //   $piloto_id= $request->addPilotoNaoAutorizado;
-       // $pilotosAutorizados= Aeronave::find($piloto_id)->pilotosAutorizados()->create(['piloto_id' => $piloto_id, 'matricula' => $request->matricula]);
-
+DB::table('aeronaves_pilotos')->insert(['matricula'=>$matricula, 'piloto_id' =>$piloto]);
 
     }
 
     public function removePilotoAutorizado($matricula, $piloto){
-      //  Aeronave::find($request->id)->pilotosAutorizados()->delete();
+        DB::table('aeronaves_pilotos')->where('piloto_id', 'piloto')->where('matricula', 'matricula')->delete();
+
     }
 
 

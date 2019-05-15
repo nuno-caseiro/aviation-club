@@ -28,8 +28,18 @@
 
                                 <td>{{ $piloto->piloto_id}}</td>
                                 <td>{{$user->name}}</td>
-                                <td> <a class="btn btn-xs btn-primary" href="{{ action('AeronaveController@addPilotoAutorizado', ['matricula'=>$piloto->matricula, 'piloto' =>$user->id] )}}">Adicionar piloto autorizado</a>
+                                {{--<td> <a class="btn btn-xs btn-primary" href="{{ action('AeronaveController@addPilotoAutorizado', ['matricula'=>$piloto->matricula, 'piloto' =>$user->id] )}}">Adicionar piloto autorizado</a>
+                                </td>--}}
+                               <td><form action="{{ action('AeronaveController@removePilotoAutorizado', ['matricula'=>$piloto->matricula, 'piloto' =>$user->id] ) }}"
+                                         method="post">
+                                       @csrf
+                                       @method('delete')
+                                       <input class="btn btn-xs btn-primary" type="submit" value="Adicionar piloto autorizado">
+                                   </form>
                                 </td>
+
+
+
                </tr>
                                 </tbody>
 
@@ -56,15 +66,52 @@
 
 
         <h3>Pilotos Não autorizados</h3>
-        <p>
-            <select size="15"  style="width: 200px;"  name="addPilotoNaoAutorizado">
-                @foreach($pilotosNaoAutorizados as $piloto)
-                    <option value=""> {{ $piloto->id." ".$piloto->name}} </option>
-                @endforeach    </select>
-            </select>
 
 
-        </p>
+    <table class="table table-striped table-bordered" style="width: 100%" id="mydatatable">
+        <thead>
+        <tr>
+            <th>Id</th>
+            <th>Name</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            @foreach($pilotosNaoAutorizados as $piloto)
+                @foreach($users as $user)
+                    @if($user->id== $piloto->id)
+
+                        <td>{{ $piloto->piloto_id}}</td>
+                        <td>{{$user->name}}</td>
+                        {{--<td> <a class="btn btn-xs btn-primary" href="{{ action('AeronaveController@addPilotoAutorizado', ['matricula'=>$piloto->matricula, 'piloto' =>$user->id] )}}">Adicionar piloto autorizado</a>
+                        </td>--}}
+                        <td><form action="{{ action('AeronaveController@addPilotoAutorizado', ['matricula'=>$piloto->matricula, 'piloto' =>$user->id] ) }}"
+                                  method="post">
+                                @csrf
+                                @method('delete')
+                                <input class="btn btn-xs btn-primary" type="submit" value="Remover piloto autorizado">
+                            </form>
+                        </td>
+
+
+
+        </tr>
+        </tbody>
+
+
+
+
+        {{--  <option value={{$piloto->piloto_id}}> {{ $piloto->piloto_id." ".$user->name}} </option>
+
+           <a class="btn btn-xs btn-primary" href="{{ action('AeronaveController@addPilotoAutorizado', $matricula, $) }}">Adicionar piloto autorizado</a>--}}
+        @endif
+        @endforeach
+        @endforeach
+
+
+    </table>
+
+
 
 
 
