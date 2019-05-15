@@ -92,7 +92,7 @@
             </div>
 
             <label >Socios</label>
-            <select name="piloto_id"   onchange="return location.reload()">
+            <select name="piloto_id">
                 @foreach ($socios as $socio)
                     <option value="{{$socio->id}}" {{(  $socio->id == $movimento->piloto_id) ? 'selected' : $movimento->piloto_id }}> {{ $socio->id }}
                     </option>
