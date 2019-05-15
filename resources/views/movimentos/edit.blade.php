@@ -4,7 +4,8 @@
     <form action="{{action('MovimentoController@update', $movimento->id)}}" method="post" >
         @method('put')
         @csrf
-    {{$instrutorEsp=null}}
+
+
         <div class="card-header">Editar Movimento</div>
         <div>
             <label >Aeronave</label>
@@ -16,7 +17,7 @@
             <br>
             <label>Natureza</label>
             <select name="natureza">
-                <option value="{{$movimento->natureza}}"> @if($movimento->natureza=='I')
+                <option value="{{ $movimento->natureza}}">@if ($movimento->natureza=='I')
                         Instruçao
                     @endif
                     @if ($movimento->natureza=='T')
@@ -26,8 +27,10 @@
                         Especial
                     @endif
                 </option>
+
                 @if ($movimento->natureza!='I')
                     <option value="I">Instruçao</option>
+
                 @endif
 
                 @if ($movimento->natureza!='T')
@@ -44,10 +47,8 @@
           @if ($movimento->natureza=='I')
         <div></div>
           <label>Tipo Instruçao</label>
+          
           <select name=tipo_instrucao required>
-            @if(is_null($movimento->tipo_instrucao))
-                {{$movimento->tipo_instrucao='S'}}
-            @endif
             <option value="{{$movimento->tipo_instrucao}}">@if ($movimento->tipo_instrucao=='D')
                        Duplo  
                   @endif
@@ -115,27 +116,20 @@
 
 
                     @if ($socio->id==$movimento->instrutor_id)
-                        {{$instrutorEsp=$socio}}                        
-                    @endif
-
+                        {{$instrutorEsp=$socio}}
+                        @endif
                     @endforeach    </select>
 
+            @endif
 
-                 @endif
-                 
-              @if (!is_null($instrutorEsp))
+
             <label>{{$instrutorEsp->name}}</label>
-              @endif
+
 
         <div>
             <button type="submit" name="ok">Save</button>
 
         </div>
-   
-
-
-
-
     </form>
 
   
