@@ -144,29 +144,19 @@ private $matricula;
 
         })->get();
 
-
-
-
-
-
-
-
-
-        //posso ir buscar os nomes de cada um deles
         return view('aeronaves.pilotosautorizados_list', compact('title', 'pilotosAutorizados', 'matricula', 'pilotosNaoAutorizados', 'users'));
-
-
 
     }
 
     public function addPilotoAutorizado($matricula, $piloto){
 
-DB::table('aeronaves_pilotos')->insert(['matricula'=>$matricula, 'piloto_id' =>$piloto]);
-
+        DB::table('aeronaves_pilotos')->insert(['matricula'=>$matricula, 'piloto_id' =>$piloto]);
+        return redirect()->action('AeronaveController@index');
     }
 
     public function removePilotoAutorizado($matricula, $piloto){
-        DB::table('aeronaves_pilotos')->where('piloto_id', 'piloto')->where('matricula', 'matricula')->delete();
+        DB::table('aeronaves_pilotos')->where('matricula', $matricula)->where('piloto_id', $piloto)->delete();
+        return redirect()->action('AeronaveController@index');
 
     }
 

@@ -28,20 +28,16 @@
 
                                 <td>{{ $piloto->piloto_id}}</td>
                                 <td>{{$user->name}}</td>
-                                {{--<td> <a class="btn btn-xs btn-primary" href="{{ action('AeronaveController@addPilotoAutorizado', ['matricula'=>$piloto->matricula, 'piloto' =>$user->id] )}}">Adicionar piloto autorizado</a>
-                                </td>--}}
                                <td><form action="{{ action('AeronaveController@removePilotoAutorizado', ['matricula'=>$piloto->matricula, 'piloto' =>$user->id] ) }}"
                                          method="post">
                                        @csrf
                                        @method('delete')
-                                       <input class="btn btn-xs btn-primary" type="submit" value="Adicionar piloto autorizado">
+                                       <input class="btn btn-xs btn-primary" type="submit" value="Remover piloto autorizado">
                                    </form>
                                 </td>
 
-
-
                </tr>
-                                </tbody>
+        </tbody>
 
 
 
@@ -81,15 +77,15 @@
                 @foreach($users as $user)
                     @if($user->id== $piloto->id)
 
-                        <td>{{ $piloto->piloto_id}}</td>
+                        <td>{{ $piloto->id}}</td>
                         <td>{{$user->name}}</td>
                         {{--<td> <a class="btn btn-xs btn-primary" href="{{ action('AeronaveController@addPilotoAutorizado', ['matricula'=>$piloto->matricula, 'piloto' =>$user->id] )}}">Adicionar piloto autorizado</a>
                         </td>--}}
-                        <td><form action="{{ action('AeronaveController@addPilotoAutorizado', ['matricula'=>$piloto->matricula, 'piloto' =>$user->id] ) }}"
+                        <td><form action="{{ action('AeronaveController@addPilotoAutorizado', ['matricula'=>$matricula, 'piloto' =>$user->id] ) }}"
                                   method="post">
                                 @csrf
-                                @method('delete')
-                                <input class="btn btn-xs btn-primary" type="submit" value="Remover piloto autorizado">
+                                @method('post')
+                                <input class="btn btn-xs btn-primary" type="submit" value="Adicionar piloto autorizado">
                             </form>
                         </td>
 
