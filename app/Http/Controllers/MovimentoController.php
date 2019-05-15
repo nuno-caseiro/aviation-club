@@ -55,6 +55,17 @@ class MovimentoController extends Controller
         //dd($request->all());
         //protected $fillable = ['id', 'aeronave', 'data_inf??', ' data_sup??', 'natureza', 'confirmado???','piloto??','instrutor??','meus_movimentos??'];
 
+        $title = "Editar movimentos ";
+        $aeronaves=Aeronave::all();
+        $socios=User::all();
+        $movimento= Movimento::find($id);
+        /*
+        if($request->natureza!=$movimentoModel->natureza){
+            $movimentoModel->natureza=$request->natureza;
+            $movimentoModel->save();
+            return view('movimentos.edit', compact('title', 'movimento','aeronaves','socios'));
+        }*/
+
         $movimentoModel->aeronave=$request->members;
         $movimentoModel->natureza= $request->natureza;
         $movimentoModel->confirmado=$request->confirmado;
