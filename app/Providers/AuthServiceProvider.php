@@ -15,7 +15,7 @@ class AuthServiceProvider extends ServiceProvider
      * @var array
      */
     protected $policies = [
-        // 'App\Model' => 'App\Policies\ModelPolicy',
+         'App\User' => 'App\Policies\UserPolicy',
     ];
 
     /**
@@ -23,6 +23,8 @@ class AuthServiceProvider extends ServiceProvider
      *
      * @return void
      */
+
+
     public function boot()
     {
         $this->registerPolicies();
@@ -31,7 +33,7 @@ class AuthServiceProvider extends ServiceProvider
 
 
         Gate::define('normal_ativo', function($user){
-            return $user->isNormal() || $user->isAeromodelista();
+            return $user->isNormal() || $user->isAeromodelista() || $user->isPiloto();
         });
 
 

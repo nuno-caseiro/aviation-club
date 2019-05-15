@@ -23,7 +23,7 @@ class UserController extends Controller
     public function index()
     {
 
-
+        //$users= new \stdClass();
         //$this->authorize('list', User::class);
 
          if(Auth::user()->can('list', Auth::user())){
@@ -55,8 +55,11 @@ class UserController extends Controller
         }
 
 
+
             $users=$filtro->paginate(15);
         }
+
+
         $title="Lista de utilizadores";
         return view('users.list', compact('users','title'));
 

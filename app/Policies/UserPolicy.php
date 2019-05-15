@@ -20,26 +20,27 @@ class UserPolicy
     }
 
 
-    public function create(User $user){
-        if ($user->isDirecao()){
+    public function create(User $auth){
+        if ($auth->isDirecao()){
             return true;
         }
+        return false;
     }
 
 
-    public function update(User $user, User $auth){
-        return $user->isDirecao() || $user->id === $auth->id;
+    public function update(User $auth, User $socio){
+        return $auth->isDirecao() || $socio->id === $auth->id;
     }
 
-    public function list(User $user)
+    public function list(User $auth)
     {
-        return $user->isDirecao();
+        return $auth->isDirecao();
     }
 
 
-    public function normal_list_ativo(User $user)
+    public function normal_list_ativo(User $auth)
     {
-        return $user->isNormal() || $user->isAeromodelista();
+        return $auth->isNormal() || $auth->isAeromodelista();
     }
 
 }
