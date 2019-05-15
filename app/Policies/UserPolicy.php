@@ -40,7 +40,7 @@ class UserPolicy
 
     public function normal_list_ativo(User $auth)
     {
-        return $auth->isNormal() || $auth->isAeromodelista();
+        return $auth->isNormal() || $auth->isAeromodelista() || $auth->isPiloto();
     }
 
 }

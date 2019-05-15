@@ -21,6 +21,7 @@
             <input type="text" name="nrlugares" id="inputNrLugares" value="{{ $aeronave->num_lugares }}" placeholder="Numero de lugares" >
         </div>
         <div>
+            @can('list',  App\User::class)
             <table class="table">
                 <thead>
                 <tr>
@@ -43,7 +44,7 @@
 
                 </tbody>
             </table>
-
+            @endcan
         </div>
 
 
