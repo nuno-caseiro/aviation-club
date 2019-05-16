@@ -52,6 +52,8 @@ Route::post('socios','UserController@store');
 Route::put('socios/{socio}','UserController@update');
 Route::delete('socios/{socio}','UserController@destroy');
 
+//login
+//Route::get('/login',);
 
 
 
