@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+
 use App\ClassesCertificados;
 use App\Http\Requests\UserStoreRequest;
+use App\Http\Requests\UserUpdateRequest;
 use App\TiposLicencas;
 use Illuminate\Http\Request;
 use App\User;
@@ -27,7 +29,7 @@ class UserController extends Controller
         //$this->authorize('list', User::class);
 
          if(Auth::user()->can('list', Auth::user())){
-            $users = User::paginate(15);//oi
+            $users = User::paginate(15);
         }elseif(Auth::user()->can('normal_ativo', Auth::user())) {
         //$users = User::where('ativo', '=', '1')->paginate(15);
 
@@ -42,7 +44,7 @@ class UserController extends Controller
             $filtro = $filtro->where('num_socio', $num_socio);
         }
         if ($nome_informal) {
-            $filtro = $filtro->where('nome_informal', 'like', '%'.$nome_informal.'%');
+            $filtro = $filtro->where('nome_informal', 'like','%'.$nome_informal.'%');
         }
         if ($email) {
             $filtro = $filtro->where('email', $email);
@@ -168,11 +170,13 @@ class UserController extends Controller
 		->with('success', 'User added successfully!');
 	}
 
-	public function update(Request $request,User $user){
+	public function update(UserUpdateRequest $request,$socio){
 		if ($request->has('cancel')) {
             return redirect()->action('UserController@index');
 		}
-		
+
+       // $this->authorize('update', $user);
+
 		/*$this->validate($request, [
 			'num_socio'=>'required|',
             'name' => 'required|alpha_dash',
@@ -182,7 +186,7 @@ class UserController extends Controller
 		
 		*/
 
-		$user = User::find($user);
+		$user = User::find($socio);
         $user->fill($request->except('password'));
         $user->save();
 
