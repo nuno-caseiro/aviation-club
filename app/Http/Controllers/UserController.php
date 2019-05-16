@@ -11,17 +11,18 @@ use Illuminate\Http\Request;
 use App\User;
 use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
+use App\Http\Requests\UpdatePassword;
 use Illuminate\Support\Facades\Auth;
 use Hash;
 
 class UserController extends Controller
 {
 
-   /* public function __construct()
+    public function __construct()
     {
         $this->middleware('auth');
     }
-*/
+
     public function index()
     {
 
@@ -204,16 +205,16 @@ class UserController extends Controller
     public function showEditPassword(){
         return view('users.editPassword');
     }
-    public function editPassword(Request $request){
-        $user = Auth::user();
-        $password = $request->validate([
-            'oldPassword' => 'required',
-            'newPassword' => 'required|confirmed'
-        ]);
-        if(!Hash::check($request->oldPassword, Auth::user()->password)){
-            return "Password Invalida";
-        }
-        dd($user, $request->oldPassword, $password);
+
+    public function editPassword(UpdatePassword $request){
+
+        $data = $request->all();
+        $user= User::find(Auth::id());
+        $user->update($data);
+        return redirect(route('home'))
+            ->with('info', 'Your profile has been updated successfully.');
+
+
     }
 
 

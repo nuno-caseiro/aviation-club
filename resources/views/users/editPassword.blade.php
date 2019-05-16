@@ -2,39 +2,77 @@
 
 @section('content')
     <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-md-8">
-                <div class="card">
-                    <div class="card-header">Edit Password</div>
+        @if (session('info'))
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="alert alert-success alert-dismissible">
+                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                        {{ session('info') }}
+                    </div>
+                </div>
+            </div>
+        @elseif (session('error'))
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="alert alert-danger alert-dismissible">
+                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                        {{ session('error') }}
+                    </div>
+                </div>
+            </div>
+        @endif
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2">
+                <div class="panel panel-default">
 
-                    <div class="card-body">
 
+                    <div class="panel-body">
+                        <form class="form-horizontal" method="POST" action="{{ route('editPassword')}}">
+                            {{ csrf_field() }}
+                            {{ method_field('PATCH') }}
 
+                            <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
+                                <label for="password" class="col-md-4 control-label">Password</label>
 
-                        <form action="{{route('editPassword')}}" method="post" class="form-group">
-                            @method('PATCH')
-                            @csrf
-                            <div class="form-group">
-                                <label for="inputPassword">Old Password</label>
-                                <input
-                                        type="password" class="form-control"
-                                        name="old_password" id="inputPassword"/>
+                                <div class="col-md-6">
+                                    <input id="password" type="password" class="form-control" name="password">
+
+                                    @if ($errors->has('password'))
+                                        <span class="help-block">
+                                        <strong>{{ $errors->first('password') }}</strong>
+                                    </span>
+                                    @endif
+                                </div>
                             </div>
+
                             <div class="form-group">
-                                <label for="inputNewPassword">New Password</label>
-                                <input
-                                        type="password" class="form-control"
-                                        name="newPassword" id="inputNewPassword"/>
+                                <label for="password-confirm" class="col-md-4 control-label">Confirm Password</label>
+
+                                <div class="col-md-6">
+                                    <input id="password-confirm" type="password" class="form-control" name="password_confirmation">
+                                </div>
                             </div>
-                            <div class="form-group">
-                                <label for="inputPasswordConfirmation">Password confirmation</label>
-                                <input
-                                        type="password" class="form-control"
-                                        name="newPassword_confirmation" id="inputPasswordConfirmation"/>
+
+                            <div class="form-group{{ $errors->has('current_password') ? ' has-error' : '' }}">
+                                <label for="current-password" class="col-md-4 control-label">Current Password</label>
+
+                                <div class="col-md-6">
+                                    <input id="current-password" type="password" class="form-control" name="current_password">
+
+                                    @if ($errors->has('current_password'))
+                                        <span class="help-block">
+                                        <strong>{{ $errors->first('current_password') }}</strong>
+                                    </span>
+                                    @endif
+                                </div>
                             </div>
+
                             <div class="form-group">
-                                <button type="submit" class="btn btn-success" name="ok">Add</button>
-                                <a type="submit" class="btn btn-default" href="{{route('home')}}">Cancel</a>
+                                <div class="col-md-6 col-md-offset-4">
+                                    <button type="submit" class="btn btn-primary">
+                                        Update
+                                    </button>
+                                </div>
                             </div>
                         </form>
                     </div>

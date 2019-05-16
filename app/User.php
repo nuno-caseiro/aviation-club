@@ -101,5 +101,13 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->password_inicial===1;
     }
 
+    public function setPasswordAttribute($password)
+    {
+        if ( $password !== null & $password !== "" )
+        {
+            $this->attributes['password'] = bcrypt($password);
+        }
+    }
+
 
 }
