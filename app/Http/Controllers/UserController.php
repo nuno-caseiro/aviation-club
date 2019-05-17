@@ -115,7 +115,7 @@ class UserController extends Controller
 */
 
 	public function create(){
-        //$this->authorize('create', User::class);
+        $this->authorize('create', User::class);
 		$title= "Adicionar Utilizadores";
         $classes= ClassesCertificados::all();
         $licencas =TiposLicencas::all();
@@ -184,6 +184,8 @@ class UserController extends Controller
 	}
 
 	public function update(UserUpdateRequest $request,$socio){
+
+        $this->authorize('create', User::class);
 		if ($request->has('cancel')) {
             return redirect()->action('UserController@index');
 		}
