@@ -57,8 +57,6 @@ class UserController extends Controller
             $filtro = $filtro->where('direcao', $direcao);
         }
 
-
-
             $users=$filtro->paginate(15);
         }
 
@@ -159,7 +157,7 @@ class UserController extends Controller
 
 	    //$this->validate(request(),[]);// colocar campos para validar aqui
 
-        //$this->authorize('create', User::class);
+        $this->authorize('create', User::class);
 
 
 

@@ -46,6 +46,7 @@
                 <th>Email Verificado</th>
                 <th>Password</th>
                 <th>Remember Token</th>
+
                 <th>Criado em </th>
                 <th>Atualizado em</th>
                 <th>Apagado em</th>
@@ -78,7 +79,6 @@
                 <th>Aluno</th>
                 <th>Validade da licença</th>
                 <th>Licença confirmada</th>
-                <th>Número de certificado</th>
                 <th>Número de certificado</th>
                 <th>Classe do certificado</th>
                 <th>Validade do certificado</th>
