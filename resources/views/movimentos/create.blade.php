@@ -11,7 +11,7 @@ num_pessoas, conta_horas_inicio, conta_horas_fim, tempo_voo,
 preco_voo, modo_pagamento, num_recibo, observacoes,
 tipo_instrucao, instrutor_id
          
-
+  
  <div>Date:</div></label><input type="date" name="data" >
 
  <div>Hora Descolagem:</div><input min="date" type="datetime-local" name="hora_descolagem">
@@ -40,11 +40,13 @@ tipo_instrucao, instrutor_id
         </div>
 
 
-           <div>
-            <label for="piloto_id">ID piloto</label>
-            <input type="text" name="piloto_id" id="piloto_id"  placeholder="Pilot ID" >
-        </div>
-
+            <select name="piloto_id">
+              <option></option>
+                @foreach ($users as $socio)
+                    <option value="{{$socio->id}}"> {{ $socio->id }}
+           </option>
+ @endforeach    
+</select
         
 
 

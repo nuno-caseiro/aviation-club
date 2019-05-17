@@ -150,7 +150,7 @@ class MovimentoController extends Controller
         }
 
 
-        $movimento=$request->all()+['id'=>'1','num_licenca_piloto'=>'5202','validade_licenca_piloto'=>'2020-05-28','tipo_licenca_piloto' =>'PPL(A)','num_certificado_piloto'=>'PT.19357','confirmado'=>'1','validade_certificado_piloto'=>'2020-05-29','classe_certificado_piloto'=>'Class 1'
+        $movimento=$request->all()+['num_licenca_piloto'=>'5202','validade_licenca_piloto'=>'2020-05-28','tipo_licenca_piloto' =>'PPL(A)','num_certificado_piloto'=>'PT.19357','confirmado'=>'1','validade_certificado_piloto'=>'2020-05-29','classe_certificado_piloto'=>'Class 1'
             ];
 
         //estou a morrer por dentro nao percebo o erro so quero por um id ao calhas pq o meu delete tb nao da update nos meus ids tenho de fazer isso
