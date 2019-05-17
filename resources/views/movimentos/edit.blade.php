@@ -109,7 +109,7 @@
 <div></div>
             @if ($movimento->natureza=='I')
                 <label >Instrutor</label>
-                <select name="instrutor_id" onchange="this.form.submit()">
+                <select name="instrutor_id">
                     @foreach ($socios as $socio)
                         @if ($socio->tipo_socio=='P' && $socio->instrutor==1)
                             <option value="{{$socio->id}}" {{(  $socio->id == $movimento->instrutor_id) ? 'selected' : $movimento->instrutor_id }}> {{ $socio->id }}

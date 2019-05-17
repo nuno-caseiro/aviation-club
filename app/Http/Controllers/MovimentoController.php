@@ -66,7 +66,7 @@ class MovimentoController extends Controller
          if ($movimentoModel->instrutor_id!=$request->ins) {
              # code...
          }
-         
+
 
         $movimentoModel->save();
         return redirect()->action('MovimentoController@index');
@@ -77,7 +77,10 @@ class MovimentoController extends Controller
 
     public function create(){
         $title= "Adicionar Movimento";
-        return view('movimentos.create', compact('title'));
+        $aeronaves=Aeronave::all();   
+        $socios=User::all();
+
+        return view('movimentos.create', compact('title','aeronaves','socios'));
     }
 
 
