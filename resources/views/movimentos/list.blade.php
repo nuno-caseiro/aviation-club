@@ -10,15 +10,46 @@
         Aeronaves:<br>
 
 
-
+: id, aeronave, data_inf, data_sup, natureza, confirmado,
+piloto, instrutor, meus_movimentos.
 
 
 
           <form method="GET" action="{{action('MovimentoController@index')}}">
                  <select name="aeronave">
+                   <option></option>
                 @foreach ($aeronaves as $aeronave)
                     <option value="{{ $aeronave->matricula }}"> {{ $aeronave->matricula }} </option>
                 @endforeach    </select>
+<div></div>
+
+<label>Natureza</label>
+<div>
+  <input type="checkbox" id="instrucao">
+  <label for="I">Instrucao</label>
+</div>
+
+<div>
+  <input type="checkbox" id="especial" >
+  <label for="E">Especial</label>
+</div>
+<div>
+  <input type="checkbox" id="treino">
+  <label value="T" name="treino">Treino</label>
+</div>      
+
+<div></div>
+
+                <select name="confirmado">
+                  <option></option>
+                  <option value="0">Por Confirmar</option>
+                   <option value="0">Confirmado</option>
+                </select>
+
+
+<div></div>
+
+
         <div class="form-group row mb-0">
             <div class="col-md-6 offset-md-5">
                 <br>
