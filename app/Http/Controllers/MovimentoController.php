@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use App\Aeronave;
 use App\User;
 use App\Movimento;
+use App\Aerodromo;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -137,8 +138,10 @@ class MovimentoController extends Controller
         $title= "Adicionar Movimento";
         $aeronaves=Aeronave::all();   
         $socios=User::all();
+        $aerodromos=Aerodromo::all();
 
-        return view('movimentos.create', compact('title','aeronaves','socios'));
+       
+           return view('movimentos.create', compact('title','aeronaves','socios','aerodromos'));
     }
 
 
@@ -150,8 +153,14 @@ class MovimentoController extends Controller
         }
 
 
-        $movimento=$request->all()+['num_licenca_piloto'=>'5202','validade_licenca_piloto'=>'2020-05-28','tipo_licenca_piloto' =>'PPL(A)','num_certificado_piloto'=>'PT.19357','confirmado'=>'1','validade_certificado_piloto'=>'2020-05-29','classe_certificado_piloto'=>'Class 1'
-            ];
+        $user= User::find($request->piloto_id);
+
+
+        $movimento=$request->all()+['num_licenca_piloto'=>$user->num_licenca,'validade_licenca_piloto'=>$user->validade_licenca,'confirmado'=>'0','tipo_licenca_piloto'=>$user->tipo_licenca,'num_certificado_piloto'=>$user->num_certificado,'validade_certificado_piloto'=>$user->validade_licenca,'classe_certificado_piloto'=>$user->classe_certificado];
+    
+
+
+
 
         //estou a morrer por dentro nao percebo o erro so quero por um id ao calhas pq o meu delete tb nao da update nos meus ids tenho de fazer isso
         /*     data,
@@ -186,6 +195,8 @@ class MovimentoController extends Controller
         $movimentoModel->natureza= $request->instrutor_id;
             */
         // dd($movimento)  ;
+
+     
 
         Movimento::create($movimento);
 
