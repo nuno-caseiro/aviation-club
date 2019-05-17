@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use DB;
 use App\Aeronave;
 use App\AeronaveValores;
 use App\User;
@@ -11,7 +12,7 @@ use Illuminate\Support\Facades\Auth;
 
 class AeronaveController extends Controller
 {
-
+private $matricula;
 
     public function index(){
         if(Auth::user()->can('list', Auth::user())) {
@@ -127,33 +128,36 @@ class AeronaveController extends Controller
     public function pilotosAutorizados($matricula){
         $title = "Pilotos autorizados";
 
+        $users= DB::table('users')->get();
+
+
         $pilotosAutorizados= Aeronave::find($matricula)->pilotosAutorizados()->where('matricula','=',$matricula)->get();
 
-        //ou faz se array ou faz se pesquisa com join
 
 
-          $pilotos= User::all()->pluck('id'); //ids
+        $this->matricula=$matricula;
+
+        $pilotosNaoAutorizados= DB::table('users')->whereNotIn('id', function ($query){
+            $query->select('piloto_id')->from('aeronaves_pilotos')
+            ->where('matricula', $this->matricula);
 
 
+        })->get();
 
-
-        //posso ir buscar os nomes de cada um deles
-        return view('aeronaves.pilotosautorizados_list', compact('title', 'pilotosAutorizados', 'matricula'));
-
-
-
-    }
-
-    public function addPilotoAutorizado(Request $request){
-
-        $piloto_id= $request->addPilotoNaoAutorizado;
-        $pilotosAutorizados= Aeronave::find($piloto_id)->pilotosAutorizados()->create(['piloto_id' => $piloto_id, 'matricula' => $request->matricula]);
-
+        return view('aeronaves.pilotosautorizados_list', compact('title', 'pilotosAutorizados', 'matricula', 'pilotosNaoAutorizados', 'users'));
 
     }
 
-    public function removePilotoAutorizado(Request $request){
-        Aeronave::find($request->id)->pilotosAutorizados()->delete();
+    public function addPilotoAutorizado($matricula, $piloto){
+
+        DB::table('aeronaves_pilotos')->insert(['matricula'=>$matricula, 'piloto_id' =>$piloto]);
+        return redirect()->action('AeronaveController@index');
+    }
+
+    public function removePilotoAutorizado($matricula, $piloto){
+        DB::table('aeronaves_pilotos')->where('matricula', $matricula)->where('piloto_id', $piloto)->delete();
+        return redirect()->action('AeronaveController@index');
+
     }
 
 

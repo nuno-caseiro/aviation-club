@@ -12,11 +12,11 @@
                <th>Numero de lugares</th>
                <th>Contador de horas</th>
                <th>Preço por hora</th>
-               @cannot('normal_ativo', Auth::id())
+               @can('list',  App\User::class)
                <th>Criado em</th>
                <th>Atualizado em</th>
                <th>Apagado em </th>
-               @endcannot
+               @endcan
            </tr>
        </thead>
        @foreach($aeronaves as $aeronave)
@@ -28,11 +28,11 @@
                <td>{{$aeronave->num_lugares}}</td>
                <td>{{$aeronave->conta_horas}}</td>
                <td>{{$aeronave->preco_hora}}</td>
-               @cannot('normal_ativo', Auth::id())
+               @can('list',  App\User::class)
                <td>{{$aeronave->created_at}}</td>
                <td>{{$aeronave->updated_at}}</td>
                <td>{{$aeronave->deleted_at}}</td>
-               @endcannot
+               @endcan
                @cannot('normal_ativo', Auth::id())
                    <td><a class="btn btn-xs btn-primary" href="{{ action('AeronaveController@edit', $aeronave->matricula) }}">Edit</a></td>
 

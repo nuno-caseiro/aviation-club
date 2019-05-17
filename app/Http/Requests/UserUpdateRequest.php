@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Hash;
 
 class UserUpdateRequest extends FormRequest
 {
@@ -24,7 +25,7 @@ class UserUpdateRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+           //
         ];
     }
 }

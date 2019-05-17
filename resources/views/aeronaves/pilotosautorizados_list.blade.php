@@ -11,34 +11,105 @@
 
 <h3>Pilotos Autorizados</h3>
 
-        <p>
-            <select size="15"  style="width: 200px;" name="removePilotoAutorizado">
+
+
+    <table class="table table-striped table-bordered" style="width: 100%" id="mydatatable">
+        <thead>
+        <tr>
+            <th>Id</th>
+            <th>Name</th>
+        </tr>
+        </thead>
+        <tbody>
+               <tr>
                 @foreach($pilotosAutorizados as $piloto)
-                    <option value=""> {{ $piloto->piloto_id}}{{$piloto->name}} </option>
-                @endforeach    </select>
+                    @foreach($users as $user)
+                        @if($user->id== $piloto->piloto_id)
 
-            </select>
-        </p>
+                                <td>{{ $piloto->piloto_id}}</td>
+                                <td>{{$user->name}}</td>
+                               <td><form action="{{ action('AeronaveController@removePilotoAutorizado', ['matricula'=>$piloto->matricula, 'piloto' =>$user->id] ) }}"
+                                         method="post">
+                                       @csrf
+                                       @method('delete')
+                                       <input class="btn btn-xs btn-primary" type="submit" value="Remover piloto autorizado">
+                                   </form>
+                                </td>
+
+               </tr>
+        </tbody>
 
 
 
-      {{--<a class="btn btn-xs btn-primary" href="{{ action('AeronaveController@addPilotoAutorizado', $matricula) }}">Adicionar piloto autorizado</a>
+
+                 {{--  <option value={{$piloto->piloto_id}}> {{ $piloto->piloto_id." ".$user->name}} </option>
+
+                    <a class="btn btn-xs btn-primary" href="{{ action('AeronaveController@addPilotoAutorizado', $matricula, $) }}">Adicionar piloto autorizado</a>--}}
+                        @endif
+                        @endforeach
+                @endforeach
+
+
+    </table>
+
+
+
+
+
+
+
+
 
 
         <h3>Pilotos Não autorizados</h3>
-        <p>
-            <select size="15"  style="width: 200px;"  name="addPilotoNaoAutorizado">
-                @for($i=0; $i<=count($pilotosNaoAutorizados)-1; $i++)
-                    {{$i=0}}
-                    @dump($pilotosNaoAutorizados);
-                    <option value=""> {{ $pilotosNaoAutorizados[0]['id']}} </option>
-                @endfor
-            </select>
 
 
-        </p>
+    <table class="table table-striped table-bordered" style="width: 100%" id="mydatatable">
+        <thead>
+        <tr>
+            <th>Id</th>
+            <th>Name</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            @foreach($pilotosNaoAutorizados as $piloto)
+                @foreach($users as $user)
+                    @if($user->id== $piloto->id)
 
-    --}}
+                        <td>{{ $piloto->id}}</td>
+                        <td>{{$user->name}}</td>
+                        {{--<td> <a class="btn btn-xs btn-primary" href="{{ action('AeronaveController@addPilotoAutorizado', ['matricula'=>$piloto->matricula, 'piloto' =>$user->id] )}}">Adicionar piloto autorizado</a>
+                        </td>--}}
+                        <td><form action="{{ action('AeronaveController@addPilotoAutorizado', ['matricula'=>$matricula, 'piloto' =>$user->id] ) }}"
+                                  method="post">
+                                @csrf
+                                @method('post')
+                                <input class="btn btn-xs btn-primary" type="submit" value="Adicionar piloto autorizado">
+                            </form>
+                        </td>
+
+
+
+        </tr>
+        </tbody>
+
+
+
+
+        {{--  <option value={{$piloto->piloto_id}}> {{ $piloto->piloto_id." ".$user->name}} </option>
+
+           <a class="btn btn-xs btn-primary" href="{{ action('AeronaveController@addPilotoAutorizado', $matricula, $) }}">Adicionar piloto autorizado</a>--}}
+        @endif
+        @endforeach
+        @endforeach
+
+
+    </table>
+
+
+
+
 
 
 @endsection

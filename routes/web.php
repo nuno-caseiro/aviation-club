@@ -14,11 +14,11 @@
 
 Route::get('/', function () {
     return view('welcome');
-});
+})->name('welcome');
 
 Auth::routes(['verify' => true]);
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/home', 'HomeController@index')->middleware('auth')->name('home');
 //aeronaves
 Route::get('aeronaves', 'AeronaveController@index');//->middleware('auth'); //vê se está autenticado
 Route::get('aeronaves/create', 'AeronaveController@create');
@@ -52,6 +52,11 @@ Route::post('socios','UserController@store');
 Route::put('socios/{socio}','UserController@update');
 Route::delete('socios/{socio}','UserController@destroy');
 
+Route::get('/password', 'UserController@showEditPassword')->name('showEditPassword');
+Route::patch('/password', 'UserController@editPassword')->name('editPassword');
+
+//login
+//Route::get('/login',);
 
 
 
