@@ -11,7 +11,7 @@ num_pessoas, conta_horas_inicio, conta_horas_fim, tempo_voo,
 preco_voo, modo_pagamento, num_recibo, observacoes,
 tipo_instrucao, instrutor_id
          
-
+  
  <div>Date:</div></label><input type="date" name="data" >
 
  <div>Hora Descolagem:</div><input min="date" type="datetime-local" name="hora_descolagem">
@@ -39,20 +39,25 @@ tipo_instrucao, instrutor_id
             <input type="text" name="num_servico" id="inputNumServico"  placeholder="Numero Servico" >
         </div>
 
-
-           <div>
-            <label for="piloto_id">ID piloto</label>
-            <input type="text" name="piloto_id" id="piloto_id"  placeholder="Pilot ID" >
-        </div>
-
+          <label>ID Piloto:</label>
+            <select name="piloto_id">
+              <option></option>
+                @foreach ($socios as $socio)
+                    @if($socio->tipo_socio=='P')
+                      <option value="{{$socio->id}}"> {{ $socio->id }}
+                @endif
+           </option>
+          @endforeach    
+        </select>
         
 
 
-     
+     <div></div>
 
        
-            <label>Natureza</label>    
-                <select name="natureza">                 
+            <label> Natureza</label>    
+                <select name="natureza">
+                <option></option>                 
                 <option value="I">Instrução</option>   
                 <option value="T">Treino</option>
                 <option value="E">Especial</option>
@@ -62,23 +67,26 @@ tipo_instrucao, instrutor_id
 
 
 
+<div></div>
+
+                <label> Aerodromo Chegada:</label>    
+               <select name="aerodromo_chegada">
+              <option></option>
+                @foreach ($aerodromos as $aerodromo)
+                      <option value="{{$aerodromo->code}}"> {{$aerodromo->code}}</option>
+          @endforeach       
+        </select>       
 
 
-       
 
-
-          <div>
-            <label for="inputPartida">Aerodromo de Partida</label>
-            <input type="text" name="aerodromo_partida" id="inputPartida"  placeholder="Aerodromo de Partida" >
-        </div>
-
-
-          <div>
-            <label for="inputChegada">Aerodromo de Chegada</label>
-            <input type="text" name="aerodromo_chegada" id="inputChegada"  placeholder="Aerodromo de Chegada" >
-        </div>
-
-
+<div></div>
+  <label> Aerodromo Partida:</label>    
+               <select name="aerodromo_partida">
+              <option></option>
+                @foreach ($aerodromos as $aerodromo)
+                      <option value="{{$aerodromo->code}}"> {{$aerodromo->code}}</option>
+          @endforeach    
+        </select>    
 
 
 
@@ -144,7 +152,9 @@ tipo_instrucao, instrutor_id
 
        
           <label>Forma de Pagamento</label>    
+                
                 <select name="modo_pagamento">                 
+                <option></option>
                 <option value="N">Numerario</option>   
                 <option value="M">Multibanco</option>
                 <option value="T">Transferencia</option>
