@@ -22,11 +22,27 @@ class MovimentoController extends Controller
        // }
 
 
-        $aeronave=request()->query('aeronave');
+        $aeronave=request()->query('instrucao');
+        $confirmado=request()->query('confirmado');
+        $especial=request()->query('especial');
+        $treino=request()->query('treino');
         $filtro = Movimento::where('id','>=','1');
         if (isset($aeronave)) {
             $filtro = $filtro->where('aeronave', $aeronave);
         }
+         if (isset($instrucao) ){
+            $filtro = $filtro->where('I',$instrucao);
+        }
+         if (isset($treino)) {
+            $filtro = $filtro->where('T', $treino);
+        }
+         if (isset($confirmado)) {
+            $filtro = $filtro->where('confirmado', $confirmado);
+        }
+ 
+ 
+ 
+
  
 
 
