@@ -96,9 +96,9 @@
     <div>
         <label for="inputTipoLicenca">Tipo de licença</label>
        {{--<input type="text" name="tipo_licenca" id="inputTipoLicenca" placeholder="Tipo da licença">--}}
-         <select name="classe_certificado">
+         <select name="tipo_licenca">
             @foreach($licencas as $licenca)
-                <option value="{{$licenca->code}}">{{$licenca->nome}}</option>
+                 <option id="inputTipoLicenca" value="{{$licenca->code}}">{{$licenca->nome}}</option>
             @endforeach
         </select>
     </div>

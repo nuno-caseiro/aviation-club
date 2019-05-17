@@ -16,7 +16,7 @@ Route::get('/', function () {
     return view('welcome');
 })->name('welcome');
 
-Auth::routes(['verify' => true]);
+
 
 Route::get('/home', 'HomeController@index')->middleware('auth')->name('home');
 //aeronaves
@@ -45,18 +45,43 @@ Route::post('/movimentos', 'MovimentoController@store');
 
 
 //socios
-Route::get('socios','UserController@index');
-Route::get('socios/{socio}/edit','UserController@edit');
-Route::get('socios/create','UserController@create');
-Route::post('socios','UserController@store');
-Route::put('socios/{socio}','UserController@update');
-Route::delete('socios/{socio}','UserController@destroy');
+
+Route::middleware('verified')->group(function () {
+    Route::get('socios', 'UserController@index') ->name("socios.index");
+    Route::get('socios/{socio}/edit', 'UserController@edit')->name("socios.edit");
+    Route::get('socios/create', 'UserController@create')->name('socios.create');
+    Route::post('socios', 'UserController@store')->name('socios.store');
+    Route::put('socios/{socio}', 'UserController@update')->name('socios.update');
+    Route::delete('socios/{socio}', 'UserController@destroy')->name('socios.delete');
+
+});
+
+
+
 
 Route::get('/password', 'UserController@showEditPassword')->name('showEditPassword');
 Route::patch('/password', 'UserController@editPassword')->name('editPassword');
 
-//login
-//Route::get('/login',);
+
+Route::get('/home', 'HomeController@index')->name('home');
+
+Auth::routes(['verify' => true]);
+
+
+// Authentication Routes... -- penso q o auth faz isto tudo internamente
+//$this->get('login', 'Auth\LoginController@showLoginForm')->name('login');
+//$this->post('login', 'Auth\LoginController@login');
+//$this->post('logout', 'Auth\LoginController@logout')->name('logout');
+
+// Registration Routes...
+//$this->get('register', 'Auth\RegisterController@showRegistrationForm')->name('register');
+//$this->post('register', 'Auth\RegisterController@register');
+
+// Password Reset Routes...
+//$this->get('password/reset', 'Auth\ForgotPasswordController@showLinkRequestForm');
+//$this->post('password/email', 'Auth\ForgotPasswordController@sendResetLinkEmail');
+//$this->get('password/reset/{token}', 'Auth\ResetPasswordController@showResetForm');
+//$this->post('password/reset', 'Auth\ResetPasswordController@reset');
 
 
 
