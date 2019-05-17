@@ -6,6 +6,7 @@ namespace App\Http\Controllers;
 use App\ClassesCertificados;
 use App\Http\Requests\UserStoreRequest;
 use App\Http\Requests\UserUpdateRequest;
+use App\Movimento;
 use App\TiposLicencas;
 use Illuminate\Http\Request;
 use App\User;
@@ -14,6 +15,7 @@ use App\Http\Requests\UpdateUserRequest;
 use App\Http\Requests\UpdatePassword;
 use Illuminate\Support\Facades\Auth;
 use Hash;
+use DB;
 
 class UserController extends Controller
 {
@@ -69,15 +71,14 @@ class UserController extends Controller
 	
 	public function edit($id){
 
-
-        if($this->authorize('update_DirMe', User::find($id), User::class)){
+        $this->authorize('update_DirMe', User::findOrFail($id), User::class);
             $title = "Editar Utilizador ";
-            $user= User::find($id);
+            $user= User::findOrFail($id);
             return view('users.edit', compact('title', 'user' ));
-        }
 
 
-        return view('users.list', compact('title', 'title'));
+
+
 
         //return view('users.edit', compact('title', 'user' ));
 
@@ -132,10 +133,17 @@ class UserController extends Controller
 
 	public function destroy($id){
 
-	    $this->authorize('delete_socio',$id);
-		$user= User::find($id);
-        $user->delete();
-		return redirect()->action('UserController@index');
+	    $this->authorize('delete_socio',User::findOrFail($id));
+		$user= User::findOrFail($id);
+        $movimentosAssociados= DB::table('movimentos')->select('id')->where('piloto_id',$id)->get();
+        if($movimentosAssociados->isEmpty()){
+            $user->forceDelete();
+        }
+        else {
+            $user->delete(); // faz soft delete
+
+        }
+        return redirect()->action('UserController@index');
 		
 		//return redirect()->route('users.list')->with('success', 'User deleted successfully'); -- testar
 	}
@@ -202,7 +210,7 @@ class UserController extends Controller
 		
 		*/
 
-		$user = User::find($socio);
+		$user = User::findOrFail($socio);
         $user->fill($request->except('password'));
         $user->save();
 
@@ -211,12 +219,6 @@ class UserController extends Controller
 
 	}
 
-	public function getfile($id) {
-		$user=User::find($id);
-        
-        return $path= $user->foto_url;
-    }
-
     public function showEditPassword(){
         return view('users.editPassword');
     }
@@ -224,7 +226,7 @@ class UserController extends Controller
     public function editPassword(UpdatePassword $request){
 
         $data = $request->all();
-        $user= User::find(Auth::id());
+        $user= User::findOrFail(Auth::id());
         $user->update($data);
         return redirect(route('home'))
             ->with('info', 'Your profile has been updated successfully.');

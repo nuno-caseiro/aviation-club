@@ -136,7 +136,15 @@ private $matricula;
         $this->authorize('destroyAeronave', Auth::user());
         Aeronave::find($matricula)->aeronaveValores()->delete();
         $aeronave= Aeronave::find($matricula);
-        $aeronave->delete();
+        $movimentosAssociados= DB::table('movimentos')->select('id')->where('aeronave',$matricula)->get();
+        if($movimentosAssociados->isEmpty()){
+            $aeronave->forceDelete();
+        }
+        else {
+            $aeronave->delete(); // faz soft delete
+
+        }
+
         return redirect()->action('AeronaveController@index');
 
     }

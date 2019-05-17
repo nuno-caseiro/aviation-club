@@ -12,7 +12,7 @@
                <th>Numero de lugares</th>
                <th>Contador de horas</th>
                <th>Preço por hora</th>
-               @can('list',  App\User::class)
+               @can('socio_direcao',  App\User::class)
                <th>Criado em</th>
                <th>Atualizado em</th>
                <th>Apagado em </th>
@@ -33,7 +33,7 @@
                <td>{{$aeronave->updated_at}}</td>
                <td>{{$aeronave->deleted_at}}</td>
                @endcan
-               @can('socio_Direcao',  User::class)
+               @can('socio_Direcao', App\User::class)
                    <td><a class="btn btn-xs btn-primary" href="{{ action('AeronaveController@edit', $aeronave->matricula) }}">Edit</a></td>
 
                <td><form action="{{ action('AeronaveController@destroy', $aeronave->matricula) }}"
