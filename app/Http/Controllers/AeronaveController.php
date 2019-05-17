@@ -117,7 +117,7 @@ private $matricula;
     }
 
     public function destroy($matricula){
-
+        $this->authorize('destroyAeronave', Auth::user());
         Aeronave::find($matricula)->aeronaveValores()->delete();
         $aeronave= Aeronave::find($matricula);
         $aeronave->delete();

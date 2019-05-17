@@ -41,7 +41,15 @@ class UserPolicy
 
     public function normal_list_ativo(User $auth)
     {
-        return $auth->isNormal() || $auth->isAeromodelista() || $auth->isPiloto();
+        return !$auth->isDirecao();
+    }
+
+
+    public function destroyAeronave(User $auth){
+        if ($auth->isDirecao()){
+            return true;
+        }
+        return false;
     }
 
 }

@@ -133,7 +133,7 @@ class UserController extends Controller
 
 	public function destroy($id){
 
-	    //$this->authorize('delete',$id);
+	    $this->authorize('delete',$id);
 		$user= User::find($id);
         $user->delete();
 		return redirect()->action('UserController@index');
