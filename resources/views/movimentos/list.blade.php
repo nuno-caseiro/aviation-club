@@ -10,12 +10,26 @@
         Aeronaves:<br>
 
 
-: id, aeronave, data_inf, data_sup, natureza, confirmado,
+:id, aeronave, data_inf, data_sup, natureza, confirmado,
 piloto, instrutor, meus_movimentos.
+      
+
 
 
 
           <form method="GET" action="{{action('MovimentoController@index')}}">
+
+
+        <label>Movimento ID:</label>
+       <input  name="movimento_id"></input>
+      <div></div>
+
+
+
+
+
+
+                  <label>Aeronaves</label>
                  <select name="aeronave">
                    <option></option>
                 @foreach ($aeronaves as $aeronave)
@@ -24,30 +38,48 @@ piloto, instrutor, meus_movimentos.
 <div></div>
 
 <label>Natureza</label>
-<div>
-  <input type="checkbox" id="instrucao">
-  <label for="I">Instrucao</label>
-</div>
+<input type="checkbox" name="naturezaI" value=I> <label>Instrução</label>
+<input type="checkbox" name="naturezaT" value=T> <label>Treino</label>
+<input type="checkbox" name="naturezaE" value=E> <label>Especial</label>
 
-<div>
-  <input type="checkbox" id="especial" >
-  <label for="E">Especial</label>
-</div>
-<div>
-  <input type="checkbox" id="treino">
-  <label value="T" name="treino">Treino</label>
-</div>      
+
+<div></div>
+              <label>Cofirmado:</label>
+                <input type="radio" name="confirmado" value="1">Confirmado<br>
+                <input type="radio" name="porConfirmar" value="0">Por Confirmar<br>
+
 
 <div></div>
 
-                <select name="confirmado">
+ 
+<label >Socios</label>
+            <select name="piloto">
+              <option></option>
+                @foreach ($users as $socio)
+                    <option value="{{$socio->id}}"> {{ $socio->id }}
+           </option>
+ @endforeach    
+</select>
+
+  
+   <label >Instrutor</label>
+                <select name="instrutor">
                   <option></option>
-                  <option value="0">Por Confirmar</option>
-                   <option value="0">Confirmado</option>
-                </select>
+                    @foreach ($users as $socio)
+                        @if ($socio->tipo_socio=='P' && $socio->instrutor==1)
+                            <option value="{{$socio->id}}"> {{ $socio->id }}</option>
+                        @endif
+                    @endforeach
+
+          </select>
+
+<label>Hora:</label>
+<input type="datetime-local" name="descolar">
+<input type="datetime-local" name="aterrar">
 
 
-<div></div>
+
+
 
 
         <div class="form-group row mb-0">
@@ -59,8 +91,6 @@ piloto, instrutor, meus_movimentos.
             </div>
         </div>
       </form>
-
-
 
 
 

@@ -21,31 +21,56 @@ class MovimentoController extends Controller
 
        // }
 
-
+        $movimento_id=request()->query('movimento_id');
         $aeronave=request()->query('instrucao');
         $confirmado=request()->query('confirmado');
+        $porConfirmar=request()->query('porConfirmar');
         $especial=request()->query('especial');
         $treino=request()->query('treino');
+        $piloto=request()->query('piloto');
+        $instrutor=request()->query('instrutor');
+        $naturezaI=request()->query('naturezaI');
+        $naturezaT=request()->query('naturezaT');
+        $naturezaE=request()->query('naturezaE');
+        $descolar=request()->query('descolar');
+        $aterrar=request()->query('aterrar');
         $filtro = Movimento::where('id','>=','1');
         if (isset($aeronave)) {
             $filtro = $filtro->where('aeronave', $aeronave);
         }
-         if (isset($instrucao) ){
-            $filtro = $filtro->where('I',$instrucao);
+         if (isset($naturezaT) || isset($naturezaI)||isset($naturezaE) ){
+            $natureza=$naturezaT;
+            $filtro = $filtro->where('natureza',$natureza)->orWhere('natureza',$naturezaI)->orWhere('natureza',$naturezaE);
         }
-         if (isset($treino)) {
-            $filtro = $filtro->where('T', $treino);
-        }
-         if (isset($confirmado)) {
+        
+         if (isset($confirmado) || isset($porConfirmar)) {
+                if (isset($confirmado)) {
+                    # code...
             $filtro = $filtro->where('confirmado', $confirmado);
+                }else{
+
+            $filtro = $filtro->where('confirmado', $porConfirmar);
+                }
+
         }
  
- 
+           if (isset($piloto)) {
+            $filtro = $filtro->where('piloto_id',$piloto);
+        }
  
 
+        if (isset($instrutor)) {
+            $filtro = $filtro->where('instrutor_id',$instrutor);
+        }
  
 
+            if (isset($aterrar)&&isset($descolar)) {
+            $filtro = $filtro->where('hora_descolagem','>=',$descolar)->where('hora_aterragem','<=',$aterrar);
+        }
 
+            if (isset($movimento_id)) {//id do movimento
+            $filtro = $filtro->where('id','=',$movimento_id);
+        }
 
         $movimentos = $filtro->paginate(15);
 
@@ -93,8 +118,8 @@ class MovimentoController extends Controller
         $movimentoModel->confirmado=$request->confirmado;
         $movimentoModel->piloto_id=$request->piloto_id;
         $movimentoModel->instrutor_id=$request->instrutor_id;
-         $movimentoModel->tipo_instrucao=$request->tipo_instrucao;
-             //dd($movimentoModel);
+        $movimentoModel->tipo_instrucao=$request->tipo_instrucao;
+         //dd($movimentoModel);
 
          if ($movimentoModel->instrutor_id!=$request->ins) {
              # code...

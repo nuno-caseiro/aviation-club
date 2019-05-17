@@ -53,9 +53,9 @@ tipo_instrucao, instrutor_id
        
             <label>Natureza</label>    
                 <select name="natureza">                 
-                <option value="I">I</option>   
-                <option value="T">T</option>
-                <option value="E">E</option>
+                <option value="I">Instrução</option>   
+                <option value="T">Treino</option>
+                <option value="E">Especial</option>
               </select>
 
        
@@ -145,10 +145,10 @@ tipo_instrucao, instrutor_id
        
           <label>Forma de Pagamento</label>    
                 <select name="modo_pagamento">                 
-                <option value="N">N</option>   
-                <option value="M">M</option>
-                <option value="T">T</option>
-                <option value="P">P</option>
+                <option value="N">Numerario</option>   
+                <option value="M">Multibanco</option>
+                <option value="T">Transferencia</option>
+                <option value="P">Pacote de Horas</option>
               </select>
 
 
@@ -171,16 +171,21 @@ tipo_instrucao, instrutor_id
        
          <label>Tipo Instruçao</label>    
                 <select name="tipo_instrucao">                 
-                <option value="S">I</option>   
-                <option value="D">T</option>
+                <option value="S">Simples</option>   
+                <option value="D">Duplo</option>
               </select>
 
 
 
-         <div>
-            <label for="inputDescolagens">ID  do instrutor</label>
-            <input type="text" name="instrutor_id" id="inputNumDescolagens"  placeholder="ID do instrutor" >
-        </div>
+         <label >Instrutor</label>
+                <select name="instrutor_id">
+                  <option></option>
+                    @foreach ($socios as $socio)
+                        @if ($socio->tipo_socio=='P' && $socio->instrutor==1)
+                            <option value="{{$socio->id}}"> {{ $socio->id }}</option>
+                        @endif
+                    @endforeach
+          </select>
 
 
 
