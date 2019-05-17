@@ -21,9 +21,10 @@
 
             <div><label for="inputSexo">Sexo</label>
                 <select name="sexo" id="inputSexo" >
-                    <option value="F" @if((Auth::user()->can('normal_ativo',Auth::id()))) disabled @endif
+                    <option value="F" @if((Auth::user()->can('socio_normal',App\User::class))) disabled @endif
                         {{ ($user->sexo=="F")? "selected" : "" }}  >Feminino</option>
-                    <option value="M" @if((Auth::user()->can('normal_ativo',Auth::id()))) disabled @endif {{ ($user->sexo=="M")? "selected" : "" }}>Masculino</option>
+                    <option value="M" @if((Auth::user()->can('socio_normal',App\User::class))) disabled @endif
+                            {{ ($user->sexo=="M")? "selected" : "" }}>Masculino</option>
                 </select></div>
 
 
@@ -52,16 +53,16 @@
                 <label for="inputTipoSocio">Tipo de Sócio </label>
                 <select name="tipo_socio" id="inputTipoSocio">
 
-                    <option value="P" @if((Auth::user()->can('normal_ativo',Auth::id()))) disabled @endif {{($user->tipo_socio=="P")? "selected" : "" }}>Piloto</option>
-                    <option value="NP"@if((Auth::user()->can('normal_ativo',Auth::id()))) disabled @endif {{($user->tipo_socio=="NP")? "selected" : "" }}>Não Piloto</option>
-                    <option value="A" @if((Auth::user()->can('normal_ativo',Auth::id()))) disabled @endif{{($user->tipo_socio=="A")? "selected" : "" }}>Aeromodelista</option>
+                    <option value="P" @if((Auth::user()->can('socio_normal',App\User::class))) disabled @endif {{($user->tipo_socio=="P")? "selected" : "" }}>Piloto</option>
+                    <option value="NP"@if((Auth::user()->can('socio_normal',App\User::class))) disabled @endif {{($user->tipo_socio=="NP")? "selected" : "" }}>Não Piloto</option>
+                    <option value="A" @if((Auth::user()->can('socio_normal',App\User::class))) disabled @endif{{($user->tipo_socio=="A")? "selected" : "" }}>Aeromodelista</option>
                 </select>
             </div>
 
             <div>
                 <label for="inputQuotaPaga"  >Quotas em dia</label>
-                <input type="radio" name="quota_paga" value="1" @if((Auth::user()->can('normal_ativo',Auth::id()))) disabled @endif {{ ($user->quota_paga=="1")? "checked" : "" }} > Sim
-                <input type="radio" name="quota_paga" value="0" @if((Auth::user()->can('normal_ativo',Auth::id()))) disabled @endif{{ ($user->quota_paga=="0")? "checked" : "" }}> Não
+                <input type="radio" name="quota_paga" value="1" @if((Auth::user()->can('socio_normal',App\User::class))) disabled @endif {{ ($user->quota_paga=="1")? "checked" : "" }} > Sim
+                <input type="radio" name="quota_paga" value="0" @if((Auth::user()->can('socio_normal',App\User::class))) disabled @endif{{ ($user->quota_paga=="0")? "checked" : "" }}> Não
 
             </div>
 
@@ -72,15 +73,15 @@
 
             <div>
                 <label for="inputAtivo">Sócio Ativo</label>
-                <input type="radio" name="ativo" value="1" @if((Auth::user()->can('normal_ativo',Auth::id()))) disabled @endif {{ ($user->ativo=="1")? "checked" : "" }} > Sim
-                <input type="radio" name="ativo" value="0" @if((Auth::user()->can('normal_ativo',Auth::id()))) disabled @endif{{ ($user->ativo=="0")? "checked" : "" }}> Não
+                <input type="radio" name="ativo" value="1" @if((Auth::user()->can('socio_normal',App\User::class))) disabled @endif {{ ($user->ativo=="1")? "checked" : "" }} > Sim
+                <input type="radio" name="ativo" value="0" @if((Auth::user()->can('socio_normal',App\User::class))) disabled @endif{{ ($user->ativo=="0")? "checked" : "" }}> Não
 
             </div>
 
             <div>
                 <label for="inputDirecao">Direção</label>
-                <input type="radio" name="direcao"  value="1" @if((Auth::user()->can('normal_ativo',Auth::id()))) disabled @endif{{ ($user->direcao=="1")? "checked" : "" }} > Sim
-                <input type="radio" name="direcao" value="0" @if((Auth::user()->can('normal_ativo',Auth::id()))) disabled @endif{{ ($user->direcao=="0")? "checked" : "" }}> Não
+                <input type="radio" name="direcao"  value="1" @if((Auth::user()->can('socio_normal',App\User::class))) disabled @endif{{ ($user->direcao=="1")? "checked" : "" }} > Sim
+                <input type="radio" name="direcao" value="0" @if((Auth::user()->can('socio_normal',App\User::class))) disabled @endif{{ ($user->direcao=="0")? "checked" : "" }}> Não
 
             </div>
 

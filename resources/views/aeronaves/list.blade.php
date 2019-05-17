@@ -28,12 +28,12 @@
                <td>{{$aeronave->num_lugares}}</td>
                <td>{{$aeronave->conta_horas}}</td>
                <td>{{$aeronave->preco_hora}}</td>
-               @can('list',  App\User::class)
+               @can('socio_Direcao',  App\User::class)
                <td>{{$aeronave->created_at}}</td>
                <td>{{$aeronave->updated_at}}</td>
                <td>{{$aeronave->deleted_at}}</td>
                @endcan
-               @cannot('normal_ativo', Auth::id())
+               @can('socio_Direcao',  User::class)
                    <td><a class="btn btn-xs btn-primary" href="{{ action('AeronaveController@edit', $aeronave->matricula) }}">Edit</a></td>
 
                <td><form action="{{ action('AeronaveController@destroy', $aeronave->matricula) }}"
@@ -44,20 +44,22 @@
                    <input  class="btn btn-xs btn-primary" type="submit" value="Delete">
                </form>
                </td>
-               @endcannot
+
 
                <td><a class="btn btn-xs btn-primary" href="{{ action('AeronaveController@pilotosAutorizados', $aeronave->matricula) }}">Pilotos autorizados</a></td>
                <td><a class="btn btn-xs btn-primary" href="{{ action('AeronaveController@precosTempos', $aeronave->matricula) }}">Ver tempos e precos</a></td>
-
+               @endcan
               </tr>
            @endforeach
 
 
           </table>
 
+
+@can('socio_Direcao',  App\User::class)
   <a  class="btn btn-xs btn-primary" href="{{ action('AeronaveController@create') }}">Add Aeronave</a>
 
-
+@endcan
 
 
 
