@@ -9,7 +9,7 @@
         <div class="card-header">Editar Movimento</div>
         <div>
             <label >Aeronave</label>
-            <select name="members">
+            <select name="aeronave">
                 @foreach ($aeronaves as $aeronave)
                     <option value="{{ $aeronave->matricula }}" {{ ( $aeronave->matricula == $movimento->aeronave) ? 'selected' : $movimento->aeronave }}> {{ $aeronave->matricula }} </option>
                 @endforeach    </select>

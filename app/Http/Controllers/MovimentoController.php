@@ -16,12 +16,29 @@ class MovimentoController extends Controller
        // if(Auth::user()->can('list', Auth::user())) {
        //     $movimentos = Movimento::paginate(15);
        // }elseif(Auth::user()->can('normal_ativo', Auth::user())) {
-            $movimentos = Movimento::paginate(15);
+            
+
+
        // }
 
+
+        $aeronave=request()->query('aeronave');
+        $filtro = Movimento::where('id','>=','1');
+        if (isset($aeronave)) {
+            $filtro = $filtro->where('aeronave', $aeronave);
+        }
+ 
+
+
+
+        $movimentos = $filtro->paginate(15);
+
+            
+
+        $aeronaves=Aeronave::all();
         $users=User::all();
         $title = "List of Movimentos";
-        return view('movimentos.list', compact('movimentos', 'title', 'users'));
+        return view('movimentos.list', compact('movimentos', 'title', 'users','aeronaves'));
     }
 
 

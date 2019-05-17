@@ -4,6 +4,37 @@
     <h4>Tabela de Movimentos</h4>
 
    <table class="table table-striped table-bordered" style="width: 100%" id="mydatatable">
+      
+
+     <legend>Filtrar Movimentos:</legend>
+        Aeronaves:<br>
+
+
+
+
+
+
+          <form method="GET" action="{{action('MovimentoController@index')}}">
+                 <select name="aeronave">
+                @foreach ($aeronaves as $aeronave)
+                    <option value="{{ $aeronave->matricula }}"> {{ $aeronave->matricula }} </option>
+                @endforeach    </select>
+        <div class="form-group row mb-0">
+            <div class="col-md-6 offset-md-5">
+                <br>
+                <button type="submit" class="btn btn-primary">
+                    {{ __('Aplicar filtro') }}
+                </button>
+            </div>
+        </div>
+      </form>
+
+
+
+
+
+
+
        <thead>
            <tr>
 
@@ -11,13 +42,13 @@
                <th>Data</th>
                <th>Hora Descolagem</th>
                <th>Hora Aterragem</th>
-               @cannot('normal_ativo', Auth::id())
+             @cannot('normal_ativo', Auth::id())
                <th>Aeronave</th>
                @endcannot
                <th>Numero Diario</th>
                <th>Numero Servico</th>
                <th>Piloto </th>
-               @cannot('normal_ativo', Auth::id())
+                @cannot('normal_ativo', Auth::id())
                <th>Numero Licensa do piloto</th>
                <th>Validade Licensa Piloto</th>
                <th>Tipo Licensa Piloto</th>
@@ -25,7 +56,7 @@
                <th>Validade Certificado Pilot</th>
                <th>Classe Certificado Piloto</th> 
                <th>Natureza</th>
-               @endcannot
+                @endcannot
                <th>Aerodromo Partida</th>
                <th>Aerodromo Chegada</th>
                <th>Numero Aterragens</th>
@@ -33,17 +64,17 @@
                <th>Numero Pessoas</th>
                <th>Conta Horas Inicio</th>
                <th>Conta Horas Fim</th>
-               @cannot('normal_ativo', Auth::id())
+              @cannot('normal_ativo', Auth::id())
                <th>Tempo de Voo</th>
                <th>Preço Voo</th>
                <th>Modo de pagamento</th>
                <th>Numero Recibo</th>
-               @endcannot
+                 @endcannot
                <th>Observacoes</th>
                <th>Confirmado</th>
                <th>Tipo Instrucao</th>
                <th>Instrutor</th>
-               @cannot('normal_ativo', Auth::id())
+                @cannot('normal_ativo', Auth::id())
                <th>Numero Licenca Instrutor</th>
                <th>Validade Lincensa Instrutor</th>
                <th>Tipo Lincesa Instrutor</th>
@@ -52,7 +83,7 @@
                <th>Classe certificado Instrutor</th>
                <th>Criado A</th>
                <th>Updated a</th>
-               @endcannot
+              @endcannot
 
            </tr>
        </thead>
