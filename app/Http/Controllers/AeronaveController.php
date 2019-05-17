@@ -15,11 +15,30 @@ class AeronaveController extends Controller
 private $matricula;
 
     public function index(){
+
+        $this->authorize('listDP', Auth::user());
+
         if(Auth::user()->can('list', Auth::user())) {
             $aeronaves = Aeronave::all();
-        }elseif(Auth::user()->can('normal_ativo', Auth::user())) {
-            $aeronaves = Aeronave::all();
+        }elseif(Auth::user()->can('socioPiloto', Auth::user())) {
+
+
+            //DB::table('aeronaves_pilotos')->insert(['matricula'=>$matricula, 'piloto_id' =>$piloto]);
+            $aeronavesMatriculas= DB::table('aeronaves_pilotos')->select('matricula')->where('piloto_id',Auth::id())->pluck('matricula');
+
+
+            foreach ($aeronavesMatriculas as $matricula){
+                $aeronaves[]=Aeronave::find($matricula);
+
+            }
+
+
+
+
+
+
         }
+
         foreach ($aeronaves as $aeronave){
             $aeronaveValores1= Aeronave::find($aeronave->matricula)->aeronaveValores()->get()->toArray();
             if(!empty($aeronaveValores1)){
@@ -54,9 +73,6 @@ private $matricula;
         ], [ // Custom Messages
             'name.regex' => 'Name must only contain letters and spaces.',
         ]);*/
-
-
-
 
         $aeronave=$request->all()+['conta_horas'=>'0', 'preco_hora'=>$request->precos[9]];
 

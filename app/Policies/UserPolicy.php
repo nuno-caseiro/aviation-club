@@ -33,15 +33,28 @@ class UserPolicy
         return $auth->isDirecao() || $socio->id === $auth->id;
     }
 
+
+
     public function list(User $auth)
     {
         return $auth->isDirecao();
     }
 
+    public function listDP(User $auth)
+    {
+        return $auth->isDirecao()|| $auth->isPiloto();;
+    }
+
+
+    public function socioPiloto(User $auth){
+        return !$auth->isDirecao() && $auth->isPiloto();
+    }
+
+
 
     public function normal_list_ativo(User $auth)
     {
-        return !$auth->isDirecao();
+        return !$auth->isDirecao() ;
     }
 
 

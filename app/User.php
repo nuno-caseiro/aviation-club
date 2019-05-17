@@ -79,7 +79,7 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return $this->tipo_socio === 'P';
     }
-    public function isNormal()
+    public function isNotPiloto()
     {
         return $this->tipo_socio === 'NP';
     }

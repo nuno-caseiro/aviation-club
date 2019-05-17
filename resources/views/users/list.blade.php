@@ -37,7 +37,7 @@
 
     <thead>
             <tr>
-                @cannot('normal_ativo', Auth::id())
+                @cannot('normal_list_ativo',  App\User::class)
                 <th>Id</th>
                 <th>Nome</th>
                 @endcannot
@@ -92,7 +92,7 @@
         @foreach($users as $utilizador)
             <tr>
                {{--<td><img src="{{route('getfile',['user'=>$user->foto_url])}}"></td>--}}
-                @cannot('normal_ativo', Auth::id())
+                @cannot('normal_list_ativo',  App\User::class)
                 <td>{{$utilizador->id}}</td>
                 <td>{{$utilizador->name}}</td>
                 @endcannot
