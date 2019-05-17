@@ -19,7 +19,7 @@ class UserPolicy
         //
     }
 
-
+/*
     public function create(User $auth){
         if ($auth->isDirecao()){
             return true;
@@ -27,32 +27,33 @@ class UserPolicy
         return false;
     }
 
+*/
 
 
-    public function update(User $auth, User $socio){
+    public function update_DirMe(User $auth, User $socio){
         return $auth->isDirecao() || $socio->id === $auth->id;
     }
 
 
 
-    public function list(User $auth)
+    public function socio_Direcao(User $auth)
     {
         return $auth->isDirecao();
     }
 
-    public function listDP(User $auth)
+    public function socio_DP(User $auth)
     {
-        return $auth->isDirecao()|| $auth->isPiloto();;
+        return $auth->isDirecao()|| $auth->isPiloto();
     }
 
 
-    public function socioPiloto(User $auth){
+    public function socio_Piloto(User $auth){
         return !$auth->isDirecao() && $auth->isPiloto();
     }
 
 
 
-    public function normal_list_ativo(User $auth)
+    public function socio_normal(User $auth)
     {
         return !$auth->isDirecao() ;
     }
@@ -63,6 +64,11 @@ class UserPolicy
             return true;
         }
         return false;
+    }
+
+    public function delete_socio(User $auth){
+        return $auth->isDirecao();
+
     }
 
 }

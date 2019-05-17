@@ -16,11 +16,11 @@ private $matricula;
 
     public function index(){
 
-        $this->authorize('listDP', Auth::user());
+        $this->authorize('socio_DP', Auth::user());
 
-        if(Auth::user()->can('list', Auth::user())) {
+        if(Auth::user()->can('socio_Direcao', Auth::user())) {
             $aeronaves = Aeronave::all();
-        }elseif(Auth::user()->can('socioPiloto', Auth::user())) {
+        }elseif(Auth::user()->can('socio_Piloto', Auth::user())) {
 
 
             //DB::table('aeronaves_pilotos')->insert(['matricula'=>$matricula, 'piloto_id' =>$piloto]);

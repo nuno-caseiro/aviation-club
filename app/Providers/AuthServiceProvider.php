@@ -31,7 +31,7 @@ class AuthServiceProvider extends ServiceProvider
 
         //
 
-
+/*
         Gate::define('normal_ativo', function($user){
             return !$user->isDirecao() ;
         });
@@ -43,7 +43,11 @@ class AuthServiceProvider extends ServiceProvider
 
         Gate::define('update', function(User $user, User $auth){
         return $user->isDirecao() || $user->id === $auth->id;
-    });
+
+        });
+*/
+
+}
 
 
 
@@ -51,4 +55,5 @@ class AuthServiceProvider extends ServiceProvider
 
 
     }
-}
+
+

@@ -29,9 +29,10 @@ class UserController extends Controller
         //$users= new \stdClass();
         //$this->authorize('list', User::class);
 
-         if(Auth::user()->can('list', Auth::user())){
+
+         if(Auth::user()->can('socio_Direcao', User::class)){
             $users = User::paginate(15);
-        }elseif(Auth::user()->can('normal_ativo', Auth::user())) {
+        }elseif(Auth::user()->can('socio_normal', User::class)) {
         //$users = User::where('ativo', '=', '1')->paginate(15);
 
         $num_socio=request()->query('num_socio');
@@ -69,7 +70,7 @@ class UserController extends Controller
 	public function edit($id){
 
 
-        if($this->authorize('update', User::find($id), Auth::id())){
+        if($this->authorize('update_DirMe', User::find($id), User::class)){
             $title = "Editar Utilizador ";
             $user= User::find($id);
             return view('users.edit', compact('title', 'user' ));
@@ -113,7 +114,7 @@ class UserController extends Controller
 */
 
 	public function create(){
-        $this->authorize('create', User::class);
+        $this->authorize('socio_Direcao', User::class);
 		$title= "Adicionar Utilizadores";
         $classes= ClassesCertificados::all();
         $licencas =TiposLicencas::all();
@@ -131,7 +132,7 @@ class UserController extends Controller
 
 	public function destroy($id){
 
-	    $this->authorize('delete',$id);
+	    $this->authorize('delete_socio',$id);
 		$user= User::find($id);
         $user->delete();
 		return redirect()->action('UserController@index');
@@ -183,7 +184,7 @@ class UserController extends Controller
 
 	public function update(UserUpdateRequest $request,$socio){
 
-        $this->authorize('create', User::class);
+        $this->authorize('update_DirMe', Auth::user(),User::class);
 		if ($request->has('cancel')) {
             return redirect()->action('UserController@index');
 		}
