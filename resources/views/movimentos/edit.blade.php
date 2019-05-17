@@ -5,7 +5,7 @@
         @method('put')
         @csrf
 
-
+{{$instrutorEsp=null}}
         <div class="card-header">Editar Movimento</div>
         <div>
             <label >Aeronave</label>
@@ -47,24 +47,26 @@
           @if ($movimento->natureza=='I')
         <div></div>
           <label>Tipo Instruçao</label>
-          
+          @if (is_null($movimento->tipo_instrucao))
+          {{$movimento->tipo_instrucao='S'}}  <!--ver se pode ser harcoded -->  
+          @endif
+         
           <select name=tipo_instrucao required>
-            <option value="{{$movimento->tipo_instrucao}}">@if ($movimento->tipo_instrucao=='D')
+            <option value="{{$movimento->tipo_instrucao}}">@if($movimento->tipo_instrucao=='D')
                        Duplo  
                   @endif
                     @if ($movimento->tipo_instrucao=='S')
                         Solo
                     @endif
-                  
                 </option>
-
-                <option value="S">  @if ($movimento->tipo_instrucao=='D')
+                 @if ($movimento->tipo_instrucao=='D')
+                <option value="S"> 
                         Solo
-                    @endif</option>
-
-                    <option value="D">  @if ($movimento->tipo_instrucao=='S')
+                  </option>  @endif
+                  @if($movimento->tipo_instrucao=='S')
+                    <option value="D">
                         Duplo
-                    @endif</option>
+                   </option> @endif
 
           </select>
          @endif
@@ -72,7 +74,7 @@
             <div>
                 <label for="input">Estado</label>
                 <select name=confirmado>
-                    <option value="{{ $movimento->confirmado}}">@if ($movimento->confirmado==1)
+                    <option value="{{ $movimento->confirmado}}">@if($movimento->confirmado==1)
                             Confirmado
                         @endif
                         @if ($movimento->confirmado==0)
@@ -90,7 +92,7 @@
             </div>
 
             <label >Socios</label>
-            <select name="piloto_id"   onchange="return location.reload()">
+            <select name="piloto_id">
                 @foreach ($socios as $socio)
                     <option value="{{$socio->id}}" {{(  $socio->id == $movimento->piloto_id) ? 'selected' : $movimento->piloto_id }}> {{ $socio->id }}
                     </option>
@@ -122,9 +124,9 @@
 
             @endif
 
-
+            @if(!is_null($instrutorEsp))
             <label>{{$instrutorEsp->name}}</label>
-
+            @endif
 
         <div>
             <button type="submit" name="ok">Save</button>

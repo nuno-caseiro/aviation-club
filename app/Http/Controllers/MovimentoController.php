@@ -63,6 +63,11 @@ class MovimentoController extends Controller
          $movimentoModel->tipo_instrucao=$request->tipo_instrucao;
              //dd($movimentoModel);
 
+         if ($movimentoModel->instrutor_id!=$request->ins) {
+             # code...
+         }
+
+
         $movimentoModel->save();
         return redirect()->action('MovimentoController@index');
         //podemos dar nomes às rotas
@@ -72,7 +77,10 @@ class MovimentoController extends Controller
 
     public function create(){
         $title= "Adicionar Movimento";
-        return view('movimentos.create', compact('title'));
+        $aeronaves=Aeronave::all();   
+        $socios=User::all();
+
+        return view('movimentos.create', compact('title','aeronaves','socios'));
     }
 
 
@@ -122,6 +130,7 @@ class MovimentoController extends Controller
         // dd($movimento)  ;
 
         Movimento::create($movimento);
+
         return redirect()->action('MovimentoController@index');
     }
 
