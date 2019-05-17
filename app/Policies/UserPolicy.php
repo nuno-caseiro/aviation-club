@@ -28,6 +28,7 @@ class UserPolicy
     }
 
 
+
     public function update(User $auth, User $socio){
         return $auth->isDirecao() || $socio->id === $auth->id;
     }
