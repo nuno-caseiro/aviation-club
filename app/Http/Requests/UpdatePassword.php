@@ -25,8 +25,8 @@ class UpdatePassword extends FormRequest
     public function rules()
     {
         return [
-            'password' => 'nullable|required_with:password_confirmation|string|confirmed',
-            'current_password' => 'required',
+            'password' => 'nullable|required_with:password_confirmation|string|confirmed|min:8',
+            'old_password' => 'required',
         ];
     }
 
@@ -35,8 +35,8 @@ class UpdatePassword extends FormRequest
         // checks user current password
         // before making changes
         $validator->after(function ($validator) {
-            if ( !Hash::check($this->current_password, $this->user()->password) ) {
-                $validator->errors()->add('current_password', 'Your current password is incorrect.');
+            if ( !Hash::check($this->old_password, $this->user()->password) ) {
+                $validator->errors()->add('old_password', 'Your current password is incorrect.');
             }
         });
         return;

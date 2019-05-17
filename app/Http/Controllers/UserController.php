@@ -132,6 +132,8 @@ class UserController extends Controller
 */
 
 	public function destroy($id){
+
+	    //$this->authorize('delete',$id);
 		$user= User::find($id);
         $user->delete();
 		return redirect()->action('UserController@index');
@@ -157,7 +159,17 @@ class UserController extends Controller
 
 	    //$this->validate(request(),[]);// colocar campos para validar aqui
 
-        //$this->authorize('create', User::class); p as permissoes
+        //$this->authorize('create', User::class);
+
+
+
+        //$image = $request->file('image'); -- deve ser necessario
+       // $name = time().'.'.$image->getClientOriginalExtension();
+
+        //$path = $request->file('image')->storeAs('public/img', $name);
+        // OR
+        // Storage::putFileAs('public/img', $image, $name);
+
 		$user = new User();
         $user->fill($request->all());
         $user->ativo=false;
@@ -176,7 +188,9 @@ class UserController extends Controller
             return redirect()->action('UserController@index');
 		}
 
-       // $this->authorize('update', $user);
+
+
+        //$this->authorize('update', $socio);
 
 		/*$this->validate($request, [
 			'num_socio'=>'required|',

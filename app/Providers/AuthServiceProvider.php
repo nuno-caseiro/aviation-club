@@ -33,7 +33,7 @@ class AuthServiceProvider extends ServiceProvider
 
 
         Gate::define('normal_ativo', function($user){
-            return $user->isNormal() || $user->isAeromodelista() || $user->isPiloto();
+            return !$user->isDirecao() ;
         });
 
 

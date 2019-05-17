@@ -31,15 +31,15 @@
                             {{ csrf_field() }}
                             {{ method_field('PATCH') }}
 
-                            <div class="form-group{{ $errors->has('current_password') ? ' has-error' : '' }}">
-                                <label for="current-password" class="col-md-4 control-label">Current Password</label>
+                            <div class="form-group{{ $errors->has('old_password') ? ' has-error' : '' }}">
+                                <label for="old-password" class="col-md-4 control-label">Current Password</label>
 
                                 <div class="col-md-6">
-                                    <input id="current-password" type="password" class="form-control" name="current_password">
+                                    <input id="old-password" type="password" class="form-control" name="old_password">
 
-                                    @if ($errors->has('current_password'))
+                                    @if ($errors->has('old_password'))
                                         <span class="help-block">
-                                        <strong>{{ $errors->first('current_password') }}</strong>
+                                        <strong>{{ $errors->first('old_password') }}</strong>
                                     </span>
                                     @endif
                                 </div>
