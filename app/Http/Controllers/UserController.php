@@ -74,45 +74,15 @@ class UserController extends Controller
         $this->authorize('update_DirMe', User::findOrFail($id), User::class);
             $title = "Editar Utilizador ";
             $user= User::findOrFail($id);
+
+
+
+
+
             return view('users.edit', compact('title', 'user' ));
-
-
-
-
-
-        //return view('users.edit', compact('title', 'user' ));
 
 	}
 
-/*    public function edit(User $id) testar este
-    {
-        $this->authorize('update', $id);
-        return view('users.edit', compact('user'));
-    }
-*/
-/*
-    public function update(UpdateUserRequest $request, User $user)
-    {
-        $this->authorize('update', $user);
-        $user->fill($request->validated());
-        $user->save();
-
-        return redirect()
-            ->route('users.index')
-            ->with('success', 'User updated successfully!');
-    }
-
-    public function destroy(User $user)
-    {
-        $this->authorize('delete', $user);
-
-        $user->delete();
-        return redirect()
-            ->route('users.index')
-            ->with('success', 'User deleted successfully!');
-    }
-
-*/
 
 	public function create(){
         $this->authorize('socio_Direcao', User::class);
@@ -122,14 +92,6 @@ class UserController extends Controller
         return view('users.create', compact('title', 'classes', 'licencas'));
 
 	}
-/*
-	public function create(){
-		$this->authorize('create', User::class);
-
-        $user = new User;
-        return view('users.add', compact('user'));
-	}
-*/
 
 	public function destroy($id){
 
@@ -147,38 +109,24 @@ class UserController extends Controller
 		
 		//return redirect()->route('users.list')->with('success', 'User deleted successfully'); -- testar
 	}
-/*
-	public function store(Request $request){
-		if ($request->has('cancel')) {
-            return redirect()->action('UserController@index');
-		}
-		
-		$user=$request->all();
 
-       User::create($user);
-        return redirect()->action('UserController@index');
-
-
-	}
-	*/
 
 	public function store(UserStoreRequest $request, User $user){ // depois de login meter ou so Request
 
 	    //$this->validate(request(),[]);// colocar campos para validar aqui
 
-        $this->authorize('create', User::class);
+        $this->authorize('socio_Direcao', User::class);
 
 
 
-        //$image = $request->file('image'); -- deve ser necessario
-       // $name = time().'.'.$image->getClientOriginalExtension();
+        $image = $request->file('image');
+        $name = time().'.'.$image->getClientOriginalExtension();
 
-        //$path = $request->file('image')->storeAs('public/img', $name);
-        // OR
-        // Storage::putFileAs('public/img', $image, $name);
+        $path = $request->file('image')->storeAs('public/img', $name);
 
 		$user = new User();
         $user->fill($request->all());
+        $user->foto_url = $name;
         $user->ativo=false;
         $user->password_inicial=true;
         $user->password = Hash::make($request->data_nascimento);
@@ -199,19 +147,35 @@ class UserController extends Controller
 
 
 
-        //$this->authorize('update', $socio);
-
-		/*$this->validate($request, [
-			'num_socio'=>'required|',
+        /*$this->validate($request, [
+            'num_socio'=>'required|',
             'name' => 'required|alpha_dash',
             'email' => 'required|email',
             'type' => 'required|between:0,2'
-		]);
-		
-		*/
+        ]);
+
+        */
+
+
+
+
 
 		$user = User::findOrFail($socio);
+        if(! is_null($request['image'])) {
+            $image = $request->file('image');
+            $name = time().'.'.$image->getClientOriginalExtension();
+
+            $path = $request->file('image')->storeAs('public/img', $name);
+            // OR
+
+            // Storage::putFileAs('public/img', $image, $name);
+            $user->foto_url = $name;
+
+        }
         $user->fill($request->except('password'));
+
+
+
         $user->save();
 
 

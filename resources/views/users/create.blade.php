@@ -1,8 +1,11 @@
 @extends('master')
 @section('content')
 
+    @if (count($errors) > 0)
+        @include('shared.errors')
+    @endif
 
-<form action="{{action('UserController@store')}}" method="post">
+<form action="{{action('UserController@store')}}" method="post" enctype="multipart/form-data">
     @csrf
     <div>
         <label for="inputNumSocio">Numero de Sócio</label>
@@ -147,9 +150,12 @@
 
     </div>
 
-    <div>
-        <label for="inputFileFoto">Foto sócio </label>
-        <input type="file" name="file_foto">
+
+
+
+    <div><label for="image">Foto</label>
+
+        <input type="file" name="image" accept="image/*">
     </div>
 
     <div>

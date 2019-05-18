@@ -25,8 +25,6 @@ class UserUpdateRequest extends FormRequest
     public function rules()
     {
         return [
-            //'name' => 'required|alpha_dash',
-            //'email' => 'required|email'
         ];
     }
 }
