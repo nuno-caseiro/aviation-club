@@ -4,6 +4,8 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\Rule;
+
 
 class UserUpdateRequest extends FormRequest
 {
@@ -25,6 +27,16 @@ class UserUpdateRequest extends FormRequest
     public function rules()
     {
         return [
+            'name' => 'required|alpha_spaces', //teste
+            'nome_informal' => 'required|max:40',
+            'nif' => 'max:9',
+            'telefone'=> 'max:20',
+           // 'email'=>'email|unique:users,email,'.$this->user()->id, //check //apenas o user atual
+            'email' => [
+                'required',
+                Rule::unique('users')->ignore($this->user()->id),
+            ],
+
         ];
     }
 }

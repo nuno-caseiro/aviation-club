@@ -119,10 +119,10 @@ class UserController extends Controller
 
 
 
-        $image = $request->file('image');
+        $image = $request->file('file_foto');
         $name = time().'.'.$image->getClientOriginalExtension();
 
-        $path = $request->file('image')->storeAs('public/img', $name);
+        $path = $request->file('file_foto')->storeAs('public/img', $name);
 
 		$user = new User();
         $user->fill($request->all());
@@ -161,18 +161,22 @@ class UserController extends Controller
 
 
 		$user = User::findOrFail($socio);
-        if(! is_null($request['image'])) {
-            $image = $request->file('image');
+        if(! is_null($request['file_foto'])) {
+            $image = $request->file('file_foto');
             $name = time().'.'.$image->getClientOriginalExtension();
 
-            $path = $request->file('image')->storeAs('public/img', $name);
+            $path = $request->file('file_foto')->storeAs('public/img', $name);
             // OR
 
             // Storage::putFileAs('public/img', $image, $name);
             $user->foto_url = $name;
 
         }
-        $user->fill($request->except('password'));
+
+
+            $user->fill($request->except('password'));
+
+
 
 
 

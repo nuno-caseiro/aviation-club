@@ -1,8 +1,12 @@
 @extends('master')
 @section('content')
 
-    <form action="{{action('UserController@update', $user->id)}}" method="post" enctype="multipart/form-data">
-        @method('put')
+    @if (count($errors) > 0)
+        @include('shared.errors')
+    @endif
+
+    <form method="POST" action="{{route('socios.update', $user->id)}}" enctype="multipart/form-data">
+        @method('PUT')
         @csrf
 
         <div>
@@ -29,8 +33,8 @@
 
 
             <div>
-                <label for="inputDataNascimento">Data nascimento</label>
-                <input type="date" name="data_nascimento" id="inputDataNascimento" value="{{$user->data_nascimento}}">
+                <label >Data nascimento</label>
+                <input type="date" name="data_nascimento" value="{{$user->data_nascimento}}">
             </div>
 
             <div>
@@ -69,7 +73,8 @@
 
             <div>
                 <label for="inputEndereco">Endereço</label>
-                <input type="text" name="endereco" id="inputEndereco" placeholder="Endereco" value="{{$user->endereco}}">  </div>
+                <textarea type="text" name="endereco" id="inputEndereco">{{$user->endereco}} </textarea>
+            </div>
 
             <div>
                 <label for="inputAtivo">Sócio Ativo</label>
@@ -87,9 +92,9 @@
 
 
 
-            <div><label for="image">Foto</label>
+            <div><label for="file_foto">Foto</label>
 
-                <input type="file" name="image" accept="image/*">
+                <input type="file" name="file_foto" accept="image/*">
             </div>
 
         </div>
