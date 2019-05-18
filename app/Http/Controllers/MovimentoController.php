@@ -25,7 +25,7 @@ class MovimentoController extends Controller
         $movimento_id=request()->query('movimento_id');
         $aeronave=request()->query('instrucao');
         $confirmado=request()->query('confirmado');
-        $porConfirmar=request()->query('porConfirmar');
+
         $especial=request()->query('especial');
         $treino=request()->query('treino');
         $piloto=request()->query('piloto');
@@ -44,13 +44,13 @@ class MovimentoController extends Controller
             $filtro = $filtro->where('natureza',$natureza)->orWhere('natureza',$naturezaI)->orWhere('natureza',$naturezaE);
         }
         
-         if (isset($confirmado) || isset($porConfirmar)) {
-                if (isset($confirmado)) {
+         if (isset($confirmado)) {
+                if ($confirmado=='1') {
                     # code...
             $filtro = $filtro->where('confirmado', $confirmado);
                 }else{
 
-            $filtro = $filtro->where('confirmado', $porConfirmar);
+            $filtro = $filtro->where('confirmado', $confirmado);
                 }
 
         }

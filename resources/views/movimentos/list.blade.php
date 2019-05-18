@@ -45,10 +45,8 @@ piloto, instrutor, meus_movimentos.
 
 <div></div>
               <label>Cofirmado:</label>
-                <input type="radio" name="confirmado" value="1">Confirmado<br>
-                <input type="radio" name="porConfirmar" value="0">Por Confirmar<br>
-
-
+                <input type="radio" name="confirmado" value="1"><label for="confirmado" class="light">Confirmado</label>
+                <input type="radio" name="confirmado" value="0"><label for="confirmado" class="light">Por Confirmar</label>
 <div></div>
 
  
