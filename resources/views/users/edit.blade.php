@@ -87,9 +87,9 @@
 
 
 
-            <div><label for="inputFoto">Foto</label>
+            <div><label for="image">Foto</label>
 
-                <input type="file" name="foto" accept="image/*">
+                <input type="file" name="image" accept="image/*">
             </div>
 
         </div>
