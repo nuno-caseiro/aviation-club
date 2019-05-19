@@ -13,8 +13,7 @@
 
     <form method="GET" action="{{action('UserController@index')}}">
 
-        <legend>Filtrar sócios:</legend>
-
+        <legend>Filtrar sócios</legend>
         <div>
             Número sócio:
             <input id="num_socio" type="text" class="form-control{{ $errors->has('num_socio') ? ' is-invalid' : '' }}" name="num_socio" value="{{ old('num_socio') }}"  autofocus>
@@ -29,6 +28,7 @@
        </div>
 
        <div>
+           Tipo de Sócio :
            <select name="tipo" id="inputTipoSocio">
                <option  value=""></option>
                <option  value="P">Piloto</option>
@@ -40,6 +40,15 @@
             Direção:
             <input id="direcao" type="text" class="form-control{{ $errors->has('direcao') ? ' is-invalid' : '' }}" name="direcao" value="" >
         </div>
+
+        @can('socio_Direcao', App\User::class)
+            <div>Quotas em dia:
+                <input id="quota_paga" type="text" class="form-control{{ $errors->has('quota_paga') ? ' is-invalid' : '' }}" name="quota_paga" value="{{ old('quota_paga') }}" ></div>
+            <div>
+            Sócio ativo: <br>
+                <input id="ativo" type="text" class="form-control{{ $errors->has('ativo') ? ' is-invalid' : '' }}" name="ativo" value="{{ old('ativo') }}" >
+            </div>
+        @endcan
 
         <div class="form-group row mb-0">
             <div class="col-md-6 offset-md-5">
@@ -135,8 +144,17 @@
                 @endcannot
                 <td>{{$utilizador->tipo_socio}}</td>
                 @cannot('socio_normal', App\User::class)
-                <td>{{$utilizador->quota_paga}}</td>
-                <td>{{$utilizador->ativo}}</td>
+                @if($utilizador->quota_paga==1)
+                    <td>Sim</td>
+                @else
+                    <td>Não</td>
+                @endif
+               @if($utilizador->ativo==1)
+                   <td>Sim</td>
+                @else
+                   <td>Não</td>
+                @endif
+
                 <td>{{$utilizador->password_inicial}}</td>
                 @endcannot
                 @if($utilizador->direcao==1)
@@ -156,7 +174,11 @@
                 @endif
                 @cannot('socio_normal', App\User::class)
                 <td>{{$utilizador->tipo_licenca}}</td>
-                <td>{{$utilizador->instrutor}}</td>
+                @if($utilizador->instrutor==1)
+                <td>Sim</td>
+                    @else
+                    <td>Não</td>
+                @endif
                 <td>{{$utilizador->aluno}}</td>
                 <td>{{$utilizador->validade_licenca}}</td>
                 <td>{{$utilizador->licenca_confirmada}}</td>

@@ -91,7 +91,7 @@ class MovimentoController extends Controller
     {
 
         $title = "Editar movimentos ";
-        $movimento= Movimento::find($id);
+        $movimento= Movimento::findOrFail($id);
         $aeronaves=Aeronave::all();
         $socios=User::all();
 
@@ -109,7 +109,7 @@ class MovimentoController extends Controller
             return redirect()->action('MovimentoController@index');
         }
         //falta validacao
-        $movimentoModel= Movimento::find($id);
+        $movimentoModel= Movimento::findOrFail($id);
 
         //dd($request->all());
         //protected $fillable = ['id', 'aeronave', 'data_inf??', ' data_sup??', 'natureza', 'confirmado???','piloto??','instrutor??','meus_movimentos??'];
@@ -206,7 +206,7 @@ class MovimentoController extends Controller
 
 
     public function destroy($id){
-        $movimento= Movimento::find($id);
+        $movimento= Movimento::findOrFail($id);
         $movimento->delete();
 
 

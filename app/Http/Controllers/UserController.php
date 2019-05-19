@@ -33,43 +33,92 @@ class UserController extends Controller
 
 
          if(Auth::user()->can('socio_Direcao', User::class)){
-            $users = User::paginate(15);
-        }elseif(Auth::user()->can('socio_normal', User::class)) {
-        //$users = User::where('ativo', '=', '1')->paginate(15);
+             $num_socio=request()->query('num_socio');
+             $nome_informal=request()->query('nome_informal');
+             $email=request()->query('email');
+             $tipo=request()->query('tipo');
+             $direcao=request()->query('direcao');
+             $quota_paga=request()->query('quota_paga');
+             $ativo=request()->query('ativo');
+             $filtro = User::where('ativo','>=','0');
+
+             if (isset($num_socio)) {
+                 $filtro = $filtro->where('num_socio', $num_socio);
+             }
+             if (isset($nome_informal)) {
+                 $filtro = $filtro->where('nome_informal', 'like','%'.$nome_informal.'%');
+             }
+             if (isset($email)) {
+                 $filtro = $filtro->where('email', 'like','%'.$email.'%');
+             }
+             if (isset($tipo)) {
+                 $filtro = $filtro->where('tipo_socio', $tipo);
+             }
+             if (isset($direcao)) {
+                 $filtro = $filtro->where('direcao', $direcao);
+             }
+             if(isset($quota_paga)){
+                 $filtro=$filtro->where('quota_paga',$quota_paga);
+             }
+             if(isset($ativo)){
+                 $filtro=$filtro->where('ativo',$ativo);
+             }
+
+             {
+                 $users =$filtro->paginate(15)->appends([
+                     'num_socio' => request('num_socio'),
+                     'nome_informal' => request('nome_informal'),
+                     'email' => request('email'),
+                     'tipo' => request('tipo'),
+                     'direcao' => request('direcao'),
+                     'quota_paga' => request('quota_paga'),
+                     'ativo' => request('ativo'),
+
+                 ]);
+             }
 
 
-        $num_socio=request()->query('num_socio');
-        $nome_informal=request()->query('nome_informal');
-        $email=request()->query('email');
-        $tipo=request()->query('tipo');
-        $direcao=request()->query('direcao');
-         // $filtro=  DB::table('users')->select(['num_socio', 'nome_informal', 'foto_url', 'email', 'telefone', 'tipo_socio', 'num_licenca', 'direcao'])->whereNull('deleted_at')->where('ativo',1);
-        $filtro = User::whereNull('deleted_at')->where('ativo','1');
-
-        if (isset($num_socio)) {
-            $filtro = $filtro->where('num_socio', $num_socio);
-        }
-        if (isset($nome_informal)) {
-            $filtro = $filtro->where('nome_informal', 'like','%'.$nome_informal.'%');
-        }
-        if (isset($email)) {
-            $filtro = $filtro->where('email', 'like', '%'.$email.'%');
-        }
-        if (isset($tipo)) {
-            $filtro = $filtro->where('tipo_socio', $tipo);
-        }
-        if (isset($direcao)) {
-            $filtro = $filtro->where('direcao', $direcao);
-        }
+        }elseif(Auth::user()->can('socio_normal', App\User::class)) {
+             //$users = User::where('ativo', '=', '1')->paginate(15);
 
 
-            $users=$filtro->paginate(100);
+             $num_socio = request()->query('num_socio');
+             $nome_informal = request()->query('nome_informal');
+             $email = request()->query('email');
+             $tipo = request()->query('tipo');
+             $direcao = request()->query('direcao');
+             // $filtro=  DB::table('users')->select(['num_socio', 'nome_informal', 'foto_url', 'email', 'telefone', 'tipo_socio', 'num_licenca', 'direcao'])->whereNull('deleted_at')->where('ativo',1);
+             $filtro = User::whereNull('deleted_at')->where('ativo', '1');
 
+             if (isset($num_socio)) {
+                 $filtro = $filtro->where('num_socio', $num_socio);
+             }
+             if (isset($nome_informal)) {
+                 $filtro = $filtro->where('nome_informal', 'like', '%' . $nome_informal . '%');
+             }
+             if (isset($email)) {
+                 $filtro = $filtro->where('email', 'like', '%' . $email . '%');
+             }
+             if (isset($tipo)) {
+                 $filtro = $filtro->where('tipo_socio', $tipo);
+             }
+             if (isset($direcao)) {
+                 $filtro = $filtro->where('direcao', $direcao);
+             }
 
-         }else{
-             $users = User::paginate(15);
+             {
+
+                 $users = $filtro->paginate(15)->appends([
+                     'num_socio' => request('num_socio'),
+                     'nome_informal' => request('nome_informal'),
+                     'email' => request('email'),
+                     'tipo' => request('tipo'),
+                     'direcao' => request('direcao'),
+
+                 ]);
+             }
+
          }
-
 
         $title="Lista de utilizadores";
         return view('users.list', compact('users','title'));

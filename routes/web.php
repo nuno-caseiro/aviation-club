@@ -62,6 +62,9 @@ Route::middleware('verified')->group(function () {
 Route::get('/password', 'UserController@showEditPassword')->name('showEditPassword');
 Route::patch('/password', 'UserController@editPassword')->name('editPassword');
 
+//Route::get('pilotos/{piloto}/certificado','');
+//Route::get('pilotos/{piloto}/certificado','');
+
 
 Route::get('/home', 'HomeController@index')->name('home');
 
