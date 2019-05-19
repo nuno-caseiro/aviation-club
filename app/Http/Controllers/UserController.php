@@ -78,7 +78,7 @@ class UserController extends Controller
 */
 
 
-        }elseif(Auth::user()->can('socio_normal', Auth::user())) {
+        }elseif(Auth::user()->can('socio_normal', App\User::class)) {
              //$users = User::where('ativo', '=', '1')->paginate(15);
 
 
@@ -116,10 +116,8 @@ class UserController extends Controller
                      'direcao' => request('direcao'),
 
                  ]);
+             }
 
-
-         }else{
-             $users= User::paginate(15);
          }
 
         $title="Lista de utilizadores";
