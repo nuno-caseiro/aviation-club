@@ -97,6 +97,9 @@
 
 
             @can('socio_DP', App\User::class)
+                @if($user->tipo_socio!='P')
+
+                @else
                 <div>
                     <label for="inputNrLicenca"> Número de licença </label>
                     <input type="text" name="num_licenca" id="inputNrLicenca" @if((Auth::user()->can('socio_piloto',App\User::class))) disabled @endif value="{{$user->num_licenca}}">
@@ -155,7 +158,11 @@
                     <label for=""> Cópia digital certificado </label>
                 </div>
 
+                    @endif
+
                 @endcan
+
+
 
         </div>
         <div>

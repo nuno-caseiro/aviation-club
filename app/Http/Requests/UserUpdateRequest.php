@@ -30,7 +30,7 @@ class UserUpdateRequest extends FormRequest
             'name' => 'required|alpha_spaces', //teste
             'nome_informal' => 'required|max:40',
             'nif' => 'max:9',
-            'telefone'=> 'max:20',
+            'telefone'=> 'max:14',
             'num_socio' => 'required|max:11',
             'file_foto' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'data_nascimento' => 'required',

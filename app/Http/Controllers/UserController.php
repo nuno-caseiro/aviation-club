@@ -78,7 +78,7 @@ class UserController extends Controller
              }
 
 
-        }elseif(Auth::user()->can('socio_normal', App\User::class)) {
+        }elseif(Auth::user()->can('socio_normal',Auth::user())) { // pq nao User::class??
              //$users = User::where('ativo', '=', '1')->paginate(15);
 
 
@@ -89,6 +89,7 @@ class UserController extends Controller
              $direcao = request()->query('direcao');
              // $filtro=  DB::table('users')->select(['num_socio', 'nome_informal', 'foto_url', 'email', 'telefone', 'tipo_socio', 'num_licenca', 'direcao'])->whereNull('deleted_at')->where('ativo',1);
              $filtro = User::whereNull('deleted_at')->where('ativo', '1');
+
 
              if (isset($num_socio)) {
                  $filtro = $filtro->where('num_socio', $num_socio);
@@ -108,6 +109,7 @@ class UserController extends Controller
 
              {
 
+
                  $users = $filtro->paginate(15)->appends([
                      'num_socio' => request('num_socio'),
                      'nome_informal' => request('nome_informal'),
@@ -116,12 +118,17 @@ class UserController extends Controller
                      'direcao' => request('direcao'),
 
                  ]);
+
              }
 
-         }
 
-        $title="Lista de utilizadores";
-        return view('users.list', compact('users','title'));
+
+             }
+
+
+             $title = "Lista de utilizadores";
+             return view('users.list', compact('users', 'title'));
+
 
 	}
 	
