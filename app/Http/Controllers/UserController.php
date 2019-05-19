@@ -71,13 +71,9 @@ class UserController extends Controller
 	
 	public function edit($id){
 
-        $this->authorize('update_DirMe', User::findOrFail($id), User::class);
+        $this->authorize('update_DirMe',User::findOrFail($id),App\User::class );
             $title = "Editar Utilizador ";
             $user= User::findOrFail($id);
-
-
-
-
 
             return view('users.edit', compact('title', 'user' ));
 
@@ -140,22 +136,10 @@ class UserController extends Controller
 
 	public function update(UserUpdateRequest $request,$socio){
 
-        $this->authorize('update_DirMe', Auth::user(),User::class);
+        $this->authorize('update_DirMe', User::findOrFail($socio),App\User::class);
 		if ($request->has('cancel')) {
             return redirect()->action('UserController@index');
 		}
-
-
-
-        /*$this->validate($request, [
-            'num_socio'=>'required|',
-            'name' => 'required|alpha_dash',
-            'email' => 'required|email',
-            'type' => 'required|between:0,2'
-        ]);
-
-        */
-
 
 
 
@@ -163,13 +147,13 @@ class UserController extends Controller
 		$user = User::findOrFail($socio);
         if(! is_null($request['file_foto'])) {
             $image = $request->file('file_foto');
-            $name = time().'.'.$image->getClientOriginalExtension();
+            $newFotoUrl = time().'.'.$image->getClientOriginalExtension();
 
-            $path = $request->file('file_foto')->storeAs('public/img', $name);
+            $path = $request->file('file_foto')->storeAs('public/img', $newFotoUrl);
             // OR
 
             // Storage::putFileAs('public/img', $image, $name);
-            $user->foto_url = $name;
+            $user->foto_url = $newFotoUrl;
 
         }
 

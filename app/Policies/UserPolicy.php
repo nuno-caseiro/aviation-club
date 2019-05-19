@@ -31,7 +31,7 @@ class UserPolicy
 
 
     public function update_DirMe(User $auth, User $socio){
-        return ($auth->isDirecao() || $socio->id === $auth->id) && $auth->isAtivo() ;
+        return ($auth->isDirecao() || $socio->id == $auth->id) && $auth->isAtivo() ;
     }
 
 
