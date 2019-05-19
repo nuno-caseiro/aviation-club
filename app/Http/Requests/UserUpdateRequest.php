@@ -42,8 +42,8 @@ class UserUpdateRequest extends FormRequest
             'tipo_licenca'=>'exists:users,tipo_licenca',
             'num_certificado'=> 'max:30',
             'classe_certificado'=>'exists:users,classe_certificado',
-            'validade_licenca' => 'nullable|date_format:Y-m-d',
-            'validade_certificado' => 'date',
+            'validade_licenca' => 'date_format:Y-m-d',
+            'validade_certificado' => 'date_format:Y-m-d',
 
 
 
