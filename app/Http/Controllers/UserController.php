@@ -29,7 +29,7 @@ class UserController extends Controller
     {
 
         //$users= new \stdClass();
-        //$this->authorize('list', User::class);
+        $this->authorize('listarUsers', Auth::user());
 
 
          if(Auth::user()->can('socio_Direcao', User::class)){
@@ -42,7 +42,8 @@ class UserController extends Controller
         $email=request()->query('email');
         $tipo_socio=request()->query('tipo_socio');
         $direcao=request()->query('direcao');
-        $filtro = User::where('ativo','=','1');
+          $filtro=  DB::table('users')->select(['num_socio', 'nome_informal', 'foto_url', 'email', 'telefone', 'tipo_socio', 'num_licenca', 'direcao'])->whereNull('deleted_at')->where('ativo',1);
+        //$filtro = User::whereNull('deleted_at')->where('ativo','1');
 
         if (isset($num_socio)) {
             $filtro = $filtro->where('num_socio', $num_socio);
@@ -60,8 +61,12 @@ class UserController extends Controller
             $filtro = $filtro->where('direcao', $direcao);
         }
 
+
             $users=$filtro->paginate(15);
-        }
+
+        }else{
+             $users = User::paginate(15);
+         }
 
 
         $title="Lista de utilizadores";

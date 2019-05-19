@@ -51,11 +51,15 @@ class UserPolicy
         return !$auth->isDirecao() && $auth->isPiloto();
     }
 
+    public function listarUsers(User $auth){
+        return  $auth->isAtivo() && $auth->NotSoftDeleted() ;
+    }
+
 
 
     public function socio_normal(User $auth)
     {
-        return !$auth->isDirecao() ;
+        return !$auth->isDirecao() && !$auth->isPiloto() ;
     }
 
 
