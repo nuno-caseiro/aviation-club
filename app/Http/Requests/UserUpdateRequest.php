@@ -34,16 +34,18 @@ class UserUpdateRequest extends FormRequest
             'num_socio' => 'required|max:11',
             'file_foto' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'data_nascimento' => 'required',
-           /* 'tipo_socio'=> 'required',
-            'quota_paga'=> 'required',
-            'ativo'=> 'required',
-            'direcao' =>'required',*/
-
-           // 'email'=>'email|unique:users,email,'.$this->user()->id, //check //apenas o user atual
             'email' => [
                 'email', 'required',
                 Rule::unique('users')->ignore($this->user()->id),
             ],
+            'num_licenca'=>'max:30',
+            'tipo_licenca'=>'exists:users,tipo_licenca',
+            'num_certificado'=> 'max:30',
+            'classe_certificado'=>'exists:users,classe_certificado',
+            'validade_licenca' => 'nullable|date_format:Y-m-d',
+            'validade_certificado' => 'date',
+
+
 
         ];
     }

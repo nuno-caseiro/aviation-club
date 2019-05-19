@@ -20,7 +20,7 @@ Route::get('/', function () {
 
 Route::get('/home', 'HomeController@index')->middleware('auth')->name('home');
 //aeronaves
-Route::get('aeronaves', 'AeronaveController@index');//->middleware('auth'); //vê se está autenticado
+Route::get('/aeronaves', 'AeronaveController@index');//->middleware('auth'); //vê se está autenticado
 Route::get('aeronaves/create', 'AeronaveController@create');
 Route::post('aeronaves', 'AeronaveController@store');
 Route::get('aeronaves/{aeronave}/edit','AeronaveController@edit');

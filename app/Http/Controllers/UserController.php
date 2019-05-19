@@ -29,10 +29,10 @@ class UserController extends Controller
     {
 
         //$users= new \stdClass();
-        $this->authorize('listarUsers', Auth::user());
+        $this->authorize('listar', Auth::user());
 
 
-         if(Auth::user()->can('socio_Direcao', User::class)){
+         if(Auth::user()->can('socio_Direcao', Auth::user())){
              $num_socio=request()->query('num_socio');
              $nome_informal=request()->query('nome_informal');
              $email=request()->query('email');
@@ -64,8 +64,8 @@ class UserController extends Controller
                  $filtro=$filtro->where('ativo',$ativo);
              }
 
-             {
-                 $users =$filtro->paginate(15)->appends([
+
+                 $users =$filtro->paginate(15);/*->appends([
                      'num_socio' => request('num_socio'),
                      'nome_informal' => request('nome_informal'),
                      'email' => request('email'),
@@ -75,10 +75,10 @@ class UserController extends Controller
                      'ativo' => request('ativo'),
 
                  ]);
-             }
+*/
 
 
-        }elseif(Auth::user()->can('socio_normal', App\User::class)) {
+        }elseif(Auth::user()->can('socio_normal', Auth::user())) {
              //$users = User::where('ativo', '=', '1')->paginate(15);
 
 
@@ -106,7 +106,7 @@ class UserController extends Controller
                  $filtro = $filtro->where('direcao', $direcao);
              }
 
-             {
+
 
                  $users = $filtro->paginate(15)->appends([
                      'num_socio' => request('num_socio'),
@@ -116,8 +116,10 @@ class UserController extends Controller
                      'direcao' => request('direcao'),
 
                  ]);
-             }
 
+
+         }else{
+             $users= User::paginate(15);
          }
 
         $title="Lista de utilizadores";

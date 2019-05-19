@@ -16,7 +16,7 @@ private $matricula;
 
     public function index(){
 
-        $this->authorize('socio_DP', Auth::user());
+        $this->authorize('listar', Auth::user());
 
         if(Auth::user()->can('socio_Direcao', Auth::user())) {
             $aeronaves = Aeronave::all();
@@ -36,6 +36,9 @@ private $matricula;
 
 
 
+
+        }else{
+            $aeronaves = Aeronave::all();
 
         }
 

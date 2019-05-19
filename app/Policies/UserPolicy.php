@@ -51,7 +51,7 @@ class UserPolicy
         return !$auth->isDirecao() && $auth->isPiloto();
     }
 
-    public function listarUsers(User $auth){
+    public function listar(User $auth){
         return  $auth->isAtivo() && $auth->NotSoftDeleted() ;
     }
 
