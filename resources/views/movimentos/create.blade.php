@@ -11,7 +11,7 @@ num_pessoas, conta_horas_inicio, conta_horas_fim, tempo_voo,
 preco_voo, modo_pagamento, num_recibo, observacoes,
 tipo_instrucao, instrutor_id
          
-  
+
  <div>Date:</div></label><input type="date" name="data" >
 
  <div>Hora Descolagem:</div><input min="date" type="datetime-local" name="hora_descolagem">
@@ -187,7 +187,7 @@ tipo_instrucao, instrutor_id
 
 
 
-         <label >Instrutor</label>
+         <label>Instrutor</label>
                 <select name="instrutor_id">
                   <option></option>
                     @foreach ($socios as $socio)
@@ -205,7 +205,6 @@ tipo_instrucao, instrutor_id
               <button type="submit" name="ok">Save</button>
 
           </div>
-
 
 
 
