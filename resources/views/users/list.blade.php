@@ -14,16 +14,33 @@
     <form method="GET" action="{{action('UserController@index')}}">
 
         <legend>Filtrar sócios:</legend>
-        Número sócio:<br>
-        <input id="num_socio" type="text" class="form-control{{ $errors->has('num_socio') ? ' is-invalid' : '' }}" name="num_socio" value="{{ old('num_socio') }}"  autofocus>
-        Nome informal:<br>
-        <input id="nome_informal" type="text" class="form-control{{ $errors->has('nome_informal') ? ' is-invalid' : '' }}" name="nome_informal" value="{{ old('nome_informal') }}"  autofocus>
-        E-mail:<br>
-        <input id="email" type="text" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" name="email" value="{{ old('email') }}"  autofocus>
-        Tipo sócio:<br>
-        <input id="tipo_socio" type="text" class="form-control{{ $errors->has('tipo_socio') ? ' is-invalid' : '' }}" name="tipo_socio" value="{{ old('tipo_socio') }}"  autofocus>
-        Direção:<br>
-        <input id="direcao" type="text" class="form-control{{ $errors->has('direcao') ? ' is-invalid' : '' }}" name="direcao" value="{{ old('direcao') }}" >
+
+        <div>
+            Número sócio:
+            <input id="num_socio" type="text" class="form-control{{ $errors->has('num_socio') ? ' is-invalid' : '' }}" name="num_socio" value="{{ old('num_socio') }}"  autofocus>
+        </div>
+      <div>
+          Nome informal:
+          <input id="nome_informal" type="text" class="form-control{{ $errors->has('nome_informal') ? ' is-invalid' : '' }}" name="nome_informal" value="{{ old('nome_informal') }}"  autofocus>
+      </div>
+       <div>
+           E-mail:
+           <input id="email" type="text" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" name="email" value="{{ old('email') }}"  autofocus>
+       </div>
+
+       <div>
+           <select name="tipo" id="inputTipoSocio">
+               <option  value=""></option>
+               <option  value="P">Piloto</option>
+               <option  value="NP">Não Piloto</option>
+               <option  value="A" >Aeromodelista</option>
+           </select>
+       </div>
+        <div>
+            Direção:
+            <input id="direcao" type="text" class="form-control{{ $errors->has('direcao') ? ' is-invalid' : '' }}" name="direcao" value="" >
+        </div>
+
         <div class="form-group row mb-0">
             <div class="col-md-6 offset-md-5">
                 <br>
