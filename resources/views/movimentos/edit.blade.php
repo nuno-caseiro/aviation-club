@@ -6,6 +6,7 @@
         @csrf
 
 {{$instrutorEsp=null}}
+{{$socioEsp=null}}
         <div class="card-header">Editar Movimento</div>
         <div>
             <label >Aeronave</label>
@@ -13,6 +14,15 @@
                 @foreach ($aeronaves as $aeronave)
                     <option value="{{ $aeronave->matricula }}" {{ ( $aeronave->matricula == $movimento->aeronave) ? 'selected' : $movimento->aeronave }}> {{ $aeronave->matricula }} </option>
                 @endforeach    </select>
+
+        <label>{{$movimento->hora_descolagem}}</label>
+                <div></div>
+                <div>Date:</div><input type="date" name="data" value={{$movimento->data}} >
+
+         <div>Hora Descolagem:</div><input min="date" type="datetime-local" name="hora_descolagem" value={{$movimento->hora_descolagem}}> 
+   
+   <div>Hora Aterragem</div><input type="datetime-local" name="hora_aterragem" value={{$movimento->hora_aterragem}}>
+
 
             <br>
             <label>Natureza</label>
@@ -97,7 +107,7 @@
                     <option value="{{$socio->id}}" {{(  $socio->id == $movimento->piloto_id) ? 'selected' : $movimento->piloto_id }}> {{ $socio->id }}
                     </option>
 
-                    @if ($socio->id==$movimento->piloto_id)
+                    @if ($socio->id==$socio->id)
                   {{$socioEsp=$socio}}
                     @endif
 
@@ -127,6 +137,11 @@
             @if(!is_null($instrutorEsp))
             <label>{{$instrutorEsp->name}}</label>
             @endif
+
+
+
+
+       
 
         <div>
             <button type="submit" name="ok">Save</button>

@@ -8,7 +8,7 @@ use App\Aerodromo;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
-
+use Carbon\Carbon;
 class MovimentoController extends Controller
 {
     //
@@ -87,6 +87,8 @@ class MovimentoController extends Controller
 
 
 
+
+
     public function edit($id)
     {
 
@@ -95,11 +97,17 @@ class MovimentoController extends Controller
         $aeronaves=Aeronave::all();
         $socios=User::all();
 
+
+        $movimento->hora_aterragem=self::parseDate($movimento->hora_aterragem);
+         $movimento->hora_descolagem=self::parseDate($movimento->hora_descolagem);
         return view('movimentos.edit', compact('title', 'movimento','aeronaves','socios'));
     }
 
 
-
+    public function parseDate($value)
+{
+     return Carbon::parse($value)->format('Y-m-d\TH:i');
+}
 
 
 
@@ -114,17 +122,17 @@ class MovimentoController extends Controller
         //dd($request->all());
         //protected $fillable = ['id', 'aeronave', 'data_inf??', ' data_sup??', 'natureza', 'confirmado???','piloto??','instrutor??','meus_movimentos??'];
 
-        $movimentoModel->aeronave=$request->members;
+        $movimentoModel->aeronave=$request->aeronave;
         $movimentoModel->natureza= $request->natureza;
         $movimentoModel->confirmado=$request->confirmado;
         $movimentoModel->piloto_id=$request->piloto_id;
         $movimentoModel->instrutor_id=$request->instrutor_id;
         $movimentoModel->tipo_instrucao=$request->tipo_instrucao;
+        $movimentoModel->hora_aterragem=$request->hora_descolagem;
+        $movimentoModel->hora_descolagem=$request->hora_aterragem;
          //dd($movimentoModel);
 
-         if ($movimentoModel->instrutor_id!=$request->ins) {
-             # code...
-         }
+  
 
 
         $movimentoModel->save();
@@ -155,7 +163,7 @@ class MovimentoController extends Controller
 
         $user= User::find($request->piloto_id);
         $instrutor=User::find($request->instrutor_id);
-       
+
         $movimento=$request->all()+['num_licenca_piloto'=>$user->num_licenca,'validade_licenca_piloto'=>$user->validade_licenca,'confirmado'=>'0','tipo_licenca_piloto'=>$user->tipo_licenca,'num_certificado_piloto'=>$user->num_certificado,'validade_certificado_piloto'=>$user->validade_licenca,'classe_certificado_piloto'=>$user->classe_certificado,'numero_linceca_instrutor'=>$instrutor->num_licenca,'validade_licenca_instrutor'=>$instrutor->validade_licenca,'tipo_licenca_instrutor'=>$instrutor->tipo_licenca,'validade_certificado_instrutor'=>$instrutor->validade_certificado,'classe_certificado_instrutor'=>$instrutor->classe_certificado,'num_licenca_instrutor'=>$instrutor->num_licenca,'num_certificado_instrutor'=>$instrutor->num_certificado];
   
 
