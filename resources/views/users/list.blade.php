@@ -1,7 +1,9 @@
 @extends('master')
 @section('content')
 
-
+    @if (count($errors) > 0)
+        @include('shared.errors')
+    @endif
     <h4>Tabela de Utilizadores </h4>
 
 

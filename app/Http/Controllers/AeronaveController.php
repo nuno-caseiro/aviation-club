@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Auth;
 
 class AeronaveController extends Controller
 {
-private $matricula;
+    private $matricula;
 
     public function index(){
 
@@ -44,7 +44,7 @@ private $matricula;
             $aeronaveValores1= Aeronave::find($aeronave->matricula)->aeronaveValores()->get()->toArray();
             if(!empty($aeronaveValores1)){
                 if($aeronaveValores1[count($aeronaveValores1)-1]['unidade_conta_horas']==10)
-                $aeronave->preco_hora= $aeronaveValores1[count($aeronaveValores1)-1]['preco'];
+                    $aeronave->preco_hora= $aeronaveValores1[count($aeronaveValores1)-1]['preco'];
             }
         }
 
@@ -59,31 +59,27 @@ private $matricula;
     }
 
     public function create(){
+        $this->authorize('socio_Direcao',Auth::user());
         $title= "Adicionar aeronave";
         return view('aeronaves.create', compact('title'));
     }
 
     public function store(AeronaveCreate $request)
     {
+        $this->authorize('socio_Direcao',Auth::user());
         if ($request->has('cancel')) {
             return redirect()->action('AeronaveController@index');
         }
-      /*  $user = $request->validate([
-            'name' => 'required|regex:/^[\pL\s]+$/u',
-            'age' => 'required|integer|between:1,120',
-        ], [ // Custom Messages
-            'name.regex' => 'Name must only contain letters and spaces.',
-        ]);*/
 
         $aeronave=$request->all();
 
         Aeronave::create($aeronave);
 
         foreach(range(1,10) as $i){
-/*
-            $aeronaveValor[]= ['unidade_conta_horas' => $i,
-                'minutos' => $request->minutos[$i-1], 'preco' => $request->precos[$i-1]];
-*/
+            /*
+                        $aeronaveValor[]= ['unidade_conta_horas' => $i,
+                            'minutos' => $request->minutos[$i-1], 'preco' => $request->precos[$i-1]];
+            */
             Aeronave::find($request->matricula)->aeronaveValores()->create(['unidade_conta_horas' => $i,
                 'minutos' => $request->minutos[$i-1], 'preco' => $request->precos[$i-1]]);
         }
@@ -96,9 +92,7 @@ private $matricula;
         $this->authorize('socio_Direcao',Auth::user() );
 
         $title = "Editar Aeronave";
-       $aeronave = Aeronave::findOrFail($matricula);
-//$aeronave=DB::table('aeronaves')->select('matricula','marca', 'modelo', 'num_lugares', 'conta_horas', 'preco_hora');
-       // dd($aeronave);
+        $aeronave = Aeronave::findOrFail($matricula);
 
         $aeronaveValores= Aeronave::find($matricula)->aeronaveValores()->get()->toArray();
 
@@ -112,39 +106,31 @@ private $matricula;
     public function update(AeronaveUpdate $request, $matricula){
         $this->authorize('socio_Direcao',Auth::user());
 
-
-
         if ($request->has('cancel')) {
             return redirect()->action('AeronaveController@index');
         }
 
-
         $aeronaveModel= Aeronave::find($matricula);
-
-        //request precos??
-        $i=0;
-
-if(isset($request->precos)){
-    foreach ($request->precos as $preco){
-
-        Aeronave::find($matricula)->aeronaveValores()->where('unidade_conta_horas',$i+1)->update(['preco'=> $request->precos[$i]]);
-        Aeronave::find($matricula)->aeronaveValores()->where('unidade_conta_horas',$i+1)->update(['minutos'=> $request->minutos[$i]]);
-        $i++;
-    }
-
-}
-
-
-        $aeronaveModel->marca=$request->marca;
-        $aeronaveModel->modelo=$request->modelo;
-        $aeronaveModel->num_lugares= $request->num_lugares;
+        $aeronaveModel->fill($request->except(['created_at', 'updated_at', 'deleted_at']));
         $aeronaveModel->save();
+
+        $i=0;
+        if(isset($request->precos)){
+            foreach ($request->precos as $preco){
+
+                Aeronave::find($matricula)->aeronaveValores()->where('unidade_conta_horas',$i+1)->update(['preco'=> $request->precos[$i]]);
+                Aeronave::find($matricula)->aeronaveValores()->where('unidade_conta_horas',$i+1)->update(['minutos'=> $request->minutos[$i]]);
+                $i++;
+            }
+
+        }
         return redirect()->action('AeronaveController@index');
 
     }
 
     public function destroy($matricula){
-        $this->authorize('destroyAeronave', Auth::user());
+
+        $this->authorize('socio_Direcao', Auth::user());
         Aeronave::find($matricula)->aeronaveValores()->delete();
         $aeronave= Aeronave::find($matricula);
         $movimentosAssociados= DB::table('movimentos')->select('id')->where('aeronave',$matricula)->get();
@@ -174,7 +160,7 @@ if(isset($request->precos)){
 
         $pilotosNaoAutorizados= DB::table('users')->whereNotIn('id', function ($query){
             $query->select('piloto_id')->from('aeronaves_pilotos')
-            ->where('matricula', $this->matricula);
+                ->where('matricula', $this->matricula);
 
 
         })->get();

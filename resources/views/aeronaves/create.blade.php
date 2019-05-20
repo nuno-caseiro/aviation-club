@@ -1,6 +1,10 @@
 @extends('master')
 @section('content')
 
+    @if (count($errors) > 0)
+        @include('shared.errors')
+    @endif
+
     <form method="POST" action="{{action('AeronaveController@store')}}" >
         @method("POST")
         @csrf

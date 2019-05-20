@@ -1,6 +1,10 @@
 @extends('master')
 @section('content')
 
+    @if (count($errors) > 0)
+        @include('shared.errors')
+    @endif
+
     <form method="POST" action="{{action('AeronaveController@update', $aeronave->matricula)}}" >
         @method('PUT')
         @csrf
@@ -57,7 +61,7 @@
 
 
         <div>
-            <button type="submit" name="ok">Save</button>
+            <button class="btn btn-xs btn-primary" type="submit" name="ok">Save</button>
 
         </div>
     </form>

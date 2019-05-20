@@ -1,6 +1,10 @@
 @extends('layouts.app')
 
 @section('content')
+
+    @if (count($errors) > 0)
+        @include('shared.errors')
+    @endif
     <div class="container">
         @if (session('info'))
             <div class="row">
