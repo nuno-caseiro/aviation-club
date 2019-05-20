@@ -15,7 +15,7 @@
                     <option value="{{ $aeronave->matricula }}" {{ ( $aeronave->matricula == $movimento->aeronave) ? 'selected' : $movimento->aeronave }}> {{ $aeronave->matricula }} </option>
                 @endforeach    </select>
 
-        <label>{{$movimento->hora_descolagem}}</label>
+   
                 <div></div>
                 <div>Date:</div><input type="date" name="data" value={{$movimento->data}} >
 
@@ -26,7 +26,7 @@
 
             <br>
             <label>Natureza</label>
-            <select name="natureza">
+            <select name="natureza" id="natureza">
                 <option value="{{ $movimento->natureza}}">@if ($movimento->natureza=='I')
                         Instruçao
                     @endif
@@ -119,7 +119,7 @@
 <div></div>
             @if ($movimento->natureza=='I')
                 <label >Instrutor</label>
-                <select name="instrutor_id">
+                <select name="instrutor_id" id="instrutor" >
                     @foreach ($socios as $socio)
                         @if ($socio->tipo_socio=='P' && $socio->instrutor==1)
                             <option value="{{$socio->id}}" {{(  $socio->id == $movimento->instrutor_id) ? 'selected' : $movimento->instrutor_id }}> {{ $socio->id }}

@@ -130,7 +130,7 @@ class UserController extends Controller
         $this->authorize('update_DirMe',User::findOrFail($id),App\User::class );
             $title = "Editar Utilizador ";
             $user= User::findOrFail($id);
-
+            dd($user);
             return view('users.edit', compact('title', 'user' ));
 
 	}

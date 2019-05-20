@@ -21,7 +21,7 @@ piloto, instrutor, meus_movimentos.
 
 
         <label>Movimento ID:</label>
-       <input  name="movimento_id"></input>
+       <input type="number"  name="movimento_id"></input>
       <div></div>
 
 
@@ -46,7 +46,7 @@ piloto, instrutor, meus_movimentos.
 <div></div>
               <label>Cofirmado:</label>
                 <input type="radio" name="confirmado" value="1"><label for="confirmado" class="light">Confirmado</label>
-                <input type="radio" name="confirmado" value="0"><label for="confirmado" class="light">Por Confirmar</label>
+                <input type="radio" name="confirmado" value="0"><label for="Confirmar" class="light">Por Confirmar</label>
 <div></div>
 
  
