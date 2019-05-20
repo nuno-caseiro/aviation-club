@@ -33,18 +33,17 @@ class UserUpdateRequest extends FormRequest
             'telefone'=> 'max:20',
             'num_socio' => 'required|max:11',
             'file_foto' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            'data_nascimento' => 'required',
+            'data_nascimento' => 'required|date_format:Y-m-d',
             'email' => [
-                'email', 'required',
-                Rule::unique('users')->ignore($this->user()->id),
+                'email',
+                Rule::unique('users')->ignore($this->id),
             ],
-            'num_licenca'=>'max:30',
-            'tipo_licenca'=>'exists:users,tipo_licenca',
-            'num_certificado'=> 'max:30',
-            'classe_certificado'=>'exists:users,classe_certificado',
-            'validade_licenca' => 'date_format:Y-m-d|after:today',
-            'validade_certificado' => 'date_format:Y-m-d|after:today',
-
+            'num_licenca'=>'nullable|max:30',
+            'tipo_licenca'=>'nullable|exists:users,tipo_licenca',
+            'num_certificado'=> 'nullable|max:30',
+            'classe_certificado'=>'nullable|exists:users,classe_certificado',
+            'validade_licenca' => 'nullable|date|date_format:Y-m-d|after_or_equal:today',
+            'validade_certificado' => 'nullable|date|date_format:Y-m-d|after_or_equal:today',
 
 
         ];

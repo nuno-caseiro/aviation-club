@@ -20,6 +20,16 @@
             <label for="inputNrLugares">Numero de lugares</label>
             <input type="text" name="num_lugares" id="inputNrLugares"  placeholder="Numerolugares" >
         </div>
+
+        <div>
+            <label for="inputContaHoras">Conta horas</label>
+            <input type="text" name="conta_horas" id="inputContaHoras" placeholder="Conta horas" >
+        </div>
+        <div>
+            <label for="inputPrecoHora">Preco hora</label>
+            <input type="text" name="preco_hora" id="inputPrecoHora"  placeholder="Preco hora" >
+        </div>
+
         <div>
             <button type="submit" name="ok">Save</button>
         </div>

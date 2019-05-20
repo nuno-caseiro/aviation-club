@@ -32,7 +32,7 @@ class UserController extends Controller
         $this->authorize('listar', Auth::user());
 
 
-         if(Auth::user()->can('socio_Direcao', User::class)){
+         if(Auth::user()->can('socio_Direcao', Auth::user())){
              $num_socio=request()->query('num_socio');
              $nome_informal=request()->query('nome_informal');
              $email=request()->query('email');
@@ -64,7 +64,7 @@ class UserController extends Controller
                  $filtro=$filtro->where('ativo',$ativo);
              }
 
-             {
+
                  $users =$filtro->paginate(15)->appends([
                      'num_socio' => request('num_socio'),
                      'nome_informal' => request('nome_informal'),
@@ -75,7 +75,7 @@ class UserController extends Controller
                      'ativo' => request('ativo'),
 
                  ]);
-             }
+
 
 
         }elseif(Auth::user()->can('socio_normal', Auth::user())) {
@@ -106,7 +106,7 @@ class UserController extends Controller
                  $filtro = $filtro->where('direcao', $direcao);
              }
 
-             {
+
 
                  $users = $filtro->paginate(15)->appends([
                      'num_socio' => request('num_socio'),
@@ -116,8 +116,11 @@ class UserController extends Controller
                      'direcao' => request('direcao'),
 
                  ]);
-             }
 
+
+         }
+         else{
+             $users=User::paginate(15);
          }
 
         $title="Lista de utilizadores";
@@ -130,8 +133,19 @@ class UserController extends Controller
         $this->authorize('update_DirMe',User::findOrFail($id),App\User::class );
             $title = "Editar Utilizador ";
             $user= User::findOrFail($id);
+
             dd($user);
             return view('users.edit', compact('title', 'user' ));
+
+
+
+
+return view('users.edit', compact('title', 'user' ));
+
+
+
+        return view('users.edit', compact('title', 'user' ));
+
 
 	}
 
@@ -214,7 +228,20 @@ class UserController extends Controller
         }
 
 
+           // $user->fill($request->except('password'));
+        if(User::findOrFail($socio)->num_licenca != $request->num_licenca){
+            $user->licenca_confirmada=false;
+        }
+        if(User::findOrFail($socio)->num_certificado != $request->num_certificado){
+            $user->certificado_confirmado=false;
+        }
+
+        //para utilizador normal
+        if(Auth::user()->can('socio_normal', Auth::user())){
+            $user->fill($request->except(['id','num_socio',"ativo", "quota_paga","sexo","tipo_socio","direcao", "instrutor","aluno", "certificado_confirmado","licenca_confirmada"]));
+        }else{
             $user->fill($request->except('password'));
+        }
 
 
 

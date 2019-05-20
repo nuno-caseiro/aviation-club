@@ -24,7 +24,12 @@ class AeronaveUpdate extends FormRequest
     public function rules()
     {
         return [
-            'matricula'=> 'alpha|max:8'
+            'matricula'=> 'required|alpha|max:8',
+            'marca'=>'required|max:40',
+            'modelo' => 'required|max:40',
+            'num_lugares' => 'required|integer|min:1',
+            'conta_horas'=>'required|integer|min:1',
+            'preco_hora' => 'required|numeric|min:1'
         ];
     }
 }
