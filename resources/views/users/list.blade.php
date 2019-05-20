@@ -92,11 +92,9 @@
                     <td>{{$utilizador->email}}</td>
                     <td>{{$utilizador->telefone}}</td>
 
-                    @if($utilizador->tipo_socio=="P")
-                        <td>{{$utilizador->num_licenca}}</td>
-                    @else
-                        <td>Não é piloto</td>
-                    @endif
+                    <td>{{$utilizador->tipo_socio}}</td>
+
+
                     @if($utilizador->tipo_socio=="P")
                         <td>{{$utilizador->num_licenca}}</td>
                     @else

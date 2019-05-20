@@ -16,6 +16,9 @@ use App\Http\Requests\UpdatePassword;
 use Illuminate\Support\Facades\Auth;
 use Hash;
 use DB;
+use Barryvdh\DomPDF\Facade as PDF;
+
+
 
 class UserController extends Controller
 {
@@ -134,9 +137,11 @@ class UserController extends Controller
             $title = "Editar Utilizador ";
             $user= User::findOrFail($id);
 
+        $classes= ClassesCertificados::all();
+        $licencas =TiposLicencas::all();
 
 
-return view('users.edit', compact('title', 'user' ));
+return view('users.edit', compact('title', 'user','classes','licencas' ));
 
 
 
@@ -261,6 +266,34 @@ return view('users.edit', compact('title', 'user' ));
         return redirect(route('home'))
             ->with('info', 'Your profile has been updated successfully.');
 
+
+    }
+
+
+    public function certificado($id){
+        //$user= User::findOrFail($id);
+        //$filename = 'certificado_'.$user->id.'.pdf';
+        //$path = storage/app/docs_piloto($filename);
+
+        //return Response::make(file_get_contents($path), 200, [
+          //  'Content-Type' => 'application/pdf',
+        //'Content-Disposition' => 'inline; filename="'.$filename.'"'
+        //]);
+
+       // return Response::download($path, $filename);
+      // $pdf= PDF::loadView('users.licenca_pdf');
+
+       //return $pdf->download('teste.pdf');
+
+        $users=User::findOrFail(Auth::id());
+        $pdf = PDF::loadView('users.licencaPdf', $users);
+
+        return $pdf->download('Certificado.pdf');
+
+    }
+
+
+    public function licenca(){
 
     }
 

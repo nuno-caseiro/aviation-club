@@ -34,7 +34,7 @@
 
             <div>
                 <label >Data nascimento</label>
-                <input type="date" name="data_nascimento" value="{{$user->data_nascimento}}">
+                <input type="date" name="data_nascimento" format="YYYY-MM-DD" value="{{$user->data_nascimento}}">
             </div>
 
             <div>
@@ -105,8 +105,18 @@
 
 
                 <div>
-                    <label for="inputTipoLicenca"> Tipo de licença </label>
-                    <input type="text" name="tipo_licenca" id="inputTipoLicenca" @if((Auth::user()->can('socio_piloto',App\User::class))) disabled @endif  value="{{$user->tipo_licenca}}">
+                    <label for="inputTipoLicenca">Tipo de licença</label>
+                    {{--<input type="text" name="tipo_licenca" id="inputTipoLicenca" placeholder="Tipo da licença">--}}
+                    <select name="tipo_licenca">
+                        @foreach($licencas as $licenca)
+                            <option id="inputTipoLicenca" value="{{$licenca->code}}">{{$licenca->nome}}</option>
+                        @endforeach
+                    </select>
+                </div>
+
+
+
+
                 </div>
 
                 <div>
@@ -128,6 +138,8 @@
 
                 <div>
                     <label for=""> Cópia digitial da licença </label>
+                    <a href="{{route('certificado',Auth::id())}}" class="btn btn-success mb-2"> Download</a>
+
                 </div>
 
                 <div>
@@ -135,10 +147,13 @@
                     <input type="text" name="num_certificado" id="inputNrCertificado" @if((Auth::user()->can('socio_piloto',App\User::class))) disabled @endif  value="{{$user->num_certificado}}">
                 </div>
 
-                <div>
-                    <label for="inputClasseCertificado"> Classe do certificado </label>
-                    <input type="text" name="classe_certificado" id="inputClasseCertificado" @if((Auth::user()->can('socio_piloto',App\User::class))) disabled @endif  value="{{$user->classe_certificado}}">
-                </div>
+        <div>
+            <label for="inputClasseCertificado">Classe do certificado </label>
+            <select name="classe_certificado">
+                @foreach($classes as $classe)
+                    <option id="inputClasseCertificado" value="{{$classe->code}}">{{$classe->nome}}</option>
+                @endforeach
+            </select>
 
                 <div>
                     <label >Validade do certificado </label>
@@ -154,6 +169,7 @@
 
                 <div>
                     <label for=""> Cópia digital certificado </label>
+
                 </div>
 
 

@@ -62,13 +62,15 @@ Route::middleware('verified')->group(function () {
 Route::get('/password', 'UserController@showEditPassword')->name('showEditPassword');
 Route::patch('/password', 'UserController@editPassword')->name('editPassword');
 
-//Route::get('pilotos/{piloto}/certificado','');
-//Route::get('pilotos/{piloto}/certificado','');
+Route::get('pilotos/{piloto}/licenca','UserController@certificado')->name('certificado');
+Route::get('pilotos/{piloto}/licenca','UserController@licenca')->name('licenca');
 
 
 Route::get('/home', 'HomeController@index')->name('home');
 
 Auth::routes(['verify' => true]);
+
+
 
 
 // Authentication Routes... -- penso q o auth faz isto tudo internamente
