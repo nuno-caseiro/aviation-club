@@ -75,7 +75,7 @@ private $matricula;
             'name.regex' => 'Name must only contain letters and spaces.',
         ]);*/
 
-        $aeronave=$request->except(['created_at','updated_at','deleted_at']);
+        $aeronave=$request->all();
 
         Aeronave::create($aeronave);
 
@@ -96,8 +96,9 @@ private $matricula;
         $this->authorize('socio_Direcao',Auth::user() );
 
         $title = "Editar Aeronave";
-        $aeronave = Aeronave::findOrFail($matricula);
-        dd($aeronave);
+       $aeronave = Aeronave::findOrFail($matricula);
+//$aeronave=DB::table('aeronaves')->select('matricula','marca', 'modelo', 'num_lugares', 'conta_horas', 'preco_hora');
+       // dd($aeronave);
 
         $aeronaveValores= Aeronave::find($matricula)->aeronaveValores()->get()->toArray();
 
@@ -120,7 +121,7 @@ private $matricula;
 
         $aeronaveModel= Aeronave::find($matricula);
 
-
+        //request precos??
         $i=0;
 
 if(isset($request->precos)){
@@ -132,11 +133,11 @@ if(isset($request->precos)){
     }
 
 }
-$aeronaveModel->fill($request->except(['minutos','precos','created_at','updated_at','deleted_at']));
-/*
+
+
         $aeronaveModel->marca=$request->marca;
         $aeronaveModel->modelo=$request->modelo;
-        $aeronaveModel->num_lugares= $request->num_lugares;*/
+        $aeronaveModel->num_lugares= $request->num_lugares;
         $aeronaveModel->save();
         return redirect()->action('AeronaveController@index');
 
