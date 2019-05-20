@@ -10,15 +10,15 @@
     </tr>
     </thead>
     <tbody>
-    @foreach($users as $user)
+
         <tr>
-            <td>{{ $user>id }}</td>
+            {{--<td>{{ $user->if }}</td>
             <td>{{ $user->nome }}</td>
-            <td>{{ $user->nif }}</td>
+            <td>{{ $user->nif }}</td>--}}
 
 
         </tr>
-    @endforeach
+
     </tbody>
 </table>
 

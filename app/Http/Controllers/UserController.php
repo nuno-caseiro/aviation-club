@@ -285,8 +285,12 @@ return view('users.edit', compact('title', 'user','classes','licencas' ));
 
        //return $pdf->download('teste.pdf');
 
-        $users=User::findOrFail(Auth::id());
-        $pdf = PDF::loadView('users.licencaPdf', $users);
+        $user=User::findOrFail($id);
+        //$pdf = PDF::loadView('users.licencaPdf', $user);
+
+
+
+        $pdf = PDF::loadView('users.licencaPdf', $user);
 
         return $pdf->download('Certificado.pdf');
 

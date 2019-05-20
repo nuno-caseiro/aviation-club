@@ -63,7 +63,7 @@ Route::middleware('verified')->group(function () {
 Route::get('/password', 'UserController@showEditPassword')->name('showEditPassword');
 Route::patch('/password', 'UserController@editPassword')->name('editPassword');
 
-Route::get('pilotos/{piloto}/licenca','UserController@certificado')->name('certificado');
+Route::get('pilotos/{piloto}/certificado','UserController@certificado')->name('certificado');
 Route::get('pilotos/{piloto}/licenca','UserController@licenca')->name('licenca');
 
 
