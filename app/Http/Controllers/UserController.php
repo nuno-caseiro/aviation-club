@@ -223,7 +223,20 @@ return view('users.edit', compact('title', 'user' ));
         }
 
 
+           // $user->fill($request->except('password'));
+        if(User::findOrFail($socio)->num_licenca != $request->num_licenca){
+            $user->licenca_confirmada=false;
+        }
+        if(User::findOrFail($socio)->num_certificado != $request->num_certificado){
+            $user->certificado_confirmado=false;
+        }
+
+        //para utilizador normal
+        if(Auth::user()->can('socio_normal', Auth::user())){
+            $user->fill($request->except(['id','num_socio',"ativo", "quota_paga","sexo","tipo_socio","direcao", "instrutor","aluno", "certificado_confirmado","licenca_confirmada"]));
+        }else{
             $user->fill($request->except('password'));
+        }
 
 
 

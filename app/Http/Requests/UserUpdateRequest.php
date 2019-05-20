@@ -38,12 +38,12 @@ class UserUpdateRequest extends FormRequest
                 'email',
                 Rule::unique('users')->ignore($this->id),
             ],
-            'num_licenca'=>'max:30',
-            'tipo_licenca'=>'exists:users,tipo_licenca',
-            'num_certificado'=> 'max:30',
-            'classe_certificado'=>'exists:users,classe_certificado',
-            'validade_licenca' => 'date_format:Y-m-d H:i|after_or_equal:today',
-            'validade_certificado' => 'date_format:Y-m-d H:i|after_or_equal:today',
+            'num_licenca'=>'nullable|max:30',
+            'tipo_licenca'=>'nullable|exists:users,tipo_licenca',
+            'num_certificado'=> 'nullable|max:30',
+            'classe_certificado'=>'nullable|exists:users,classe_certificado',
+            'validade_licenca' => 'nullable|date|date_format:Y-m-d|after_or_equal:today',
+            'validade_certificado' => 'nullable|date|date_format:Y-m-d|after_or_equal:today',
 
 
         ];

@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\AeronaveCreate;
+use App\Http\Requests\AeronaveUpdate;
 use DB;
 use App\Aeronave;
 use App\AeronaveValores;
@@ -23,7 +25,7 @@ private $matricula;
         }elseif(Auth::user()->can('socio_Piloto', Auth::user())) {
 
 
-            //DB::table('aeronaves_pilotos')->insert(['matricula'=>$matricula, 'piloto_id' =>$piloto]);
+
             $aeronavesMatriculas= DB::table('aeronaves_pilotos')->select('matricula')->where('piloto_id',Auth::id())->pluck('matricula');
 
 
@@ -31,10 +33,6 @@ private $matricula;
                 $aeronaves[]=Aeronave::find($matricula);
 
             }
-
-
-
-
 
 
         }else{
@@ -65,7 +63,7 @@ private $matricula;
         return view('aeronaves.create', compact('title'));
     }
 
-    public function store(Request $request)
+    public function store(AeronaveCreate $request)
     {
         if ($request->has('cancel')) {
             return redirect()->action('AeronaveController@index');
@@ -77,7 +75,7 @@ private $matricula;
             'name.regex' => 'Name must only contain letters and spaces.',
         ]);*/
 
-        $aeronave=$request->all()+['conta_horas'=>'0', 'preco_hora'=>$request->precos[9]];
+        $aeronave=$request->except(['created_at','updated_at','deleted_at']);
 
         Aeronave::create($aeronave);
 
@@ -99,6 +97,7 @@ private $matricula;
 
         $title = "Editar Aeronave";
         $aeronave = Aeronave::findOrFail($matricula);
+        dd($aeronave);
 
         $aeronaveValores= Aeronave::find($matricula)->aeronaveValores()->get()->toArray();
 
@@ -109,7 +108,7 @@ private $matricula;
     }
 
 
-    public function update(Request $request, $matricula){
+    public function update(AeronaveUpdate $request, $matricula){
         $this->authorize('socio_Direcao',Auth::user());
 
 
@@ -121,7 +120,7 @@ private $matricula;
 
         $aeronaveModel= Aeronave::find($matricula);
 
-        //request precos??
+
         $i=0;
 
 if(isset($request->precos)){
@@ -133,11 +132,11 @@ if(isset($request->precos)){
     }
 
 }
-
-
+$aeronaveModel->fill($request->except(['minutos','precos','created_at','updated_at','deleted_at']));
+/*
         $aeronaveModel->marca=$request->marca;
         $aeronaveModel->modelo=$request->modelo;
-        $aeronaveModel->num_lugares= $request->nrlugares;
+        $aeronaveModel->num_lugares= $request->num_lugares;*/
         $aeronaveModel->save();
         return redirect()->action('AeronaveController@index');
 
