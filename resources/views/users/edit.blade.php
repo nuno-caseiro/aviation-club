@@ -118,7 +118,7 @@
 
                 <div>
                     <label >Validade da licença</label>
-                    <input type="date" name="validade_licenca" @if((Auth::user()->can('socio_piloto',App\User::class))) disabled @endif  value="{{$user->validade_licenca}}">
+                    <input type="date" name="validade_licenca" value="{{$user->validade_licenca}} @if((Auth::user()->can('socio_piloto',App\User::class))) disabled @endif  ">
                 </div>
 
                 <div>
@@ -144,7 +144,7 @@
 
                 <div>
                     <label >Validade do certificado </label>
-                    <input type="date" name="validade_certificado" @if((Auth::user()->can('socio_piloto',App\User::class))) disabled @endif  value="{{$user->validade_certificado}}">
+                    <input type="date" name="validade_certificado" value="{{$user->validade_certificado}} @if((Auth::user()->can('socio_piloto',App\User::class))) disabled @endif  ">
                 </div>
 
                 <div>

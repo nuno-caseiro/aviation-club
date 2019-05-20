@@ -29,7 +29,7 @@ class UserController extends Controller
     {
 
         //$users= new \stdClass();
-        $this->authorize('listarUsers', Auth::user());
+        $this->authorize('listar', Auth::user());
 
 
          if(Auth::user()->can('socio_Direcao', User::class)){

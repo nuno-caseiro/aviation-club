@@ -95,9 +95,10 @@ private $matricula;
 
     public function edit($matricula)
     {
+        $this->authorize('socio_Direcao',Auth::user() );
 
         $title = "Editar Aeronave";
-        $aeronave = Aeronave::find($matricula);
+        $aeronave = Aeronave::findOrFail($matricula);
 
         $aeronaveValores= Aeronave::find($matricula)->aeronaveValores()->get()->toArray();
 
@@ -109,23 +110,30 @@ private $matricula;
 
 
     public function update(Request $request, $matricula){
+        $this->authorize('socio_Direcao',Auth::user());
+
 
 
         if ($request->has('cancel')) {
             return redirect()->action('AeronaveController@index');
         }
-        //falta validacao
+
 
         $aeronaveModel= Aeronave::find($matricula);
 
         //request precos??
         $i=0;
-        foreach ($request->precos as $preco){
 
-            Aeronave::find($matricula)->aeronaveValores()->where('unidade_conta_horas',$i+1)->update(['preco'=> $request->precos[$i]]);
-            Aeronave::find($matricula)->aeronaveValores()->where('unidade_conta_horas',$i+1)->update(['minutos'=> $request->minutos[$i]]);
-            $i++;
-        }
+if(isset($request->precos)){
+    foreach ($request->precos as $preco){
+
+        Aeronave::find($matricula)->aeronaveValores()->where('unidade_conta_horas',$i+1)->update(['preco'=> $request->precos[$i]]);
+        Aeronave::find($matricula)->aeronaveValores()->where('unidade_conta_horas',$i+1)->update(['minutos'=> $request->minutos[$i]]);
+        $i++;
+    }
+
+}
+
 
         $aeronaveModel->marca=$request->marca;
         $aeronaveModel->modelo=$request->modelo;
