@@ -40,6 +40,7 @@ Route::put('movimentos/{movimento}', 'MovimentoController@update');
 Route::delete('/movimentos/{movimento}', 'MovimentoController@destroy');
 Route::get('/movimentos/create', 'MovimentoController@create');
 Route::post('/movimentos', 'MovimentoController@store');
+Route::get('/movimentos/estatisticas','MovimentoController@estatisticas');
 
 
 
