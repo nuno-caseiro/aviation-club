@@ -9,6 +9,8 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
+use Charts;
+use DB;
 class MovimentoController extends Controller
 {
     //
@@ -73,7 +75,20 @@ class MovimentoController extends Controller
             $filtro = $filtro->where('id','=',$movimento_id);
         }
 
-        $movimentos = $filtro->paginate(15);
+        $movimentos = $filtro->paginate(15)->appends([
+                     'movimento_id' => request('movimento_id'),
+                     'instrucao' => request('instrucao'),
+                     'confirmado' => request('confirmado'),
+                     'especial' => request('especial'),
+                     'treino' => request('treino'),
+                     'piloto' => request('piloto'),
+                     'instrutor' => request('instrutor'),
+                     'naturezaI' => request('naturezaI'),
+                     'naturezaT' => request('naturezaT'),      
+                     'naturezaE' => request('naturezaE'),
+                     'descolar' => request('descolar'),
+                     'aterrar' => request('aterrar'),      
+                 ]);
 
             
 
@@ -168,41 +183,7 @@ class MovimentoController extends Controller
   
 
 
-
-
-        //estou a morrer por dentro nao percebo o erro so quero por um id ao calhas pq o meu delete tb nao da update nos meus ids tenho de fazer isso
-        /*     data,
- hora_descolagem, hora_aterragem, aeronave, num_diario,
- num_servico, piloto_id, natureza, aerodromo_partida,
- aerodromo_chegada, num_aterragens, num_descolagens,
- num_pessoas, conta_horas_inicio, conta_horas_fim, tempo_voo,
- preco_voo, modo_pagamento, num_recibo, observacoes,
- tipo_instrucao, instrutor_id*/
-//dd($request);
-        /*   deu erro tb
-        $movimento->id=1;
-        $movimentoModel->data=$request->data;
-        $movimentoModel->hora_aterragem=$request->hora_aterragem;
-        $movimentoModel->hora_descolagem=$request->hora_descolagem;
-        $movimentoModel->aeronave=$request->aeronave;
-        $movimentoModel->confirmado=$request->num_servico;
-        $movimentoModel->confirmado=$request->piloto_id;
-        $movimentoModel->natureza= $request->aerodromo_partida;
-        $movimentoModel->natureza= $request->aerodromo_chegada;
-        $movimentoModel->natureza= $request->num_aterragens;
-        $movimentoModel->natureza= $request->num_descolagens;
-        $movimentoModel->natureza= $request->num_pessoas;
-           $movimentoModel->natureza= $request->conta_horas_inicio;
-        $movimentoModel->natureza= $request->conta_horas_fim;
-        $movimentoModel->natureza= $request->tempo_voo; 
-        $movimentoModel->natureza= $request->preco_voo;
-        $movimentoModel->natureza= $request->modo_pagamento;
-        $movimentoModel->natureza= $request->num_recibo;
-        $movimentoModel->natureza= $request->observacoes;
-        $movimentoModel->natureza= $request->tipo_instrucao;
-        $movimentoModel->natureza= $request->instrutor_id;
-            */
-        // dd($movimento)  ;
+       
 
      
 
@@ -221,6 +202,28 @@ class MovimentoController extends Controller
         return redirect()->action('MovimentoController@index');
 
     }
+
+
+    public function estatisticas(){
+       $users = User::where(DB::raw("(DATE_FORMAT(created_at,'%Y'))"),date('Y'))
+                    ->get();
+        $chart = Charts::database($users, 'bar', 'highcharts')
+                  ->title("Monthly new Register Users")
+                  ->elementLabel("Total Users")
+                  ->dimensions(1000, 500)
+                  ->responsive(false)
+                  ->groupByMonth(date('Y'), true);
+
+        $pie  =  Charts::create('pie', 'highcharts')
+                    ->title('My nice chart')
+                    ->labels(['First', 'Second', 'Third'])
+                    ->values([5,10,20])
+                    ->dimensions(1000,500)
+                    ->responsive(false);
+        return view('movimentos.estatisticas',compact('chart','pie'));
+    }   
+
+
 
 
 }

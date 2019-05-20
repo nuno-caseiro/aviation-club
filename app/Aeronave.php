@@ -12,6 +12,7 @@ class Aeronave extends Model
     use SoftDeletes;
     protected $table= 'aeronaves';
     protected $primaryKey = 'matricula';
+    protected $hidden = ['created_at', 'updated_at', 'deleted_at'];
 
 
     protected $fillable = ['matricula', 'marca', 'modelo', 'num_lugares', 'conta_horas', 'preco_hora'];

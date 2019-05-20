@@ -38,7 +38,7 @@ class UserPolicy
 
     public function socio_Direcao(User $auth)
     {
-        return $auth->isDirecao();
+        return $auth->isDirecao() && $auth->hasVerifiedEmail() && $auth->isAtivo();
     }
 
     public function socio_DP(User $auth)
