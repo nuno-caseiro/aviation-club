@@ -32,7 +32,7 @@ class UserController extends Controller
         $this->authorize('listar', Auth::user());
 
 
-         if(Auth::user()->can('socio_Direcao', User::class)){
+         if(Auth::user()->can('socio_Direcao', Auth::user())){
              $num_socio=request()->query('num_socio');
              $nome_informal=request()->query('nome_informal');
              $email=request()->query('email');
@@ -64,7 +64,7 @@ class UserController extends Controller
                  $filtro=$filtro->where('ativo',$ativo);
              }
 
-             {
+
                  $users =$filtro->paginate(15)->appends([
                      'num_socio' => request('num_socio'),
                      'nome_informal' => request('nome_informal'),
@@ -75,7 +75,7 @@ class UserController extends Controller
                      'ativo' => request('ativo'),
 
                  ]);
-             }
+
 
 
         }elseif(Auth::user()->can('socio_normal', App\User::class)) {
@@ -106,7 +106,7 @@ class UserController extends Controller
                  $filtro = $filtro->where('direcao', $direcao);
              }
 
-             {
+
 
                  $users = $filtro->paginate(15)->appends([
                      'num_socio' => request('num_socio'),
@@ -116,8 +116,11 @@ class UserController extends Controller
                      'direcao' => request('direcao'),
 
                  ]);
-             }
 
+
+         }
+         else{
+             $users=User::paginate(15);
          }
 
         $title="Lista de utilizadores";
@@ -131,7 +134,13 @@ class UserController extends Controller
             $title = "Editar Utilizador ";
             $user= User::findOrFail($id);
 
-            return view('users.edit', compact('title', 'user' ));
+
+
+return view('users.edit', compact('title', 'user' ));
+
+
+
+        //return view('users.edit', compact('title', 'user' ));
 
 	}
 

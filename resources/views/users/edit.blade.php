@@ -96,10 +96,8 @@
             </div>
 
 
-            @can('socio_DP', App\User::class)
-                @if($user->tipo_socio!='P')
+            @can('socio_DP', Auth::user())
 
-                @else
                 <div>
                     <label for="inputNrLicenca"> Número de licença </label>
                     <input type="text" name="num_licenca" id="inputNrLicenca" @if((Auth::user()->can('socio_piloto',App\User::class))) disabled @endif value="{{$user->num_licenca}}">
@@ -118,7 +116,7 @@
 
                 <div>
                     <label >Validade da licença</label>
-                    <input type="date" name="validade_licenca" value="{{$user->validade_licenca}} @if((Auth::user()->can('socio_piloto',App\User::class))) disabled @endif  ">
+                    <input type="date" name="validade_licenca" value="{{$user->validade_licenca}}" @if((Auth::user()->can('socio_piloto',App\User::class))) disabled @endif  >
                 </div>
 
                 <div>
@@ -144,7 +142,7 @@
 
                 <div>
                     <label >Validade do certificado </label>
-                    <input type="date" name="validade_certificado" value="{{$user->validade_certificado}} @if((Auth::user()->can('socio_piloto',App\User::class))) disabled @endif  ">
+                    <input type="date" name="validade_certificado" value="{{$user->validade_certificado}}" @if((Auth::user()->can('socio_piloto',App\User::class))) disabled @endif  >
                 </div>
 
                 <div>
@@ -158,7 +156,7 @@
                     <label for=""> Cópia digital certificado </label>
                 </div>
 
-                    @endif
+
 
                 @endcan
 
