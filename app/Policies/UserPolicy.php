@@ -31,7 +31,7 @@ class UserPolicy
 
 
     public function update_DirMe(User $auth, User $socio){
-        return ($auth->isDirecao() || $socio->id === $auth->id) && $auth->isAtivo() ;
+        return ($auth->isDirecao() || $socio->id == $auth->id) && $auth->isAtivo() ;
     }
 
 
@@ -51,11 +51,15 @@ class UserPolicy
         return !$auth->isDirecao() && $auth->isPiloto();
     }
 
+    public function listar(User $auth){
+        return  $auth->isAtivo() && $auth->NotSoftDeleted() ;
+    }
+
 
 
     public function socio_normal(User $auth)
     {
-        return !$auth->isDirecao() ;
+        return !$auth->isDirecao() && !$auth->isPiloto() ;
     }
 
 

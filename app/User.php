@@ -113,6 +113,10 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->password_inicial===1;
     }
 
+    public function NotSoftDeleted(){
+        return $this->deleted_at==null;
+    }
+
     public function setPasswordAttribute($password)
     {
         if ( $password !== null & $password !== "" )

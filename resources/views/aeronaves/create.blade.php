@@ -1,7 +1,8 @@
 @extends('master')
 @section('content')
 
-    <form action="{{action('AeronaveController@store')}}" method="post">
+    <form method="POST" action="{{action('AeronaveController@store')}}" >
+        @method("POST")
         @csrf
         <div>
             <label for="inputMatricula">Matricula</label>

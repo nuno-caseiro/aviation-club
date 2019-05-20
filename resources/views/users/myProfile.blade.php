@@ -26,7 +26,7 @@
             <div><label for="inputSexo">Sexo</label>
                 <select name="sexo" id="inputSexo" >
                     <option value="F" @if((Auth::user()->can('socio_normal',App\User::class))) disabled @endif
-                        {{ ($user->sexo=="F")? "selected" : "" }}  >Feminino</option>
+                            {{ ($user->sexo=="F")? "selected" : "" }}  >Feminino</option>
                     <option value="M" @if((Auth::user()->can('socio_normal',App\User::class))) disabled @endif
                             {{ ($user->sexo=="M")? "selected" : "" }}>Masculino</option>
                 </select></div>
@@ -90,79 +90,12 @@
 
             </div>
 
+
+
             <div><label for="file_foto">Foto</label>
 
                 <input type="file" name="file_foto" accept="image/*">
             </div>
-
-
-            @can('socio_DP', App\User::class)
-                @if($user->tipo_socio!='P')
-
-                @else
-                <div>
-                    <label for="inputNrLicenca"> Número de licença </label>
-                    <input type="text" name="num_licenca" id="inputNrLicenca" @if((Auth::user()->can('socio_piloto',App\User::class))) disabled @endif value="{{$user->num_licenca}}">
-                </div>
-
-
-                <div>
-                    <label for="inputTipoLicenca"> Tipo de licença </label>
-                    <input type="text" name="tipo_licenca" id="inputTipoLicenca" @if((Auth::user()->can('socio_piloto',App\User::class))) disabled @endif  value="{{$user->tipo_licenca}}">
-                </div>
-
-                <div>
-                    <label for="inputInstrutor"> Instrutor </label>
-                    <input type="text" name="instrutor" id="inputInstrutor" @if((Auth::user()->can('socio_piloto',App\User::class))) disabled @endif  value="{{$user->instrutor}}">
-                </div>
-
-                <div>
-                    <label >Validade da licença</label>
-                    <input type="date" name="validade_licenca" value="{{$user->validade_licenca}} @if((Auth::user()->can('socio_piloto',App\User::class))) disabled @endif  ">
-                </div>
-
-                <div>
-                    <label for="inputLicencaConfirmada">Licença confirmada</label>
-                    <input type="radio" name="licenca_confirmada" value="1" @if((Auth::user()->can('socio_piloto',App\User::class))) disabled @endif  {{ ($user->licenca_confirmada=="1")? "checked" : "" }} > Sim
-                    <input type="radio" name="licenca_confirmada" value="0" @if((Auth::user()->can('socio_piloto',App\User::class))) disabled @endif  {{ ($user->licenca_confirmada=="0")? "checked" : "" }}> Não
-
-                </div>
-
-                <div>
-                    <label for=""> Cópia digitial da licença </label>
-                </div>
-
-                <div>
-                    <label for="inputNrCertificado"> Número de certificado </label>
-                    <input type="text" name="num_certificado" id="inputNrCertificado" @if((Auth::user()->can('socio_piloto',App\User::class))) disabled @endif  value="{{$user->num_certificado}}">
-                </div>
-
-                <div>
-                    <label for="inputClasseCertificado"> Classe do certificado </label>
-                    <input type="text" name="classe_certificado" id="inputClasseCertificado" @if((Auth::user()->can('socio_piloto',App\User::class))) disabled @endif  value="{{$user->classe_certificado}}">
-                </div>
-
-                <div>
-                    <label >Validade do certificado </label>
-                    <input type="date" name="validade_certificado" value="{{$user->validade_certificado}} @if((Auth::user()->can('socio_piloto',App\User::class))) disabled @endif  ">
-                </div>
-
-                <div>
-                    <label for="inputCertificadoConfirmado">Certificado confirmado</label>
-                    <input type="radio" name="certificado_confirmado" value="1" @if((Auth::user()->can('socio_piloto',App\User::class))) disabled @endif  {{ ($user->certificado_confirmado=="1")? "checked" : "" }} > Sim
-                    <input type="radio" name="certificado_confirmado" value="0" @if((Auth::user()->can('socio_piloto',App\User::class))) disabled @endif  {{ ($user->certificado_confirmado=="0")? "checked" : "" }}> Não
-
-                </div>
-
-                <div>
-                    <label for=""> Cópia digital certificado </label>
-                </div>
-
-                    @endif
-
-                @endcan
-
-
 
         </div>
         <div>

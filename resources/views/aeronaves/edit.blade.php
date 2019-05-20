@@ -1,8 +1,8 @@
 @extends('master')
 @section('content')
 
-    <form action="{{action('AeronaveController@update', $aeronave->matricula)}}" method="post">
-        @method('put')
+    <form method="POST" action="{{action('AeronaveController@update', $aeronave->matricula)}}" >
+        @method('PUT')
         @csrf
         <div>
             <label for="inputMatricula">Matricula</label>
@@ -21,7 +21,7 @@
             <input type="text" name="nrlugares" id="inputNrLugares" value="{{ $aeronave->num_lugares }}" placeholder="Numero de lugares" >
         </div>
         <div>
-            @can('list',  App\User::class)
+            @can('socio_Direcao',  Auth::user())
             <table class="table">
                 <thead>
                 <tr>

@@ -29,40 +29,96 @@ class UserController extends Controller
     {
 
         //$users= new \stdClass();
-        //$this->authorize('list', User::class);
+        $this->authorize('listar', Auth::user());
 
 
          if(Auth::user()->can('socio_Direcao', User::class)){
-            $users = User::paginate(15);
-        }elseif(Auth::user()->can('socio_normal', User::class)) {
-        //$users = User::where('ativo', '=', '1')->paginate(15);
+             $num_socio=request()->query('num_socio');
+             $nome_informal=request()->query('nome_informal');
+             $email=request()->query('email');
+             $tipo=request()->query('tipo');
+             $direcao=request()->query('direcao');
+             $quota_paga=request()->query('quota_paga');
+             $ativo=request()->query('ativo');
+             $filtro = User::where('ativo','>=','0');
 
-        $num_socio=request()->query('num_socio');
-        $nome_informal=request()->query('nome_informal');
-        $email=request()->query('email');
-        $tipo_socio=request()->query('tipo_socio');
-        $direcao=request()->query('direcao');
-        $filtro = User::where('ativo','=','1');
+             if (isset($num_socio)) {
+                 $filtro = $filtro->where('num_socio', $num_socio);
+             }
+             if (isset($nome_informal)) {
+                 $filtro = $filtro->where('nome_informal', 'like','%'.$nome_informal.'%');
+             }
+             if (isset($email)) {
+                 $filtro = $filtro->where('email', 'like','%'.$email.'%');
+             }
+             if (isset($tipo)) {
+                 $filtro = $filtro->where('tipo_socio', $tipo);
+             }
+             if (isset($direcao)) {
+                 $filtro = $filtro->where('direcao', $direcao);
+             }
+             if(isset($quota_paga)){
+                 $filtro=$filtro->where('quota_paga',$quota_paga);
+             }
+             if(isset($ativo)){
+                 $filtro=$filtro->where('ativo',$ativo);
+             }
 
-        if (isset($num_socio)) {
-            $filtro = $filtro->where('num_socio', $num_socio);
-        }
-        if ($nome_informal) {
-            $filtro = $filtro->where('nome_informal', 'like','%'.$nome_informal.'%');
-        }
-        if ($email) {
-            $filtro = $filtro->where('email', $email);
-        }
-        if ($tipo_socio) {
-            $filtro = $filtro->where('tipo_socio', $tipo_socio);
-        }
-        if ($direcao) {
-            $filtro = $filtro->where('direcao', $direcao);
-        }
+             {
+                 $users =$filtro->paginate(15)->appends([
+                     'num_socio' => request('num_socio'),
+                     'nome_informal' => request('nome_informal'),
+                     'email' => request('email'),
+                     'tipo' => request('tipo'),
+                     'direcao' => request('direcao'),
+                     'quota_paga' => request('quota_paga'),
+                     'ativo' => request('ativo'),
 
-            $users=$filtro->paginate(15);
-        }
+                 ]);
+             }
 
+
+        }elseif(Auth::user()->can('socio_normal', App\User::class)) {
+             //$users = User::where('ativo', '=', '1')->paginate(15);
+
+
+             $num_socio = request()->query('num_socio');
+             $nome_informal = request()->query('nome_informal');
+             $email = request()->query('email');
+             $tipo = request()->query('tipo');
+             $direcao = request()->query('direcao');
+             // $filtro=  DB::table('users')->select(['num_socio', 'nome_informal', 'foto_url', 'email', 'telefone', 'tipo_socio', 'num_licenca', 'direcao'])->whereNull('deleted_at')->where('ativo',1);
+             $filtro = User::whereNull('deleted_at')->where('ativo', '1');
+
+             if (isset($num_socio)) {
+                 $filtro = $filtro->where('num_socio', $num_socio);
+             }
+             if (isset($nome_informal)) {
+                 $filtro = $filtro->where('nome_informal', 'like', '%' . $nome_informal . '%');
+             }
+             if (isset($email)) {
+                 $filtro = $filtro->where('email', 'like', '%' . $email . '%');
+             }
+             if (isset($tipo)) {
+                 $filtro = $filtro->where('tipo_socio', $tipo);
+             }
+             if (isset($direcao)) {
+                 $filtro = $filtro->where('direcao', $direcao);
+             }
+
+             {
+
+                 $users = $filtro->paginate(15)->appends([
+                     'num_socio' => request('num_socio'),
+                     'nome_informal' => request('nome_informal'),
+                     'email' => request('email'),
+                     'tipo' => request('tipo'),
+                     'direcao' => request('direcao'),
+
+                 ]);
+             }
+
+         }
 
         $title="Lista de utilizadores";
         return view('users.list', compact('users','title'));
@@ -71,13 +127,9 @@ class UserController extends Controller
 	
 	public function edit($id){
 
-        $this->authorize('update_DirMe', User::findOrFail($id), User::class);
+        $this->authorize('update_DirMe',User::findOrFail($id),App\User::class );
             $title = "Editar Utilizador ";
             $user= User::findOrFail($id);
-
-
-
-
 
             return view('users.edit', compact('title', 'user' ));
 
@@ -140,22 +192,10 @@ class UserController extends Controller
 
 	public function update(UserUpdateRequest $request,$socio){
 
-        $this->authorize('update_DirMe', Auth::user(),User::class);
+        $this->authorize('update_DirMe', User::findOrFail($socio),App\User::class);
 		if ($request->has('cancel')) {
             return redirect()->action('UserController@index');
 		}
-
-
-
-        /*$this->validate($request, [
-            'num_socio'=>'required|',
-            'name' => 'required|alpha_dash',
-            'email' => 'required|email',
-            'type' => 'required|between:0,2'
-        ]);
-
-        */
-
 
 
 
@@ -163,13 +203,13 @@ class UserController extends Controller
 		$user = User::findOrFail($socio);
         if(! is_null($request['file_foto'])) {
             $image = $request->file('file_foto');
-            $name = time().'.'.$image->getClientOriginalExtension();
+            $newFotoUrl = time().'.'.$image->getClientOriginalExtension();
 
-            $path = $request->file('file_foto')->storeAs('public/img', $name);
+            $path = $request->file('file_foto')->storeAs('public/img', $newFotoUrl);
             // OR
 
             // Storage::putFileAs('public/img', $image, $name);
-            $user->foto_url = $name;
+            $user->foto_url = $newFotoUrl;
 
         }
 

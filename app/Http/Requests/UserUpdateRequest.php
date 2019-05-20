@@ -31,11 +31,21 @@ class UserUpdateRequest extends FormRequest
             'nome_informal' => 'required|max:40',
             'nif' => 'max:9',
             'telefone'=> 'max:20',
-           // 'email'=>'email|unique:users,email,'.$this->user()->id, //check //apenas o user atual
+            'num_socio' => 'required|max:11',
+            'file_foto' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'data_nascimento' => 'required',
             'email' => [
-                'required',
+                'email', 'required',
                 Rule::unique('users')->ignore($this->user()->id),
             ],
+            'num_licenca'=>'max:30',
+            'tipo_licenca'=>'exists:users,tipo_licenca',
+            'num_certificado'=> 'max:30',
+            'classe_certificado'=>'exists:users,classe_certificado',
+            'validade_licenca' => 'date_format:Y-m-d|after:today',
+            'validade_certificado' => 'date_format:Y-m-d|after:today',
+
+
 
         ];
     }
