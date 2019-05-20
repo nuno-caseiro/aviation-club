@@ -37,7 +37,7 @@ class AeronaveController extends Controller
 
         }
 
-        foreach ($aeronaves as $aeronave){
+       /* foreach ($aeronaves as $aeronave){
             $aeronaveValores1= Aeronave::findOrFail($aeronave->matricula)->aeronaveValores()->get()->toArray();
             if(!empty($aeronaveValores1)){
                 if($aeronaveValores1[count($aeronaveValores1)-1]['unidade_conta_horas']==10)
@@ -45,7 +45,7 @@ class AeronaveController extends Controller
             }
         }
 
-
+*/
 
         $title= "Lista de Aeronaves";
 
@@ -81,6 +81,7 @@ class AeronaveController extends Controller
     }
 
 
+
     public function edit($matricula)
     {
         $this->authorize('socio_Direcao',Auth::user() );
@@ -112,16 +113,22 @@ class AeronaveController extends Controller
 
         if(isset($request->precos)){
             foreach ($request->precos as $preco){
-
+/*
                 DB::table('aeronaves_valores')->where('matricula', $matricula)->where('unidade_conta_horas', $i+1)->update(['preco' => $request->precos[$i]]);
                 DB::table('aeronaves_valores')->where('matricula', $matricula)->where('unidade_conta_horas', $i+1)->update(['minutos' => $request->tempos[$i]]);
                  // Aeronave::findOrFail($matricula)->aeronaveValores()->where('unidade_conta_horas',$i+1)->update(['preco'=> $request->precos[$i],'minutos'=> $request->tempos[$i] ]);
-             //   Aeronave::find($matricula)->aeronaveValores()->where('unidade_conta_horas',$i+1)->update(['minutos'=> $request->tempos[$i]]);
+             //   Aeronave::find($matricula)->aeronaveValores()->where('unidade_conta_horas',$i+1)->update(['minutos'=> $request->tempos[$i]]);*/
+            $this->updateAeronaveValores($matricula, $i+1, $request->tempos[$i],$request->precos[$i]);
                 $i++;
             }
 
         }
         return redirect()->action('AeronaveController@index');
+
+    }
+
+    public function updateAeronaveValores($matricula, $unidade ,$tempo, $preco){
+        DB::table('aeronaves_valores')->where('matricula', $matricula)->where('unidade_conta_horas', $unidade)->update(['preco' => $preco,'minutos' => $tempo]);
 
     }
 

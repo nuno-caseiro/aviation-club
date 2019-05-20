@@ -138,7 +138,7 @@
 
                 <div>
                     <label for=""> Cópia digitial da licença </label>
-                    <a href="{{route('certificado',Auth::id())}}" class="btn btn-success mb-2"> Download</a>
+                    <a href="{{route('certificado',Auth::Id())}}" class="btn btn-success mb-2"> Download</a>
 
                 </div>
 
