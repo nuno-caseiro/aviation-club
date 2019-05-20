@@ -9,6 +9,7 @@ class AeronaveValores extends Model
 {
     protected $table= 'aeronaves_valores';
     protected $fillable= ['matricula','unidade_conta_horas','minutos','preco'];
+    protected $hidden = ['id'];
 
     public $timestamps=false;
 

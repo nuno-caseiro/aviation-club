@@ -27,11 +27,8 @@ class AeronaveController extends Controller
 
 
             $aeronavesMatriculas= DB::table('aeronaves_pilotos')->select('matricula')->where('piloto_id',Auth::id())->pluck('matricula');
-
-
             foreach ($aeronavesMatriculas as $matricula){
-                $aeronaves[]=Aeronave::find($matricula);
-
+                $aeronaves[]=Aeronave::findOrFail($matricula);
             }
 
 
@@ -41,7 +38,7 @@ class AeronaveController extends Controller
         }
 
         foreach ($aeronaves as $aeronave){
-            $aeronaveValores1= Aeronave::find($aeronave->matricula)->aeronaveValores()->get()->toArray();
+            $aeronaveValores1= Aeronave::findOrFail($aeronave->matricula)->aeronaveValores()->get()->toArray();
             if(!empty($aeronaveValores1)){
                 if($aeronaveValores1[count($aeronaveValores1)-1]['unidade_conta_horas']==10)
                     $aeronave->preco_hora= $aeronaveValores1[count($aeronaveValores1)-1]['preco'];
@@ -76,12 +73,9 @@ class AeronaveController extends Controller
         Aeronave::create($aeronave);
 
         foreach(range(1,10) as $i){
-            /*
-                        $aeronaveValor[]= ['unidade_conta_horas' => $i,
-                            'minutos' => $request->minutos[$i-1], 'preco' => $request->precos[$i-1]];
-            */
-            Aeronave::find($request->matricula)->aeronaveValores()->create(['unidade_conta_horas' => $i,
-                'minutos' => $request->minutos[$i-1], 'preco' => $request->precos[$i-1]]);
+
+            Aeronave::findOrFail($request->matricula)->aeronaveValores()->create(['unidade_conta_horas' => $i,
+                'minutos' => $request->tempos[$i-1], 'preco' => $request->precos[$i-1]]);
         }
         return redirect()->action('AeronaveController@index');
     }
@@ -94,7 +88,7 @@ class AeronaveController extends Controller
         $title = "Editar Aeronave";
         $aeronave = Aeronave::findOrFail($matricula);
 
-        $aeronaveValores= Aeronave::find($matricula)->aeronaveValores()->get()->toArray();
+        $aeronaveValores= Aeronave::findOrFail($matricula)->aeronaveValores()->get()->toArray();
 
 
 
@@ -110,16 +104,19 @@ class AeronaveController extends Controller
             return redirect()->action('AeronaveController@index');
         }
 
-        $aeronaveModel= Aeronave::find($matricula);
+        $aeronaveModel= Aeronave::findOrFail($matricula);
         $aeronaveModel->fill($request->except(['created_at', 'updated_at', 'deleted_at']));
         $aeronaveModel->save();
 
         $i=0;
+
         if(isset($request->precos)){
             foreach ($request->precos as $preco){
 
-                Aeronave::find($matricula)->aeronaveValores()->where('unidade_conta_horas',$i+1)->update(['preco'=> $request->precos[$i]]);
-                Aeronave::find($matricula)->aeronaveValores()->where('unidade_conta_horas',$i+1)->update(['minutos'=> $request->minutos[$i]]);
+                DB::table('aeronaves_valores')->where('matricula', $matricula)->where('unidade_conta_horas', $i+1)->update(['preco' => $request->precos[$i]]);
+                DB::table('aeronaves_valores')->where('matricula', $matricula)->where('unidade_conta_horas', $i+1)->update(['minutos' => $request->tempos[$i]]);
+                 // Aeronave::findOrFail($matricula)->aeronaveValores()->where('unidade_conta_horas',$i+1)->update(['preco'=> $request->precos[$i],'minutos'=> $request->tempos[$i] ]);
+             //   Aeronave::find($matricula)->aeronaveValores()->where('unidade_conta_horas',$i+1)->update(['minutos'=> $request->tempos[$i]]);
                 $i++;
             }
 
@@ -132,7 +129,7 @@ class AeronaveController extends Controller
 
         $this->authorize('socio_Direcao', Auth::user());
         Aeronave::find($matricula)->aeronaveValores()->delete();
-        $aeronave= Aeronave::find($matricula);
+        $aeronave= Aeronave::findOrFail($matricula);
         $movimentosAssociados= DB::table('movimentos')->select('id')->where('aeronave',$matricula)->get();
         if($movimentosAssociados->isEmpty()){
             $aeronave->forceDelete();
@@ -152,7 +149,7 @@ class AeronaveController extends Controller
         $users= DB::table('users')->get();
 
 
-        $pilotosAutorizados= Aeronave::find($matricula)->pilotosAutorizados()->where('matricula','=',$matricula)->get();
+        $pilotosAutorizados= Aeronave::findOrFail($matricula)->pilotosAutorizados()->where('matricula','=',$matricula)->get();
 
 
 
@@ -184,7 +181,7 @@ class AeronaveController extends Controller
 
     public function precosTempos($matricula){
         $title= "Tempos e precos";
-        $aeronaveValores= Aeronave::find($matricula)->aeronaveValores()->get()->toJson();
+        $aeronaveValores= Aeronave::findOrFail($matricula)->aeronaveValores()->get()->toJson();
 
         return view('aeronaves.precoValores',compact('aeronaveValores', 'title', 'matricula'));
 

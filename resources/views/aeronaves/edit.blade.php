@@ -47,7 +47,7 @@
                 @for($i=0; $i<=count($aeronaveValores)-1; $i++)
                     <tr>
                         <th>{{$aeronaveValores[$i]['unidade_conta_horas']}}</th>
-                        <th> <input type="text" name="minutos[]" id="inputMinuto" value="{{$aeronaveValores[$i]['minutos']}}" placeholder={{$aeronaveValores[$i]['minutos']}} >    </th>
+                        <th> <input type="text" name="tempos[]" id="inputMinuto" value="{{$aeronaveValores[$i]['minutos']}}" placeholder={{$aeronaveValores[$i]['minutos']}} >    </th>
                         <th> <input type="text" name="precos[]" id="inputPreco" value="{{$aeronaveValores[$i]['preco']}}" placeholder={{$aeronaveValores[$i]['preco']}} >    </th>
 
                     </tr>

@@ -30,8 +30,8 @@ class AeronaveCreate extends FormRequest
             'num_lugares' => 'required|integer|min:1',
             'conta_horas'=>'required|integer|min:1',
             'preco_hora' => 'required|numeric|min:1',
-            'minutos'=> 'nullable',
-            'precos'=> 'nullable'
+            'tempos.*'=> 'required|numeric|integer|min:0',
+            'precos.*'=> 'required|numeric|min:0',
         ];
     }
 }

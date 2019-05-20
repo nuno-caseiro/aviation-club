@@ -52,7 +52,7 @@
                 @for($i=0; $i<=9; $i++)
                     <tr>
                         <th>{{$i+1}}</th>
-                        <th> <input type="text" name="minutos[]" id="inputMinuto" value="" placeholder="" >    </th>
+                        <th> <input type="text" name="tempos[]" id="inputMinuto" value="" placeholder="" >    </th>
                         <th> <input type="text" name="precos[]" id="inputPreco" value="" placeholder="" >    </th>
 
                     </tr>
