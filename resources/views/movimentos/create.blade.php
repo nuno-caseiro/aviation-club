@@ -11,6 +11,62 @@ num_pessoas, conta_horas_inicio, conta_horas_fim, tempo_voo,
 preco_voo, modo_pagamento, num_recibo, observacoes,
 tipo_instrucao, instrutor_id
          
+<script>
+function myFunction() {
+var selectedValue=document.getElementById("natureza").value;
+if(selectedValue != "I") {
+    document.getElementById("instrutor_id").style="display: none;"
+    document.getElementById("instrutor_label").style="display: none;"
+     document.getElementById("instrutor_label1").style="display: none;"
+    document.getElementById("tipo_instrucao").style="display: none;"
+    document.getElementById("tipo_instrucao_select").style="display: none;"
+     document.getElementById("instrutor_id").value=null;
+    document.getElementById("instrutor_label").value=null;
+     document.getElementById("instrutor_label1").value=null;
+    document.getElementById("tipo_instrucao").value=null;
+    document.getElementById("tipo_instrucao_select").value=null;
+
+}else{
+   document.getElementById("instrutor_id").style="display: ?;"
+    document.getElementById("instrutor_label").style="display: ?;"
+    document.getElementById("tipo_instrucao").style="display: ?;"
+    document.getElementById("tipo_instrucao_select").style="display: ?;"
+    document.getElementById("instrutor_label1").style="display: ?;"
+}
+}
+</script>
+
+<script>
+function myLabelsSocio(array) {
+var selectedValue=document.getElementById("piloto_id").value;
+array.forEach(function(element) {
+    var value=element.id;
+  if(selectedValue==value){
+    document.getElementById("socio_label").innerHTML=element.name;
+  }
+    if(selectedValue==""){
+        document.getElementById("socio_label").innerHTML="";
+  }
+});
+
+}
+</script>
+
+<script>
+function myLabelsInstrutor(array) {
+var selectedValue=document.getElementById("instrutor_id").value;
+array.forEach(function(element) {
+    var value=element.id;
+  if(selectedValue==value){
+    document.getElementById("instrutor_label").innerHTML=element.name;
+  }
+  if(selectedValue==""){
+       document.getElementById("instrutor_label").innerHTML="";
+  }
+});
+}
+</script>
+
 
  <div>Date:</div></label><input type="date" name="data" >
 
@@ -40,7 +96,7 @@ tipo_instrucao, instrutor_id
         </div>
 
           <label>ID Piloto:</label>
-            <select name="piloto_id">
+            <select id="piloto_id"name="piloto_id" onchange="myLabelsSocio({{$socios}})">
               <option></option>
                 @foreach ($socios as $socio)
                     @if($socio->tipo_socio=='P')
@@ -49,14 +105,14 @@ tipo_instrucao, instrutor_id
            </option>
           @endforeach    
         </select>
-        
+        <label id="socio_label" readonly="readonly"> </label>
 
 
      <div></div>
 
        
             <label> Natureza</label>    
-                <select name="natureza">
+                <select name="natureza" id="natureza" onchange="myFunction();">
                 <option></option>                 
                 <option value="I">Instrução</option>   
                 <option value="T">Treino</option>
@@ -166,7 +222,7 @@ tipo_instrucao, instrutor_id
 
          <div>
             <label for="inputDescolagens">Numero de Recibo</label>
-            <input type="text" name="num_recibo" id="inputNumDescolagens"  placeholder="Numero de Recibo" >
+            <input  type="number"  name="num_recibo" id="inputNumDescolagens"  placeholder="Numero de Recibo" >
         </div>
 
 
@@ -179,16 +235,16 @@ tipo_instrucao, instrutor_id
   </div>
 
        
-         <label>Tipo Instruçao</label>    
-                <select name="tipo_instrucao">                 
+         <label id="tipo_instrucao">Tipo Instruçao</label>    
+                <select name="tipo_instrucao" id="tipo_instrucao_select">                 
                 <option value="S">Simples</option>   
                 <option value="D">Duplo</option>
               </select>
 
 
 
-         <label>Instrutor</label>
-                <select name="instrutor_id">
+         <label id="instrutor_label1">Instrutor</label>
+                <select name="instrutor_id" id="instrutor_id" onchange="myLabelsInstrutor({{$socios}})">
                   <option></option>
                     @foreach ($socios as $socio)
                         @if ($socio->tipo_socio=='P' && $socio->instrutor==1)
@@ -198,7 +254,7 @@ tipo_instrucao, instrutor_id
           </select>
 
 
-
+               <label id="instrutor_label" readonly="readonly "></label>
 
 
           <div>

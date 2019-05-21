@@ -3,8 +3,75 @@
 
     <form action="{{action('MovimentoController@update', $movimento->id)}}" method="post" >
         @method('put')
-        @csrf
+        @csrf 
+<script>
+function myFunction() {
+var selectedValue=document.getElementById("natureza").value;
+if(selectedValue != "I") {
+    document.getElementById("instrutor_id").style="display: none;"
+    document.getElementById("instrutor_label").style="display: none;"
+    document.getElementById("instrutorEsp").style="display: none;"
+    document.getElementById("tipo_instrucao").style="display: none;"
+    document.getElementById("tipo_instrucao_select").style="display: none;"
+     document.getElementById("instrutor_id").value=null;
+    document.getElementById("instrutor_label").value=null;
+    document.getElementById("instrutorEsp").value=null;
+    document.getElementById("tipo_instrucao").value=null;
+    document.getElementById("tipo_instrucao_select").value=null;
+       document.getElementById("instrutor_label").value=null;
+}else{
+   document.getElementById("instrutor_id").style="display: ?;"
+    document.getElementById("instrutor_label").style="display: ?;"
+    document.getElementById("instrutorEsp").style="display: ?;"
+    document.getElementById("tipo_instrucao").style="display: ?;"
+    document.getElementById("tipo_instrucao_select").style="display: ?;"
 
+}
+}
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+<script>
+function myLabelsSocio(array) {
+var selectedValue=document.getElementById("socio").value;
+array.forEach(function(element) {
+    var value=element.id;
+  if(selectedValue==value){
+    document.getElementById("socioName").innerHTML=element.name;
+  }
+   if(selectedValue==""){
+    document.getElementById("socioName").innerHTML="";
+  }
+});
+
+}
+</script>
+
+<script>
+function myLabelsInstrutor(array) {
+var selectedValue=document.getElementById("instrutor_id").value;
+array.forEach(function(element) {
+    var value=element.id;
+  if(selectedValue==value){
+    document.getElementById("instrutorEsp").innerHTML=element.name;
+  }
+    if(selectedValue==""){
+    document.getElementById("instrutorEsp").innerHTML="";
+  }
+});
+
+}
+</script>
 {{$instrutorEsp=null}}
 {{$socioEsp=null}}
         <div class="card-header">Editar Movimento</div>
@@ -26,7 +93,7 @@
 
             <br>
             <label>Natureza</label>
-            <select name="natureza" id="natureza">
+            <select name="natureza" id="natureza" onchange="myFunction();">
                 <option value="{{ $movimento->natureza}}">@if ($movimento->natureza=='I')
                         Instruçao
                     @endif
@@ -54,14 +121,14 @@
             </select>
 
 
-          @if ($movimento->natureza=='I')
+         
         <div></div>
-          <label>Tipo Instruçao</label>
+          <label id='tipo_instrucao'>Tipo Instruçao</label>
           @if (is_null($movimento->tipo_instrucao))
           {{$movimento->tipo_instrucao='S'}}  <!--ver se pode ser harcoded -->  
           @endif
          
-          <select name=tipo_instrucao required>
+          <select id="tipo_instrucao_select" name=tipo_instrucao required>
             <option value="{{$movimento->tipo_instrucao}}">@if($movimento->tipo_instrucao=='D')
                        Duplo  
                   @endif
@@ -79,7 +146,7 @@
                    </option> @endif
 
           </select>
-         @endif
+ 
 
             <div>
                 <label for="input">Estado</label>
@@ -91,7 +158,6 @@
                             Por Confirmar
                         @endif
                     </option>
-                    Alterara para ser um botao para confirmar mais tarde
                     @if ($movimento->confirmado==1)
                         <option value=0>Por Confirmar</option>
                     @endif
@@ -102,12 +168,13 @@
             </div>
 
             <label >Socios</label>
-            <select name="piloto_id">
+            <select name="piloto_id" id="socio" onchange="myLabelsSocio({{$socios}})">
+                <option></option>
                 @foreach ($socios as $socio)
                     <option value="{{$socio->id}}" {{(  $socio->id == $movimento->piloto_id) ? 'selected' : $movimento->piloto_id }}> {{ $socio->id }}
                     </option>
 
-                    @if ($socio->id==$socio->id)
+                    @if ($socio->id==$movimento->piloto_id)
                   {{$socioEsp=$socio}}
                     @endif
 
@@ -115,11 +182,12 @@
                 @endforeach    </select>
 
 
-            <label>{{$socioEsp->name}}</label>
+            <label id="socioName">{{$socioEsp->name}}</label>
 <div></div>
-            @if ($movimento->natureza=='I')
-                <label >Instrutor</label>
-                <select name="instrutor_id" id="instrutor" >
+        
+                <label id="instrutor_label" >Instrutor</label>
+                <select name="instrutor_id" id="instrutor_id" onchange="myLabelsInstrutor({{$socios}})" >
+                    <option></option>
                     @foreach ($socios as $socio)
                         @if ($socio->tipo_socio=='P' && $socio->instrutor==1)
                             <option value="{{$socio->id}}" {{(  $socio->id == $movimento->instrutor_id) ? 'selected' : $movimento->instrutor_id }}> {{ $socio->id }}
@@ -132,11 +200,8 @@
                         @endif
                     @endforeach    </select>
 
-            @endif
 
-            @if(!is_null($instrutorEsp))
-            <label>{{$instrutorEsp->name}}</label>
-            @endif
+            <label id="instrutorEsp">{{$instrutorEsp->name}}</label>
 
 
 

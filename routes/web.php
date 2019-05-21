@@ -54,6 +54,10 @@ Route::middleware('verified')->group(function () {
     Route::post('socios', 'UserController@store')->name('socios.store');
     Route::put('socios/{socio}', 'UserController@update')->name('socios.update');
     Route::delete('socios/{socio}', 'UserController@destroy')->name('socios.delete');
+    Route::patch('socios/{socio}/ativo','UserController@ativarDesativar')->name('socios.ativar');
+    Route::patch('socios/{socio}/quota','UserController@quotaPaga')->name('socios.quota');
+    Route::patch('/socios/reset_quotas', 'UserController@resetQuotas')->name('socios.resetQuota');
+    Route::patch('/socios/desativar_sem_quotas', 'UserController@resetAtivosSemQuota')->name('socios.resetAtivosSemQuota');
 
 });
 
@@ -65,6 +69,10 @@ Route::patch('/password', 'UserController@editPassword')->name('editPassword');
 
 Route::get('pilotos/{piloto}/certificado','UserController@certificado')->name('certificado');
 Route::get('pilotos/{piloto}/licenca','UserController@licenca')->name('licenca');
+
+Route::get('pilotos/{piloto}/licenca_pdf','UserController@licenca_pdf')->name('licenca_pdf');
+Route::get('pilotos/{piloto}/certificado_pdf','UserController@certificado_pdf')->name('certificado_pdf');
+
 
 
 Route::get('/home', 'HomeController@index')->name('home');

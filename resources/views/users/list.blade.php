@@ -45,7 +45,7 @@
 
         @can('socio_Direcao', App\User::class)
             <div>Quotas em dia:
-                <input id="quota_paga" type="text" class="form-control{{ $errors->has('quota_paga') ? ' is-invalid' : '' }}" name="quota_paga" value="{{ old('quota_paga') }}" ></div>
+                <input id="quotas_pagas" type="text" class="form-control{{ $errors->has('quotas_pagas') ? ' is-invalid' : '' }}" name="quotas_pagas" value="{{ old('quotas_pagas') }}" ></div>
             <div>
             Sócio ativo: <br>
                 <input id="ativo" type="text" class="form-control{{ $errors->has('ativo') ? ' is-invalid' : '' }}" name="ativo" value="{{ old('ativo') }}" >
@@ -63,6 +63,8 @@
         <br>
     </form>
 
+
+
     <thead>
     <tr>
 
@@ -78,9 +80,37 @@
             <th>Quotas pagas</th>
             <th>Sócio Ativo</th>
         @endcan
+        @can('socio_Direcao', Auth::User())
+        <th>
 
+                <div>
+                        <form method="POST" action="{{action('UserController@resetQuotas')}}">
+                            @csrf
+                            <input type="hidden" name="_method" value="patch">
+
+                            <input class="btn btn-xs btn-primary" type="submit" value="Reset quotas">
+
+                        </form>
+                </div>
+
+        </th>
+            <th>
+                <div>
+                    <form method="POST" action="{{action('UserController@resetAtivosSemQuota')}}">
+                        @csrf
+                        <input type="hidden" name="_method" value="patch">
+
+                        <input class="btn btn-xs btn-primary" type="submit" value="Reset ativos QPP">
+
+                    </form>
+                </div>
+
+
+            </th>
+        @endcan
     </tr>
     </thead>
+<tbody>
 
         @foreach($users as $utilizador)
             <tr>
@@ -93,56 +123,63 @@
                     <td>{{$utilizador->nome_informal}}</td>
                     <td>{{$utilizador->email}}</td>
                     <td>{{$utilizador->telefone}}</td>
-
                     <td>{{$utilizador->tipo_socio}}</td>
-
-
                     @if($utilizador->tipo_socio=="P")
                         <td>{{$utilizador->num_licenca}}</td>
                     @else
                         <td>Não é piloto</td>
                     @endif
-
-
-
                     @if($utilizador->direcao==1)
                         <td>Sim</td>
                     @else
                         <td>Não</td>
                     @endif
-                    @can('socio_Direcao', App\User::class)
-                    @if($utilizador->quota_paga==1)
-                        <td>Sim</td>
-                    @else
-                        <td>Não</td>
-                    @endif
 
-                    @if($utilizador->ativo==1)
-                        <td>Sim</td>
-                    @else
-                        <td>Não</td>
-                    @endif
+                    @can('socio_Direcao', App\User::class)
+                        <td> <form method="POST" action="{{action('UserController@quotaPaga', $utilizador->id)}}">
+                                @csrf
+                                <input type="hidden" name="_method" value="patch">
+                                <input type="hidden" name="quota_paga" value="{{$utilizador->quota_paga}}">
+                                @if($utilizador->quota_paga==1)
+                                    <input class="btn btn-xs btn-primary" type="submit" value="Paga">
+                                @else
+                                    <input class="btn btn-xs btn-primary" type="submit" value="Por pagar">
+                                @endif
+                            </form>
+                        </td>
+                        <td> <form method="POST" action="{{action('UserController@ativarDesativar', $utilizador->id)}}">
+                                @csrf
+                                <input type="hidden" name="_method" value="patch">
+                                <input type="hidden" name="ativo" value="{{$utilizador->ativo}}">
+                            @if($utilizador->ativo==1)
+                                    <input class="btn btn-xs btn-primary" type="submit" value="Desativar">
+                            @else
+                                <input class="btn btn-xs btn-primary" type="submit" value="Ativar">
+                            @endif
+                        </form>
+                        </td>
                     @endcan
 
 
 
-
                 <td><a class="btn btn-xs btn-primary" href="{{ action('UserController@edit', $utilizador->id) }}">Edit</a></td>
+
                 <td><form action="{{ action('UserController@destroy', $utilizador->id) }}"
                     method="post">
                   @csrf
                   @method('delete')
                   <input type="hidden" name="id" value="{{$utilizador->id}}">
                   <input class="btn btn-xs btn-primary" type="submit" value="Delete">
-              </form>
+                    </form>
+                </td>
 
                
 
             </tr>
             @endforeach
 
-   
-            
+
+</tbody>
            </table>
            <div class="text-center">
 
