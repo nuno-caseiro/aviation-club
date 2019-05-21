@@ -41,7 +41,7 @@ class UserController extends Controller
              $email=request()->query('email');
              $tipo=request()->query('tipo');
              $direcao=request()->query('direcao');
-             $quota_paga=request()->query('quota_paga');
+             $quotas_pagas=request()->query('quotas_pagas');
              $ativo=request()->query('ativo');
              $filtro = User::where('ativo','>=','0');
 
@@ -134,7 +134,7 @@ class UserController extends Controller
 	
 	public function edit($id){
 
-        $this->authorize('update_DirMe',User::findOrFail($id),App\User::class );
+        $this->authorize('update_DirMe',User::findOrFail($id));
             $title = "Editar Utilizador ";
             $user= User::findOrFail($id);
 
@@ -152,7 +152,7 @@ return view('users.edit', compact('title', 'user','classes','licencas' ));
 
 
 	public function create(){
-        $this->authorize('socio_Direcao', User::class);
+        $this->authorize('socio_Direcao', Auth::user());
 		$title= "Adicionar Utilizadores";
         $classes= ClassesCertificados::all();
         $licencas =TiposLicencas::all();
@@ -185,7 +185,7 @@ return view('users.edit', compact('title', 'user','classes','licencas' ));
 
 
 
-        $this->authorize('socio_Direcao', User::class);
+        $this->authorize('socio_Direcao', Auth::user());
 
 
 
@@ -210,7 +210,7 @@ return view('users.edit', compact('title', 'user','classes','licencas' ));
 
 	public function update(UserUpdateRequest $request,$socio){
 
-        $this->authorize('update_DirMe', User::findOrFail($socio),App\User::class);
+        $this->authorize('update_DirMe',App\User::Class , User::findOrFail($socio));
 		if ($request->has('cancel')) {
             return redirect()->action('UserController@index');
 		}
@@ -296,11 +296,11 @@ return view('users.edit', compact('title', 'user','classes','licencas' ));
 
 
 
-    public function licenca($id){
+    public function licenca($id)
+    {
 
-        $user=User::findOrFail($id);
+        $user = User::findOrFail($id);
         //$pdf = PDF::loadView('users.licencaPdf', $user);
-
 
 
         $view = View('users.licenca', compact('user'));
@@ -308,7 +308,7 @@ return view('users.edit', compact('title', 'user','classes','licencas' ));
         $pdf->loadHTML($view->render());
         return $pdf->stream();
 
-
+    }
        // return view('users.licenca',compact('user','title'));
 public function ativarDesativar(Request $request, $id){
 
