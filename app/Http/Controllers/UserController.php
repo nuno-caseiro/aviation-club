@@ -41,7 +41,7 @@ class UserController extends Controller
              $email=request()->query('email');
              $tipo=request()->query('tipo');
              $direcao=request()->query('direcao');
-             $quota_paga=request()->query('quota_paga');
+             $quotas_pagas=request()->query('quotas_pagas');
              $ativo=request()->query('ativo');
              $filtro = User::where('ativo','>=','0');
 
@@ -60,8 +60,8 @@ class UserController extends Controller
              if (isset($direcao)) {
                  $filtro = $filtro->where('direcao', $direcao);
              }
-             if(isset($quota_paga)){
-                 $filtro=$filtro->where('quota_paga',$quota_paga);
+             if(isset($quotas_pagas)){
+                 $filtro=$filtro->where('quota_paga',$quotas_pagas);
              }
              if(isset($ativo)){
                  $filtro=$filtro->where('ativo',$ativo);
@@ -74,7 +74,7 @@ class UserController extends Controller
                      'email' => request('email'),
                      'tipo' => request('tipo'),
                      'direcao' => request('direcao'),
-                     'quota_paga' => request('quota_paga'),
+                     'quotas_pagas' => request('quotas_pagas'),
                      'ativo' => request('ativo'),
 
                  ]);
@@ -181,6 +181,9 @@ return view('users.edit', compact('title', 'user','classes','licencas' ));
 
 	    //$this->validate(request(),[]);// colocar campos para validar aqui
 
+
+
+
         $this->authorize('socio_Direcao', User::class);
 
 
@@ -270,41 +273,76 @@ return view('users.edit', compact('title', 'user','classes','licencas' ));
     }
 
 
-    public function certificado($id){
-        //$user= User::findOrFail($id);
-        //$filename = 'certificado_'.$user->id.'.pdf';
-        //$path = storage/app/docs_piloto($filename);
+    public function certificado_pdf($id){
 
-        //return Response::make(file_get_contents($path), 200, [
-          //  'Content-Type' => 'application/pdf',
-        //'Content-Disposition' => 'inline; filename="'.$filename.'"'
-        //]);
 
-       // return Response::download($path, $filename);
-      // $pdf= PDF::loadView('users.licenca_pdf');
+        $user=User::findOrFail($id);
+        //$pdf = PDF::loadView('users.licencaPdf', $user);
 
-       //return $pdf->download('teste.pdf');
+        $title="Certificado";
+        $pdf = PDF::loadView('users.certificadoPdf',compact('user','title'));
+
+
+
+
+        return $pdf->download('Certificado.pdf');
+
+
+
+
+    }
+
+
+
+
+    public function licenca($id){
 
         $user=User::findOrFail($id);
         //$pdf = PDF::loadView('users.licencaPdf', $user);
 
 
 
-        $pdf = PDF::loadView('users.licencaPdf', $user);
+        $view = View('users.licenca', compact('user'));
+        $pdf = \App::make('dompdf.wrapper');
+        $pdf->loadHTML($view->render());
+        return $pdf->stream();
 
-        return $pdf->download('Certificado.pdf');
+
+       // return view('users.licenca',compact('user','title'));
 
     }
 
+    public function certificado($id){
 
-    public function licenca(){
+        $user=User::findOrFail($id);
+        //$pdf = PDF::loadView('users.licencaPdf', $user);
+
+
+
+        $view = View('users.certificado', compact('user'));
+        $pdf = \App::make('dompdf.wrapper');
+        $pdf->loadHTML($view->render());
+
+        return $pdf->stream();
+
+
+        // return view('users.licenca',compact('user','title'));
 
     }
 
+    public function licenca_PDF($id){
+        $user=User::findOrFail($id);
+        //$pdf = PDF::loadView('users.licencaPdf', $user);
+
+
+        $pdf = PDF::loadView('users.licencaPdf',compact('user'));
 
 
 
 
-    
-	
+
+        return $pdf->download('Licença.pdf');
+    }
+
+
 }

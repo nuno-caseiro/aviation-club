@@ -45,7 +45,7 @@
 
         @can('socio_Direcao', App\User::class)
             <div>Quotas em dia:
-                <input id="quota_paga" type="text" class="form-control{{ $errors->has('quota_paga') ? ' is-invalid' : '' }}" name="quota_paga" value="{{ old('quota_paga') }}" ></div>
+                <input id="quotas_pagas" type="text" class="form-control{{ $errors->has('quotas_pagas') ? ' is-invalid' : '' }}" name="quotas_pagas" value="{{ old('quotas_pagas') }}" ></div>
             <div>
             Sócio ativo: <br>
                 <input id="ativo" type="text" class="form-control{{ $errors->has('ativo') ? ' is-invalid' : '' }}" name="ativo" value="{{ old('ativo') }}" >

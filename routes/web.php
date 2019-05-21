@@ -66,6 +66,10 @@ Route::patch('/password', 'UserController@editPassword')->name('editPassword');
 Route::get('pilotos/{piloto}/certificado','UserController@certificado')->name('certificado');
 Route::get('pilotos/{piloto}/licenca','UserController@licenca')->name('licenca');
 
+Route::get('pilotos/{piloto}/licenca_pdf','UserController@licenca_pdf')->name('licenca_pdf');
+Route::get('pilotos/{piloto}/certificado_pdf','UserController@certificado_pdf')->name('certificado_pdf');
+
+
 
 Route::get('/home', 'HomeController@index')->name('home');
 
