@@ -88,6 +88,11 @@
         }
     </script>
 
+
+
+
+
+
     <form method="POST" action="{{route('socios.update', $user->id)}}" enctype="multipart/form-data">
         @method('PUT')
         @csrf
@@ -211,10 +216,21 @@
                 </select>
             </div>
 
-            <div>
-                <label id="labelinputInstrutor"for="inputInstrutor"> Instrutor </label>
-                <input type="text" name="instrutor" id="inputInstrutor" @if((Auth::user()->can('socio_piloto',App\User::class))) readonly @endif  value="{{$user->instrutor}}">
-            </div>
+
+
+
+        </div>
+
+        <div>
+            <label id="labelinputAluno"for="inputAluno"> Aluno </label>
+            <input type="text" name="aluno" id="inputAluno" value="{{$user->aluno}}">
+
+        </div>
+
+        <div>
+            <label id="labelinputInstrutor"for="inputInstrutor"> Instrutor </label>
+            <input type="text" name="instrutor" id="inputInstrutor" value="{{$user->instrutor}}">
+        </div>
 
             <div>
                 <label id="labeValidadeLicenca">Validade da licença</label>

@@ -134,7 +134,7 @@ class UserController extends Controller
 	
 	public function edit($id){
 
-        $this->authorize('update_DirMe',User::findOrFail($id));
+        $this->authorize('update_DirMe',User::findOrFail($id),App\User::class );
             $title = "Editar Utilizador ";
             $user= User::findOrFail($id);
 
@@ -152,7 +152,7 @@ return view('users.edit', compact('title', 'user','classes','licencas' ));
 
 
 	public function create(){
-        $this->authorize('socio_Direcao', Auth::user());
+        $this->authorize('socio_Direcao', User::class);
 		$title= "Adicionar Utilizadores";
         $classes= ClassesCertificados::all();
         $licencas =TiposLicencas::all();
@@ -185,7 +185,7 @@ return view('users.edit', compact('title', 'user','classes','licencas' ));
 
 
 
-        $this->authorize('socio_Direcao', Auth::user());
+        $this->authorize('socio_Direcao', User::class);
 
 
 
@@ -210,7 +210,7 @@ return view('users.edit', compact('title', 'user','classes','licencas' ));
 
 	public function update(UserUpdateRequest $request,$socio){
 
-        $this->authorize('update_DirMe',App\User::Class , User::findOrFail($socio));
+        $this->authorize('update_DirMe', User::findOrFail($socio),App\User::class);
 		if ($request->has('cancel')) {
             return redirect()->action('UserController@index');
 		}
@@ -296,11 +296,11 @@ return view('users.edit', compact('title', 'user','classes','licencas' ));
 
 
 
-    public function licenca($id)
-    {
+    public function licenca($id){
 
-        $user = User::findOrFail($id);
+        $user=User::findOrFail($id);
         //$pdf = PDF::loadView('users.licencaPdf', $user);
+
 
 
         $view = View('users.licenca', compact('user'));
