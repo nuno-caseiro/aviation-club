@@ -139,11 +139,9 @@
                 <label for="inputTelefone">Telefone</label>
                 <input type="text" name="telefone" id="inputTelefone" placeholder="Telefone" value="{{$user->telefone}}">
             </div>
-
             <div>
                 <label for="inputTipoSocio">Tipo de Sócio </label>
                 <select name="tipo_socio" id="inputTipoSocio"  onchange="myFunction()">
-
                     <option value="P" @if((Auth::user()->can('socio_normal',App\User::class))) disabled @endif {{($user->tipo_socio=="P")? "selected" : "" }}>Piloto</option>
                     <option value="NP"@if((Auth::user()->can('socio_normal',App\User::class))) disabled @endif {{($user->tipo_socio=="NP")? "selected" : "" }}>Não Piloto</option>
                     <option value="A" @if((Auth::user()->can('socio_normal',App\User::class))) disabled @endif{{($user->tipo_socio=="A")? "selected" : "" }}>Aeromodelista</option>
@@ -154,7 +152,22 @@
                 <label for="inputQuotaPaga"  >Quotas em dia</label>
                 <input type="radio" name="quota_paga" value="1" @if((Auth::user()->can('socio_normal',App\User::class))) disabled @endif {{ ($user->quota_paga=="1")? "checked" : "" }} > Sim
                 <input type="radio" name="quota_paga" value="0" @if((Auth::user()->can('socio_normal',App\User::class))) disabled @endif{{ ($user->quota_paga=="0")? "checked" : "" }}> Não
+            </div>
 
+            <div>
+                @can('socio_Direcao', Auth::User())
+                <form method="POST" action="{{action('UserController@quotaPaga', $user->id)}}">
+                    @csrf
+
+                    <input type="hidden" name="_method" value="PATCH">
+                    <input type="hidden" name="quota_paga" value="{{$user->quota_paga}}">
+                    @if($user->quota_paga==1)
+                        <input class="btn btn-xs btn-primary" type="submit" value="Paga">
+                    @else
+                        <input class="btn btn-xs btn-primary" type="submit" value="Por pagar">
+                    @endif
+                </form>
+                @endcan
             </div>
 
 

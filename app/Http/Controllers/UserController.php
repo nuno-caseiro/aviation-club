@@ -41,7 +41,7 @@ class UserController extends Controller
              $email=request()->query('email');
              $tipo=request()->query('tipo');
              $direcao=request()->query('direcao');
-             $quotas_pagas=request()->query('quotas_pagas');
+             $quota_paga=request()->query('quota_paga');
              $ativo=request()->query('ativo');
              $filtro = User::where('ativo','>=','0');
 
@@ -76,6 +76,7 @@ class UserController extends Controller
                      'direcao' => request('direcao'),
                      'quotas_pagas' => request('quotas_pagas'),
                      'ativo' => request('ativo'),
+                     'num_licenca' =>request('num_licenca'),
 
                  ]);
 
@@ -311,8 +312,65 @@ return view('users.edit', compact('title', 'user','classes','licencas' ));
 
 
        // return view('users.licenca',compact('user','title'));
+public function ativarDesativar(Request $request, $id){
+
+        $user= User::findOrFail($id);
+        if($user->ativo==$request->ativo) {
+            $user->ativo=!$request->ativo;
+        }
+
+        $user->save();
+
+
+    return redirect()->action('UserController@index');
+
+}
+
+
+public function resetQuotas(){
+        $users= User::all();
+        foreach ($users as $user){
+            if($user->quota_paga==1){
+                $user->quota_paga=0;
+            }
+            $user->save();
+        }
+
+
+
+    return redirect()->action('UserController@index');
+
+}
+
+public function resetAtivosSemQuota(){
+    $users=User::all();
+    foreach ($users as $user){
+        if($user->quota_paga==0){
+            $user->ativo=0;
+        }
+        $user->save();
 
     }
+    return redirect()->action('UserController@index');
+
+}
+
+    public function quotaPaga(Request $request, $id){
+
+        $user= User::findOrFail($id);
+        if($user->quota_paga== $request->quota_paga){
+            $user->quota_paga=!$request->quota_paga;
+        }
+
+        $user->save();
+
+
+        return redirect()->action('UserController@index');
+
+    }
+
+
+
 
     public function certificado($id){
 
