@@ -209,6 +209,8 @@ return view('users.edit', compact('title', 'user','classes','licencas' ));
 
 	public function update(UserUpdateRequest $request,$socio){
 
+
+
         $this->authorize('update_DirMe', User::findOrFail($socio),App\User::class);
 		if ($request->has('cancel')) {
             return redirect()->action('UserController@index');
