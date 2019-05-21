@@ -17,6 +17,7 @@ var selectedValue=document.getElementById("natureza").value;
 if(selectedValue != "I") {
     document.getElementById("instrutor_id").style="display: none;"
     document.getElementById("instrutor_label").style="display: none;"
+     document.getElementById("instrutor_label1").style="display: none;"
     document.getElementById("tipo_instrucao").style="display: none;"
     document.getElementById("tipo_instrucao_select").style="display: none;"
 
@@ -25,10 +26,37 @@ if(selectedValue != "I") {
     document.getElementById("instrutor_label").style="display: ?;"
     document.getElementById("tipo_instrucao").style="display: ?;"
     document.getElementById("tipo_instrucao_select").style="display: ?;"
-
+       document.getElementById("instrutor_label1").style="display: ?;"
 }
 }
 </script>
+
+<script>
+function myLabelsSocio(array) {
+var selectedValue=document.getElementById("piloto_id").value;
+array.forEach(function(element) {
+    var value=element.id;
+  if(selectedValue==value){
+    document.getElementById("socio_label").innerHTML=element.name;
+  }
+});
+
+}
+</script>
+
+<script>
+function myLabelsInstrutor(array) {
+var selectedValue=document.getElementById("instrutor_id").value;
+array.forEach(function(element) {
+    var value=element.id;
+  if(selectedValue==value){
+    document.getElementById("instrutor_label").innerHTML=element.name;
+  }
+});
+}
+</script>
+
+
  <div>Date:</div></label><input type="date" name="data" >
 
  <div>Hora Descolagem:</div><input min="date" type="datetime-local" name="hora_descolagem">
@@ -57,7 +85,7 @@ if(selectedValue != "I") {
         </div>
 
           <label>ID Piloto:</label>
-            <select name="piloto_id">
+            <select id="piloto_id"name="piloto_id" onchange="myLabelsSocio({{$socios}})">
               <option></option>
                 @foreach ($socios as $socio)
                     @if($socio->tipo_socio=='P')
@@ -66,7 +94,7 @@ if(selectedValue != "I") {
            </option>
           @endforeach    
         </select>
-        
+        <label id="socio_label" readonly="readonly"> </label>
 
 
      <div></div>
@@ -204,8 +232,8 @@ if(selectedValue != "I") {
 
 
 
-         <label id="instrutor_label">Instrutor</label>
-                <select name="instrutor_id" id="instrutor_id">
+         <label id="instrutor_label1">Instrutor</label>
+                <select name="instrutor_id" id="instrutor_id" onchange="myLabelsInstrutor({{$socios}})">
                   <option></option>
                     @foreach ($socios as $socio)
                         @if ($socio->tipo_socio=='P' && $socio->instrutor==1)
@@ -215,7 +243,7 @@ if(selectedValue != "I") {
           </select>
 
 
-
+               <label id="instrutor_label" readonly="readonly ">Instrutor</label>
 
 
           <div>
