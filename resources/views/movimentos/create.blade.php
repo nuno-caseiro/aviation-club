@@ -20,13 +20,18 @@ if(selectedValue != "I") {
      document.getElementById("instrutor_label1").style="display: none;"
     document.getElementById("tipo_instrucao").style="display: none;"
     document.getElementById("tipo_instrucao_select").style="display: none;"
+     document.getElementById("instrutor_id").value=null;
+    document.getElementById("instrutor_label").value=null;
+     document.getElementById("instrutor_label1").value=null;
+    document.getElementById("tipo_instrucao").value=null;
+    document.getElementById("tipo_instrucao_select").value=null;
 
 }else{
    document.getElementById("instrutor_id").style="display: ?;"
     document.getElementById("instrutor_label").style="display: ?;"
     document.getElementById("tipo_instrucao").style="display: ?;"
     document.getElementById("tipo_instrucao_select").style="display: ?;"
-       document.getElementById("instrutor_label1").style="display: ?;"
+    document.getElementById("instrutor_label1").style="display: ?;"
 }
 }
 </script>
@@ -243,7 +248,7 @@ array.forEach(function(element) {
           </select>
 
 
-               <label id="instrutor_label" readonly="readonly ">Instrutor</label>
+               <label id="instrutor_label" readonly="readonly "></label>
 
 
           <div>

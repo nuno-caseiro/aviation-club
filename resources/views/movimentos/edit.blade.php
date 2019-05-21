@@ -66,8 +66,6 @@ array.forEach(function(element) {
 
 }
 </script>
-
-
 {{$instrutorEsp=null}}
 {{$socioEsp=null}}
         <div class="card-header">Editar Movimento</div>
@@ -194,11 +192,9 @@ array.forEach(function(element) {
                         @endif
                     @endforeach    </select>
 
-        
 
-            @if(!is_null($instrutorEsp))
             <label id="instrutorEsp">{{$instrutorEsp->name}}</label>
-            @endif
+
 
 
 
