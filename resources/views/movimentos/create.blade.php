@@ -11,7 +11,24 @@ num_pessoas, conta_horas_inicio, conta_horas_fim, tempo_voo,
 preco_voo, modo_pagamento, num_recibo, observacoes,
 tipo_instrucao, instrutor_id
          
+<script>
+function myFunction() {
+var selectedValue=document.getElementById("natureza").value;
+if(selectedValue != "I") {
+    document.getElementById("instrutor_id").style="display: none;"
+    document.getElementById("instrutor_label").style="display: none;"
+    document.getElementById("tipo_instrucao").style="display: none;"
+    document.getElementById("tipo_instrucao_select").style="display: none;"
 
+}else{
+   document.getElementById("instrutor_id").style="display: ?;"
+    document.getElementById("instrutor_label").style="display: ?;"
+    document.getElementById("tipo_instrucao").style="display: ?;"
+    document.getElementById("tipo_instrucao_select").style="display: ?;"
+
+}
+}
+</script>
  <div>Date:</div></label><input type="date" name="data" >
 
  <div>Hora Descolagem:</div><input min="date" type="datetime-local" name="hora_descolagem">
@@ -56,7 +73,7 @@ tipo_instrucao, instrutor_id
 
        
             <label> Natureza</label>    
-                <select name="natureza">
+                <select name="natureza" id="natureza" onchange="myFunction();">
                 <option></option>                 
                 <option value="I">Instrução</option>   
                 <option value="T">Treino</option>
@@ -179,16 +196,16 @@ tipo_instrucao, instrutor_id
   </div>
 
        
-         <label>Tipo Instruçao</label>    
-                <select name="tipo_instrucao">                 
+         <label id="tipo_instrucao">Tipo Instruçao</label>    
+                <select name="tipo_instrucao" id="tipo_instrucao_select">                 
                 <option value="S">Simples</option>   
                 <option value="D">Duplo</option>
               </select>
 
 
 
-         <label>Instrutor</label>
-                <select name="instrutor_id">
+         <label id="instrutor_label">Instrutor</label>
+                <select name="instrutor_id" id="instrutor_id">
                   <option></option>
                     @foreach ($socios as $socio)
                         @if ($socio->tipo_socio=='P' && $socio->instrutor==1)
