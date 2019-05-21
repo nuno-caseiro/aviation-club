@@ -44,6 +44,9 @@ array.forEach(function(element) {
   if(selectedValue==value){
     document.getElementById("socio_label").innerHTML=element.name;
   }
+    if(selectedValue==""){
+        document.getElementById("socio_label").innerHTML="";
+  }
 });
 
 }
@@ -56,6 +59,9 @@ array.forEach(function(element) {
     var value=element.id;
   if(selectedValue==value){
     document.getElementById("instrutor_label").innerHTML=element.name;
+  }
+  if(selectedValue==""){
+       document.getElementById("instrutor_label").innerHTML="";
   }
 });
 }
@@ -216,7 +222,7 @@ array.forEach(function(element) {
 
          <div>
             <label for="inputDescolagens">Numero de Recibo</label>
-            <input type="text" name="num_recibo" id="inputNumDescolagens"  placeholder="Numero de Recibo" >
+            <input  type="number"  name="num_recibo" id="inputNumDescolagens"  placeholder="Numero de Recibo" >
         </div>
 
 

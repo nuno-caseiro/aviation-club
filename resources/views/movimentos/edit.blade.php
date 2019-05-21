@@ -49,6 +49,9 @@ array.forEach(function(element) {
   if(selectedValue==value){
     document.getElementById("socioName").innerHTML=element.name;
   }
+   if(selectedValue==""){
+    document.getElementById("socioName").innerHTML="";
+  }
 });
 
 }
@@ -61,6 +64,9 @@ array.forEach(function(element) {
     var value=element.id;
   if(selectedValue==value){
     document.getElementById("instrutorEsp").innerHTML=element.name;
+  }
+    if(selectedValue==""){
+    document.getElementById("instrutorEsp").innerHTML="";
   }
 });
 
@@ -163,6 +169,7 @@ array.forEach(function(element) {
 
             <label >Socios</label>
             <select name="piloto_id" id="socio" onchange="myLabelsSocio({{$socios}})">
+                <option></option>
                 @foreach ($socios as $socio)
                     <option value="{{$socio->id}}" {{(  $socio->id == $movimento->piloto_id) ? 'selected' : $movimento->piloto_id }}> {{ $socio->id }}
                     </option>
@@ -180,6 +187,7 @@ array.forEach(function(element) {
         
                 <label id="instrutor_label" >Instrutor</label>
                 <select name="instrutor_id" id="instrutor_id" onchange="myLabelsInstrutor({{$socios}})" >
+                    <option></option>
                     @foreach ($socios as $socio)
                         @if ($socio->tipo_socio=='P' && $socio->instrutor==1)
                             <option value="{{$socio->id}}" {{(  $socio->id == $movimento->instrutor_id) ? 'selected' : $movimento->instrutor_id }}> {{ $socio->id }}
