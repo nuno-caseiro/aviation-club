@@ -26,6 +26,8 @@ class UserUpdateRequest extends FormRequest
      */
     public function rules()
     {
+
+
         return [
             'name' => 'required|alpha_spaces', //teste
             'nome_informal' => 'required|max:40',
@@ -44,16 +46,17 @@ class UserUpdateRequest extends FormRequest
             'classe_certificado'=>'nullable|exists:classes_certificados,code',
             'validade_licenca' => 'nullable|date|date_format:Y-m-d|after_or_equal:today',
             'validade_certificado' => 'nullable|date|date_format:Y-m-d|after_or_equal:today',
-            'aluno' => 'nullable|integer|different:instrutor|in:0,1',
-            'instrutor' => 'nullable|integer|in:0,1|different:aluno',
+
+            'aluno' => 'in:0,1|different:instrutor',
+            'instrutor' => 'in:0,1|different:aluno',
             'direcao' => 'required|in:0,1',
             'ativo' => 'required|in:0,1',
             'quota_paga' => 'required|in:0,1',
             'tipo_socio' => 'required| in:P,NP,A',
             'sexo' => 'required|in:M,F',
-            'certificado_confirmado'=>'in:0,1',
-            'licenca_confirmada'=>'in:0,1',
-            //'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'certificado_confirmado'=>'nullable|in:0,1',
+            'licenca_confirmada'=>'nullable|in:0,1',
+            //'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
 
 
 

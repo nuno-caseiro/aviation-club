@@ -59,7 +59,7 @@ class UserPolicy
 
     public function socio_normal(User $auth)
     {
-        return !$auth->isDirecao() ;
+        return !$auth->isDirecao();
     }
 
 

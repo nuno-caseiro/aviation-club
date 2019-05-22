@@ -213,7 +213,9 @@
                     @foreach($licencas as $licenca)
                         <option id="inputTipoLicenca" value="{{$licenca->code}}">{{$licenca->nome}}</option>
                     @endforeach
+
                 </select>
+                <a href="">{{$user->tipo_licenca}}</a>
             </div>
 
 
@@ -252,7 +254,7 @@
 
             <div>
                 <label id="labelNrCerificado"for="inputNrCertificado"> Número de certificado </label>
-                <input type="text" name="num_certificado" id="inputNrCertificado" @if((Auth::user()->can('socio_piloto',App\User::class))) readonly @endif  value="{{$user->num_certificado}}">
+                <input type="text" name="num_certificado" id="inputNrCertificado" @if((!Auth::user()->can('socio_piloto',App\User::class))) readonly @endif  value="{{$user->num_certificado}}">
             </div>
 
 
@@ -261,8 +263,10 @@
                     @foreach($classes as $classe)
                         <option id="inputClasseCertificado" value="{{$classe->code}}">{{$classe->nome}}</option>
                     @endforeach
-                </select>
 
+
+                </select>
+                 <label for="" id="">{{$user->classe_certificado}} </label>
                 <div>
                     <label id="validade_certificado">Validade do certificado </label>
                     <input type="date" id="inputValidadeCertificado" name="validade_certificado" value="{{$user->validade_certificado}}" @if((Auth::user()->can('socio_piloto',App\User::class))) readonly @endif  >

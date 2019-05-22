@@ -232,26 +232,60 @@ return view('users.edit', compact('title', 'user','classes','licencas' ));
         }
 
 
-           // $user->fill($request->except('password'));
-        if(User::findOrFail($socio)->num_licenca != $request->num_licenca){
-            $user->licenca_confirmada=false;
-        }
-        if(User::findOrFail($socio)->num_certificado != $request->num_certificado){
-            $user->certificado_confirmado=false;
+
+
+        if(Auth::user()->can('socio_normal', Auth::user())) {
+                $user->fill($request->except([ 'num_socio', "ativo", "quota_paga", "sexo", "tipo_socio", "direcao", "instrutor", "aluno", "certificado_confirmado", "licenca_confirmada"]));
+                $user->num_licenca=null;
+                $user->tipo_licenca=null;
+                $user->validade_licenca=null;
+                $user->num_certificado=null;
+                $user->classe_certificado=null;
+                $user->validade_certificado=null;
+                $user->save();
+//faltava isto no teste 8_B....
+            }
+
+
+        if(Auth::user()->can('socio_piloto', Auth::user())){
+            $user->fill($request->except(['password','email_verified_at', 'remember_token', 'created_at', 'updated_at','deleted_at', 'num_socio', 'tipo_socio', 'sexo', 'quota_paga', 'ativo','password_inicial','direcao', 'foto_url', 'instrutor', 'aluno','certificado_confirmado']));
+
+            // $user->fill($request->except('password'));
+            if(User::findOrFail(Auth::id())->num_licenca != $request->num_licenca){
+                $user->licenca_confirmada=false;
+            }
+            if(User::findOrFail(Auth::id())->num_certificado != $request->num_certificado){
+                $user->certificado_confirmado=false;
+            }
+            $user->save();
+
         }
 
-        //para utilizador normal
-        if(Auth::user()->can('socio_normal', Auth::user())){
+
+
+
+
+
+
+
+     /*   //para utilizador normal
+        if (Auth::user()->can('socio_piloto', Auth::user())){
+            $user->fill($request->all());
+            $user->save();
+
+        }elseif(Auth::user()->can('socio_normal', Auth::user())){
             $user->fill($request->except(['id','num_socio',"ativo", "quota_paga","sexo","tipo_socio","direcao", "instrutor","aluno", "certificado_confirmado","licenca_confirmada"]));
-        }else{
-            $user->fill($request->except('password'));
+            $user->save();
         }
+        else{
+            $user->fill($request->except('password'));
+        }*/
 
 
 
 
 
-        $user->save();
+
 
 
         return redirect()->action('UserController@index');
