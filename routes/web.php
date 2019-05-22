@@ -16,7 +16,7 @@ Route::get('/', function () {
     return view('welcome');
 })->name('welcome');
 
-
+Auth::routes(['verify' => true]);
 
 Route::get('/home', 'HomeController@index')->middleware('auth')->name('home');
 //aeronaves
@@ -75,9 +75,8 @@ Route::get('pilotos/{piloto}/certificado_pdf','UserController@certificado_pdf')-
 
 
 
-Route::get('/home', 'HomeController@index')->name('home');
 
-Auth::routes(['verify' => true]);
+
 
 
 

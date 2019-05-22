@@ -41,15 +41,33 @@ class LoginController extends Controller
 
     protected function authenticated(Request $request, $user)
     {
+        dd($request->user()->hasVerifiedEmail());
+        //dd($user->hasVerifiedEmail());
+
+        if($request->user()->hasVerifiedEmail()){
+
+            $user->ativo=1;
+            $user->save();
+
+        }
+
         if ($user->ativo == 0) {
             Auth::logout();
             return redirect()->route('login');
         }
+
+
     }
 
     public function logout(){
         Auth::logout();
         return redirect()->route('welcome');
     }
+
+
+
+
+
+
 
 }

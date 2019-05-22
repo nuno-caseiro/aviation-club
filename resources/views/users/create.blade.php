@@ -71,7 +71,7 @@
     <div>
         <label for="inputAtivo">Ativo</label>
         <input type="radio" name="ativo" value="1"> Sim
-        <input type="radio" name="ativo" value="1"> Não
+        <input type="radio" name="ativo" value="0"> Não
     </div>
 
     <div>

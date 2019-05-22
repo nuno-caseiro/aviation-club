@@ -6,6 +6,7 @@ namespace App\Http\Controllers;
 use App\ClassesCertificados;
 use App\Http\Requests\UserStoreRequest;
 use App\Http\Requests\UserUpdateRequest;
+
 use App\Movimento;
 use App\TiposLicencas;
 use Illuminate\Http\Request;
@@ -156,7 +157,10 @@ return view('users.edit', compact('title', 'user','classes','licencas' ));
 		$title= "Adicionar Utilizadores";
         $classes= ClassesCertificados::all();
         $licencas =TiposLicencas::all();
+
         return view('users.create', compact('title', 'classes', 'licencas'));
+
+
 
 	}
 
@@ -209,7 +213,9 @@ if($request->tipo_socio=="P" ){
     $user->password_inicial=true;
     $user->save();
 
+
 }
+
 
 
       /*  $user->foto_url = "";
@@ -218,6 +224,10 @@ if($request->tipo_socio=="P" ){
         $user->password = Hash::make($request->data_nascimento);
 		$user->save();
 		*/
+
+
+      $request->user()->sendEmailVerificationNotification();
+
 
 		return redirect()
 		->action('UserController@index')
