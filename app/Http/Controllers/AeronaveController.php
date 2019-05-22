@@ -74,8 +74,15 @@ class AeronaveController extends Controller
 
         foreach(range(1,10) as $i){
 
-            Aeronave::findOrFail($request->matricula)->aeronaveValores()->create(['unidade_conta_horas' => $i,
-                'minutos' => $request->tempos[$i-1], 'preco' => $request->precos[$i-1]]);
+           $aeronaveValores= new AeronaveValores();
+           $aeronaveValores->fill($request->only('matricula', 'unidade_conta_horas', 'minutos', 'preco'));
+           $aeronaveValores->unidade_conta_horas=$i;
+           $aeronaveValores->minutos=$request->tempos[$i-1];
+           $aeronaveValores->preco =$request->precos[$i-1];
+           $aeronaveValores->save();
+
+           /* Aeronave::findOrFail($request->matricula)->aeronaveValores()->create(['unidade_conta_horas' => $i,
+                'minutos' => $request->tempos[$i-1], 'preco' => $request->precos[$i-1]])->except('id');*/
         }
         return redirect()->action('AeronaveController@index');
     }
@@ -113,12 +120,12 @@ class AeronaveController extends Controller
 
         if(isset($request->precos)){
             foreach ($request->precos as $preco){
-/*
+
                 DB::table('aeronaves_valores')->where('matricula', $matricula)->where('unidade_conta_horas', $i+1)->update(['preco' => $request->precos[$i]]);
                 DB::table('aeronaves_valores')->where('matricula', $matricula)->where('unidade_conta_horas', $i+1)->update(['minutos' => $request->tempos[$i]]);
                  // Aeronave::findOrFail($matricula)->aeronaveValores()->where('unidade_conta_horas',$i+1)->update(['preco'=> $request->precos[$i],'minutos'=> $request->tempos[$i] ]);
-             //   Aeronave::find($matricula)->aeronaveValores()->where('unidade_conta_horas',$i+1)->update(['minutos'=> $request->tempos[$i]]);*/
-            $this->updateAeronaveValores($matricula, $i, $request->tempos[$i],$request->precos[$i]);
+             //   Aeronave::find($matricula)->aeronaveValores()->where('unidade_conta_horas',$i+1)->update(['minutos'=> $request->tempos[$i]]);
+           // $this->updateAeronaveValores($matricula, $i, $request->tempos[$i],$request->precos[$i]);
                 $i++;
             }
 

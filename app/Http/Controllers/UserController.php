@@ -193,7 +193,7 @@ return view('users.edit', compact('title', 'user','classes','licencas' ));
 
         $path = $request->file('file_foto')->storeAs('public/img', $name);*/
 
-if($request->tipo_socio!="P" && $request->direcao==1){
+if($request->tipo_socio!="P" ){
     $user = new User();
     $user->fill($request->only(['name','nome_informal', 'email', 'data_nascimento','nif', 'telefone', 'endereco', 'num_socio','ativo', 'quota_paga', 'sexo', 'tipo_socio','direcao', 'instrutor','aluno']));
     $user->password = $request->data_nascimento;//Hash::make($request->data_nascimento);
@@ -202,7 +202,7 @@ if($request->tipo_socio!="P" && $request->direcao==1){
 }
 
 
-if($request->tipo_socio=="P" && $request->direcao==1){
+if($request->tipo_socio=="P" ){
     $user = new User();
     $user->fill($request->only(['name','nome_informal', 'email', 'data_nascimento','nif', 'telefone', 'endereco', 'num_socio','ativo', 'quota_paga', 'sexo', 'tipo_socio','direcao', 'instrutor','aluno', 'certificado_confirmado','licenca_confirmada','num_licenca','tipo_licenca','validade_licenca', 'num_certificado', 'classe_certificado', 'validade_certificado']));
     $user->password =$request->data_nascimento; //Hash::make($request->data_nascimento);
@@ -226,7 +226,8 @@ if($request->tipo_socio=="P" && $request->direcao==1){
 
 	public function update(UserUpdateRequest $request,$socio){
 
-        $this->authorize('update_DirMe', User::findOrFail($socio),App\User::class);
+        $this->authorize('update_DirMe', User::findOrFail($socio),App\User::Class);
+
 		if ($request->has('cancel')) {
             return redirect()->action('UserController@index');
 		}
