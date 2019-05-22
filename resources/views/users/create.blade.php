@@ -155,7 +155,7 @@
 
     <div><label for="image">Foto</label>
 
-        <input type="file" name="image" accept="image/*">
+        <input type="file" name="file_foto">
     </div>
 
     <div>

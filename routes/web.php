@@ -18,7 +18,7 @@ Route::get('/', function () {
 
 Auth::routes(['verify' => true]);
 
-Route::get('/home', 'HomeController@index')->middleware('auth')->name('home');
+Route::get('/home', 'HomeController@index')->middleware('verified')->name('home');
 //aeronaves
 Route::get('/aeronaves', 'AeronaveController@index');//->middleware('auth'); //vê se está autenticado
 Route::get('aeronaves/create', 'AeronaveController@create');

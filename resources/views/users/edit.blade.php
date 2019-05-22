@@ -129,7 +129,7 @@
 
         <div>
             <label for="inputEmail">Email</label>
-            <input type="email" name="email" id="inputEmail" placeholder="Email" value="{{$user->email}}">
+            <input type="email" name="email" id="inputEmail" placeholder="Email" value="{{old('email', $user->email)}}">
         </div>
 
         <div>
@@ -194,7 +194,7 @@
 
         <div>
             <label for="file_foto">Foto</label>
-            <input type="file" name="file_foto" accept="image/*">
+            <input type="file" name="file_foto">
         </div>
 
 

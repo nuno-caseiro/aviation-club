@@ -121,8 +121,10 @@ class AeronaveController extends Controller
         if(isset($request->precos)){
             foreach ($request->precos as $preco){
 
-                DB::table('aeronaves_valores')->where('matricula', $matricula)->where('unidade_conta_horas', $i+1)->update(['preco' => $request->precos[$i]]);
-                DB::table('aeronaves_valores')->where('matricula', $matricula)->where('unidade_conta_horas', $i+1)->update(['minutos' => $request->tempos[$i]]);
+                $aeronaveValores=Aeronave::find($matricula)->aeronaveValores()->where('unidade_conta_horas',$i+1)->fill($request->only('preco', 'minutos'));
+
+           //     DB::table('aeronaves_valores')->where('matricula', $matricula)->where('unidade_conta_horas', $i+1)->update(['preco' => $request->precos[$i], 'minutos' => $request->tempos[$i]]);
+             //   DB::table('aeronaves_valores')->where('matricula', $matricula)->where('unidade_conta_horas', $i+1)->update(['minutos' => $request->tempos[$i]]);
                  // Aeronave::findOrFail($matricula)->aeronaveValores()->where('unidade_conta_horas',$i+1)->update(['preco'=> $request->precos[$i],'minutos'=> $request->tempos[$i] ]);
              //   Aeronave::find($matricula)->aeronaveValores()->where('unidade_conta_horas',$i+1)->update(['minutos'=> $request->tempos[$i]]);
            // $this->updateAeronaveValores($matricula, $i, $request->tempos[$i],$request->precos[$i]);

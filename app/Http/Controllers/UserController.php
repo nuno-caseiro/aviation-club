@@ -18,7 +18,7 @@ use Illuminate\Support\Facades\Auth;
 use Hash;
 use DB;
 use Barryvdh\DomPDF\Facade as PDF;
-
+use Illuminate\Support\Facades\Storage;
 
 
 class UserController extends Controller
@@ -80,6 +80,9 @@ class UserController extends Controller
                      'num_licenca' =>request('num_licenca'),
 
                  ]);
+
+
+
 
 
 
@@ -191,28 +194,42 @@ return view('users.edit', compact('title', 'user','classes','licencas' ));
 
 
 
-/*
-        $image = $request->file('file_foto');
-        $name = time().'.'.$image->getClientOriginalExtension();
-
-        $path = $request->file('file_foto')->storeAs('public/img', $name);*/
 
 if($request->tipo_socio!="P" ){
     $user = new User();
-    $user->fill($request->only(['name','nome_informal', 'email', 'data_nascimento','nif', 'telefone', 'endereco', 'num_socio','ativo', 'quota_paga', 'sexo', 'tipo_socio','direcao', 'instrutor','aluno']));
+    $user->fill($request->only(['name','nome_informal', 'email', 'data_nascimento','nif', 'telefone', 'endereco', 'num_socio', 'quota_paga', 'sexo', 'tipo_socio','direcao', 'instrutor','aluno']));
     $user->password = $request->data_nascimento;//Hash::make($request->data_nascimento);
     $user->password_inicial=true;
+
+    if(! is_null($request['file_foto'])){
+    $image = $request->file('file_foto');
+    $name = time().'.'.$image->getClientOriginalExtension();
+
+  //  Storage::putFileAs('public/img', $image, $name);
+    $path = $request->file('file_foto')->storeAs('public/fotos', $name);
+    $user->foto_url = $name;
+    }
     $user->save();
+    $user->sendEmailVerificationNotification();
+
 }
 
 
 if($request->tipo_socio=="P" ){
     $user = new User();
-    $user->fill($request->only(['name','nome_informal', 'email', 'data_nascimento','nif', 'telefone', 'endereco', 'num_socio','ativo', 'quota_paga', 'sexo', 'tipo_socio','direcao', 'instrutor','aluno', 'certificado_confirmado','licenca_confirmada','num_licenca','tipo_licenca','validade_licenca', 'num_certificado', 'classe_certificado', 'validade_certificado']));
+    $user->fill($request->only(['name','nome_informal', 'email', 'data_nascimento','nif', 'telefone', 'endereco', 'num_socio', 'quota_paga', 'sexo', 'tipo_socio','direcao', 'instrutor','aluno', 'certificado_confirmado','licenca_confirmada','num_licenca','tipo_licenca','validade_licenca', 'num_certificado', 'classe_certificado', 'validade_certificado']));
     $user->password =$request->data_nascimento; //Hash::make($request->data_nascimento);
     $user->password_inicial=true;
-    $user->save();
+    if(! is_null($request['file_foto'])){
+        $image = $request->file('file_foto');
+        $name = time().'.'.$image->getClientOriginalExtension();
 
+        //  Storage::putFileAs('public/img', $image, $name);
+        $path = $request->file('file_foto')->storeAs('public/fotos', $name);
+        $user->foto_url = $name;
+    }
+    $user->save();
+$user->sendEmailVerificationNotification();
 
 }
 
@@ -226,7 +243,7 @@ if($request->tipo_socio=="P" ){
 		*/
 
 
-      $request->user()->sendEmailVerificationNotification();
+      //$request->user()->sendEmailVerificationNotification();
 
 
 		return redirect()
@@ -236,8 +253,7 @@ if($request->tipo_socio=="P" ){
 
 	public function update(UserUpdateRequest $request,$socio){
 
-        $this->authorize('update_DirMe', User::findOrFail($socio),App\User::Class);
-
+        $this->authorize('update_DirMe', User::findOrFail($socio),App\User::class);
 		if ($request->has('cancel')) {
             return redirect()->action('UserController@index');
 		}
@@ -338,6 +354,7 @@ if($request->tipo_socio=="P" ){
 
         $data = $request->all();
         $user= User::findOrFail(Auth::id());
+        $user->password_inicial=0;
         $user->update($data);
         return redirect(route('home'))
             ->with('info', 'Your profile has been updated successfully.');

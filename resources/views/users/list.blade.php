@@ -115,11 +115,11 @@
         @foreach($users as $utilizador)
             <tr>
                 @if($utilizador->foto_url!=null)
-                    <td><img src="{{url('storage/app/public/fotos')."/".$utilizador->foto_url}}"></td>
+                    <td><img src="{{url('public/fotos').'/'.$utilizador->foto_url}}"></td>
                 @else
                     <td></td>
                 @endif
-                <td>{{$utilizador->num_socio}}</td>
+                    <td>{{$utilizador->num_socio}}</td>
                     <td>{{$utilizador->nome_informal}}</td>
                     <td>{{$utilizador->email}}</td>
                     <td>{{$utilizador->telefone}}</td>
@@ -139,7 +139,7 @@
                         <td> <form method="POST" action="{{action('UserController@quotaPaga', $utilizador->id)}}">
                                 @csrf
                                 <input type="hidden" name="_method" value="patch">
-                                <input type="hidden" name="quota_paga" value="{{$utilizador->quota_paga}}">
+                                <input type="hidden" name="quota_paga" value="{{!$utilizador->quota_paga}}">
                                 @if($utilizador->quota_paga==1)
                                     <input class="btn btn-xs btn-primary" type="submit" value="Paga">
                                 @else
@@ -150,7 +150,7 @@
                         <td> <form method="POST" action="{{action('UserController@ativarDesativar', $utilizador->id)}}">
                                 @csrf
                                 <input type="hidden" name="_method" value="patch">
-                                <input type="hidden" name="ativo" value="{{$utilizador->ativo}}">
+                                <input type="hidden" name="ativo" value="{{!$utilizador->ativo}}">
                             @if($utilizador->ativo==1)
                                     <input class="btn btn-xs btn-primary" type="submit" value="Desativar">
                             @else
