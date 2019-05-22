@@ -360,6 +360,7 @@ public function ativarDesativar(Request $request, $id){
 
 
 public function resetQuotas(){
+    $this->authorize('socio_Direcao', Auth::user());
         $users= User::all();
         foreach ($users as $user){
             if($user->quota_paga==1){
@@ -389,9 +390,10 @@ public function resetAtivosSemQuota(){
 
     public function quotaPaga(Request $request, $id){
 
+        $this->authorize('socio_Direcao', Auth::user());
         $user= User::findOrFail($id);
-        if($user->quota_paga== $request->quota_paga){
-            $user->quota_paga=!$request->quota_paga;
+        if($user->quota_paga!= $request->quota_paga){
+            $user->quota_paga=!$user->quota_paga;
         }
 
         $user->save();
