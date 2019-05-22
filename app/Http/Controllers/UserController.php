@@ -152,7 +152,7 @@ return view('users.edit', compact('title', 'user','classes','licencas' ));
 
 
 	public function create(){
-        $this->authorize('socio_Direcao', User::class);
+        $this->authorize('socio_Direcao', Auth::user());
 		$title= "Adicionar Utilizadores";
         $classes= ClassesCertificados::all();
         $licencas =TiposLicencas::all();
@@ -178,30 +178,46 @@ return view('users.edit', compact('title', 'user','classes','licencas' ));
 	}
 
 
-	public function store(UserStoreRequest $request, User $user){ // depois de login meter ou so Request
+	public function store(UserStoreRequest $request){ // depois de login meter ou so Request
 
 	    //$this->validate(request(),[]);// colocar campos para validar aqui
 
 
-
-
-        $this->authorize('socio_Direcao', User::class);
+        $this->authorize('socio_Direcao', Auth::user());
 
 
 
+/*
         $image = $request->file('file_foto');
         $name = time().'.'.$image->getClientOriginalExtension();
 
-        $path = $request->file('file_foto')->storeAs('public/img', $name);
+        $path = $request->file('file_foto')->storeAs('public/img', $name);*/
 
-		$user = new User();
-        $user->fill($request->all());
-        $user->foto_url = $name;
+if($request->tipo_socio!="P" && $request->direcao==1){
+    $user = new User();
+    $user->fill($request->only(['name','nome_informal', 'email', 'data_nascimento','nif', 'telefone', 'endereco', 'num_socio','ativo', 'quota_paga', 'sexo', 'tipo_socio','direcao', 'instrutor','aluno']));
+    $user->password = $request->data_nascimento;//Hash::make($request->data_nascimento);
+    $user->password_inicial=true;
+    $user->save();
+}
+
+
+if($request->tipo_socio=="P" && $request->direcao==1){
+    $user = new User();
+    $user->fill($request->only(['name','nome_informal', 'email', 'data_nascimento','nif', 'telefone', 'endereco', 'num_socio','ativo', 'quota_paga', 'sexo', 'tipo_socio','direcao', 'instrutor','aluno', 'certificado_confirmado','licenca_confirmada','num_licenca','tipo_licenca','validade_licenca', 'num_certificado', 'classe_certificado', 'validade_certificado']));
+    $user->password =$request->data_nascimento; //Hash::make($request->data_nascimento);
+    $user->password_inicial=true;
+    $user->save();
+
+}
+
+
+      /*  $user->foto_url = "";
         $user->ativo=false;
         $user->password_inicial=true;
         $user->password = Hash::make($request->data_nascimento);
 		$user->save();
-		
+		*/
 
 		return redirect()
 		->action('UserController@index')
@@ -260,6 +276,17 @@ return view('users.edit', compact('title', 'user','classes','licencas' ));
             $user->save();
 
         }
+
+
+        if(Auth::user()->can('socio_Direcao', Auth::user())) {
+
+        $user->fill($request->all());
+        $user->save();
+
+
+
+        }
+
 
 
 
@@ -345,11 +372,15 @@ return view('users.edit', compact('title', 'user','classes','licencas' ));
     }
        // return view('users.licenca',compact('user','title'));
 public function ativarDesativar(Request $request, $id){
+    $this->authorize('socio_Direcao', Auth::user());
+
 
         $user= User::findOrFail($id);
-        if($user->ativo==$request->ativo) {
-            $user->ativo=!$request->ativo;
+
+        if($user->ativo!=$request->ativo){
+            $user->ativo=!$user->ativo;
         }
+
 
         $user->save();
 
@@ -361,7 +392,8 @@ public function ativarDesativar(Request $request, $id){
 
 public function resetQuotas(){
     $this->authorize('socio_Direcao', Auth::user());
-        $users= User::all();
+
+    $users= User::all();
         foreach ($users as $user){
             if($user->quota_paga==1){
                 $user->quota_paga=0;
@@ -376,6 +408,8 @@ public function resetQuotas(){
 }
 
 public function resetAtivosSemQuota(){
+    $this->authorize('socio_Direcao', Auth::user());
+
     $users=User::all();
     foreach ($users as $user){
         if($user->quota_paga==0){
@@ -430,10 +464,6 @@ public function resetAtivosSemQuota(){
 
 
         $pdf = PDF::loadView('users.licencaPdf',compact('user'));
-
-
-
-
 
         return $pdf->download('Licença.pdf');
     }
