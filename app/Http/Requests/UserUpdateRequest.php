@@ -4,6 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Input;
 use Illuminate\Validation\Rule;
 
 
@@ -28,7 +29,9 @@ class UserUpdateRequest extends FormRequest
     {
 
 
-        return [
+
+
+        $rules= [
             'name' => 'required|alpha_spaces', //teste
             'nome_informal' => 'required|max:40',
             'nif' => 'max:9',
@@ -46,9 +49,6 @@ class UserUpdateRequest extends FormRequest
             'classe_certificado'=>'nullable|exists:classes_certificados,code',
             'validade_licenca' => 'nullable|date|date_format:Y-m-d|after_or_equal:today',
             'validade_certificado' => 'nullable|date|date_format:Y-m-d|after_or_equal:today',
-
-            'aluno' => 'in:0,1|different:instrutor',
-            'instrutor' => 'in:0,1|different:aluno',
             'direcao' => 'required|in:0,1',
             'ativo' => 'required|in:0,1',
             'quota_paga' => 'required|in:0,1',
@@ -58,9 +58,20 @@ class UserUpdateRequest extends FormRequest
             'licenca_confirmada'=>'nullable|in:0,1',
             //'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
 
-
-
-
         ];
+
+        //Input::get('aluno')!=0 && Input::get('instrutor')!=0  &&
+        if (Input::get('instrutor')==0 && Input::get('aluno')==0) {
+            $rules+=['aluno' => 'in:0',
+                'instrutor'=>'in:0'];
+        }else{
+            $rules+=['aluno' => 'in:0,1|different:instrutor',
+                'instrutor'=>'in:0,1|different:aluno'];
+
+        }
+
+        return $rules;
+
+
     }
 }
