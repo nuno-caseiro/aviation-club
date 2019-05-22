@@ -378,7 +378,9 @@ $user->sendEmailVerificationNotification();
         return $pdf->download('Certificado.pdf');
 
 
+        //$content = $pdf->download('Certificado.pdf')->getOriginalContent();
 
+        //Storage::put('public/teste.pdf',$content) ;
 
     }
 
@@ -493,8 +495,20 @@ public function resetAtivosSemQuota(){
 
         $pdf = PDF::loadView('users.licencaPdf',compact('user'));
 
+
         return $pdf->download('Licença.pdf');
+
+        //$content = $pdf->download()->getOriginalContent();
+
+        //Storage::put('public/teste.pdf',$content) ;
     }
+
+    public function sendReactivateEmail($id){
+        $this->authorize('socio_direcao',User::findOrFail($id),Auth::user());
+        $user=User::findOrFail($id);
+        $user->resend();
+    }
+
 
 
 }

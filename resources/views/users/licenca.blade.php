@@ -1,8 +1,4 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-</head>
+
 
 
     <a href="{{route('licenca_pdf',$user->id)}}" class="btn btn-success mb-2"> Download</a>
@@ -38,6 +34,3 @@
 
 
     </table>
-    </body>
-
-</html>

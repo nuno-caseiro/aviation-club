@@ -285,13 +285,24 @@
                     <a id="hrefDownload" href="{{route('certificado_pdf',$user->id)}}" class="btn btn-success mb-2"> Download</a>
                 </div>
 
+            <div>
+
+                <form method="POST" action="{{route('socios.sendEmail', $user->id)}}" enctype="multipart/form-data">
+                    @method('PUT')
+                    @csrf
+                    <input class="btn btn-xs btn-primary" type="submit" value="Send email activation ">
+
+                </form>
+
+
+            </div>
 
 
                 @endcan
 
             <div>
                 <button class="btn btn-xs btn-primary" type="submit" name="ok">Save</button>
-                <button class="btn btn-xs btn-primary" type="submit" name="cancel">Cancel</button>
+                <button type="button" class="btn btn-primary" onclick="window.history.back();">Cancel</button>
             </div>
     </form>
 

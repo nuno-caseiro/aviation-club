@@ -1,11 +1,5 @@
 
 
-<!DOCTYPE html>
-<html>
-<head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-</head>
-
     <table class="table table-striped table-bordered" style="width: 100%" id="mydatatable">
         <thead>
         <tr>
@@ -34,5 +28,3 @@
 
 
     </table>
-</body>
-</html>

@@ -58,6 +58,7 @@ Route::middleware('verified')->group(function () {
     Route::patch('socios/{socio}/quota','UserController@quotaPaga')->name('socios.quota');
     Route::patch('/socios/reset_quotas', 'UserController@resetQuotas')->name('socios.resetQuota');
     Route::patch('/socios/desativar_sem_quotas', 'UserController@resetAtivosSemQuota')->name('socios.resetAtivosSemQuota');
+    Route::post('socios/{socio}/send_reactivate_mail','UserController@sendReactivateEmail')->name('socios.sendEmail');
 
 });
 
