@@ -2,28 +2,38 @@
 @section('content')
 
     <h4>Tabela de Movimentos</h4>
+<script type="text/javascript">
+  function checkAndUncheck(){
+ var allRadios = document.getElementsByName('confirmado');
+var booRadio;
+var x = 0;
+for(x = 0; x < allRadios.length; x++){
+  allRadios[x].onclick = function() {
+    if(booRadio == this){
+      this.checked = false;
+      booRadio = null;
+    } else {
+      booRadio = this;
+    }
+  };
+}
+}
 
+
+
+</script>
    <table class="table table-striped table-bordered" style="width: 100%" id="mydatatable">
       
 
-     <legend>Filtrar Movimentos:</legend>
-        Aeronaves:<br>
-
-
-:id, aeronave, data_inf, data_sup, natureza, confirmado,
-piloto, instrutor, meus_movimentos.
-      
-
-
-
-
+     <legend>Filtrar Movimentos:</legend>    
           <form method="GET" action="{{action('MovimentoController@index')}}">
 
-
+        
         <label>Movimento ID:</label>
-       <input type="number"  name="movimento_id"></input>
+       <input type="number"  name="movimento_id"@if (!is_null($data['movimento_id']))
+       value="{{$data['movimento_id']}}" 
+      @endif></input>
       <div></div>
-
 
 
 
@@ -33,20 +43,48 @@ piloto, instrutor, meus_movimentos.
                  <select name="aeronave">
                    <option></option>
                 @foreach ($aeronaves as $aeronave)
-                    <option value="{{ $aeronave->matricula }}"> {{ $aeronave->matricula }} </option>
+                       <option value="{{ $aeronave->matricula }}" @if (!is_null($data['aeronave']) && $data['aeronave']==$aeronave->matricula)
+               selected="selected"
+           @endif > {{ $aeronave->matricula }} </option>
                 @endforeach    </select>
 <div></div>
 
 <label>Natureza</label>
-<input type="checkbox" name="naturezaI" value=I> <label>Instrução</label>
-<input type="checkbox" name="naturezaT" value=T> <label>Treino</label>
-<input type="checkbox" name="naturezaE" value=E> <label>Especial</label>
+<input type="checkbox" name="naturezaI"
+@if (!is_null($data['naturezaI']))
+       checked="true"
+@endif
+value=I> <label>Instrução</label>
+
+
+
+<input type="checkbox" name="naturezaT"
+
+@if (!is_null($data['naturezaT']))
+       checked="true"
+@endif
+ value=T> <label>Treino</label>
+
+
+<input type="checkbox" name="naturezaE" 
+@if (!is_null($data['naturezaE']))
+       checked="true"
+@endif
+ value=E f> <label>Especial</label>
 
 
 <div></div>
               <label>Cofirmado:</label>
-                <input type="radio" name="confirmado" value="1"><label for="confirmado" class="light">Confirmado</label>
-                <input type="radio" name="confirmado" value="0"><label for="Confirmar" class="light">Por Confirmar</label>
+                <input  type="radio" onclick="checkAndUncheck()"; id="confirmado" name="confirmado"
+@if (!is_null($data['confirmado'])&&$data['confirmado']==1)
+       checked="true" 
+@endif
+value="1"><label for="confirmado" class="light">Confirmado</label>
+                <input type="radio" name="confirmado" 
+@if (!is_null($data['confirmado'])&&$data['confirmado']==0)
+       checked="true"
+@endif
+ value="0"><label for="Confirmar" class="light">Por Confirmar</label>
 <div></div>
 
  
@@ -54,7 +92,9 @@ piloto, instrutor, meus_movimentos.
             <select name="piloto">
               <option></option>
                 @foreach ($users as $socio)
-                    <option value="{{$socio->id}}"> {{ $socio->id }}
+                    <option value="{{$socio->id}}" @if (!is_null($data['piloto']) && $data['piloto']==$socio->id)
+               selected="selected"
+           @endif> {{ $socio->id }}
            </option>
  @endforeach    
 </select>
@@ -65,15 +105,17 @@ piloto, instrutor, meus_movimentos.
                   <option></option>
                     @foreach ($users as $socio)
                         @if ($socio->tipo_socio=='P' && $socio->instrutor==1)
-                            <option value="{{$socio->id}}"> {{ $socio->id }}</option>
+                            <option value="{{$socio->id}}" @if (!is_null($data['instrutor']) && $data['instrutor']==$socio->id)
+               selected="selected"
+           @endif> {{ $socio->id }}</option>
                         @endif
                     @endforeach
 
           </select>
 
 <label>Hora:</label>
-<input type="datetime-local" name="descolar">
-<input type="datetime-local" name="aterrar">
+<input type="datetime-local" name="descolar" value={{$data['descolar']}}>
+<input type="datetime-local" name="aterrar" value={{$data['aterrar']}}>
 
 
 
@@ -89,6 +131,8 @@ piloto, instrutor, meus_movimentos.
             </div>
         </div>
       </form>
+               
+               
 
 
 

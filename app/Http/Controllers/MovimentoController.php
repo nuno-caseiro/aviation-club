@@ -25,7 +25,7 @@ class MovimentoController extends Controller
        // }
 
         $movimento_id=request()->query('movimento_id');
-        $aeronave=request()->query('instrucao');
+        $aeronave=request()->query('aeronave');
         $confirmado=request()->query('confirmado');
 
         $especial=request()->query('especial');
@@ -38,23 +38,17 @@ class MovimentoController extends Controller
         $descolar=request()->query('descolar');
         $aterrar=request()->query('aterrar');
         $filtro = Movimento::where('id','>=','1');
+        $data=['naturezaE'=>$naturezaE,'naturezaT'=>$naturezaT,'naturezaI'=>$naturezaI,'confirmado'=>$confirmado,'movimento_id'=>$movimento_id,'aterrar'=>$aterrar,'descolar'=>$descolar,'piloto'=>$piloto,'instrutor'=>$instrutor,'aeronave'=>$aeronave];
+
         if (isset($aeronave)) {
             $filtro = $filtro->where('aeronave', $aeronave);
         }
          if (isset($naturezaT) || isset($naturezaI)||isset($naturezaE) ){
-            $natureza=$naturezaT;
-            $filtro = $filtro->where('natureza',$natureza)->orWhere('natureza',$naturezaI)->orWhere('natureza',$naturezaE);
+            $filtro = $filtro->where('natureza',$naturezaT)->orWhere('natureza',$naturezaI)->orWhere('natureza',$naturezaE);
         }
         
          if (isset($confirmado)) {
-                if ($confirmado=='1') {
-                    # code...
             $filtro = $filtro->where('confirmado', $confirmado);
-                }else{
-
-            $filtro = $filtro->where('confirmado', $confirmado);
-                }
-
         }
  
            if (isset($piloto)) {
@@ -95,7 +89,7 @@ class MovimentoController extends Controller
         $aeronaves=Aeronave::all();
         $users=User::all();
         $title = "List of Movimentos";
-        return view('movimentos.list', compact('movimentos', 'title', 'users','aeronaves'));
+        return view('movimentos.list', compact('movimentos', 'title', 'users','aeronaves','data'));
     }
 
 
