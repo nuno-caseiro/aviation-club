@@ -115,7 +115,7 @@
         @foreach($users as $utilizador)
             <tr>
                 @if($utilizador->foto_url!=null)
-                    <td><img src="{{url('public/fotos').'/'.$utilizador->foto_url}}"></td>
+                    <td><img src="{{Storage::url('public/fotos'.'/'.$utilizador->foto_url)}}"></td>
                 @else
                     <td></td>
                 @endif
