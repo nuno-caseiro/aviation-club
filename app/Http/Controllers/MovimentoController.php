@@ -179,10 +179,6 @@ class MovimentoController extends Controller
     }
 
 
-       
-
-     
-
         Movimento::create($movimento);
 
         return redirect()->action('MovimentoController@index');

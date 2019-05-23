@@ -22,6 +22,7 @@ class AeronaveController extends Controller
 
         if(Auth::user()->can('socio_Direcao', Auth::user())) {
             $aeronaves = Aeronave::all();
+            //meter paginate
         }elseif(Auth::user()->can('socio_Piloto', Auth::user())) {
 
 
@@ -37,15 +38,7 @@ class AeronaveController extends Controller
 
         }
 
-       /* foreach ($aeronaves as $aeronave){
-            $aeronaveValores1= Aeronave::findOrFail($aeronave->matricula)->aeronaveValores()->get()->toArray();
-            if(!empty($aeronaveValores1)){
-                if($aeronaveValores1[count($aeronaveValores1)-1]['unidade_conta_horas']==10)
-                    $aeronave->preco_hora= $aeronaveValores1[count($aeronaveValores1)-1]['preco'];
-            }
-        }
 
-*/
 
         $title= "Lista de Aeronaves";
 
@@ -69,8 +62,8 @@ class AeronaveController extends Controller
         }
 
         $aeronave=$request->all();
-
-        Aeronave::create($aeronave);
+        $matricula=$request->matricula;
+        $aeronaveCriada=Aeronave::create($aeronave);
 
         foreach(range(1,10) as $i){
 
@@ -84,6 +77,15 @@ class AeronaveController extends Controller
            /* Aeronave::findOrFail($request->matricula)->aeronaveValores()->create(['unidade_conta_horas' => $i,
                 'minutos' => $request->tempos[$i-1], 'preco' => $request->precos[$i-1]])->except('id');*/
         }
+        // $filtro=  DB::table('users')->select(['num_socio', 'nome_informal', 'foto_url', 'email', 'telefone', 'tipo_socio', 'num_licenca', 'direcao'])->whereNull('deleted_at')->where('ativo',1);
+        /*$horas=DB::table('aeronaves_valores')->select('preco')->where('matricula',$matricula)->where('unidade_conta_horas',10)->get();
+        dd($horas);
+        if($aeronaveCriada->preco_hora!=$horas){
+            $aeronaveCriada->preco_hora=$horas;
+            $aeronaveCriada->save();
+        }*/
+       // dd($horas);
+
         return redirect()->action('AeronaveController@index');
     }
 
@@ -114,6 +116,7 @@ class AeronaveController extends Controller
 
         $aeronaveModel= Aeronave::findOrFail($matricula);
         $aeronaveModel->fill($request->except(['created_at', 'updated_at', 'deleted_at']));
+
         $aeronaveModel->save();
 
         $i=0;
@@ -121,17 +124,19 @@ class AeronaveController extends Controller
         if(isset($request->precos)){
             foreach ($request->precos as $preco){
 
-                $aeronaveValores=Aeronave::find($matricula)->aeronaveValores()->where('unidade_conta_horas',$i+1)->fill($request->only('preco', 'minutos'));
-
+//                $aeronaveValores=Aeronave::find($matricula)->aeronaveValores()->where('unidade_conta_horas',$i+1)->fill($request->only('preco', 'minutos'));
            //     DB::table('aeronaves_valores')->where('matricula', $matricula)->where('unidade_conta_horas', $i+1)->update(['preco' => $request->precos[$i], 'minutos' => $request->tempos[$i]]);
              //   DB::table('aeronaves_valores')->where('matricula', $matricula)->where('unidade_conta_horas', $i+1)->update(['minutos' => $request->tempos[$i]]);
-                 // Aeronave::findOrFail($matricula)->aeronaveValores()->where('unidade_conta_horas',$i+1)->update(['preco'=> $request->precos[$i],'minutos'=> $request->tempos[$i] ]);
-             //   Aeronave::find($matricula)->aeronaveValores()->where('unidade_conta_horas',$i+1)->update(['minutos'=> $request->tempos[$i]]);
+              //  Aeronave::find($matricula)->aeronaveValores()->where('unidade_conta_horas',$i+1)->update(['minutos'=> $request->tempos[$i]]);
            // $this->updateAeronaveValores($matricula, $i, $request->tempos[$i],$request->precos[$i]);
+                Aeronave::findOrFail($matricula)->aeronaveValores()->where('unidade_conta_horas',$i+1)->update(['preco'=> $request->precos[$i],'minutos'=> $request->tempos[$i] ]);
                 $i++;
             }
-
         }
+
+
+
+
         return redirect()->action('AeronaveController@index');
 
     }
