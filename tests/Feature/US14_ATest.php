@@ -117,8 +117,10 @@ class US14_ATest extends USTestBase
             $response->assertHeader('Content-Length', 3028);
             $response->assertHeader('Content-Type', 'application/pdf');
         } finally {
+
             $this->deleteLicencaPDF($this->pilotoUser->id);
             $this->deleteCertificadoPDF($this->pilotoUser->id);
+
         }
     }    
 

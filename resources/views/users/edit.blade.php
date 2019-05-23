@@ -5,7 +5,7 @@
         @include('shared.errors')
     @endif
 
-    <script>
+  {{--  <script>
         function myFunction() {
             var selectedValue=document.getElementById("inputTipoSocio").value;
 
@@ -88,7 +88,7 @@
         }
     </script>
 
-
+--}}
 
 
 
@@ -96,6 +96,9 @@
     <form method="POST" action="{{route('socios.update', $user->id)}}" enctype="multipart/form-data">
         @method('PUT')
         @csrf
+
+        <input type="hidden" value="{{$user->id}}" name="id">
+
 
         <div>
             <label for="num_socio">Número de socio</label>
@@ -143,7 +146,7 @@
         </div>
         <div>
             <label for="inputTipoSocio">Tipo de Sócio </label>
-            <select name="tipo_socio" id="inputTipoSocio"  onchange="myFunction()">
+            <select name="tipo_socio" id="inputTipoSocio">
                 <option value="P" @if((Auth::user()->can('socio_normal',App\User::class))) {{($user->tipo_socio=="P")? "selected" : "disabled" }} @endif >Piloto</option>
                 <option value="NP"@if((Auth::user()->can('socio_normal',App\User::class))) {{($user->tipo_socio=="NP")? "selected" : "disabled" }} @endif >Não Piloto</option>
                 <option value="A" @if((Auth::user()->can('socio_normal',App\User::class))) {{($user->tipo_socio=="A")? "selected" : "disabled" }} @endif>Aeromodelista</option>
@@ -199,6 +202,7 @@
 
 
         @can('socio_DP', Auth::user())
+        @if($user->tipo_socio=='P')
 
 
             <div>
@@ -283,27 +287,27 @@
                     <label id="labelCopiaDigital"> Cópia digital certificado </label>
                     <a id="hrefDownload" href="{{route('certificado',$user->id)}}" class="btn btn-success mb-2"> Ver PDF</a>
                     <a id="hrefDownload" href="{{route('certificado_pdf',$user->id)}}" class="btn btn-success mb-2"> Download</a>
-                </div>
+    {{--              </div>
 
-            <div>
+              <div>
 
-                <form method="POST" action="{{route('socios.sendEmail', $user->id)}}" enctype="multipart/form-data">
-                    @method('PUT')
-                    @csrf
-                    <input class="btn btn-xs btn-primary" type="submit" value="Send email activation ">
+                  <form method="POST" action="{{route('socios.sendEmail', $user->id)}}" enctype="multipart/form-data">
+                      @method('PUT')
+                      @csrf
+                      <input class="btn btn-xs btn-primary" type="submit" value="Send email activation ">
 
-                </form>
-
-
-            </div>
+                  </form>
 
 
-                @endcan
+              </div>
+  --}}
+                    @endif
+                  @endcan
 
-            <div>
-                <button class="btn btn-xs btn-primary" type="submit" name="ok">Save</button>
-                <button type="button" class="btn btn-primary" onclick="window.history.back();">Cancel</button>
-            </div>
-    </form>
+              <div>
+                  <button class="btn btn-xs btn-primary" type="submit" name="ok">Save</button>
+                  <button type="button" class="btn btn-primary" onclick="window.history.back();">Cancel</button>
+              </div>
+      </form>
 
-@endsection
+  @endsection

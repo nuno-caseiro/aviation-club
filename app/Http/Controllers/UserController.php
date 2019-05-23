@@ -69,7 +69,7 @@ class UserController extends Controller
              }
 
 
-                 $users =$filtro->paginate(15)->appends([
+                 $users =$filtro->paginate(20)->appends([
                      'num_socio' => request('num_socio'),
                      'nome_informal' => request('nome_informal'),
                      'email' => request('email'),
@@ -263,14 +263,22 @@ $user->sendEmailVerificationNotification();
 
 		$user = User::findOrFail($socio);
         if(! is_null($request['file_foto'])) {
+            $old_foto= 'public/fotos/'.$user->foto_url;
+
+
             $image = $request->file('file_foto');
             $newFotoUrl = time().'.'.$image->getClientOriginalExtension();
 
-            $path = $request->file('file_foto')->storeAs('public/img', $newFotoUrl);
+            $path = $request->file('file_foto')->storeAs('public/fotos', $newFotoUrl);
             // OR
 
             // Storage::putFileAs('public/img', $image, $name);
             $user->foto_url = $newFotoUrl;
+
+
+            if(Storage::exists($old_foto)) {
+                Storage::delete($old_foto);
+            }
 
         }
 
@@ -490,13 +498,15 @@ public function resetAtivosSemQuota(){
 
     public function licenca_PDF($id){
         $user=User::findOrFail($id);
+
+
         //$pdf = PDF::loadView('users.licencaPdf', $user);
 
 
         $pdf = PDF::loadView('users.licencaPdf',compact('user'));
 
 
-        return $pdf->download('Licença.pdf');
+        //return $pdf->();
 
         //$content = $pdf->download()->getOriginalContent();
 

@@ -30,7 +30,6 @@ class UserUpdateRequest extends FormRequest
 
 
 
-
         $rules= [
             'name' => 'required|alpha_spaces', //teste
             'nome_informal' => 'required|max:40',

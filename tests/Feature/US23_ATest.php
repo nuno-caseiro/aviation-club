@@ -70,6 +70,8 @@ class US23_ATest extends USTestBase
     public function testMostraCamposIncluindoLicenca()
     {
         $this->seedPilotoUser();
+        //dd(DB::table('users')->get());
+
         $this->actingAs($this->userToSimulate)->get('/socios')
                 ->assertStatus(200)
                 ->assertSeeAll([
