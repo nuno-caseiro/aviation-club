@@ -18,7 +18,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>{{$title}}</title>
 </head>
-<body  onload="myFunction()">
+<body>
 	
     <div>
         @yield('content')

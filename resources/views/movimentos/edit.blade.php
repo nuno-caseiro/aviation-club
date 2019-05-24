@@ -10,11 +10,8 @@
 -->
 
 @if($movimento->confirmado=="1")
-    <td>Movimento nao pode ser alterado porque ja foi confirmado</td>
+    <h1>Movimento nao pode ser alterado porque ja foi confirmado</h1>
 @else
-    <form action="{{action('MovimentoController@update', $movimento->id)}}" method="post" >
-        @method('put')
-        @csrf 
 <script>
 function myFunction() {
 var selectedValue=document.getElementById("natureza").value;
@@ -94,6 +91,13 @@ array.forEach(function(element) {
 
 }
 </script>
+
+    <form action="{{action('MovimentoController@update', $movimento->id)}}" method="post" >
+        @method('put')
+        @csrf 
+
+
+
 {{$instrutorEsp=null}}
 {{$socioEsp=null}}
         <div class="card-header">Editar Movimento</div>
@@ -166,24 +170,6 @@ array.forEach(function(element) {
 
 
             <div>
-                <label for="input">Estado</label>
-                <select name=confirmado>
-                    <option value="{{ $movimento->confirmado}}">@if($movimento->confirmado==1)
-                            Confirmado
-                        @endif
-                        @if ($movimento->confirmado==0)
-                            Por Confirmar
-                        @endif
-                    </option>
-                    @if ($movimento->confirmado==1)
-                        <option value=0>Por Confirmar</option>
-                    @endif
-                    @if ($movimento->confirmado==0)
-                        <option value=1>Confirmado</option>
-                    @endif
-                </select>
-            </div>
-
             <label >Socios</label>
             <select name="piloto_id" id="socio" onchange="myLabelsSocio({{$socios}})">
                 <option></option>
@@ -202,16 +188,21 @@ array.forEach(function(element) {
             <label id="socioName">{{$socioEsp}}</label>
           
 <div></div>
-        
+             
                 <label id="instrutor_label" >Instrutor</label>
-                <select name="instrutor_id" id="instrutor_id" onchange="myLabelsInstrutor({{$socios}})" >
-                    <option></option>
+                <select name="instrutor_id" id="instrutor_id" onload="myFunction()" onchange="myLabelsInstrutor({{$socios}})" >
                     @foreach ($socios as $socio)
-                        @if ($socio->tipo_socio=='P' && $socio->instrutor==1)
-                            <option value="{{$socio->id}}" {{(  $socio->id == $movimento->instrutor_id) ? 'selected' : $movimento->instrutor_id }}> {{ $socio->id }}
+                   @if (Auth::user()->can('socio_Piloto', Auth::user()) && $movimento->instrutor_id==auth()->user()->id) 
+                  @if (auth()->user()->id==$socio->id)
+                      <option value="{{$socio->id}}" {{(  $socio->id == $movimento->instrutor_id) ? 'selected' : $movimento->instrutor_id }}> {{ $socio->id }}
                     </option>
-                        @endif
-
+                  @endif
+                 @else
+                  @if ($socio->tipo_socio=='P' && $socio->instrutor==1)
+                   <option value="{{$socio->id}}" {{(  $socio->id == $movimento->instrutor_id) ? 'selected' : $movimento->instrutor_id }}> {{ $socio->id }}
+                    </option>
+                    @endif
+                    @endif
 
                     @if ($socio->id==$movimento->instrutor_id)
                         {{$instrutorEsp=$socio->name}}
@@ -253,8 +244,15 @@ array.forEach(function(element) {
 
         <div>
             <button type="submit" name="ok">Save</button>
-
         </div>
+
+        <!-- @can(Auth::user()->can('isDirecao', Auth::user()))
+        <button type="submit" name = "submit" value = "confirmar">Confirmar</button>
+        @endcan so os da direcao e que teem esta opcao-->
+
+        <div>
+          <button type="submit" name ="submit" value="confirmar">Confirmar</button>
+      </div>
     </form>
 
   @endif

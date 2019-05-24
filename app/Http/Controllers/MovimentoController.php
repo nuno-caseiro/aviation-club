@@ -15,6 +15,12 @@ use Illuminate\Support\Facades\Input;
 class MovimentoController extends Controller
 {
     //
+
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+  
     public function index()
     {
        // if(Auth::user()->can('list', Auth::user())) {
@@ -24,6 +30,14 @@ class MovimentoController extends Controller
 
 
        // }
+
+
+
+
+
+
+
+
 
         $this->authorize('listar', Auth::user());
 
@@ -79,12 +93,13 @@ class MovimentoController extends Controller
        //meus movimentos
     $confirmarVarios=request()->query('confirmarVarios');
     if(!is_null($confirmarVarios) && $confirmarVarios=="true"){
+       if(!is_null($checkboxConfirmado)){
      foreach ($checkboxConfirmado as $checked) {
         $movimento= Movimento::findOrFail($checked);
         $movimento->confirmado="1";
         //conflitos
         $movimento->save();
-    
+    }
 
      }
        
@@ -185,10 +200,7 @@ class MovimentoController extends Controller
        
          //dd($movimentoModel);
         if($request->natureza=='I'){
-         if(!is_null($request->confirmado)){
-        $movimentoModel->confirmado=$request->confirmado;
-        }
-        $movimentoModel->piloto_id=$request->piloto_id;
+      $movimentoModel->piloto_id=$request->piloto_id;
         $movimentoModel->instrutor_id=$request->instrutor_id;
         $movimentoModel->tipo_instrucao=$request->tipo_instrucao;
         $movimentoModel->hora_aterragem=$request->hora_descolagem;
@@ -197,9 +209,6 @@ class MovimentoController extends Controller
         $movimentoModel->aerodromo_partida=$request->aerodromo_partida;
         $movimentoModel->num_pessoas=$request->num_pessoas;
         }else{
-        if(!is_null($request->confirmado)){
-        $movimentoModel->confirmado=$request->confirmado;
-        }
         $movimentoModel->piloto_id=$request->piloto_id;
         $movimentoModel->instrutor_id=null;
         $movimentoModel->tipo_instrucao=null;
@@ -208,8 +217,13 @@ class MovimentoController extends Controller
         $movimentoModel->aerodromo_chegada=$request->aerodromo_chegada;
         $movimentoModel->aerodromo_partida=$request->aerodromo_partida;
         $movimentoModel->num_pessoas=$request->num_pessoas;
-
         }
+         if($request->submit == "confirmar")
+      {
+        $movimentoModel->confirmado=1;
+      }else{
+          $movimentoModel->confirmado=0;
+      }
   
 
 
@@ -227,7 +241,7 @@ class MovimentoController extends Controller
         $aerodromos=Aerodromo::all();
         $movimentos=Movimento::all();
     
-           return view('movimentos.create', compact('title','aeronaves','socios','aerodromos','movimentos'));
+       return view('movimentos.create', compact('title','aeronaves','socios','aerodromos','movimentos'));
     }
 
 

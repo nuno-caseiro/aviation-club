@@ -15,7 +15,7 @@ class Movimento extends Model
     public $incrementing = true;
    // protected $fillable = ['id', 'aeronave', 'data_inf', ' data_sup', 'natureza', 'confirmado','piloto','instrutor','meus_movimentos'];
    
-
+   
 
   protected $fillable = ['data',
 'hora_descolagem', 'hora_aterragem', 'aeronave','num_diario',

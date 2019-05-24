@@ -164,18 +164,6 @@ array.forEach(function(element) {
 
  
 
-
-
-
-  
-  movimentos.forEach(function(elem) {
-      var valueMov=elem.aeronave;
-    if(selectedValue==valueMov){
-       document.getElementById("num_aterragens").value=elem.num_aterragens+1;
-        document.getElementById("num_descolagens").value=elem.num_descolagens+1;
-    }
-
-    });
 }
 
 
@@ -266,7 +254,7 @@ array.forEach(function(element) {
 
          <div>
             <label for="num_aterragens">Numero Aterragens</label>
-            <input  type="number" name="num_aterragens" id="num_aterragens"  placeholder="Numero de Aterragens" readonly >
+            <input  type="number" name="num_aterragens" id="num_aterragens"  placeholder="Numero de Aterragens"  >
         </div>
 
 
@@ -274,7 +262,7 @@ array.forEach(function(element) {
 
          <div>
             <label for="inputDescolagens">Numero de Descolagens</label>
-            <input type="number" name="num_descolagens" id="num_descolagens"  placeholder="Numero de Descolagens"  readonly>
+            <input type="number" name="num_descolagens" id="num_descolagens"  placeholder="Numero de Descolagens"  >
         </div>
 
 
