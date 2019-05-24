@@ -1,4 +1,4 @@
-@extends('master')
+@extends('layouts.app')
 @section('content')
 
     <h1>{{$title}}</h1>
@@ -24,3 +24,5 @@
 
         </tbody>
     </table>
+
+     @endsection

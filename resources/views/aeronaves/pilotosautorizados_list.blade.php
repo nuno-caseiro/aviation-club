@@ -1,4 +1,4 @@
-@extends('master')
+@extends('layouts.app')
 @section('content')
     <h1>Lista de pilotos autorizados</h1>
     <h2>{{$matricula}}</h2>
