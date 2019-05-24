@@ -1,5 +1,11 @@
 @extends('layouts.app')
 @section('content')
+
+
+    @if (count($errors) > 0)
+        @include('shared.errors')
+    @endif
+
     <h1>Lista de pilotos autorizados</h1>
     <h2>{{$matricula}}</h2>
 

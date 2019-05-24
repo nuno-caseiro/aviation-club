@@ -1,6 +1,10 @@
 @extends('layouts.app')
 @section('content')
 
+    @if (count($errors) > 0)
+        @include('shared.errors')
+    @endif
+
     <h1>{{$title}}</h1>
     <h2>{{$matricula}}</h2>
 

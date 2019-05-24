@@ -1,5 +1,10 @@
-@extends('master')
+@extends('layouts.app')
 @section('content')
+
+
+    @if (count($errors) > 0)
+        @include('shared.errors')
+    @endif
 
     <form action="{{action('MovimentoController@store')}}" method="post">
         @csrf

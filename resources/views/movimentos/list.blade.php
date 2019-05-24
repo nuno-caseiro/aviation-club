@@ -1,4 +1,4 @@
-@extends('master')
+@extends('layouts.app')
 @section('content')
 
     <h4>Tabela de Movimentos</h4>
