@@ -92,7 +92,7 @@ array.forEach(function(element) {
     var value=element.id;
   if(selectedValue==value){
     document.getElementById("instrutor_label").innerHTML=element.name;
-  }
+  } 
   if(selectedValue==""){
        document.getElementById("instrutor_label").innerHTML="";
   }
@@ -145,7 +145,7 @@ array.forEach(function(element) {
   var horas=Math.floor(horasFinal-horasInicio);
     console.log(horas);
   var hora=Math.floor((horasFinal-horasInicio)/10);
-  var minutos=horas%10;
+  var minutos=(horas%10);
 
   console.log(hora);//hora 
   console.log(minutos);//minuto
@@ -183,12 +183,12 @@ array.forEach(function(element) {
 
  <div>Date:</div></label><input type="date" name="data" >
  
- <div>Hora Descolagem:</div><input id="hora_descolagem" type="datetime-local" name="hora_descolagem">
+ <div>Hora Descolagem:</div><input id="hora_descolagem" type="datetime-local" name="hora_descolagem"></input>
 
-   <div>Hora Aterragem</div><input id="hora_aterragem" type="datetime-local" name="hora_aterragem">
+   <div>Hora Aterragem</div><input id="hora_aterragem" type="datetime-local" name="hora_aterragem"></input>
  
          <label >Aeronave</label>
-         <select name="aeronave" " id="aeronave" onchange="precoVoo({{$aeronaves}},{{$movimentos}})">       
+         <select name="aeronave"  id="aeronave" onchange="precoVoo({{$aeronaves}},{{$movimentos}})">       
           <option></option>
               @foreach ($aeronaves as $aeronave) 
                  <option value="{{ $aeronave->matricula }}"> {{ $aeronave->matricula }} </option>
@@ -292,7 +292,7 @@ array.forEach(function(element) {
 
          <div>
             <label for="inputDescolagens">Conta Horas Fim</label>
-            <input type="number"" name="conta_horas_fim" id="conta_horas_fim"  placeholder="Conta Horas Fim"  onchange="precoVoo({{$aeronaves}},{{$movimentos}})">
+            <input type="number" name="conta_horas_fim" id="conta_horas_fim"  placeholder="Conta Horas Fim"  onchange="precoVoo({{$aeronaves}},{{$movimentos}})">
         </div>
 
 
@@ -311,7 +311,7 @@ array.forEach(function(element) {
 
          <div>
             <label>Preço de voo</label>
-            <input   type="number"" name="preco_voo" id="preco_voo"  placeholder="Preço do Voo"  readonly>
+            <input   type="number" name="preco_voo" id="preco_voo"  placeholder="Preço do Voo"  readonly>
         </div>
 
 
@@ -342,7 +342,7 @@ array.forEach(function(element) {
        
  <div class="form-group">
     <label for="exampleFormControlTextarea1">Observacoes</label>
-    <textarea  name=observacoes class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+    <textarea  name="observacoes"class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
   </div>
 
        

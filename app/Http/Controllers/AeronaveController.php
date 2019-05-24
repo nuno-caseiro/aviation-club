@@ -192,7 +192,7 @@ class AeronaveController extends Controller
     public function precosTempos($matricula){
         $title= "Tempos e precos";
         $aeronaveValores= Aeronave::findOrFail($matricula)->aeronaveValores()->get()->toJson();
-
+      
         return view('aeronaves.precoValores',compact('aeronaveValores', 'title', 'matricula'));
 
     }
