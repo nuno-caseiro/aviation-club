@@ -155,8 +155,12 @@
 
         <div>
             <label for="inputQuotaPaga"  >Quotas em dia</label>
-            <input type="radio" name="quota_paga" value="1" @if((Auth::user()->can('socio_normal',App\User::class))) {{ ($user->quota_paga=="1")? "checked" : "disabled" }} @endif  > Sim
-            <input type="radio" name="quota_paga" value="0" @if((Auth::user()->can('socio_normal',App\User::class))) {{ ($user->quota_paga=="0")? "checked" : "disabled" }} @endif> Não
+            <input type="radio" name="quota_paga" value="1" @if((Auth::user()->can('socio_normal',App\User::class))) {{ ($user->quota_paga=="1")? "checked" : "disabled" }} @else
+                {{ ($user->quota_paga=="1")? "checked" : "" }}
+                    @endif  > Sim
+            <input type="radio" name="quota_paga" value="0" @if((Auth::user()->can('socio_normal',App\User::class))) {{ ($user->quota_paga=="0")? "checked" : "disabled" }} @else
+                {{ ($user->quota_paga=="0")? "checked" : "" }}
+                    @endif> Não
         </div>
         {{--    @can('socio_Direcao', Auth::User())
     <div>
@@ -183,15 +187,23 @@
 
         <div>
             <label for="inputAtivo">Sócio Ativo</label>
-            <input type="radio" name="ativo" value="1" @if((Auth::user()->can('socio_normal',App\User::class))) {{ ($user->ativo=="1")? "checked" : "disabled" }} @endif  > Sim
-            <input type="radio" name="ativo" value="0" @if((Auth::user()->can('socio_normal',App\User::class))) {{ ($user->ativo=="0")? "checked" : "disabled" }}  @endif> Não
+            <input type="radio" name="ativo" value="1" @if((Auth::user()->can('socio_normal',App\User::class))) {{ ($user->ativo=="1")? "checked" : "disabled" }} @else
+                {{ ($user->ativo=="1")? "checked" : "" }}
+                @endif  > Sim
+        <input type="radio" name="ativo" value="0" @if((Auth::user()->can('socio_normal',App\User::class))) {{ ($user->ativo=="0")? "checked" : "disabled" }}  @else
+            {{ ($user->ativo=="0")? "checked" : "" }}
+                @endif > Não
 
         </div>
 
         <div>
             <label for="inputDirecao">Direção</label>
-            <input type="radio" name="direcao"  value="1" @if((Auth::user()->can('socio_normal',App\User::class))) {{ ($user->direcao=="1")? "checked" : "disabled" }} @endif > Sim
-            <input type="radio" name="direcao" value="0" @if((Auth::user()->can('socio_normal',App\User::class))) {{ ($user->direcao=="0")? "checked" : "disabled" }} @endif> Não
+            <input type="radio" name="direcao"  value="1" @if((Auth::user()->can('socio_normal',App\User::class))) {{ ($user->direcao=="1")? "checked" : "disabled" }} @else
+                {{ ($user->direcao=="1")? "checked" : "" }}
+                    @endif > Sim
+            <input type="radio" name="direcao" value="0" @if((Auth::user()->can('socio_normal',App\User::class))) {{ ($user->direcao=="0")? "checked" : "disabled" }} @else
+                {{ ($user->direcao=="0")? "checked" : "" }}
+                    @endif> Não
 
         </div>
 
@@ -244,9 +256,13 @@
             </div>
 
             <div>
-                <label id="labelInoutLicencaConfirmada"for="inputLicencaConfirmada">Licença confirmada</label>
-                <input id="inputLicencaConfirmada1" type="radio" name="licenca_confirmada" value="1" @if((Auth::user()->can('socio_piloto',App\User::class))) {{ ($user->licenca_confirmada=="1")? "checked" : "disabled" }} @endif   ><label id="labelLicencaConf"> Sim</label>
-                <input type="radio"id="inputLicencaConfirmada2" name="licenca_confirmada" value="0" @if((Auth::user()->can('socio_piloto',App\User::class))) {{ ($user->licenca_confirmada=="0")? "checked" : "disabled" }} @endif  > <label id="labelLicencaNaoConf">Não</label>
+                <label id="labelInputLicencaConfirmada"for="inputLicencaConfirmada">Licença confirmada</label>
+                <input id="inputLicencaConfirmada1" type="radio" name="licenca_confirmada" value="1" @if((Auth::user()->can('socio_piloto',App\User::class))) {{ ($user->licenca_confirmada=="1")? "checked" : "disabled" }}@else
+                        {{ ($user->licenca_confirmada=="1")? "checked" : "" }}
+                        @endif > Sim
+                <input type="radio"id="inputLicencaConfirmada2" name="licenca_confirmada" value="0" @if((Auth::user()->can('socio_piloto',App\User::class))) {{ ($user->licenca_confirmada=="0")? "checked" : "disabled" }} @else
+                    {{ ($user->licenca_confirmada=="0")? "checked" : "" }}
+                        @endif >Não
 
             </div>
 
@@ -254,6 +270,7 @@
                 <label id="labelCopia" for=""> Cópia digitial da licença </label>
                 <a id="hrefDownload" href="{{route('licenca',$user->id)}}" class="btn btn-success mb-2"> Ver PDF</a>
                 <a id="hrefDownload" href="{{route('licenca_pdf',$user->id)}}" class="btn btn-success mb-2"> Download</a>
+                <input type="file" name="file_licenca">
             </div>
 
             <div>
@@ -278,8 +295,12 @@
 
                 <div>
                     <label id="labelCertificadoConfirmado" for="inputCertificadoConfirmado">Certificado confirmado</label>
-                    <input  id="inputCertificadoConfirmado" type="radio" name="certificado_confirmado" value="1" @if((Auth::user()->can('socio_piloto',App\User::class))) {{ ($user->certificado_confirmado=="1")? "checked" : "disabled" }} @endif   > <label id="confirmado">Sim</label>
-                    <input type="radio"id="inputCertificadoPorConfirmar" name="certificado_confirmado" value="0" @if((Auth::user()->can('socio_piloto',App\User::class))) {{ ($user->certificado_confirmado=="0")? "checked" : "disabled" }} @endif  > <label id="naoConfirmado">Não</label>
+                    <input  id="inputCertificadoConfirmado" type="radio" name="certificado_confirmado" value="1" @if((Auth::user()->can('socio_piloto',App\User::class))) {{ ($user->certificado_confirmado=="1")? "checked" : "disabled" }}@else
+                        {{ ($user->certificado_confirmado=="1")? "checked" : "" }}
+                            @endif   > <label id="confirmado">Sim</label>
+                    <input type="radio"id="inputCertificadoPorConfirmar" name="certificado_confirmado" value="0" @if((Auth::user()->can('socio_piloto',App\User::class))) {{ ($user->certificado_confirmado=="0")? "checked" : "disabled" }} @else
+                        {{ ($user->certificado_confirmado=="0")? "checked" : "" }}
+                            @endif  > <label id="naoConfirmado">Não</label>
 
                 </div>
 
@@ -287,6 +308,7 @@
                     <label id="labelCopiaDigital"> Cópia digital certificado </label>
                     <a id="hrefDownload" href="{{route('certificado',$user->id)}}" class="btn btn-success mb-2"> Ver PDF</a>
                     <a id="hrefDownload" href="{{route('certificado_pdf',$user->id)}}" class="btn btn-success mb-2"> Download</a>
+                    <input type="file" name="file_certificado">
     {{--              </div>
 
               <div>
