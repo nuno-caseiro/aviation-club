@@ -44,11 +44,11 @@
                 </thead>
 
                 <tbody>
-                @for($i=0; $i<=count($aeronaveValores)-1; $i++)
+                @for($i=1; $i<=count($aeronaveValores); $i++)
                     <tr>
-                        <th>{{$aeronaveValores[$i]['unidade_conta_horas']}}</th>
-                        <th> <input type="text" name="tempos[]" id="inputMinuto" value="{{$aeronaveValores[$i]['minutos']}}" placeholder={{$aeronaveValores[$i]['minutos']}} >    </th>
-                        <th> <input type="text" name="precos[]" id="inputPreco" value="{{$aeronaveValores[$i]['preco']}}" placeholder={{$aeronaveValores[$i]['preco']}} >    </th>
+                        <th>{{$aeronaveValores[$i-1]['unidade_conta_horas']}}</th>
+                        <th> <input type="text" name="tempos[{{$i}}]" id="inputMinuto" value="{{$aeronaveValores[$i-1]['minutos']}}" placeholder={{$aeronaveValores[$i-1]['minutos']}} >    </th>
+                        <th> <input type="text" name="precos[{{$i}}]" id="inputPreco" value="{{$aeronaveValores[$i-1]['preco']}}" placeholder={{$aeronaveValores[$i-1]['preco']}} >    </th>
 
                     </tr>
 

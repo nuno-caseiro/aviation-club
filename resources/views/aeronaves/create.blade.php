@@ -49,11 +49,11 @@
                 </thead>
 
                 <tbody>
-                @for($i=0; $i<=9; $i++)
+                @for($i=1; $i<=10; $i++)
                     <tr>
-                        <th>{{$i+1}}</th>
-                        <th> <input type="text" name="tempos[]" id="inputMinuto" value="" placeholder="" >    </th>
-                        <th> <input type="text" name="precos[]" id="inputPreco" value="" placeholder="" >    </th>
+                        <th>{{$i}}</th>
+                        <th> <input type="text" name="tempos[{{$i}}]" id="inputMinuto" value="" placeholder="" >    </th>
+                        <th> <input type="text" name="precos[{{$i}}]" id="inputPreco" value="" placeholder="" >    </th>
 
                     </tr>
 

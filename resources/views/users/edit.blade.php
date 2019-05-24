@@ -314,7 +314,7 @@
               <div>
 
 
-                 <a class="btn btn-xs btn-primary" href="{{ route('socios.sendEmail', $user->id) }}">Send Email</a>
+               {{--<a class="btn btn-xs btn-primary" href="{{ route('socios.sendEmail', $user->id) }}">Send Email</a>--}}
 
 
 

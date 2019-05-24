@@ -62,8 +62,8 @@ class AeronaveController extends Controller
            $aeronaveValores= new AeronaveValores();
            $aeronaveValores->fill($request->only('matricula', 'unidade_conta_horas', 'minutos', 'preco'));
            $aeronaveValores->unidade_conta_horas=$i;
-           $aeronaveValores->minutos=$request->tempos[$i-1];
-           $aeronaveValores->preco =$request->precos[$i-1];
+           $aeronaveValores->minutos=$request->tempos[$i];
+           $aeronaveValores->preco =$request->precos[$i];
            $aeronaveValores->save();
 
            /* Aeronave::findOrFail($request->matricula)->aeronaveValores()->create(['unidade_conta_horas' => $i,
@@ -108,13 +108,12 @@ class AeronaveController extends Controller
         $linha=Aeronave::findOrFail($matricula)->aeronaveValores()->get();
         if(isset($request->precos)){
             foreach ($request->precos as $preco){
-                if($linha[$i]->preco!= $request->precos[$i] ||$linha[$i]->minutos!= $request->tempos[$i] ){
-                    Aeronave::findOrFail($matricula)->aeronaveValores()->where('unidade_conta_horas',$i+1)->update(['preco'=> $request->precos[$i],'minutos'=> $request->tempos[$i] ]);
-                    $conta++;
-                }
+                    Aeronave::findOrFail($matricula)->aeronaveValores()->where('unidade_conta_horas',$i+1)->update(['preco'=> $request->precos[$i+1],'minutos'=> $request->tempos[$i+1] ]);
                     $i++;
             }
         }
+
+
 
 
 
