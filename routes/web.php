@@ -11,16 +11,16 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-
+/*
 Route::get('/', function () {
-    return view('home');
-})->name('welcome');
-
+    return view('welcome');
+})->middleware('verified')->name('welcome');
+*/
 Auth::routes(['verify' => true]);
 
-Route::get('/home', 'HomeController@index')->middleware('verified')->name('home');
+Route::get('/', 'HomeController@index')->middleware('verified')->name('home');
 //aeronaves
-Route::get('/aeronaves', 'AeronaveController@index');//->middleware('auth'); //vê se está autenticado
+Route::get('/aeronaves', 'AeronaveController@index')->name('aeronaves.index');//->middleware('auth'); //vê se está autenticado
 Route::get('aeronaves/create', 'AeronaveController@create');
 Route::post('aeronaves', 'AeronaveController@store');
 Route::get('aeronaves/{aeronave}/edit','AeronaveController@edit');
@@ -34,7 +34,7 @@ Route::get('/aeronaves/{aeronave}/precos_tempos', 'AeronaveController@precosTemp
 
 
 //movimentos
-Route::get('movimentos', 'MovimentoController@index');
+Route::get('movimentos', 'MovimentoController@index')->name("movimentos.index");
 Route::get('movimentos/{movimento}/edit', 'MovimentoController@edit');
 Route::put('movimentos/{movimento}', 'MovimentoController@update');
 Route::delete('/movimentos/{movimento}', 'MovimentoController@destroy');
