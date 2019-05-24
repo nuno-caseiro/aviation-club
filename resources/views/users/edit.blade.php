@@ -309,20 +309,18 @@
                     <a id="hrefDownload" href="{{route('certificado',$user->id)}}" class="btn btn-success mb-2"> Ver PDF</a>
                     <a id="hrefDownload" href="{{route('certificado_pdf',$user->id)}}" class="btn btn-success mb-2"> Download</a>
                     <input type="file" name="file_certificado">
-    {{--              </div>
+                 </div>
 
               <div>
 
-                  <form method="POST" action="{{route('socios.sendEmail', $user->id)}}" enctype="multipart/form-data">
-                      @method('PUT')
-                      @csrf
-                      <input class="btn btn-xs btn-primary" type="submit" value="Send email activation ">
 
-                  </form>
+                 <a class="btn btn-xs btn-primary" href="{{ route('socios.sendEmail', $user->id) }}">Send Email</a>
+
+
 
 
               </div>
-  --}}
+
                     @endif
                   @endcan
 
