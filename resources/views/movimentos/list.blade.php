@@ -169,6 +169,7 @@ value="1"><label for="confirmado" class="light">Confirmado</label>
    
       @endif
 
+   </form>
 
 
        <thead>
@@ -328,7 +329,6 @@ instrução", "instrutor" (nome informal), "confirmado"
 
 
  
-   </form>
 
 
            
