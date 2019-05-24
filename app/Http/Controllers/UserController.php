@@ -8,6 +8,8 @@ use App\Http\Requests\UserStoreRequest;
 use App\Http\Requests\UserUpdateRequest;
 
 use App\Movimento;
+//use Illuminate\Http\Response;
+use Response;
 use App\TiposLicencas;
 use Illuminate\Http\Request;
 use App\User;
@@ -377,18 +379,35 @@ $user->sendEmailVerificationNotification();
         $user=User::findOrFail($id);
         //$pdf = PDF::loadView('users.licencaPdf', $user);
 
-        $title="Certificado";
-        $pdf = PDF::loadView('users.certificadoPdf',compact('user','title'));
+        //$title="Certificado";
+        $pdf = PDF::loadView('users.certificadoPdf',compact('user'));
+
+        $content = $pdf->download('certificado_'.$user->id.'.pdf')->getOriginalContent();
+
+        Storage::put('docs_piloto/'.'certificado_'.$user->id.'.pdf',$content) ;
+
+        //Storage::put('public/docs_piloto');
+        //return $pdf->download('certificado_'.$user->id.'.pdf');
+       // Storage::get('docs_piloto/'.'certificado_'.$user->id.'.pdf');
+        //return response()->file('docs_piloto/certificado_100001.pdf');
+
+        //return Storage::download('docs_piloto/certificado_'.$user->id.'.pdf'); // funciona , mas em baixo diz q caminho nao existe
+        //$pathToFile='docs_piloto/certificado_'.$user->id.'.pdf';
+
+        //return response()->download($pathToFile);
+
+
+        $filename='certificado_'.$user->id.'.pdf';
+        //$headers=
+        //$headers
+
+
+
+        return response()->download(storage_path("app/docs_piloto/".$filename));//->header('Content-Length',3028);
 
 
 
 
-        return $pdf->download('Certificado.pdf');
-
-
-        //$content = $pdf->download('Certificado.pdf')->getOriginalContent();
-
-        //Storage::put('public/teste.pdf',$content) ;
 
     }
 
@@ -401,13 +420,21 @@ $user->sendEmailVerificationNotification();
         //$pdf = PDF::loadView('users.licencaPdf', $user);
 
 
-
+/*
         $view = View('users.licenca', compact('user'));
         $pdf = \App::make('dompdf.wrapper');
         $pdf->loadHTML($view->render());
-        return $pdf->stream();
 
+        return $pdf->stream();
+*/
+        $path = storage_path('app/docs_piloto/licenca_'.$user->id.'.pdf');
+        return response()->file($path);
+
+
+        //return response()->file($pathToFile);
     }
+
+
        // return view('users.licenca',compact('user','title'));
 public function ativarDesativar(Request $request, $id){
     $this->authorize('socio_Direcao', Auth::user());
@@ -484,40 +511,73 @@ public function resetAtivosSemQuota(){
         //$pdf = PDF::loadView('users.licencaPdf', $user);
 
 
-
+/*
         $view = View('users.certificado', compact('user'));
         $pdf = \App::make('dompdf.wrapper');
         $pdf->loadHTML($view->render());
 
-        return $pdf->stream();
+       // return $pdf->stream();
+
+        return $pdf->stream();*/
+
+        $path = storage_path('app/docs_piloto/certificado_'.$user->id.'.pdf');
+        return response()->file($path);
+
+
 
 
         // return view('users.licenca',compact('user','title'));
 
     }
 
-    public function licenca_PDF($id){
-        $user=User::findOrFail($id);
 
 
-        //$pdf = PDF::loadView('users.licencaPdf', $user);
+public function licenca_PDF($id){
+    $user=User::findOrFail($id);
 
 
-        $pdf = PDF::loadView('users.licencaPdf',compact('user'));
+    //$pdf = PDF::loadView('users.licencaPdf', $user);
 
 
-        //return $pdf->();
+    $pdf = PDF::loadView('users.licencaPdf',compact('user'));
 
-        //$content = $pdf->download()->getOriginalContent();
 
-        //Storage::put('public/teste.pdf',$content) ;
+
+    $content = $pdf->download('licenca_'.$user->id.'.pdf')->getOriginalContent();
+
+    Storage::put('docs_piloto/'.'licenca_'.$user->id.'.pdf',$content) ;
+   // Storage::get('docs_piloto/'.'licenca_'.$user->id.'.pdf');
+    //return response()->file('docs_piloto/licenca_10001.pdf');
+    //$path='docs_piloto/licenca_100001.pdf';
+    //return response()->download($path);
+
+    //$file_path = public_path('docs_piloto/licenca_10001.pdf');
+    //return response()->download($file_path);
+   // return Storage::download('docs_piloto/licenca_'.$user->id.'.pdf');
+    //Storage::put('public/docs_piloto');
+   // return $pdf->download('licenca_'.$user->id.'.pdf');
+    /*if ($request->file('licenca')->isValid()) {
+        $path= Storage::putFile('public/docs_piloto',$request->file('licenca'));
+
     }
+
+    return $path;*/
+
+    $filename='licenca_'.$user->id.'.pdf';
+    $headers = [ 'Content-Length' => '3028' ];
+
+
+    return response()->download(storage_path("app/docs_piloto/".$filename,$headers));
+
+}
+
 
     public function sendReactivateEmail($id){
         $this->authorize('socio_direcao',User::findOrFail($id),Auth::user());
         $user=User::findOrFail($id);
         $user->resend();
     }
+
 
 
 

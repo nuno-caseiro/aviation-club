@@ -254,6 +254,7 @@
                 <label id="labelCopia" for=""> Cópia digitial da licença </label>
                 <a id="hrefDownload" href="{{route('licenca',$user->id)}}" class="btn btn-success mb-2"> Ver PDF</a>
                 <a id="hrefDownload" href="{{route('licenca_pdf',$user->id)}}" class="btn btn-success mb-2"> Download</a>
+                <input type="file" name="licenca">
             </div>
 
             <div>
@@ -287,6 +288,7 @@
                     <label id="labelCopiaDigital"> Cópia digital certificado </label>
                     <a id="hrefDownload" href="{{route('certificado',$user->id)}}" class="btn btn-success mb-2"> Ver PDF</a>
                     <a id="hrefDownload" href="{{route('certificado_pdf',$user->id)}}" class="btn btn-success mb-2"> Download</a>
+                    <input type="file" name="certificado">
     {{--              </div>
 
               <div>
