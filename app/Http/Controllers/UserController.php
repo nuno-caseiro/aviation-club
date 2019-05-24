@@ -284,6 +284,41 @@ $user->sendEmailVerificationNotification();
 
         }
 
+        //if(! is_null($request['certificado'])) {
+            //$old_certificado= 'docs_piloto/certificado_'.$user->id.'.pdf';
+
+
+           // $image = $request->file('certificado');
+            //$newPdfUrl = time().'.'.$image->getClientOriginalExtension();
+
+            //$path = $request->file('certificado')->storeAs('docs_piloto/',$newPdfUrl);
+            // OR
+            //$path=$request->file('certificado')->store('docs_piloto');
+
+            // Storage::putFileAs('public/img', $image, $name);
+            //$user->foto_url = $newFotoUrl;
+            if($request->hasFile('file_certificado')){
+                $path=Storage::putFileAs('docs_piloto',$request->file('file_certificado'),'certificado_'.$user->id.'.pdf');
+
+            }
+
+         if($request->hasFile('file_licenca')){
+            $path=Storage::putFileAs('docs_piloto',$request->file('file_licenca'),'licenca_'.$user->id.'.pdf');
+
+        }
+            //$content = $pdf->download('licenca_'.$user->id.'.pdf')->getOriginalContent();
+
+           // Storage::put('docs_piloto/'.'licenca_'.$user->id.'.pdf',$content) ;
+
+            /*if(Storage::exists($old_foto)) {
+                Storage::delete($old_foto);
+            }
+*/
+        //}
+
+
+
+
 
 
 
