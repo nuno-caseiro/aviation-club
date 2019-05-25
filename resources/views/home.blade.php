@@ -152,6 +152,20 @@
         margin: 0px;
         padding: 0px;
     }
+
+    .button {
+        background-color: #2e353d;
+        border: none;
+        color: white;
+        padding: 0px 40px;
+        text-align: left;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 15px;
+        margin: 4px 2px;
+        cursor: pointer;
+    }
+
 </style>
 
 <div class="nav-side-menu">
@@ -197,9 +211,9 @@
                    <li>New New 2</li>
                    <li>New New 3</li>
                </ul>  --}}
-            <li>
-                <a href="{{route("socios.index")}}">
-                    <i class="fa fa-user fa-lg"></i> Socios
+            <li >
+                <a class="button" href="{{route("socios.index")}}">
+                    {{--<i class="fa fa-user fa-lg"></i>--}} Socios
                 </a>
             </li>
             <li>

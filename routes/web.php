@@ -13,9 +13,9 @@
 */
 /*
 Route::get('/', function () {
-    return view('welcome');
-})->middleware('verified')->name('welcome');
-*/
+    return view('home');
+})->middleware('verified')->name('welcome');*/
+
 Auth::routes(['verify' => true]);
 
 Route::get('/', 'HomeController@index')->middleware('verified')->name('home');

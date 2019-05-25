@@ -241,9 +241,12 @@ class MovimentoController extends Controller
         $aerodromos=Aerodromo::all();
         $movimentos=Movimento::all();
           dd($movimentos);
-          foreach($aeronaves as $aeronave)
-        $aeronaveValores=Aeronave::find('DEAY-')->aeronaveValores()->get()->toJson();
-          @endforeach
+          foreach($aeronaves as $aeronave){
+              $aeronaveValores=Aeronave::find('DEAY-')->aeronaveValores()->get()->toJson();
+
+          }
+
+
         
        return view('movimentos.create', compact('title','aeronaves','socios','aerodromos','movimentos'));
     }

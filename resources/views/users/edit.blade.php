@@ -227,7 +227,7 @@
                 <label id="labelInputTipoLicensa"for="inputTipoLicenca">Tipo de licença</label>
                 <select name="tipo_licenca" id="inputTipoLicenca">
                     @foreach($licencas as $licenca)
-                        <option id="inputTipoLicenca" value="{{$licenca->code}}">{{$licenca->nome}}</option>
+                        <option id="inputTipoLicenca" value="{{$licenca->code}}" {{($user->tipo_licenca==$licenca->code)? "selected" : "" }} >{{$licenca->nome}}</option>
                     @endforeach
 
                 </select>
@@ -282,7 +282,7 @@
                 <label for="inputClasseCertificado" id="labelCertificado">Classe do certificado </label>
                 <select name="classe_certificado" id="classe_certificado">
                     @foreach($classes as $classe)
-                        <option id="inputClasseCertificado" value="{{$classe->code}}">{{$classe->nome}}</option>
+                        <option id="inputClasseCertificado" value="{{$classe->code}}" {{($user->classe_certificado==$classe->code)? "selected" : "" }}>{{$classe->nome}}</option>
                     @endforeach
 
 
