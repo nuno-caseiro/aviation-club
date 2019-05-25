@@ -227,7 +227,7 @@ class MovimentoController extends Controller
       }
   
 
-$movimentoModel=$this->calculos($movimentoModel);
+        $movimentoModel=$this->calculos($movimentoModel);
         $movimentoModel->save();
         return redirect()->action('MovimentoController@index');
         //podemos dar nomes às rotas
@@ -249,8 +249,6 @@ $movimentoModel=$this->calculos($movimentoModel);
        
 
        return view('movimentos.create',compact('title','aeronaves','socios','aerodromos','movimentos','valores'));
-
-          dd($movimentos);
           foreach($aeronaves as $aeronave){
               $aeronaveValores=Aeronave::find('DEAY-')->aeronaveValores()->get()->toJson();
 
@@ -259,7 +257,6 @@ $movimentoModel=$this->calculos($movimentoModel);
 
         
        return view('movimentos.create', compact('title','aeronaves','socios','aerodromos','movimentos'));
-
     }
 
 

@@ -9,149 +9,6 @@
     <form action="{{action('MovimentoController@store')}}" method="post">
         @csrf
         data,
-
-hora_descolagem, hora_aterragem, aeronave, num_diario,
-num_servico, piloto_id, natureza, aerodromo_partida,
-aerodromo_chegada, num_aterragens, num_descolagens,
-num_pessoas, conta_horas_inicio, conta_horas_fim, tempo_voo,
-preco_voo, modo_pagamento, num_recibo, observacoes,
-tipo_instrucao, instrutor_id
-         
-<script>
-function myFunction() {
-var selectedValue=document.getElementById("natureza").value;
-if(selectedValue != "I") {
-    document.getElementById("instrutor_id").style="display: none;"
-    document.getElementById("instrutor_label").style="display: none;"
-     document.getElementById("instrutor_label1").style="display: none;"
-    document.getElementById("tipo_instrucao").style="display: none;"
-    document.getElementById("tipo_instrucao_select").style="display: none;"
-     document.getElementById("instrutor_id").value=null;
-    document.getElementById("instrutor_label").value=null;
-     document.getElementById("instrutor_label1").value=null;
-    document.getElementById("tipo_instrucao").value=null;
-    document.getElementById("tipo_instrucao_select").value=null;
-
-}else{
-   document.getElementById("instrutor_id").style="display: ?;"
-    document.getElementById("instrutor_label").style="display: ?;"
-    document.getElementById("tipo_instrucao").style="display: ?;"
-    document.getElementById("tipo_instrucao_select").style="display: ?;"
-    document.getElementById("instrutor_label1").style="display: ?;"
-}
-}
-</script>
-
-<script type="text/javascript">
-function countHoras() {
-var horaDescolagem=document.getElementById("hora_descolagem").value;
-var horaAterragem=document.getElementById("hora_aterragem").value;
-console.log("sadas"+horaAterragem.value);
-
-console.log("sadas"+horaDescolagem.value);
-  if(horaDescolagem!=null && horaAterragem!=null){
-   //value start
-  var start = Date.parse(horaDescolagem); //get timestamp
-console.log(start);
-
-  //value end
-  var end = Date.parse(horaAterragem); //get timestamp
-  console.log(end);
-  totalHours = NaN;
-  if (start < end) {
-    totalHours = ((end - start)/1000/60/60); //horas
-  }
-    console.log("total de horas="+totalHours);
-    document.getElementById("tempo_voo").setAttribute('value',totalHours);
-}
-}
-</script>
-
-
-
-
-<script>
-function myLabelsSocio(array) {
-var selectedValue=document.getElementById("piloto_id").value;
-array.forEach(function(element) {
-    var value=element.id;
-  if(selectedValue==value){
-    document.getElementById("socio_label").innerHTML=element.name;
-  }
-    if(selectedValue==""){
-        document.getElementById("socio_label").innerHTML="";
-  }
-});
-
-}
-</script>
-
-<script>
-function myLabelsInstrutor(array) {
-var selectedValue=document.getElementById("instrutor_id").value;
-array.forEach(function(element) {
-    var value=element.id;
-  if(selectedValue==value){
-    document.getElementById("instrutor_label").innerHTML=element.name;
-  } 
-  if(selectedValue==""){
-       document.getElementById("instrutor_label").innerHTML="";
-  }
-});
-}
-</script>
-
-
-
-<script>
-function precoVoo(array,movimentos) {
-
-var selectedValue=document.getElementById("aeronave").value;
-
-
-
-   var valores = {!! json_encode($valores) !!};//aeronaves array com os valores dos precos
-
-
-console.log(valores);
-
-
-if(selectedValue!=null){
-array.forEach(function(element) {
-    var value=element.matricula;
-  if(selectedValue==value){
-    var horasInicio=document.getElementById("conta_horas_inicio").value;
-   var horasFinal=document.getElementById("conta_horas_fim").value;
-    if(horasInicio!="" && horasFinal!=""){
-      
-
-
-
-      //mt mais facil seria fazer um menos o outro e dividia
-    /*  var minutosHoraFinal = horasFinal[horasFinal.length-1]*6;        
-      var horaFinal=Math.round(horasFinal/10);
-      
-
-
-
-      var minutosHoraInicio= horasInicio[horasInicio.length-1]*6;
-      var horaInicial=Math.round(horasInicio/10);
-
-      var horas=horaFinal-horaInicial;
-
-      var minutos=0;
-      if(minutosHoraInicio<minutosHoraFinal){
-        minutos=minutosHoraFinal-minutosHoraInicio;
-      }else{
-        if(minutosHoraFinal==minutosHoraInicio){
-          minutos=minutosHoraInicio;
-        }else{
-          if(minutosHoraInicio>minutosHoraFinal){
-            minutos=60-minutosHoraInicio+minutosHoraFinal;
-          }
-        }
-      }
-
         hora_descolagem, hora_aterragem, aeronave, num_diario,
         num_servico, piloto_id, natureza, aerodromo_partida,
         aerodromo_chegada, num_aterragens, num_descolagens,
@@ -173,7 +30,6 @@ array.forEach(function(element) {
                     document.getElementById("instrutor_label1").value=null;
                     document.getElementById("tipo_instrucao").value=null;
                     document.getElementById("tipo_instrucao_select").value=null;
-
                 }else{
                     document.getElementById("instrutor_id").style="display: ?;"
                     document.getElementById("instrutor_label").style="display: ?;"
@@ -189,13 +45,11 @@ array.forEach(function(element) {
                 var horaDescolagem=document.getElementById("hora_descolagem").value;
                 var horaAterragem=document.getElementById("hora_aterragem").value;
                 console.log("sadas"+horaAterragem.value);
-
                 console.log("sadas"+horaDescolagem.value);
                 if(horaDescolagem!=null && horaAterragem!=null){
                     //value start
                     var start = Date.parse(horaDescolagem); //get timestamp
                     console.log(start);
-
                     //value end
                     var end = Date.parse(horaAterragem); //get timestamp
                     console.log(end);
@@ -224,49 +78,8 @@ array.forEach(function(element) {
                         document.getElementById("socio_label").innerHTML="";
                     }
                 });
-
-
             }
         </script>
-
-
-      console.log(minutosHoraFinal);
-        console.log(horaFinal);
-*/
-  var horas=Math.floor(horasFinal-horasInicio);
-    console.log(horas);
-  var hora=Math.floor((horasFinal-horasInicio)/10);
-  var conta_horas_minutos=(horas%10);//obter ultimo valor
-
-
-  for (var i = 0 ; i <valores.length ; i++) {
-      for (var j = 0 ; j <valores[0].length ; j++) {
-      if(valores[i][j]['matricula']==selectedValue){
-          console.log("entrou matricula" +valores[i][j]['matricula']);
-        if(valores[i][j]['unidade_conta_horas']==conta_horas_minutos){
-          console.log("entrou");
-          console.log(valores[i][j]['matricula']);
-          var preco=valores[i][j]['preco'];
-          console.log(conta_horas_minutos);
-          console.log(preco);
-        
-      }
-      }
-  }
-  }
-
-
-
-
-  console.log(hora);//hora 
- 
-
-
-
-  var tempo_voo=horas;
-
-    document.getElementById("tempo_voo").value=tempo_voo;
-    document.getElementById("preco_voo").value=element.preco_hora*hora+(preco);
 
         <script>
             function myLabelsInstrutor(array) {
@@ -284,78 +97,61 @@ array.forEach(function(element) {
         </script>
 
 
-
-        <script>
-            function precoVoo(array,movimentos) {
-                var selectedValue=document.getElementById("aeronave").value;
-                if(selectedValue!=null){
-                    array.forEach(function(element) {
-                        var value=element.matricula;
-                        if(selectedValue==value){
-                            var horasInicio=document.getElementById("conta_horas_inicio").value;
-                            var horasFinal=document.getElementById("conta_horas_fim").value;
-                            if(horasInicio!="" && horasFinal!=""){
-
-                                //mt mais facil seria fazer um menos o outro e dividia
-                                /*  var minutosHoraFinal = horasFinal[horasFinal.length-1]*6;
-                                  var horaFinal=Math.round(horasFinal/10);
-
-
-
-
-                                  var minutosHoraInicio= horasInicio[horasInicio.length-1]*6;
-                                  var horaInicial=Math.round(horasInicio/10);
-
-                                  var horas=horaFinal-horaInicial;
-
-                                  var minutos=0;
-                                  if(minutosHoraInicio<minutosHoraFinal){
-                                    minutos=minutosHoraFinal-minutosHoraInicio;
-                                  }else{
-                                    if(minutosHoraFinal==minutosHoraInicio){
-                                      minutos=minutosHoraInicio;
-                                    }else{
-                                      if(minutosHoraInicio>minutosHoraFinal){
-                                        minutos=60-minutosHoraInicio+minutosHoraFinal;
-                                      }
-                                    }
-                                  }
-
-
-                                  console.log(minutosHoraFinal);
-                                    console.log(horaFinal);
-                            */
-                                var horas=Math.floor(horasFinal-horasInicio);
-                                console.log(horas);
-                                var hora=Math.floor((horasFinal-horasInicio)/10);
-                                var minutos=(horas%10);
-
-                                console.log(hora);//hora
-                                console.log(minutos);//minuto
-                                var tempo_voo=horas;
-
-                                document.getElementById("tempo_voo").value=tempo_voo;
-                                document.getElementById("preco_voo").value=element.preco_hora*hora+(element.preco_hora*minutos/10);
-
-
-
-                            }
+<script>
+function precoVoo(array,movimentos) {
+var selectedValue=document.getElementById("aeronave").value;
+if(selectedValue!=null){
+array.forEach(function(element) {
+    var value=element.matricula;
+  if(selectedValue==value){
+    var horasInicio=document.getElementById("conta_horas_inicio").value;
+   var horasFinal=document.getElementById("conta_horas_fim").value;
+    if(horasInicio!="" && horasFinal!=""){
+      
+      //mt mais facil seria fazer um menos o outro e dividia
+    /*  var minutosHoraFinal = horasFinal[horasFinal.length-1]*6;        
+      var horaFinal=Math.round(horasFinal/10);
+      
+      var minutosHoraInicio= horasInicio[horasInicio.length-1]*6;
+      var horaInicial=Math.round(horasInicio/10);
+      var horas=horaFinal-horaInicial;
+      var minutos=0;
+      if(minutosHoraInicio<minutosHoraFinal){
+        minutos=minutosHoraFinal-minutosHoraInicio;
+      }else{
+        if(minutosHoraFinal==minutosHoraInicio){
+          minutos=minutosHoraInicio;
+        }else{
+          if(minutosHoraInicio>minutosHoraFinal){
+            minutos=60-minutosHoraInicio+minutosHoraFinal;
+          }
+        }
+      }
+      console.log(minutosHoraFinal);
+        console.log(horaFinal);
+*/
+  var horas=Math.floor(horasFinal-horasInicio);
+    console.log(horas);
+  var hora=Math.floor((horasFinal-horasInicio)/10);
+  var minutos=(horas%10);
+  console.log(hora);//hora 
+  console.log(minutos);//minuto
+  var tempo_voo=horas;
+    document.getElementById("tempo_voo").value=tempo_voo;
+    document.getElementById("preco_voo").value=element.preco_hora*hora+(element.preco_hora*minutos/10);
+    }
+    
+ 
+   
+  }
+  
+});
+ 
+ 
+}
+}</script>
 
 
-
-                        }
-
-                    });
-
-
-
-
-
-
-                }
-
-
-            }</script>
 
 
 
