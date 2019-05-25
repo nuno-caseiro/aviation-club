@@ -36,7 +36,7 @@ class US14_ATest extends USTestBase
 
         $response = $this->actingAs($this->userToSimulate)->get("/socios/". $this->pilotoUser->id.'/edit');
         $response->assertStatus(200);
-        $response->assertSeeInOrder_2(['<form', 'method="POST"', '/socios/'. $this->pilotoUser->id, 'enctype="multipart/form-data">'],
+        $response->assertSeeInOrder_2(['<form', 'method="POST"', '/socios/'. $this->pilotoUser->id, 'enctype="multipart/form-data"', '>'],
             'Tem que incluir um formulário com o método POST e [action] que acaba em /socios/'. $this->pilotoUser->id . ' e que permita fazer upload de ficheiros');
         $response->assertSeeAll([
                 '<input type="hidden" name="_method" value="PUT">',
@@ -117,10 +117,8 @@ class US14_ATest extends USTestBase
             $response->assertHeader('Content-Length', 3028);
             $response->assertHeader('Content-Type', 'application/pdf');
         } finally {
-
             $this->deleteLicencaPDF($this->pilotoUser->id);
             $this->deleteCertificadoPDF($this->pilotoUser->id);
-
         }
     }    
 
