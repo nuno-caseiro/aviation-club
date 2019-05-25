@@ -62,7 +62,7 @@
 
         <div>
             <button class="btn btn-xs btn-primary" type="submit" name="ok">Save</button>
-
+            <button type="button" class="btn btn-primary" onclick="window.history.back();">Cancel</button>
         </div>
     </form>
 

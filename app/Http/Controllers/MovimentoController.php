@@ -218,6 +218,7 @@ class MovimentoController extends Controller
         $movimentoModel->aerodromo_partida=$request->aerodromo_partida;
         $movimentoModel->num_pessoas=$request->num_pessoas;
         }
+
          if($request->submit == "confirmar")
       {
         $movimentoModel->confirmado=1;
@@ -226,7 +227,7 @@ class MovimentoController extends Controller
       }
   
 
-
+$movimentoModel=$this->calculos($movimentoModel);
         $movimentoModel->save();
         return redirect()->action('MovimentoController@index');
         //podemos dar nomes às rotas
@@ -241,12 +242,24 @@ class MovimentoController extends Controller
         $aerodromos=Aerodromo::all();
         $movimentos=Movimento::all();
 
+
         foreach ($aeronaves as $aeronave) {
         $valores[]=Aeronave::findOrFail($aeronave->matricula)->aeronaveValores()->get()->toArray();
         }
        
 
        return view('movimentos.create',compact('title','aeronaves','socios','aerodromos','movimentos','valores'));
+
+          dd($movimentos);
+          foreach($aeronaves as $aeronave){
+              $aeronaveValores=Aeronave::find('DEAY-')->aeronaveValores()->get()->toJson();
+
+          }
+
+
+        
+       return view('movimentos.create', compact('title','aeronaves','socios','aerodromos','movimentos'));
+
     }
 
 
@@ -344,7 +357,26 @@ class MovimentoController extends Controller
                     ->dimensions(1000,500)
                     ->responsive(false);
         return view('movimentos.estatisticas',compact('chart','pie'));
-    }   
+    }
+
+    public function calculos($movimento){
+        $valor=($movimento->conta_horas_fim)-($movimento->conta_horas_inicio);
+        $horas=(integer)$valor/10;
+        $unidades= $valor%10;
+        if($unidades!=0){
+            $minutos= DB::table('aeronaves_valores')->select('minutos')->where('matricula',$movimento->aeronave)->where('unidade_conta_horas', $unidades)->value('minutos');
+            $preco = DB::table('aeronaves_valores')->select('preco')->where('matricula',$movimento->aeronave)->where('unidade_conta_horas',$unidades )->value('preco');
+        }
+        $minutos += 60*(integer)$horas;
+        $preco_hora=DB::table('aeronaves')->select('preco_hora')->where('matricula',$movimento->matricula)->value('preco_hora');
+        $preco += (integer)$horas*$preco_hora;
+        $movimento->preco_voo = $preco;
+        $movimento->tempo_voo = $minutos;
+
+        return $movimento;
+    }
+
+
 
 
 
