@@ -240,12 +240,13 @@ class MovimentoController extends Controller
         $socios=User::all();
         $aerodromos=Aerodromo::all();
         $movimentos=Movimento::all();
-          dd($movimentos);
-          foreach($aeronaves as $aeronave)
-        $aeronaveValores=Aeronave::find('DEAY-')->aeronaveValores()->get()->toJson();
-          @endforeach
-        
-       return view('movimentos.create', compact('title','aeronaves','socios','aerodromos','movimentos'));
+
+        foreach ($aeronaves as $aeronave) {
+        $valores[]=Aeronave::findOrFail($aeronave->matricula)->aeronaveValores()->get()->toArray();
+        }
+       
+
+       return view('movimentos.create',compact('title','aeronaves','socios','aerodromos','movimentos','valores'));
     }
 
 
