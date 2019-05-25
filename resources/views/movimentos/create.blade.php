@@ -6,9 +6,8 @@
         @include('shared.errors')
     @endif
 
-    <form action="{{action('MovimentoController@store')}}" method="post">
-        @csrf
-        data,
+{{--
+       data,
         hora_descolagem, hora_aterragem, aeronave, num_diario,
         num_servico, piloto_id, natureza, aerodromo_partida,
         aerodromo_chegada, num_aterragens, num_descolagens,
@@ -170,31 +169,26 @@ if(conta_horas_minutos!=0){
 }
 
 
-}</script>
+}</script>--}}
+
+    <form method="POST" action="{{action('MovimentoController@store')}}" >
+        @csrf
+        @method("POST")
+
+        <div>Date:</div><input type="date" name="data" >
+
+        <div>Hora Descolagem:</div><input id="hora_descolagem" type="time" name="hora_descolagem">
+
+        <div>Hora Aterragem</div><input id="hora_aterragem" type="time" name="hora_aterragem">
 
 
-
-
-
-
-
-
-
-
-        <div>Date:</div></label><input type="date" name="data" >
-
-        <div>Hora Descolagem:</div><input id="hora_descolagem" type="datetime-local" name="hora_descolagem">
-
-        <div>Hora Aterragem</div><input id="hora_aterragem" type="datetime-local" name="hora_aterragem">
-
-        <label >Aeronave</label>
-        <select name="aeronave"  id="aeronave" onchange="precoVoo({{$aeronaves}},{{$movimentos}})">
-            <option></option>
-            @foreach ($aeronaves as $aeronave)
-                <option value="{{ $aeronave->matricula }}"> {{ $aeronave->matricula }} </option>
-            @endforeach    </select>
-        <br>
-
+        <div>
+            <label>Aeronave</label>
+            <select name="aeronave"  id="aeronave" {{--onchange="precoVoo({{$aeronaves}},{{$movimentos}})--}}>
+                @foreach ($aeronaves as $aeronave)
+                    <option value="{{ $aeronave->matricula }}"> {{ $aeronave->matricula }} </option>
+                @endforeach    </select>
+        </div>
 
         <div>
             <label for="inputNumDiario">Numero Diario</label>
@@ -219,8 +213,6 @@ if(conta_horas_minutos!=0){
         <label id="socio_label" readonly="readonly"> </label>
 
 
-        <div></div>
-
 
         <label> Natureza</label>
         <select name="natureza" id="natureza" onchange="myFunction();">
@@ -229,10 +221,6 @@ if(conta_horas_minutos!=0){
             <option value="T">Treino</option>
             <option value="E">Especial</option>
         </select>
-
-
-
-
 
         <div></div>
 
@@ -262,46 +250,29 @@ if(conta_horas_minutos!=0){
             <input  type="number" name="num_aterragens" id="num_aterragens"  placeholder="Numero de Aterragens"  >
         </div>
 
-
-
-
         <div>
             <label for="inputDescolagens">Numero de Descolagens</label>
             <input type="number" name="num_descolagens" id="num_descolagens"  placeholder="Numero de Descolagens"  >
         </div>
-
 
         <div>
             <label for="inputDescolagens">Numero de Pessoas</label>
             <input type="number" name="num_pessoas" id="num_pessoas"  placeholder="Numero de Pessoas" >
         </div>
 
-
-
-
-
         <div>
-            <label for="inputDescolagens">Conta Horas Inicio</label>
-            <input type="text" name="conta_horas_inicio" id="conta_horas_inicio"  placeholder="Conta Horas Inicio"  onchange="precoVoo({{$aeronaves}},{{$movimentos}})">
+            <label for="">Conta Horas Inicio</label>
+            <input type="text" name="conta_horas_inicio" id="conta_horas_inicio"  placeholder="Conta Horas Inicio"  {{--onchange="precoVoo({{$aeronaves}},{{$movimentos}})"--}}>
         </div>
-
-
-
-
-
 
         <div>
             <label for="inputDescolagens">Conta Horas Fim</label>
-            <input type="number" name="conta_horas_fim" id="conta_horas_fim"  placeholder="Conta Horas Fim"  onchange="precoVoo({{$aeronaves}},{{$movimentos}})">
+            <input type="number" name="conta_horas_fim" id="conta_horas_fim"  placeholder="Conta Horas Fim" {{--onchange="precoVoo({{$aeronaves}},{{$movimentos}})"--}} >
         </div>
-
-
-
-
 
         <div>
             <label >Tempo de voo</label>
-            <input  type="number" name="tempo_voo" id="tempo_voo"  placeholder="Tempo de Voo" readonly>
+            <input  type="number" name="tempo_voo" id="tempo_voo"  placeholder="Tempo de Voo" >
         </div>
 
 
@@ -311,12 +282,8 @@ if(conta_horas_minutos!=0){
 
         <div>
             <label>Preço de voo</label>
-            <input   type="number" name="preco_voo" id="preco_voo"  placeholder="Preço do Voo"  readonly>
+            <input   type="number" name="preco_voo" id="preco_voo"  placeholder="Preço do Voo"  >
         </div>
-
-
-
-
 
         <label>Forma de Pagamento</label>
 
@@ -328,16 +295,10 @@ if(conta_horas_minutos!=0){
             <option value="P">Pacote de Horas</option>
         </select>
 
-
-
-
         <div>
             <label for="inputDescolagens">Numero de Recibo</label>
             <input  type="number"  name="num_recibo" id="inputNumDescolagens"  placeholder="Numero de Recibo" >
         </div>
-
-
-
 
 
         <div class="form-group">
@@ -364,8 +325,6 @@ if(conta_horas_minutos!=0){
             @endforeach
         </select>
 
-
-        <label id="instrutor_label" readonly="readonly "></label>
 
 
         <div>
