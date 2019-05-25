@@ -113,7 +113,7 @@ array.forEach(function(element) {
                     <option value="{{ $aeronave->matricula }}" {{ ( $aeronave->matricula == $movimento->aeronave) ? 'selected' : $movimento->aeronave }}> {{ $aeronave->matricula }} </option>
                 @endforeach    </select>
 
-   
+        
                 <div></div>
                 <div>Date:</div><input type="date" name="data" value={{$movimento->data}} >
 
