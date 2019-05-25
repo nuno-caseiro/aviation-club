@@ -352,7 +352,6 @@ $movimentoModel=$this->calculos($movimentoModel);
     public function calculos($movimento){
         $valor=($movimento->conta_horas_fim)-($movimento->conta_horas_inicio);
         $horas=(integer)$valor/10;
-
         $unidades= $valor%10;
         if($unidades!=0){
             $minutos= DB::table('aeronaves_valores')->select('minutos')->where('matricula',$movimento->aeronave)->where('unidade_conta_horas', $unidades)->value('minutos');

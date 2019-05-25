@@ -183,9 +183,9 @@
 
         <div>Date:</div></label><input type="date" name="data" >
 
-        <div>Hora Descolagem:</div><input id="hora_descolagem" type="datetime-local" name="hora_descolagem"></input>
+        <div>Hora Descolagem:</div><input id="hora_descolagem" type="datetime-local" name="hora_descolagem">
 
-        <div>Hora Aterragem</div><input id="hora_aterragem" type="datetime-local" name="hora_aterragem"></input>
+        <div>Hora Aterragem</div><input id="hora_aterragem" type="datetime-local" name="hora_aterragem">
 
         <label >Aeronave</label>
         <select name="aeronave"  id="aeronave" onchange="precoVoo({{$aeronaves}},{{$movimentos}})">
@@ -305,7 +305,7 @@
         </div>
 
 
-
+{{--tempo voo e preco voo deveriam ser hidden inputs, calculados posteriormente na funcao calculos--}}
 
 
 
