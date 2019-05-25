@@ -104,7 +104,17 @@ array.forEach(function(element) {
 
 <script>
 function precoVoo(array,movimentos) {
+
 var selectedValue=document.getElementById("aeronave").value;
+
+
+
+   var valores = {!! json_encode($valores) !!};//aeronaves array com os valores dos precos
+
+
+console.log(valores);
+
+
 if(selectedValue!=null){
 array.forEach(function(element) {
     var value=element.matricula;
@@ -113,6 +123,9 @@ array.forEach(function(element) {
    var horasFinal=document.getElementById("conta_horas_fim").value;
     if(horasInicio!="" && horasFinal!=""){
       
+
+
+
       //mt mais facil seria fazer um menos o outro e dividia
     /*  var minutosHoraFinal = horasFinal[horasFinal.length-1]*6;        
       var horaFinal=Math.round(horasFinal/10);
@@ -145,14 +158,37 @@ array.forEach(function(element) {
   var horas=Math.floor(horasFinal-horasInicio);
     console.log(horas);
   var hora=Math.floor((horasFinal-horasInicio)/10);
-  var minutos=(horas%10);
+  var conta_horas_minutos=(horas%10);//obter ultimo valor
+
+
+  for (var i = 0 ; i <valores.length ; i++) {
+      for (var j = 0 ; j <valores[0].length ; j++) {
+      if(valores[i][j]['matricula']==selectedValue){
+          console.log("entrou matricula" +valores[i][j]['matricula']);
+        if(valores[i][j]['unidade_conta_horas']==conta_horas_minutos){
+          console.log("entrou");
+          console.log(valores[i][j]['matricula']);
+          var preco=valores[i][j]['preco'];
+          console.log(conta_horas_minutos);
+          console.log(preco);
+        
+      }
+      }
+  }
+  }
+
+
+
 
   console.log(hora);//hora 
-  console.log(minutos);//minuto
+ 
+
+
+
   var tempo_voo=horas;
 
     document.getElementById("tempo_voo").value=tempo_voo;
-    document.getElementById("preco_voo").value=element.preco_hora*hora+(element.preco_hora*minutos/10);
+    document.getElementById("preco_voo").value=element.preco_hora*hora+(preco);
 
 
 
