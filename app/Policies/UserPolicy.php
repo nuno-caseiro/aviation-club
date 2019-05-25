@@ -52,7 +52,7 @@ class UserPolicy
     }
 
     public function listar(User $auth){
-        return  $auth->isAtivo() && $auth->NotSoftDeleted() ;
+        return  $auth->isAtivo() && $auth->NotSoftDeleted() && $auth->hasVerifiedEmail() ;
     }
 
 

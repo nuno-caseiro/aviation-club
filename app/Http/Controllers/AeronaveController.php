@@ -54,8 +54,7 @@ class AeronaveController extends Controller
         }
 
         $aeronave=$request->all();
-
-        Aeronave::create($aeronave);
+        $aeronave=Aeronave::create($aeronave);
 
         foreach(range(1,10) as $i){
 
@@ -70,6 +69,8 @@ class AeronaveController extends Controller
                 'minutos' => $request->tempos[$i-1], 'preco' => $request->precos[$i-1]])->except('id');*/
         }
 
+        $aeronave->preco_hora=Aeronave::findOrFail($request->matricula)->aeronaveValores()->select('preco')->where('unidade_conta_horas', 10)->value('preco');
+        $aeronave->save();
 
         return redirect()->action('AeronaveController@index');
     }
@@ -113,27 +114,17 @@ class AeronaveController extends Controller
             }
         }
 
+        $aeronaveModel->preco_hora=Aeronave::findOrFail($request->matricula)->aeronaveValores()->select('preco')->where('unidade_conta_horas', 10)->value('preco');
+        $aeronaveModel->save();
 
 
 
-
-
-        // $aeronaveValores=Aeronave::find($matricula)->aeronaveValores()->where('unidade_conta_horas',$i+1)->fill($request->only('preco', 'minutos'));
-        //  DB::table('aeronaves_valores')->where('matricula', $matricula)->where('unidade_conta_horas', $i+1)->update(['preco' => $request->precos[$i], 'minutos' => $request->tempos[$i]]);
-        //  DB::table('aeronaves_valores')->where('matricula', $matricula)->where('unidade_conta_horas', $i+1)->update(['minutos' => $request->tempos[$i]]);
-        //  Aeronave::find($matricula)->aeronaveValores()->where('unidade_conta_horas',$i+1)->update(['minutos'=> $request->tempos[$i]]);
-        // $this->updateAeronaveValores($matricula, $i, $request->tempos[$i],$request->precos[$i]);
 
 
         return redirect()->action('AeronaveController@index');
 
     }
 
-    public function updateAeronaveValores($matricula, $unidade ,$tempo, $preco){
-       // DB::table('aeronaves_valores')->where('matricula', $matricula)->where('unidade_conta_horas', $unidade+1)->update(['preco' => $preco,'minutos' => $tempo]);
-         Aeronave::findOrFail($matricula)->aeronaveValores()->where('unidade_conta_horas',$unidade)->update(['preco'=> $preco,'minutos'=> $tempo ]);
-//larave 4 ->pg52 ---save many??????????
-    }
 
     public function destroy($matricula){
 

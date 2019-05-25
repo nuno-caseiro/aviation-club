@@ -65,7 +65,7 @@ class US21_ATest extends USTestBase
     {
         $response = $this->actingAs($this->userToSimulate)->get('/aeronaves/create');
         $response->assertStatus(200);
-        $response->assertSeeInOrder_2(['<form', 'method="POST"', '/aeronaves'],
+        $response->assertSeeInOrder_2(['<form', 'method="POST"', '/aeronaves', '>', '<input'],
             'Tem que incluir um formulário com o método POST e [action] que acaba em /aeronaves');
         $response->assertSeeAll([
                 '<input type="hidden" name="_token"'
@@ -118,7 +118,6 @@ class US21_ATest extends USTestBase
         $this->actingAs($this->userToSimulate)->put($this->urlPut, $requestData);
         $this->assertDatabaseMissing('aeronaves', $newdata);
     }
-
 
     public function testValidacaoMarca()
     {
