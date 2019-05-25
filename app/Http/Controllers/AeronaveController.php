@@ -54,6 +54,7 @@ class AeronaveController extends Controller
         }
 
         $aeronave=$request->all();
+
         $aeronave=Aeronave::create($aeronave);
 
         foreach(range(1,10) as $i){

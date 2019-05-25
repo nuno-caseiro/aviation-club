@@ -20,139 +20,129 @@ class MovimentoController extends Controller
     {
         $this->middleware('auth');
     }
-  
+
     public function index()
     {
-       // if(Auth::user()->can('list', Auth::user())) {
-       //     $movimentos = Movimento::paginate(15);
-       // }elseif(Auth::user()->can('normal_ativo', Auth::user())) {
-            
-
-
-       // }
-
-
-
-
-
-
-
-
 
         $this->authorize('listar', Auth::user());
 
 
-
-
-
-         $movimento_id=request()->query('movimento_id');
+        $movimento_id=request()->query('id');
         $aeronave=request()->query('aeronave');
         $confirmado=request()->query('confirmado');
         $especial=request()->query('especial');
         $treino=request()->query('treino');
         $piloto=request()->query('piloto');
         $instrutor=request()->query('instrutor');
-        $naturezaI=request()->query('naturezaI');
-        $naturezaT=request()->query('naturezaT');
-        $naturezaE=request()->query('naturezaE');
-        $descolar=request()->query('descolar');
-        $aterrar=request()->query('aterrar');
-         $checkboxConfirmado=request()->query('checkboxConfirmado');
-   
-    
+        $natureza=request()->query('natureza');
+        $data_inf=request()->query('data_inf');
+        $data_sup=request()->query('data_sup');
+        $checkboxConfirmado=request()->query('checkboxConfirmado');
+
+
         $filtro = Movimento::where('id','>=','1');
+
+        if (isset($movimento_id)) {
+            $filtro = $filtro->where('id', $movimento_id);
+        }
+
+        if(isset($data_inf)){
+            $filtro = $filtro->where('data','>=', $data_inf);
+        }
+
+        if(isset($data_sup)){
+            $filtro = $filtro->where('data','<=', $data_sup);
+        }
+
+
         if (isset($aeronave)) {
             $filtro = $filtro->where('aeronave', $aeronave);
         }
-         if (isset($naturezaT) || isset($naturezaI)||isset($naturezaE) ){
-            $filtro = $filtro->where('natureza',$naturezaT)->orWhere('natureza',$naturezaI)->orWhere('natureza',$naturezaE);
+        if (isset($natureza)){
+            $filtro = $filtro->where('natureza',$natureza);
         }
-        
-         if (isset($confirmado)) {
+
+        if (isset($confirmado)) {
             $filtro = $filtro->where('confirmado', $confirmado);
         }
- 
-           if (isset($piloto)) {
+
+        if (isset($piloto)) {
             $filtro = $filtro->where('piloto_id',$piloto);
         }
- 
+
 
         if (isset($instrutor)) {
             $filtro = $filtro->where('instrutor_id',$instrutor);
         }
- 
 
-            if (isset($aterrar)&&isset($descolar)) {
+
+       /* if (isset($aterrar)&&isset($descolar)) {
             $filtro = $filtro->where('hora_descolagem','>=',$descolar)->where('hora_aterragem','<=',$aterrar);
-        }
+        }*/
 
-            if (isset($movimento_id)) {//id do movimento
-            $filtro = $filtro->where('id','=',$movimento_id);
-        }
+
+
         $pressed=request()->query('movimentos');
-       //meus movimentos
-    $confirmarVarios=request()->query('confirmarVarios');
-    if(!is_null($confirmarVarios) && $confirmarVarios=="true"){
-       if(!is_null($checkboxConfirmado)){
-     foreach ($checkboxConfirmado as $checked) {
-        $movimento= Movimento::findOrFail($checked);
-        $movimento->confirmado="1";
-        //conflitos
-        $movimento->save();
-    }
+        //meus movimentos
+        $confirmarVarios=request()->query('confirmarVarios');
+        if(!is_null($confirmarVarios) && $confirmarVarios=="true"){
+            if(!is_null($checkboxConfirmado)){
+                foreach ($checkboxConfirmado as $checked) {
+                    $movimento= Movimento::findOrFail($checked);
+                    $movimento->confirmado="1";
+                    //conflitos
+                    $movimento->save();
+                }
 
-     }
-       
-    }
+            }
+
+        }
 
         if($pressed=='true') {
             $users=User::all();
             $aeronaves=Aeronave::all();
             $filtro=$filtro->where('piloto_id','=',auth()->user()->id)->orWhere('instrutor_id','=',auth()->user()->id);
             $movimentos = $filtro->paginate(15)->appends([
-                     'movimento_id' => request('movimento_id'),
-                     'instrucao' => request('instrucao'),
-                     'confirmado' => request('confirmado'),
-                     'especial' => request('especial'),
-                     'treino' => request('treino'),
-                     'piloto' => request('piloto'),
-                     'instrutor' => request('instrutor'),
-                     'naturezaI' => request('naturezaI'),
-                     'naturezaT' => request('naturezaT'),      
-                     'naturezaE' => request('naturezaE'),
-                     'descolar' => request('descolar'),
-                     'aterrar' => request('aterrar'),      
-                 ]);
-      }else{
-        //normal
-        if(Auth::user()->can('socio_Direcao', Auth::user()) || Auth::user()->can('socio_Piloto', Auth::user())) {
-        $aeronaves=Aeronave::all();
-        $users=User::all();
-        $movimentos = $filtro->paginate(15)->appends([
-                     'movimento_id' => request('movimento_id'),
-                     'instrucao' => request('instrucao'),
-                     'confirmado' => request('confirmado'),
-                     'especial' => request('especial'),
-                     'treino' => request('treino'),
-                     'piloto' => request('piloto'),
-                     'instrutor' => request('instrutor'),
-                     'naturezaI' => request('naturezaI'),
-                     'naturezaT' => request('naturezaT'),      
-                     'naturezaE' => request('naturezaE'),
-                     'descolar' => request('descolar'),
-                     'aterrar' => request('aterrar'),      
-                 ]);
-      }
-    }
+                'movimento_id' => request('movimento_id'),
+                'instrucao' => request('instrucao'),
+                'confirmado' => request('confirmado'),
+                'especial' => request('especial'),
+                'treino' => request('treino'),
+                'piloto' => request('piloto'),
+                'instrutor' => request('instrutor'),
 
-  
-  
- 
+            ]);
+        }else{
 
-    $title = "List of Movimentos";
-    $aerodromos=Aerodromo::all();
-    $data=['naturezaE'=>$naturezaE,'naturezaT'=>$naturezaT,'naturezaI'=>$naturezaI,'confirmado'=>$confirmado,'movimento_id'=>$movimento_id,'aterrar'=>$aterrar,'descolar'=>$descolar,'piloto'=>$piloto,'instrutor'=>$instrutor,'aeronave'=>$aeronave];
-      
+            //normal
+            if(Auth::user()->can('socio_Direcao', Auth::user()) || Auth::user()->can('socio_normal', Auth::user())) {
+
+
+
+                $aeronaves=Aeronave::all();
+                $users=User::all();
+                $movimentos = $filtro->paginate(15)->appends([
+                    'movimento_id' => request('movimento_id'),
+                    'instrucao' => request('instrucao'),
+                    'confirmado' => request('confirmado'),
+                    'especial' => request('especial'),
+                    'treino' => request('treino'),
+                    'piloto' => request('piloto'),
+                    'instrutor' => request('instrutor'),
+
+                ]);
+            }
+
+        }
+
+
+
+
+
+        $title = "List of Movimentos";
+        $aerodromos=Aerodromo::all();
+        $data=['confirmado'=>$confirmado,'movimento_id'=>$movimento_id,'piloto'=>$piloto,'instrutor'=>$instrutor,'aeronave'=>$aeronave];
+
         return view('movimentos.list', compact('movimentos', 'title', 'users','aeronaves','data','pressed','aerodromos'));
     }
 
@@ -169,18 +159,18 @@ class MovimentoController extends Controller
         $movimento= Movimento::findOrFail($id);
         $aeronaves=Aeronave::all();
         $socios=User::all();
-          $aerodromos=Aerodromo::all();
+        $aerodromos=Aerodromo::all();
 
         $movimento->hora_aterragem=self::parseDate($movimento->hora_aterragem);
-         $movimento->hora_descolagem=self::parseDate($movimento->hora_descolagem);
+        $movimento->hora_descolagem=self::parseDate($movimento->hora_descolagem);
         return view('movimentos.edit', compact('title', 'movimento','aeronaves','socios','aerodromos'));
     }
 
 
     public function parseDate($value)
-{
-     return Carbon::parse($value)->format('Y-m-d\TH:i');
-}
+    {
+        return Carbon::parse($value)->format('Y-m-d\TH:i');
+    }
 
 
 
@@ -197,35 +187,35 @@ class MovimentoController extends Controller
 
         $movimentoModel->aeronave=$request->aeronave;
         $movimentoModel->natureza= $request->natureza;
-       
-         //dd($movimentoModel);
+
+        //dd($movimentoModel);
         if($request->natureza=='I'){
-      $movimentoModel->piloto_id=$request->piloto_id;
-        $movimentoModel->instrutor_id=$request->instrutor_id;
-        $movimentoModel->tipo_instrucao=$request->tipo_instrucao;
-        $movimentoModel->hora_aterragem=$request->hora_descolagem;
-        $movimentoModel->hora_descolagem=$request->hora_aterragem;
-        $movimentoModel->aerodromo_chegada=$request->aerodromo_chegada;
-        $movimentoModel->aerodromo_partida=$request->aerodromo_partida;
-        $movimentoModel->num_pessoas=$request->num_pessoas;
+            $movimentoModel->piloto_id=$request->piloto_id;
+            $movimentoModel->instrutor_id=$request->instrutor_id;
+            $movimentoModel->tipo_instrucao=$request->tipo_instrucao;
+            $movimentoModel->hora_aterragem=$request->hora_descolagem;
+            $movimentoModel->hora_descolagem=$request->hora_aterragem;
+            $movimentoModel->aerodromo_chegada=$request->aerodromo_chegada;
+            $movimentoModel->aerodromo_partida=$request->aerodromo_partida;
+            $movimentoModel->num_pessoas=$request->num_pessoas;
         }else{
-        $movimentoModel->piloto_id=$request->piloto_id;
-        $movimentoModel->instrutor_id=null;
-        $movimentoModel->tipo_instrucao=null;
-        $movimentoModel->hora_aterragem=$request->hora_descolagem;
-        $movimentoModel->hora_descolagem=$request->hora_aterragem;
-        $movimentoModel->aerodromo_chegada=$request->aerodromo_chegada;
-        $movimentoModel->aerodromo_partida=$request->aerodromo_partida;
-        $movimentoModel->num_pessoas=$request->num_pessoas;
+            $movimentoModel->piloto_id=$request->piloto_id;
+            $movimentoModel->instrutor_id=null;
+            $movimentoModel->tipo_instrucao=null;
+            $movimentoModel->hora_aterragem=$request->hora_descolagem;
+            $movimentoModel->hora_descolagem=$request->hora_aterragem;
+            $movimentoModel->aerodromo_chegada=$request->aerodromo_chegada;
+            $movimentoModel->aerodromo_partida=$request->aerodromo_partida;
+            $movimentoModel->num_pessoas=$request->num_pessoas;
         }
 
-         if($request->submit == "confirmar")
-      {
-        $movimentoModel->confirmado=1;
-      }else{
-          $movimentoModel->confirmado=0;
-      }
-  
+        if($request->submit == "confirmar")
+        {
+            $movimentoModel->confirmado=1;
+        }else{
+            $movimentoModel->confirmado=0;
+        }
+
 
         $movimentoModel=$this->calculos($movimentoModel);
         $movimentoModel->save();
@@ -237,33 +227,32 @@ class MovimentoController extends Controller
 
     public function create(){
         $title= "Adicionar Movimento";
-        $aeronaves=Aeronave::all();   
+        $aeronaves=Aeronave::all();
         $socios=User::all();
         $aerodromos=Aerodromo::all();
         $movimentos=Movimento::all();
 
 
         foreach ($aeronaves as $aeronave) {
-        $valores[]=Aeronave::findOrFail($aeronave->matricula)->aeronaveValores()->get()->toArray();
+            $valores[]=Aeronave::findOrFail($aeronave->matricula)->aeronaveValores()->get()->toArray();
         }
-       
-
-       return view('movimentos.create',compact('title','aeronaves','socios','aerodromos','movimentos','valores'));
-          foreach($aeronaves as $aeronave){
-              $aeronaveValores=Aeronave::find('DEAY-')->aeronaveValores()->get()->toJson();
-
-          }
 
 
-        
-       return view('movimentos.create', compact('title','aeronaves','socios','aerodromos','movimentos'));
+        return view('movimentos.create',compact('title','aeronaves','socios','aerodromos','movimentos','valores'));
+        /*foreach($aeronaves as $aeronave){
+            $aeronaveValores=Aeronave::find('DEAY-')->aeronaveValores()->get()->toJson();
+
+        }*/
+
+
+
     }
 
 
 
     public function store(Request $request)
-    { 
-      $movimentos=Movimento::all();
+    {
+        $movimentos=Movimento::all();
         if ($request->has('cancel')) {
             return redirect()->action('MovimentoController@index');
         }
@@ -272,7 +261,7 @@ class MovimentoController extends Controller
         $contaHorasInicial=$request->conta_horas_inicio;
         $contaHorasFinal=$request->conta_horas_fim;
         $aeronave=$request->aeronave;
-        
+
 
 
 
@@ -282,39 +271,39 @@ class MovimentoController extends Controller
         $aerodromos=Aerodromo::all();
 
         if($request->natureza=="I"){
-        $movimento=$request->all()+['num_licenca_piloto'=>$user->num_licenca,'validade_licenca_piloto'=>$user->validade_licenca,'confirmado'=>'0','tipo_licenca_piloto'=>$user->tipo_licenca,'num_certificado_piloto'=>$user->num_certificado,'validade_certificado_piloto'=>$user->validade_licenca,'classe_certificado_piloto'=>$user->classe_certificado,'numero_linceca_instrutor'=>$instrutor->num_licenca,'validade_licenca_instrutor'=>$instrutor->validade_licenca,'tipo_licenca_instrutor'=>$instrutor->tipo_licenca,'validade_certificado_instrutor'=>$instrutor->validade_certificado,'classe_certificado_instrutor'=>$instrutor->classe_certificado,'num_licenca_instrutor'=>$instrutor->num_licenca,'num_certificado_instrutor'=>$instrutor->num_certificado];
-  }else{
-      $movimento=$request->all()+['num_licenca_piloto'=>$user->num_licenca,'validade_licenca_piloto'=>$user->validade_licenca,'confirmado'=>'0','tipo_licenca_piloto'=>$user->tipo_licenca,'num_certificado_piloto'=>$user->num_certificado,'validade_certificado_piloto'=>$user->validade_licenca,'classe_certificado_piloto'=>$user->classe_certificado];
-    }
-
-      
-
-/*
-      $aux=0; 
-      foreach ($movimentos as $m) {
-        if($m->aeronave == $aeronave){
-        if(($m->conta_horas_inicio<=$contaHorasInicial)  && ($m->conta_horas_fim >= $contaHorasFinal)){
-        # code...
-          //sobreposicao
-          $movimento = new Movimento($movimento);
-            $title="Conflito sobreposicao";
-           return view('movimentos.conflitos', compact('title','movimento','movimentos','aeronaves','socios','aerodromos'));
-      }
-      if($m->conta_horas_fim==$contaHorasInicial){
-        $aux=1;//encontrado o conta kilometros final
-      }
-    }
-  }
+            $movimento=$request->all()+['num_licenca_piloto'=>$user->num_licenca,'validade_licenca_piloto'=>$user->validade_licenca,'confirmado'=>'0','tipo_licenca_piloto'=>$user->tipo_licenca,'num_certificado_piloto'=>$user->num_certificado,'validade_certificado_piloto'=>$user->validade_licenca,'classe_certificado_piloto'=>$user->classe_certificado,'numero_linceca_instrutor'=>$instrutor->num_licenca,'validade_licenca_instrutor'=>$instrutor->validade_licenca,'tipo_licenca_instrutor'=>$instrutor->tipo_licenca,'validade_certificado_instrutor'=>$instrutor->validade_certificado,'classe_certificado_instrutor'=>$instrutor->classe_certificado,'num_licenca_instrutor'=>$instrutor->num_licenca,'num_certificado_instrutor'=>$instrutor->num_certificado];
+        }else{
+            $movimento=$request->all()+['num_licenca_piloto'=>$user->num_licenca,'validade_licenca_piloto'=>$user->validade_licenca,'confirmado'=>'0','tipo_licenca_piloto'=>$user->tipo_licenca,'num_certificado_piloto'=>$user->num_certificado,'validade_certificado_piloto'=>$user->validade_licenca,'classe_certificado_piloto'=>$user->classe_certificado];
+        }
 
 
-    if($aux==0 ){
-      //buraco
-               $movimento = new Movimento($movimento);
-               $title="Conflito Buraco";
-               return view('movimentos.conflitos', compact('title','movimento','movimentos','aeronaves','socios','aerodromos'));
-    }
-  
-*/
+
+        /*
+              $aux=0;
+              foreach ($movimentos as $m) {
+                if($m->aeronave == $aeronave){
+                if(($m->conta_horas_inicio<=$contaHorasInicial)  && ($m->conta_horas_fim >= $contaHorasFinal)){
+                # code...
+                  //sobreposicao
+                  $movimento = new Movimento($movimento);
+                    $title="Conflito sobreposicao";
+                   return view('movimentos.conflitos', compact('title','movimento','movimentos','aeronaves','socios','aerodromos'));
+              }
+              if($m->conta_horas_fim==$contaHorasInicial){
+                $aux=1;//encontrado o conta kilometros final
+              }
+            }
+          }
+
+
+            if($aux==0 ){
+              //buraco
+                       $movimento = new Movimento($movimento);
+                       $title="Conflito Buraco";
+                       return view('movimentos.conflitos', compact('title','movimento','movimentos','aeronaves','socios','aerodromos'));
+            }
+
+        */
 
 
         Movimento::create($movimento);
@@ -338,21 +327,21 @@ class MovimentoController extends Controller
 
 
     public function estatisticas(){
-       $users = User::where(DB::raw("(DATE_FORMAT(created_at,'%Y'))"),date('Y'))
-                    ->get();
+        $users = User::where(DB::raw("(DATE_FORMAT(created_at,'%Y'))"),date('Y'))
+            ->get();
         $chart = Charts::database($users, 'bar', 'highcharts')
-                  ->title("Monthly new Register Users")
-                  ->elementLabel("Total Users")
-                  ->dimensions(1000, 500)
-                  ->responsive(false)
-                  ->groupByMonth(date('Y'), true);
+            ->title("Monthly new Register Users")
+            ->elementLabel("Total Users")
+            ->dimensions(1000, 500)
+            ->responsive(false)
+            ->groupByMonth(date('Y'), true);
 
         $pie  =  Charts::create('pie', 'highcharts')
-                    ->title('My nice chart')
-                    ->labels(['First', 'Second', 'Third'])
-                    ->values([5,10,20])
-                    ->dimensions(1000,500)
-                    ->responsive(false);
+            ->title('My nice chart')
+            ->labels(['First', 'Second', 'Third'])
+            ->values([5,10,20])
+            ->dimensions(1000,500)
+            ->responsive(false);
         return view('movimentos.estatisticas',compact('chart','pie'));
     }
 
@@ -362,7 +351,7 @@ class MovimentoController extends Controller
         $unidades= $valor%10;
         if($unidades!=0){
             $minutos= DB::table('aeronaves_valores')->select('minutos')->where('matricula',$movimento->aeronave)->where('unidade_conta_horas', $unidades)->value('minutos');
-            $preco = DB::table('aeronaves_valores')->select('preco')->where('matricula',$movimento->aeronave)->where('unidade_conta_horas',$unidades )->value('preco');
+            $preco = DB::table('aeronaves_valores')->select('preco')->where('matricula',$movimento->aeronave)->where('unidade_conta_horas',$unidades )->first()->preco;
         }
         $minutos += 60*(integer)$horas;
         $preco_hora=DB::table('aeronaves')->select('preco_hora')->where('matricula',$movimento->matricula)->value('preco_hora');
