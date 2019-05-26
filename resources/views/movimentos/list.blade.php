@@ -184,6 +184,8 @@
             <th>Numero Descolagens</th>
             <th>Numero Servico</th>
             <th>Numero Diario</th>
+            <th>Tipo Conflito</th>
+            <th>Razao Conflito</th>
         </tr>
         </thead>
 
