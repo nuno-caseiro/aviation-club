@@ -174,11 +174,8 @@ array.forEach(function(element) {
         --}}
 
         <div>
-            <label id="tipo_instrucao">Tipo Instruçao</label>
-            <select name="tipo_instrucao" id="tipo_instrucao_select">
-                <option value="S">Simples</option>
-                <option value="D">Duplo</option>
-            </select></div>
+                <input name="tipo_instrucao" value="{{$movimento->tipo_instrucao}}">
+            </div>
 
 
 
@@ -321,20 +318,14 @@ array.forEach(function(element) {
 
 
             <div>
-                <label for="exampleFormControlTextarea1">Observacoes</label>
-                <textarea  name="observacoes"class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                <label >Observacoes</label>
+                <textarea name="observacoes" cols="3" rows="1">{{$movimento->observacoes}}</textarea>
             </div>
 
-
-
-
             <div>
-            <button type="submit" name="ok">Save</button>
-        </div>
+                <button type="submit" name="ok">Save</button>
+            </div>
 
-        <!-- @can(Auth::user()->can('isDirecao', Auth::user()))
-        <button type="submit" name = "submit" value = "confirmar">Confirmar</button>
-        @endcan so os da direcao e que teem esta opcao-->
 
         <div>
           <button type="submit" name ="submit" value="confirmar">Confirmar</button>

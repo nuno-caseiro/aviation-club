@@ -1,7 +1,7 @@
 @extends('layouts.app')
 @section('content')
 
-    <h4>Tabela de Movimentos</h4>
+
     {{--<script type="text/javascript">
         function checkAndUncheck(){
             var allRadios = document.getElementsByName('confirmado');
@@ -21,7 +21,7 @@
     </script>
     --}}
 
-    <table class="table table-striped table-bordered" style="width: 100%" id="mydatatable">
+
 
 
         <legend>Filtrar Movimentos:</legend>
@@ -52,31 +52,31 @@
             </div>
 
 
-        {{--    <div></div>
+            <div>
             <label>Cofirmado:</label>
-            <input  type="radio" onclick="checkAndUncheck()" id="confirmado" name="confirmado"
-                    @if (!is_null($data['confirmado'])&&$data['confirmado']==1)
-                    checked="true"
-                    @endif
-                    value="1"><label for="confirmado" class="light">Confirmado</label>
-            <input type="radio" name="confirmado"
-                   @if (!is_null($data['confirmado'])&&$data['confirmado']==0)
-                   checked="true"
-                   @endif
-                   value="0"><label for="Confirmar" class="light">Por Confirmar</label>
-            <div></div>--}}
+            <input  type="radio" id="confirmado" name="confirmado" value="1"><label for="confirmado" class="light">Confirmado</label>
+            <input type="radio" name="confirmado" value="0"><label for="Confirmar" class="light">Por Confirmar</label>
+            </div>
 
+<div>
+    <label >Socios</label>
+    <select name="piloto">
+        <option></option>
+        @foreach ($users as $socio)
+            <option value="{{$socio->id}}" @if (!is_null($data['piloto']) && $data['piloto']==$socio->id)
+            selected="selected"
+                    @endif> {{ $socio->id }}
+            </option>
+        @endforeach
+    </select>
+</div>
+            @if(Auth::user()->can('socio_DP', Auth::user()))
+            <div>
+                <label for="meus_movimentos">Meus movimentos: </label>
+                <input name="meus_movimentos" value="{{Auth::id()}}" type="checkbox" id="meus_movimentos">
+            </div>
+            @endif
 
-            <label >Socios</label>
-            <select name="piloto">
-                <option></option>
-                @foreach ($users as $socio)
-                    <option value="{{$socio->id}}" @if (!is_null($data['piloto']) && $data['piloto']==$socio->id)
-                    selected="selected"
-                            @endif> {{ $socio->id }}
-                    </option>
-                @endforeach
-            </select>
 
 
             <label >Instrutor</label>
@@ -108,7 +108,7 @@
 
 
 
-
+{{--
             @if(Auth::user()->can('socio_DP', Auth::user()))
                 @if(is_null($pressed) || $pressed=='false' )
                     <div class="form-group row mb-0">
@@ -131,7 +131,7 @@
 
                 @endif
             @endif
-
+--}}
 
 
 
@@ -153,7 +153,7 @@
 
         </form>
 
-
+<table class="table table-striped table-bordered" style="width: 100%">
         <thead>
         <tr >
 

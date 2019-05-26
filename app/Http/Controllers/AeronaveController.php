@@ -70,7 +70,7 @@ class AeronaveController extends Controller
                 'minutos' => $request->tempos[$i-1], 'preco' => $request->precos[$i-1]])->except('id');*/
         }
 
-        $aeronave->preco_hora=Aeronave::findOrFail($request->matricula)->aeronaveValores()->select('preco')->where('unidade_conta_horas', 10)->value('preco');
+       // $aeronave->preco_hora=Aeronave::findOrFail($request->matricula)->aeronaveValores()->select('preco')->where('unidade_conta_horas', 10)->value('preco');
         $aeronave->save();
 
         return redirect()->action('AeronaveController@index');
@@ -115,7 +115,7 @@ class AeronaveController extends Controller
             }
         }
 
-        $aeronaveModel->preco_hora=Aeronave::findOrFail($request->matricula)->aeronaveValores()->select('preco')->where('unidade_conta_horas', 10)->value('preco');
+      //  $aeronaveModel->preco_hora=Aeronave::findOrFail($request->matricula)->aeronaveValores()->select('preco')->where('unidade_conta_horas', 10)->value('preco');
         $aeronaveModel->save();
 
 

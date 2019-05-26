@@ -2,6 +2,7 @@
 
 namespace App\Policies;
 
+use App\Movimento;
 use App\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
@@ -43,7 +44,7 @@ class UserPolicy
 
     public function socio_DP(User $auth)
     {
-        return ($auth->isDirecao()|| $auth->isPiloto()) && $auth->hasVerifiedEmail() && $auth->isAtivo();;
+        return ($auth->isDirecao()|| $auth->isPiloto()) && $auth->hasVerifiedEmail() && $auth->isAtivo();
     }
 
 
@@ -73,6 +74,14 @@ class UserPolicy
     public function delete_socio(User $auth){
         return $auth->isDirecao();
 
+    }
+
+
+    public function updateMovimentos(User $auth,$piloto_id){
+       if($auth->id==$piloto_id){
+           return true;
+       }
+       return false;
     }
 
 }
