@@ -203,12 +203,128 @@ class MovimentoController extends Controller
 
         $movimentoModel= Movimento::findOrFail($id);
         $user=User::findOrFail(Auth::id());
-        $instrutor=User::find($request->instrutor_id);
+
+
+        if($user->direcao==0) {
+            if(Auth::id()==$movimentoModel->piloto_id ) {
+            if ($request->natureza != 'I' && $movimentoModel->confirmado == 0) {
+                if (($request->piloto_id == $movimentoModel->piloto_id) == Auth::id() ) {
+
+                    //  $movimentoModel->fill($request->except('tipo_conflito','justificacao_conflito','updated_at','created_at','classe_certificado_instrutor','validade_certificado_instrutor','num_certificado_instrutor','tipo_licenca_instrutor','validade_licenca_instrutor', 'num_licenca_instrutor', 'instrutor_id','tipo_instrucao', 'classe_licenca_piloto' ));
+                    $movimentoModel->fill($request->except(['created_at', 'updated_at']));
+                    $piloto = User::findOrFail($request->piloto_id);
+                    $movimentoModel->num_licenca_piloto = $piloto->num_licenca;
+                    $movimentoModel->tipo_licenca_piloto = $piloto->tipo_licenca;
+                    $movimentoModel->validade_licenca_piloto = $piloto->validade_licenca;
+                    $movimentoModel->num_certificado_piloto = $piloto->num_certificado;
+                    $movimentoModel->classe_certificado_piloto = $piloto->classe_certificado;
+                    $movimentoModel->validade_certificado_piloto = $piloto->validade_certificado;
+                    $movimentoModel->hora_aterragem = $this->parseDate($request->data . $request->hora_aterragem);
+                    $movimentoModel->hora_descolagem = $this->parseDate($request->data . $request->hora_descolagem);
+                    $movimentoModel = $this->calculos($movimentoModel);
+
+                    $movimentoModel->save();
+
+                    }
+                }
+
+            }
+              if(Auth::id()==$movimentoModel->piloto_id || Auth::id()==$movimentoModel->instrutor_id) {
+                  if (($request->natureza == 'I' && $movimentoModel->confirmado == 0)) {
+                      if ($request->piloto_id  == Auth::id() || $request->instrutor_id  == Auth::id()) {
+
+                          $piloto = User::findOrFail($request->piloto_id);
+                          $movimentoModel->fill($request->all());
+                          $movimentoModel->num_licenca_piloto = $piloto->num_licenca;
+                          $movimentoModel->tipo_licenca_piloto = $piloto->tipo_licenca;
+                          $movimentoModel->validade_licenca_piloto = $piloto->validade_licenca;
+                          $movimentoModel->num_certificado_piloto = $piloto->num_certificado;
+                          $movimentoModel->classe_certificado_piloto = $piloto->classe_certificado;
+                          $movimentoModel->validade_certificado_piloto = $piloto->validade_certificado;
+
+                          $instrutor = User::findOrFail($request->instrutor_id);
+                          $movimentoModel->num_licenca_instrutor = $instrutor->num_licenca;
+                          $movimentoModel->tipo_licenca_instrutor = $instrutor->tipo_licenca;
+                          $movimentoModel->validade_licenca_instrutor = $instrutor->validade_licenca;
+                          $movimentoModel->num_certificado_instrutor = $instrutor->num_certificado;
+                          $movimentoModel->classe_certificado_instrutor = $instrutor->classe_certificado;
+                          $movimentoModel->validade_certificado_instrutor = $instrutor->validade_certificado;
+                          $movimentoModel->hora_aterragem = $this->parseDate($request->data . $request->hora_aterragem);
+                          $movimentoModel->hora_descolagem = $this->parseDate($request->data . $request->hora_descolagem);
+                          $movimentoModel = $this->calculos($movimentoModel);
+
+                          $movimentoModel->save();
+
+                      }
+                  }
+              }
+        }
+
+
+        if($user->direcao==1) {
+            if ($request->natureza != 'I' && $movimentoModel->confirmado == 0) {
+                $movimentoModel->fill($request->except(['created_at', 'updated_at']));
+                if ($movimentoModel->piloto_id != $request->piloto_id) {
+                    $newPilot = User::findOrFail($request->piloto_id);
+                    $movimentoModel->num_licenca_piloto = $newPilot->num_licenca;
+                    $movimentoModel->tipo_licenca_piloto = $newPilot->tipo_licenca;
+                    $movimentoModel->validade_licenca_piloto = $newPilot->validade_licenca;
+                    $movimentoModel->num_certificado_piloto = $newPilot->num_certificado;
+                    $movimentoModel->classe_certificado_piloto = $newPilot->classe_certificado;
+                    $movimentoModel->validade_certificado_piloto = $newPilot->validade_certificado;
+                } else {
+
+                    $movimentoModel->fill($request->except(['created_at', 'updated_at']));
+                }
+
+                $movimentoModel->hora_aterragem = $this->parseDate($request->data . $request->hora_aterragem);
+                $movimentoModel->hora_descolagem = $this->parseDate($request->data . $request->hora_descolagem);
+                $movimentoModel = $this->calculos($movimentoModel);
+
+                $movimentoModel->save();
+            }
+
+                if (($request->natureza == 'I' && $movimentoModel->confirmado == 0)) {
+
+                    $movimentoModel->fill($request->except(['created_at', 'updated_at']));
+                    if ($movimentoModel->piloto_id != $request->piloto_id) {
+                        $piloto = User::findOrFail($request->piloto_id);
+                        $movimentoModel->num_licenca_piloto = $piloto->num_licenca;
+                        $movimentoModel->tipo_licenca_piloto = $piloto->tipo_licenca;
+                        $movimentoModel->validade_licenca_piloto = $piloto->validade_licenca;
+                        $movimentoModel->num_certificado_piloto = $piloto->num_certificado;
+                        $movimentoModel->classe_certificado_piloto = $piloto->classe_certificado;
+                        $movimentoModel->validade_certificado_piloto = $piloto->validade_certificado;
+
+                    }
+                    if ($movimentoModel->instrutor_id != $request->instrutor_id) {
+                        $instrutor = User::findOrFail($request->instrutor_id);
+                        $movimentoModel->num_licenca_instrutor = $instrutor->num_licenca;
+                        $movimentoModel->tipo_licenca_instrutor = $instrutor->tipo_licenca;
+                        $movimentoModel->validade_licenca_instrutor = $instrutor->validade_licenca;
+                        $movimentoModel->num_certificado_instrutor = $instrutor->num_certificado;
+                        $movimentoModel->classe_certificado_instrutor = $instrutor->classe_certificado;
+                        $movimentoModel->validade_certificado_instrutor = $instrutor->validade_certificado;
+                    }
+
+                    $movimentoModel->hora_aterragem = $this->parseDate($request->data . $request->hora_aterragem);
+                    $movimentoModel->hora_descolagem = $this->parseDate($request->data . $request->hora_descolagem);
+
+                    $movimentoModel = $this->calculos($movimentoModel);
+                    $movimentoModel->save();
+
+                }
+            }
+
+
+
+
+
 
 
 //se for direcao pode fazer tudo
         //se for piloto tem que ser os  seus movimentos...
-    if ($request->natureza != 'I' && $movimentoModel->confirmado == 0) {
+  /*  if ($request->natureza != 'I' && $movimentoModel->confirmado == 0) {
         if(Auth::user()->direcao==1){
             $movimentoModel->fill($request->except(['created_at', 'updated_at']));
             if($movimentoModel->piloto_id!=$request->piloto_id){
@@ -317,7 +433,7 @@ class MovimentoController extends Controller
             }
 
         }
-
+*/
 
 
 
