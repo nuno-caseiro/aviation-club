@@ -191,7 +191,7 @@
 
         <tbody>
         @foreach($movimentos as $movimento)
-            <tr>
+            <tr @if ($movimento->tipo_conflito=='B')  class="table-warning"     @endif      @if($movimento->tipo_conflito=='S') class="table-danger"   @endif>
                 <td>{{$movimento->id}}</td>
                 <td>{{$movimento->data}}</td>
                 <td>{{$movimento->hora_descolagem}}</td>
@@ -255,7 +255,18 @@
                 <td>{{$movimento->num_descolagens}}</td>
                 <td>{{$movimento->num_servico}}</td>
                 <td>{{$movimento->num_diario}}</td>
-
+                <td>@if($movimento->tipo_conflito!=null)
+                  {{$movimento->tipo_conflito}}
+                  @else
+                  -
+                  @endif
+                </td>
+              <td>@if($movimento->justificao_conflito!=null)
+                  {{$movimento->justificacao_conflito}}
+                  @else
+                  -
+                  @endif
+                </td>
                 @if($movimento->confirmado=='1' ) <!--confirmados-->
                     @if(Auth::user()->can('socio_DP', Auth::user()) || auth()->user()->id==$movimento->piloto_id || auth()->user()->id==$movimento->instrutor)
                     <td><a class="btn btn-xs btn-primary" disabled >Edit</a></td>

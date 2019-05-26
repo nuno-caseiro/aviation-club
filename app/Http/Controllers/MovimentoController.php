@@ -363,12 +363,40 @@ class MovimentoController extends Controller
         if ($request->has('cancel')) {
             return redirect()->action('MovimentoController@index');
         }
-        $user= User::find(Auth::id());
+       $user= User::find($request->piloto_id);
+        $instrutor=User::find($request->instrutor_id);
+        $contaHorasInicial=$request->conta_horas_inicio;
+        $contaHorasFinal=$request->conta_horas_fim;
+        $aeronaves=Aeronave::all();
+        $socios=User::all();
+        $aerodromos=Aerodromo::all();
 
 
 
 
-    $movimento=new Movimento();
+
+
+    $movimento=new Movimento();//nao usei o create pq nao quero gravar na base de dados
+
+
+   $movimento->confirmado=0;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
         if($request->natureza!='I'){
 
@@ -382,14 +410,30 @@ class MovimentoController extends Controller
                 $movimento->num_certificado_piloto = $piloto->num_certificado;
                 $movimento->classe_certificado_piloto = $piloto->classe_certificado;
                 $movimento->validade_certificado_piloto = $piloto->validade_certificado;
+                 $movimento->hora_aterragem=$request->hora_aterragem;
+                 $movimento->hora_descolagem=$request->hora_descolagem;
 
-                $movimento->hora_aterragem = $this->parseDate($request->data . $request->hora_aterragem);
-                $movimento->hora_descolagem = $this->parseDate($request->data . $request->hora_descolagem);
+                //$movimento->hora_aterragem = $this->parseDate($request->data . $request->hora_aterragem);
+               // $movimento->hora_descolagem = $this->parseDate($request->data . $request->hora_descolagem);
 
-
-                $movimento->save();
             }
         }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
         if($request->natureza=='I' ){
             if( ($request->piloto_id==Auth::id()) || ($request->instrutor_id==Auth::id()) || (Auth::user()->direcao==1)) {
@@ -412,15 +456,88 @@ class MovimentoController extends Controller
                 $movimento->classe_certificado_instrutor = $instrutor->classe_certificado;
                 $movimento->validade_certificado_instrutor = $instrutor->validade_certificado;
 
+                //$movimento->hora_aterragem = $this->parseDate($request->data . $request->hora_aterragem);
+                //$movimento->hora_descolagem = $this->parseDate($request->data . $request->hora_descolagem);
 
-                $movimento->hora_aterragem = $this->parseDate($request->data . $request->hora_aterragem);
-                $movimento->hora_descolagem = $this->parseDate($request->data . $request->hora_descolagem);
 
-
-                $movimento->save();
+             
 
             }
         }
+
+
+
+
+
+            //podia ter feito uma funcao a ver se tinha conflito
+
+
+          if($request->has('comConflitos')){       //&& $movAlterado->conta_horas_inicio!=$request->query('conta_horas_inicio') || $movAlterado->conta_horas_fim!=$request->query('conta_horas_fim') adicioanr para ver se ele alterou alguma coisa do conta horas se nao quero correr verificacoes de nvo
+    
+          $textConflito=$request->razaoConflito;
+
+        
+          if($request->title=="S"){
+           $movimento->tipo_conflito="S";
+            $movimento->justificacao_conflito=$request->justificacao_conflito;
+         
+           $movimento->save();
+
+             return redirect()->action('MovimentoController@index');
+          }else{
+             $movimento->tipo_conflito="B";
+            $movimento->justificacao_conflito=$request->justificacao_conflito;
+               $movimento->save();
+             return redirect()->action('MovimentoController@index');
+          }
+          
+        }
+
+
+
+              $aux=0; 
+              foreach ($movimentos as $m) {
+                foreach ($aeronaves as $aeronave) {
+                    # code...
+                if($m->aeronave == $aeronave->matricula){
+                if(($m->conta_horas_inicio<=$contaHorasInicial)  && ($m->conta_horas_fim >= $contaHorasFinal)){ // faltam validaçoes se estiver a meio cenas desse genero
+            
+        
+                $valores[]=Aeronave::findOrFail($aeronave->matricula)->aeronaveValores()->get()->toArray();
+          
+                $title="Conflito sobreposicao";
+                # code...
+                  //sobreposicao
+               $conflito="S";
+                   return view('movimentos.create',compact('title','aeronaves','socios','aerodromos','movimentos','valores','conflito','movimento'));
+                         }
+              }
+          }
+
+
+
+              if( $m->conta_horas_fim==$contaHorasInicial){
+          
+                $aux=1;//encontrado o conta kilometros final
+             
+              }
+            }
+       
+            if(!is_null($m->conta_horas_fim)&&$aux==0){
+            foreach ($aeronaves as $aeronave) {
+            $valores[]=Aeronave::findOrFail($aeronave->matricula)->aeronaveValores()->get()->toArray();
+            }
+              //buraco
+                 $title="Conflito Buraco Temporal blalblalbla coisa parecida";
+                 $conflito="B";
+                return view('movimentos.create',compact('title','aeronaves','socios','aerodromos','movimentos','valores','conflito','movimento'));
+          }
+
+
+
+
+
+           $movimento->save();
 
 
         return redirect()->action('MovimentoController@index');
