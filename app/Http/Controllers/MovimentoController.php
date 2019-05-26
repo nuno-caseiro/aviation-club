@@ -277,51 +277,79 @@ class MovimentoController extends Controller
         $socios=User::all();
         $aerodromos=Aerodromo::all();
 
+    
         if($request->natureza=="I"){
             $movimento=$request->all()+['num_licenca_piloto'=>$user->num_licenca,'validade_licenca_piloto'=>$user->validade_licenca,'confirmado'=>'0','tipo_licenca_piloto'=>$user->tipo_licenca,'num_certificado_piloto'=>$user->num_certificado,'validade_certificado_piloto'=>$user->validade_licenca,'classe_certificado_piloto'=>$user->classe_certificado,'numero_linceca_instrutor'=>$instrutor->num_licenca,'validade_licenca_instrutor'=>$instrutor->validade_licenca,'tipo_licenca_instrutor'=>$instrutor->tipo_licenca,'validade_certificado_instrutor'=>$instrutor->validade_certificado,'classe_certificado_instrutor'=>$instrutor->classe_certificado,'num_licenca_instrutor'=>$instrutor->num_licenca,'num_certificado_instrutor'=>$instrutor->num_certificado];
-            $movimento["hora_aterragem"]=$this->parseDate($request->data.$request->hora_aterragem);
-            $movimento["hora_descolagem"]=$this->parseDate($request->data.$request->hora_descolagem);
-
         }else{
-
             $movimento=$request->all()+['num_licenca_piloto'=>$user->num_licenca,'validade_licenca_piloto'=>$user->validade_licenca,'confirmado'=>'0','tipo_licenca_piloto'=>$user->tipo_licenca,'num_certificado_piloto'=>$user->num_certificado,'validade_certificado_piloto'=>$user->validade_licenca,'classe_certificado_piloto'=>$user->classe_certificado];
-            $movimento["hora_aterragem"]=$this->parseDate($request->data.$request->hora_aterragem);
-            $movimento["hora_descolagem"]=$this->parseDate($request->data.$request->hora_descolagem);
+        }
+// $movimento["hora_aterragem"]=$this->parseDate($request->data.$request->hora_aterragem);
+//            $movimento["hora_descolagem"]=$this->parseDate($request->data.$request->hora_descolagem);
 
+        if($request->has('comConflitos')){    //&& $movAlterado->conta_horas_inicio!=$request->query('conta_horas_inicio') || $movAlterado->conta_horas_fim!=$request->query('conta_horas_fim') adicioanr para ver se ele alterou alguma coisa do conta horas
+         $aux=Movimento::create($movimento);
+          $textConflito=$request->razaoConflito;
+          if($request->query('title')=="S"){
+           
+             $this->tipo_conflito[$aux->id]="S";
+              $this->obs_conflito[$aux->id]=$request->razaoConflito;
+        
+             return redirect()->action('MovimentoController@index');
+          }else{
+             $this->obs_conflito[$aux->id]=$textConflito;
+               $this->tipo_conflito[$aux->id]="B";
+             return redirect()->action('MovimentoController@index');
+          }
+          
         }
 
-
-
-
-
-
-
-        /*
-              $aux=0;
+            $movimento= new Movimento($movimento);//nao usei o create pq nao quero gravar na base de dados
+              $aux=0; 
               foreach ($movimentos as $m) {
                 if($m->aeronave == $aeronave){
-                if(($m->conta_horas_inicio<=$contaHorasInicial)  && ($m->conta_horas_fim >= $contaHorasFinal)){
+                if(($m->conta_horas_inicio<=$contaHorasInicial)  && ($m->conta_horas_fim >= $contaHorasFinal)){ // faltam validaçoes se estiver a meio cenas desse genero
+            
+                foreach ($aeronaves as $aeronave) {
+                $valores[]=Aeronave::findOrFail($aeronave->matricula)->aeronaveValores()->get()->toArray();
+                }
+                $title="Conflito sobreposicao";
                 # code...
                   //sobreposicao
-                  $movimento = new Movimento($movimento);
-                    $title="Conflito sobreposicao";
-                   return view('movimentos.conflitos', compact('title','movimento','movimentos','aeronaves','socios','aerodromos'));
+               $conflito="S";
+                   return view('movimentos.create',compact('title','aeronaves','socios','aerodromos','movimentos','valores','conflito','movimento'));
+
               }
               if($m->conta_horas_fim==$contaHorasInicial){
+          
                 $aux=1;//encontrado o conta kilometros final
+             
               }
             }
           }
 
 
             if($aux==0 ){
-              //buraco
-                       $movimento = new Movimento($movimento);
-                       $title="Conflito Buraco";
-                       return view('movimentos.conflitos', compact('title','movimento','movimentos','aeronaves','socios','aerodromos'));
+
+            foreach ($aeronaves as $aeronave) {
+            $valores[]=Aeronave::findOrFail($aeronave->matricula)->aeronaveValores()->get()->toArray();
             }
 
-        */
+
+
+              //buraco
+                 $title="Conflito Buraco Temporal blalblalbla coisa parecida";
+                 $conflito="B";
+                return view('movimentos.create',compact('title','aeronaves','socios','aerodromos','movimentos','valores','conflito','movimento'));
+          }
+
+  
+
+
+
+
+
+
+
 
 
         Movimento::create($movimento);
