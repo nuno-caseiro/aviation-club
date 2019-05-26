@@ -79,8 +79,8 @@ class US16_ATest extends USTestBase
         }
         $response->assertStatus(200);
         if ($this->insertMov) {
-            $response->assertSeeInOrder_2(['<form', 'method="POST"', '/movimentos/create', '>'],
-            'Tem que incluir um formulário com o método POST e [action] que acaba em /movimentos/create');
+            $response->assertSeeInOrder_2(['<form', 'method="POST"', '/movimentos', '>'],
+            'Tem que incluir um formulário com o método POST e [action] que acaba em /movimentos');
         } else {
             $response->assertSeeInOrder_2(['<form', 'method="POST"', '/movimentos/' . $this->movToSave["id"] , '>'],
                 'Tem que incluir um formulário com o método POST (PUT) e [action] que acaba em /movimentos/'. $this->movToSave["id"]);

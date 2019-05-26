@@ -98,9 +98,9 @@ array.forEach(function(element) {
 </script>
 
     <form method="POST" action="{{action('MovimentoController@update', $movimento->id)}}"  >
-        @method('put')
-        @csrf 
+        @csrf
 
+        <input type="hidden" name="_method" value="PUT">
 
 
 {{$instrutorEsp=null}}
@@ -113,13 +113,13 @@ array.forEach(function(element) {
                     <option value="{{ $aeronave->matricula }}" {{ ( $aeronave->matricula == $movimento->aeronave) ? 'selected' : $movimento->aeronave }}> {{ $aeronave->matricula }} </option>
                 @endforeach    </select>
 
-        
-                <div></div>
-                <div>Date:</div><input type="date" name="data" value={{$movimento->data}} >
 
-         <div>Hora Descolagem:</div><input  type="time" name="hora_descolagem" value={{$movimento->hora_descolagem}}>
-   
-   <div>Hora Aterragem</div><input type="time" name="hora_aterragem" value={{$movimento->hora_aterragem}}>
+
+                <div>Date:<input name="data" value="{{$movimento->data}}" type="date" ></div>
+
+         <div>Hora Descolagem:</div><input name="hora_descolagem" value="{{date('H:i', strtotime($movimento->hora_descolagem)) }}" type="time">
+
+   <div>Hora Aterragem</div><input type="time" name="hora_aterragem" value="{{date('H:i', strtotime($movimento->hora_aterragem)) }}">
 
 
             <br>
@@ -199,13 +199,13 @@ array.forEach(function(element) {
 
             
             <label id="socioName">{{$socioEsp}}</label>
-          
+
 
              <div>
                 <label id="instrutor_label" >Instrutor</label>
                 <select name="instrutor_id" id="instrutor_id" onload="myFunction()" onchange="myLabelsInstrutor({{$socios}})" >
                     @foreach ($socios as $socio)
-                   @if (Auth::user()->can('socio_Piloto', Auth::user()) && $movimento->instrutor_id==auth()->user()->id) 
+                   @if (Auth::user()->can('socio_Piloto', Auth::user()) && $movimento->instrutor_id==auth()->user()->id)
                   @if (auth()->user()->id==$socio->id)
                       <option value="{{$socio->id}}" {{(  $socio->id == $movimento->instrutor_id) ? 'selected' : $movimento->instrutor_id }}> {{ $socio->id }}
                     </option>
@@ -256,42 +256,42 @@ array.forEach(function(element) {
 
             <div>
                 <label for="inputNumDiario">Numero Diario</label>
-                <input type="number" name="num_diario" id="inputNumDiario"  placeholder="Numero Diario" >
+                <input type="number" name="num_diario" id="inputNumDiario"  value="{{old('num_diario',$movimento->num_diario)}}" >
             </div>
 
             <div>
                 <label for="inputServico">Numero Servico</label>
-                <input type="number" name="num_servico" id="inputNumServico"  placeholder="Numero Servico" >
+                <input type="number" name="num_servico" id="inputNumServico"  placeholder="Numero Servico" value="{{old('num_servico',$movimento->num_servico)}}">
             </div>
 
             <div>
                 <label for="num_aterragens">Numero Aterragens</label>
-                <input  type="number" name="num_aterragens" id="num_aterragens"  placeholder="Numero de Aterragens"  >
+                <input  type="number" name="num_aterragens" id="num_aterragens"  placeholder="Numero de Aterragens" value="{{old('num_diario',$movimento->num_servico)}}"   >
             </div>
 
             <div>
                 <label for="inputDescolagens">Numero de Descolagens</label>
-                <input type="number" name="num_descolagens" id="num_descolagens"  placeholder="Numero de Descolagens"  >
+                <input type="number" name="num_descolagens" id="num_descolagens"  placeholder="Numero de Descolagens" value="{{old('num_descolagens',$movimento->num_descolagens)}}"  >
             </div>
 
             <div>
                 <label for="inputDescolagens">Numero de Pessoas</label>
-                <input type="number" name="num_pessoas" id="num_pessoas"  placeholder="Numero de Pessoas" >
+                <input type="number" name="num_pessoas" id="num_pessoas"  placeholder="Numero de Pessoas" value="{{old('num_pessoas',$movimento->num_pessoas)}}" >
             </div>
 
             <div>
                 <label for="">Conta Horas Inicio</label>
-                <input type="text" name="conta_horas_inicio" id="conta_horas_inicio"  placeholder="Conta Horas Inicio"  {{--onchange="precoVoo({{$aeronaves}},{{$movimentos}})"--}}>
+                <input type="text" name="conta_horas_inicio" id="conta_horas_inicio"  placeholder="Conta Horas Inicio"  value="{{old('conta_horas_inicio',$movimento->conta_horas_inicio)}}" {{--onchange="precoVoo({{$aeronaves}},{{$movimentos}})"--}}>
             </div>
 
             <div>
                 <label for="inputDescolagens">Conta Horas Fim</label>
-                <input type="number" name="conta_horas_fim" id="conta_horas_fim"  placeholder="Conta Horas Fim" {{--onchange="precoVoo({{$aeronaves}},{{$movimentos}})"--}} >
+                <input type="number" name="conta_horas_fim" id="conta_horas_fim"  placeholder="Conta Horas Fim"  value="{{old('conta_horas_fim',$movimento->conta_horas_fim)}}"  {{--onchange="precoVoo({{$aeronaves}},{{$movimentos}})"--}} >
             </div>
 
             <div>
                 <label >Tempo de voo</label>
-                <input  type="number" name="tempo_voo" id="tempo_voo"  placeholder="Tempo de Voo" >
+                <input  type="number" name="tempo_voo" id="tempo_voo"  placeholder="Tempo de Voo" value="{{old('tempo_voo',$movimento->tempo_voo)}}" >
             </div>
 
 
@@ -301,7 +301,7 @@ array.forEach(function(element) {
 
             <div>
                 <label>Preço de voo</label>
-                <input   type="number" name="preco_voo" id="preco_voo"  placeholder="Preço do Voo"  >
+                <input   type="number" name="preco_voo" id="preco_voo"  placeholder="Preço do Voo"  value="{{old('preco_voo',$movimento->preco_voo)}}"   >
             </div>
 
             <label>Forma de Pagamento</label>
@@ -316,7 +316,7 @@ array.forEach(function(element) {
 
             <div>
                 <label for="inputDescolagens">Numero de Recibo</label>
-                <input  type="number"  name="num_recibo" id="inputNumDescolagens"  placeholder="Numero de Recibo" >
+                <input  type="number"  name="num_recibo" id="inputNumDescolagens"  placeholder="Numero de Recibo"  value="{{old('num_recibo',$movimento->num_recibo)}}"   >
             </div>
 
 

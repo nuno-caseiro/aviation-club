@@ -2,7 +2,7 @@
 @section('content')
 
     <h4>Tabela de Movimentos</h4>
-    <script type="text/javascript">
+    {{--<script type="text/javascript">
         function checkAndUncheck(){
             var allRadios = document.getElementsByName('confirmado');
             var booRadio;
@@ -19,6 +19,8 @@
             }
         }
     </script>
+    --}}
+
     <table class="table table-striped table-bordered" style="width: 100%" id="mydatatable">
 
 
@@ -50,9 +52,9 @@
             </div>
 
 
-            <div></div>
+        {{--    <div></div>
             <label>Cofirmado:</label>
-            <input  type="radio" onclick="checkAndUncheck()"; id="confirmado" name="confirmado"
+            <input  type="radio" onclick="checkAndUncheck()" id="confirmado" name="confirmado"
                     @if (!is_null($data['confirmado'])&&$data['confirmado']==1)
                     checked="true"
                     @endif
@@ -62,7 +64,7 @@
                    checked="true"
                    @endif
                    value="0"><label for="Confirmar" class="light">Por Confirmar</label>
-            <div></div>
+            <div></div>--}}
 
 
             <label >Socios</label>
@@ -154,11 +156,7 @@
 
         <thead>
         <tr >
-            , "data do voo", "hora descolagem", "hora aterragem", "tempo
-            voo", "natureza do voo", "piloto" (nome informal), "código do aeródromo de partida",
-            "código do aeródromo de chegada", "nº de aterragens", "nº de descolagens", "nº diário", "nº
-            serviço", "conta-horas inicial", "conta-horas final", "nº pessoas a bordo", "tipo de
-            instrução", "instrutor" (nome informal), "confirmado"
+
             <th>ID</th>
             <th>Data</th>
             <th>Hora Descolagem</th>
@@ -303,7 +301,7 @@
 
 
 
-    {!! $movimentos->links(); !!}
+   {!! $movimentos->links(); !!}
 
     <a href="{{ action('MovimentoController@create') }}"class="btn btn-primary">Adicionar Movimento</a>
 

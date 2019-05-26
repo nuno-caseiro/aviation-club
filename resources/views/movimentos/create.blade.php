@@ -175,6 +175,8 @@ if(conta_horas_minutos!=0){
         @csrf
         @method("POST")
 
+        <input type="hidden" value="0" name="confirmado">
+
         <div>Date:</div><input type="date" name="data" >
 
         <div>Hora Descolagem:</div><input id="hora_descolagem" type="time" name="hora_descolagem">
