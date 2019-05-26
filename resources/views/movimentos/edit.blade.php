@@ -102,6 +102,7 @@ array.forEach(function(element) {
 
         <input type="hidden" name="_method" value="PUT">
 
+        <input type="text" name="confirmar" value="0">
 
 {{$instrutorEsp=null}}
 {{$socioEsp=null}}
