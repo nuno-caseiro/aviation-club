@@ -174,7 +174,7 @@ array.forEach(function(element) {
           </select>
         --}}
 
-        <div>
+            <div>
                 <input name="tipo_instrucao" value="{{$movimento->tipo_instrucao}}">
             </div>
 
