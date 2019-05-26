@@ -2,6 +2,7 @@
 
 
 
+
 namespace App\Providers;
 
 use Illuminate\Support\Facades\Gate;
@@ -31,21 +32,16 @@ class AuthServiceProvider extends ServiceProvider
 
         //
 
-/*
-        Gate::define('normal_ativo', function($user){
-            return !$user->isDirecao() ;
-        });
 
+/*        public function updateMovimentos(User $auth,  $id){
 
-        Gate::define('list', function($user){
-            return $user->isDirecao();
-        });
+        if($auth->id===$id){
+            return true;
+        }
+        return false;
 
-        Gate::define('update', function(User $user, User $auth){
-        return $user->isDirecao() || $user->id === $auth->id;
+        }*/
 
-        });
-*/
 
 }
 

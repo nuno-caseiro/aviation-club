@@ -157,7 +157,9 @@ class MovimentoController extends Controller
 
     public function edit($id)
     {
-        $this->authorize('socio_DP',Auth::user()) ;
+
+        $this->authorize('socio_DP', Auth::user() ) ;
+
 
         $title = "Editar movimentos ";
         $movimento= Movimento::findOrFail($id);
@@ -180,8 +182,8 @@ class MovimentoController extends Controller
     public function update(MovimentoUpdate $request, $id){
 
 
-        $this->authorize('socio_DP',Auth::user()) ;
-       // $this->authorize('updateMovimentos', Auth::user(),$request->piloto_id);
+        $this->authorize('socio_DP', Auth::user() ) ;
+
 
         if ($request->has('cancel')) {
             return redirect()->action('MovimentoController@index');
@@ -193,12 +195,14 @@ class MovimentoController extends Controller
         $instrutor=User::find($request->instrutor_id);
 
 
-    if ($request->natureza != 'I' && $movimentoModel->confirmado == 0 && ($movimentoModel->piloto_id == $user->id)) {
+//se for direcao
+        //se for piloto...
+    if ($request->natureza != 'I' && $movimentoModel->confirmado == 0) {
 
         /* $movimentoModel=$request->except(['created_at','updated_at','tipo_conflito','justificacao_conflito'])+['num_licenca_piloto'=>$user->num_licenca,'validade_licenca_piloto'=>$user->validade_licenca,'confirmado'=>'0','tipo_licenca_piloto'=>$user->tipo_licenca
                  ,'num_certificado_piloto'=>$user->num_certificado,'validade_certificado_piloto'=>$user->validade_licenca,'classe_certificado_piloto'=>$user->classe_certificado];*/
 
-        if ($movimentoModel->piloto_id != $request->piloto_id) {
+
             $newPilot = User::findOrFail($request->piloto_id);
             $movimentoModel->num_licenca_piloto = $newPilot->num_licenca;
             $movimentoModel->tipo_licenca_piloto = $newPilot->tipo_licenca;
@@ -206,23 +210,23 @@ class MovimentoController extends Controller
             $movimentoModel->num_certificado_piloto = $newPilot->num_certificado;
             $movimentoModel->classe_certificado_piloto = $newPilot->classe_certificado;
             $movimentoModel->validade_certificado_piloto = $newPilot->validade_certificado;
-            /*$movimentoModel->hora_aterragem = $this->parseDate($request->data . $request->hora_aterragem);
-            $movimentoModel->hora_descolagem = $this->parseDate($request->data . $request->hora_descolagem);*/
+            $movimentoModel->hora_aterragem = $this->parseDate($request->data . $request->hora_aterragem);
+            $movimentoModel->hora_descolagem = $this->parseDate($request->data . $request->hora_descolagem);
 
-        } else {
+       /* } else {
             $movimentoModel->fill($request->except(['created_at', 'updated_at', 'tipo_conflito', 'justificacao_conflito']));
             //$movimentoModel['num_licenca_piloto'=>$user->num_licenca,'validade_licenca_piloto'=>$user->validade_licenca,'confirmado'=>'0','tipo_licenca_piloto'=>$user->tipo_licenca,'num_certificado_piloto'=>$user->num_certificado,'validade_certificado_piloto'=>$user->validade_licenca,'classe_certificado_piloto'=>$user->classe_certificado,'numero_linceca_instrutor'=>$instrutor->num_licenca,'validade_licenca_instrutor'=>$instrutor->validade_licenca,'tipo_licenca_instrutor'=>$instrutor->tipo_licenca,'validade_certificado_instrutor'=>$instrutor->validade_certificado,'classe_certificado_instrutor'=>$instrutor->classe_certificado,'num_licenca_instrutor'=>$instrutor->num_licenca,'num_certificado_instrutor'=>$instrutor->num_certificado]);
 
             $movimentoModel->hora_aterragem = $this->parseDate($request->data . $request->hora_aterragem);
             $movimentoModel->hora_descolagem = $this->parseDate($request->data . $request->hora_descolagem);
+*/
 
 
-        }
         $movimentoModel = $this->calculos($movimentoModel);
 
         $movimentoModel->save();
-
-    } elseif ($request->natureza == 'I' && $movimentoModel->confirmado == 0 && (($movimentoModel->piloto_id == $user->id))) {
+//(($request->piloto_id == $user->id||$request->instrutor_id == $user->id)&&
+    } elseif ($request->natureza == 'I' && $movimentoModel->confirmado == 0  ){
 
         $piloto = User::findOrFail($request->piloto_id);
 
@@ -296,7 +300,7 @@ class MovimentoController extends Controller
 
     $movimento=new Movimento();
 
-        if($request->natureza!='I' && ( ($request->piloto_id==$user->id)) ){
+        if($request->natureza!='I' && ( ($movimento->piloto_id==$user->id)) ){
             $piloto=User::findOrFail($request->piloto_id);
 
             $movimento->fill($request->except(['created_at','updated_at','tipo_instrucao','instrutor_id','num_licenca_instrutor','validade_licenca_instrutor','tipo_licenca_instrutor','validade_licenca_instrutor','tipo_licenca_instrutor','num_certificado_instrutor','validade_certificado_instrutor','classe_certificado_instrutor']));
@@ -312,7 +316,7 @@ class MovimentoController extends Controller
 
 
             $movimento->save();
-        }elseif($request->natureza='I' && (($request->piloto_id==$user->id))){
+        }elseif($request->natureza='I' && (($movimento->piloto_id==$user->id)|| $movimento->instrutor_id==$user->id)){
 
             $piloto=User::findOrFail($request->piloto_id);
 

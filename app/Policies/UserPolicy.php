@@ -77,11 +77,13 @@ class UserPolicy
     }
 
 
-    public function updateMovimentos(User $auth,$piloto_id){
-       if($auth->id==$piloto_id){
-           return true;
-       }
-       return false;
+    public function updateMovimentos(User $auth,  Movimento $movimento){
+
+        if($auth->id==$movimento->piloto_id){
+            return true;
+        }
+        return false;
+
     }
 
 }
