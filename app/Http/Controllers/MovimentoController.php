@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 use App\Aeronave;
+use App\Http\Requests\MovimentoCreate;
+use App\Http\Requests\MovimentoUpdate;
 use App\User;
 use App\Movimento;
 use App\Aerodromo;
@@ -161,20 +163,19 @@ class MovimentoController extends Controller
         $socios=User::all();
         $aerodromos=Aerodromo::all();
 
-        $movimento->hora_aterragem=self::parseDate($movimento->hora_aterragem);
-        $movimento->hora_descolagem=self::parseDate($movimento->hora_descolagem);
+
         return view('movimentos.edit', compact('title', 'movimento','aeronaves','socios','aerodromos'));
     }
 
 
     public function parseDate($value)
     {
-        return Carbon::parse($value)->format('Y-m-d\TH:i');
+        return Carbon::parse($value)->format('Y-m-d\TH:i:s');
     }
 
 
 
-    public function update(Request $request, $id){
+    public function update(MovimentoUpdate $request, $id){
 
         if ($request->has('cancel')) {
             return redirect()->action('MovimentoController@index');
@@ -185,7 +186,14 @@ class MovimentoController extends Controller
         //dd($request->all());
         //protected $fillable = ['id', 'aeronave', 'data_inf??', ' data_sup??', 'natureza', 'confirmado???','piloto??','instrutor??','meus_movimentos??'];
 
-        $movimentoModel->aeronave=$request->aeronave;
+        $movimentoModel->fill($request->all());
+        //$movimentoModel->hora_descolagem=$movimentoModel->data." ".$movimentoModel->hora_descolagem;
+       // $movimentoModel->hora_aterragem=$movimentoModel->data." ".$movimentoModel->hora_descolagem;
+        $movimentoModel->hora_aterragem=$this->parseDate($movimentoModel->data.$movimentoModel->hora_aterragem);
+        $movimentoModel->hora_descolagem=$this->parseDate($movimentoModel->data.$movimentoModel->hora_descolagem);
+
+
+       /*  $movimentoModel->aeronave=$request->aeronave;
         $movimentoModel->natureza= $request->natureza;
 
         //dd($movimentoModel);
@@ -207,7 +215,7 @@ class MovimentoController extends Controller
             $movimentoModel->aerodromo_chegada=$request->aerodromo_chegada;
             $movimentoModel->aerodromo_partida=$request->aerodromo_partida;
             $movimentoModel->num_pessoas=$request->num_pessoas;
-        }
+        }*/
 
         if($request->submit == "confirmar")
         {
@@ -237,10 +245,11 @@ class MovimentoController extends Controller
             $valores[]=Aeronave::findOrFail($aeronave->matricula)->aeronaveValores()->get()->toArray();
         }
 
-       return view('movimentos.create',compact('title','aeronaves','socios','aerodromos','movimentos','valores'));
-  
 
-      
+
+        return view('movimentos.create',compact('title','aeronaves','socios','aerodromos','movimentos','valores'));
+
+
         /*foreach($aeronaves as $aeronave){
             $aeronaveValores=Aeronave::find('DEAY-')->aeronaveValores()->get()->toJson();
 
@@ -248,12 +257,11 @@ class MovimentoController extends Controller
 
 
 
-
     }
 
 
 
-    public function store(Request $request)
+    public function store(MovimentoCreate $request)
     {
         $movimentos=Movimento::all();
         if ($request->has('cancel')) {
@@ -265,19 +273,26 @@ class MovimentoController extends Controller
         $contaHorasFinal=$request->conta_horas_fim;
         $aeronave=$request->aeronave;
 
-
-
-
-
         $aeronaves=Aeronave::all();
         $socios=User::all();
         $aerodromos=Aerodromo::all();
 
         if($request->natureza=="I"){
             $movimento=$request->all()+['num_licenca_piloto'=>$user->num_licenca,'validade_licenca_piloto'=>$user->validade_licenca,'confirmado'=>'0','tipo_licenca_piloto'=>$user->tipo_licenca,'num_certificado_piloto'=>$user->num_certificado,'validade_certificado_piloto'=>$user->validade_licenca,'classe_certificado_piloto'=>$user->classe_certificado,'numero_linceca_instrutor'=>$instrutor->num_licenca,'validade_licenca_instrutor'=>$instrutor->validade_licenca,'tipo_licenca_instrutor'=>$instrutor->tipo_licenca,'validade_certificado_instrutor'=>$instrutor->validade_certificado,'classe_certificado_instrutor'=>$instrutor->classe_certificado,'num_licenca_instrutor'=>$instrutor->num_licenca,'num_certificado_instrutor'=>$instrutor->num_certificado];
+            $movimento["hora_aterragem"]=$this->parseDate($request->data.$request->hora_aterragem);
+            $movimento["hora_descolagem"]=$this->parseDate($request->data.$request->hora_descolagem);
+
         }else{
+
             $movimento=$request->all()+['num_licenca_piloto'=>$user->num_licenca,'validade_licenca_piloto'=>$user->validade_licenca,'confirmado'=>'0','tipo_licenca_piloto'=>$user->tipo_licenca,'num_certificado_piloto'=>$user->num_certificado,'validade_certificado_piloto'=>$user->validade_licenca,'classe_certificado_piloto'=>$user->classe_certificado];
+            $movimento["hora_aterragem"]=$this->parseDate($request->data.$request->hora_aterragem);
+            $movimento["hora_descolagem"]=$this->parseDate($request->data.$request->hora_descolagem);
+
         }
+
+
+
+
 
 
 

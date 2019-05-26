@@ -97,7 +97,7 @@ array.forEach(function(element) {
 }
 </script>
 
-    <form action="{{action('MovimentoController@update', $movimento->id)}}" method="post" >
+    <form method="POST" action="{{action('MovimentoController@update', $movimento->id)}}"  >
         @method('put')
         @csrf 
 
@@ -106,7 +106,7 @@ array.forEach(function(element) {
 {{$instrutorEsp=null}}
 {{$socioEsp=null}}
         <div class="card-header">Editar Movimento</div>
-        <div>
+
             <label >Aeronave</label>
             <select name="aeronave">
                 @foreach ($aeronaves as $aeronave)
@@ -117,9 +117,9 @@ array.forEach(function(element) {
                 <div></div>
                 <div>Date:</div><input type="date" name="data" value={{$movimento->data}} >
 
-         <div>Hora Descolagem:</div><input min="date" type="datetime-local" name="hora_descolagem" value={{$movimento->hora_descolagem}}> 
+         <div>Hora Descolagem:</div><input  type="time" name="hora_descolagem" value={{$movimento->hora_descolagem}}>
    
-   <div>Hora Aterragem</div><input type="datetime-local" name="hora_aterragem" value={{$movimento->hora_aterragem}}>
+   <div>Hora Aterragem</div><input type="time" name="hora_aterragem" value={{$movimento->hora_aterragem}}>
 
 
             <br>
@@ -152,9 +152,9 @@ array.forEach(function(element) {
             </select>
 
 
-         
-        <div></div>
-          <label id='tipo_instrucao'>Tipo Instruçao</label>     
+
+       {{--
+          <label id='tipo_instrucao'>Tipo Instruçao</label>
           <select id="tipo_instrucao_select" name="tipo_instrucao" required>
             <option value="{{$movimento->tipo_instrucao}}">@if ($movimento->tipo_instrucao=='D') Duplo @endif
               @if($movimento->tipo_instrucao=='S')
@@ -162,7 +162,7 @@ array.forEach(function(element) {
               @endif
             </option>
                  @if ($movimento->tipo_instrucao!='D')
-                <option value="D"> 
+                <option value="D">
                         Duplo
                   </option>  @endif
                   @if($movimento->tipo_instrucao!='S')
@@ -171,10 +171,18 @@ array.forEach(function(element) {
                    </option> @endif
 
           </select>
-          <div></div>
+        --}}
+
+        <div>
+            <label id="tipo_instrucao">Tipo Instruçao</label>
+            <select name="tipo_instrucao" id="tipo_instrucao_select">
+                <option value="S">Simples</option>
+                <option value="D">Duplo</option>
+            </select></div>
 
 
-            <div>
+
+
             <label >Socios</label>
             <select name="piloto_id" id="socio" onchange="myLabelsSocio({{$socios}})">
                 <option></option>
@@ -192,8 +200,8 @@ array.forEach(function(element) {
             
             <label id="socioName">{{$socioEsp}}</label>
           
-<div></div>
-             
+
+             <div>
                 <label id="instrutor_label" >Instrutor</label>
                 <select name="instrutor_id" id="instrutor_id" onload="myFunction()" onchange="myLabelsInstrutor({{$socios}})" >
                     @foreach ($socios as $socio)
@@ -212,12 +220,14 @@ array.forEach(function(element) {
                     @if ($socio->id==$movimento->instrutor_id)
                         {{$instrutorEsp=$socio->name}}
                         @endif
-                    @endforeach    </select>
-                
+                    @endforeach
+                </select>
+        </div>
+
             
             <label  id="instrutorEsp">{{$instrutorEsp}}</label>
     
-<br>
+
                <label> Aerodromo Chegada:</label>    
                <select name="aerodromo_chegada">
               <option></option>
@@ -228,26 +238,97 @@ array.forEach(function(element) {
 
 
 
-<div></div>
+<div>
   <label> Aerodromo Partida:</label>    
                <select name="aerodromo_partida">
               <option></option>
                 @foreach ($aerodromos as $aerodromo)
                       <option value="{{$aerodromo->code}}"  {{(  $aerodromo->code == $movimento->aerodromo_partida) ? 'selected' : $movimento->aerodromo_partida}}> {{$aerodromo->nome}}</option>
           @endforeach    
-        </select>    
-
+        </select>
+            </div>
 
 
                  <div>
             <label >Numero de Pessoas</label>
-            <input type="number" name="num_pessoas" id="num_pessoas" value={{$movimento->num_pessoas}} placeholder="Numero de Pessoas" >
+            <input type="number" name="num_pessoas" id="num_pessoas" value="{{$movimento->num_pessoas}}" placeholder="Numero de Pessoas" >
         </div>
 
+            <div>
+                <label for="inputNumDiario">Numero Diario</label>
+                <input type="number" name="num_diario" id="inputNumDiario"  placeholder="Numero Diario" >
+            </div>
 
-       
+            <div>
+                <label for="inputServico">Numero Servico</label>
+                <input type="number" name="num_servico" id="inputNumServico"  placeholder="Numero Servico" >
+            </div>
 
-        <div>
+            <div>
+                <label for="num_aterragens">Numero Aterragens</label>
+                <input  type="number" name="num_aterragens" id="num_aterragens"  placeholder="Numero de Aterragens"  >
+            </div>
+
+            <div>
+                <label for="inputDescolagens">Numero de Descolagens</label>
+                <input type="number" name="num_descolagens" id="num_descolagens"  placeholder="Numero de Descolagens"  >
+            </div>
+
+            <div>
+                <label for="inputDescolagens">Numero de Pessoas</label>
+                <input type="number" name="num_pessoas" id="num_pessoas"  placeholder="Numero de Pessoas" >
+            </div>
+
+            <div>
+                <label for="">Conta Horas Inicio</label>
+                <input type="text" name="conta_horas_inicio" id="conta_horas_inicio"  placeholder="Conta Horas Inicio"  {{--onchange="precoVoo({{$aeronaves}},{{$movimentos}})"--}}>
+            </div>
+
+            <div>
+                <label for="inputDescolagens">Conta Horas Fim</label>
+                <input type="number" name="conta_horas_fim" id="conta_horas_fim"  placeholder="Conta Horas Fim" {{--onchange="precoVoo({{$aeronaves}},{{$movimentos}})"--}} >
+            </div>
+
+            <div>
+                <label >Tempo de voo</label>
+                <input  type="number" name="tempo_voo" id="tempo_voo"  placeholder="Tempo de Voo" >
+            </div>
+
+
+            {{--tempo voo e preco voo deveriam ser hidden inputs, calculados posteriormente na funcao calculos--}}
+
+
+
+            <div>
+                <label>Preço de voo</label>
+                <input   type="number" name="preco_voo" id="preco_voo"  placeholder="Preço do Voo"  >
+            </div>
+
+            <label>Forma de Pagamento</label>
+
+            <select name="modo_pagamento">
+                <option></option>
+                <option value="N">Numerario</option>
+                <option value="M">Multibanco</option>
+                <option value="T">Transferencia</option>
+                <option value="P">Pacote de Horas</option>
+            </select>
+
+            <div>
+                <label for="inputDescolagens">Numero de Recibo</label>
+                <input  type="number"  name="num_recibo" id="inputNumDescolagens"  placeholder="Numero de Recibo" >
+            </div>
+
+
+            <div>
+                <label for="exampleFormControlTextarea1">Observacoes</label>
+                <textarea  name="observacoes"class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+            </div>
+
+
+
+
+            <div>
             <button type="submit" name="ok">Save</button>
         </div>
 
