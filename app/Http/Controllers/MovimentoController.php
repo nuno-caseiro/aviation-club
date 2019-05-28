@@ -529,8 +529,8 @@ class MovimentoController extends Controller
                  $movimento->hora_aterragem=$request->hora_aterragem;
                  $movimento->hora_descolagem=$request->hora_descolagem;
 
-                //$movimento->hora_aterragem = $this->parseDate($request->data . $request->hora_aterragem);
-               // $movimento->hora_descolagem = $this->parseDate($request->data . $request->hora_descolagem);
+                $movimento->hora_aterragem = $this->parseDate($request->data . $request->hora_aterragem);
+                $movimento->hora_descolagem = $this->parseDate($request->data . $request->hora_descolagem);
 
             }
         }
@@ -572,8 +572,8 @@ class MovimentoController extends Controller
                 $movimento->classe_certificado_instrutor = $instrutor->classe_certificado;
                 $movimento->validade_certificado_instrutor = $instrutor->validade_certificado;
 
-                //$movimento->hora_aterragem = $this->parseDate($request->data . $request->hora_aterragem);
-                //$movimento->hora_descolagem = $this->parseDate($request->data . $request->hora_descolagem);
+                $movimento->hora_aterragem = $this->parseDate($request->data . $request->hora_aterragem);
+                $movimento->hora_descolagem = $this->parseDate($request->data . $request->hora_descolagem);
 
 
              

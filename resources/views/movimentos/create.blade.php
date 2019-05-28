@@ -157,9 +157,9 @@ if(conta_horas_minutos!=0){
 
         <div>Date:</div></label><input type="date" name="data"  @if (isset($movimento)) value={{$movimento->data}} @endif>
 
-        <div>Hora Descolagem:</div><input id="hora_descolagem" type="datetime-local" name="hora_descolagem"  @if (isset($movimento)) value={{$movimento->hora_descolagem}} @endif >
+        <div>Hora Descolagem:</div><input id="hora_descolagem" type="time" name="hora_descolagem"  @if (isset($movimento)) value={{$movimento->hora_descolagem}} @endif >
 
-        <div>Hora Aterragem</div><input id="hora_aterragem" type="datetime-local" name="hora_aterragem" @if (isset($movimento)) value={{$movimento->hora_aterragem}} @endif>
+        <div>Hora Aterragem</div><input id="hora_aterragem" type="time" name="hora_aterragem" @if (isset($movimento)) value={{$movimento->hora_aterragem}} @endif>
 
         <label >Aeronave</label>
         <select name="aeronave"  id="aeronave" onchange="precoVoo({{$aeronaves}},{{$movimentos}})">
