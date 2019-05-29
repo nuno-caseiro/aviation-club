@@ -149,15 +149,19 @@ if(conta_horas_minutos!=0){
     document.getElementById("tempo_voo").value=tempo_voo;
 
 
-    console.log((element.preco_hora*hora+(preco)));
+    
 
-    var preco_hora=parseInt(element.preco_hora);
+    var preco_hora=parseInt(element.preco_hora*hora);
     var preco_minuto=parseInt(preco);
+    console.log(preco_hora);
+    console.log(preco_minuto)
 
     var preco_final=preco_hora+preco_minuto;
 
+    console.log(preco_final);
 
-    document.getElementById("preco_voo").value=preco_final;
+    document.getElementById("preco_voo").value=(preco_final);
+    
     }
  
   }
