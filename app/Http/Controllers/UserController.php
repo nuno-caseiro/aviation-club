@@ -569,16 +569,26 @@ class UserController extends Controller
 
         $filename = 'licenca_' . $user->id . '.pdf';
         //$headers = [ 'Content-Length' => '3028' ];
+        $file = storage_path('app/docs_piloto/certificado_' . $user->id . '.pdf');
+        //$contents = Storage::get('app/docs_piloto/certificado_' . $user->id . '.pdf');
 
+        //$size = filesize($contents);
+        //header('Content-type: application/pdf');
+        //header("Content-length: $size");
+        //header('Content-Disposition: attachment; filename="downloaded.pdf"');
+        //readfile($file);
+       // $head = array_change_key_case(get_headers($file, TRUE));
+        //$filesize = $head['content-length'];
 
         return response()->download(storage_path("app/docs_piloto/" . $filename));
 
     }
 
-    public function sendReactivateEmail($id)
+    public function sendReactivateEmail(Request $request,$id)
     {
-        $this->authorize('socio_direcao', User::findOrFail($id), Auth::user());
+       $this->authorize('socio_direcao', User::findOrFail($id), Auth::user());
         $user = User::findOrFail($id);
+        $user->fill($request->only('email'));
         $user->resend();
 
 
