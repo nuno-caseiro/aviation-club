@@ -159,12 +159,12 @@ class MovimentoController extends Controller
 
     public function edit($id)
     {
-
-        $this->authorize('socio_DP', Auth::user() ) ;
+        $movimento= Movimento::findOrFail($id);
+        $this->authorize('update', $movimento ) ;
 
 
         $title = "Editar movimentos ";
-        $movimento= Movimento::findOrFail($id);
+
 
         $aeronaves=Aeronave::all();
         $socios=User::all();
@@ -192,8 +192,8 @@ class MovimentoController extends Controller
 
     public function update(MovimentoUpdate $request, $id){
 
-
-        $this->authorize('socio_DP', Auth::user() ) ;
+        $movimentoModel= Movimento::findOrFail($id);
+        $this->authorize('update', $movimentoModel ) ;
 
 
         if ($request->has('cancel')) {
@@ -201,7 +201,7 @@ class MovimentoController extends Controller
         }
 
 
-        $movimentoModel= Movimento::findOrFail($id);
+
         $user=User::findOrFail(Auth::id());
 
 

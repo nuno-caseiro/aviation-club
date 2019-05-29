@@ -47,6 +47,11 @@ class UserPolicy
         return ($auth->isDirecao()|| $auth->isPiloto()) && $auth->hasVerifiedEmail() && $auth->isAtivo();
     }
 
+  /*  public function updateMov(User $auth, Movimento $movimento)
+    {
+        return ($auth->isDirecao()|| ($auth->isPiloto() && ($movimento->piloto_id==$auth->id || $movimento->instrutor_id==$auth->id))) && $auth->hasVerifiedEmail() && $auth->isAtivo();
+    }*/
+
 
     public function socio_Piloto(User $auth){
         return !$auth->isDirecao() && $auth->isPiloto();
@@ -77,13 +82,5 @@ class UserPolicy
     }
 
 
-    public function updateMovimentos(User $auth,  Movimento $movimento){
-
-        if($auth->id==$movimento->piloto_id){
-            return true;
-        }
-        return false;
-
-    }
 
 }
