@@ -47,7 +47,7 @@ Route::middleware(['auth','verified', 'ative'])->group(function () {
     Route::delete('/movimentos/{movimento}', 'MovimentoController@destroy');
     Route::get('/movimentos/create', 'MovimentoController@create');
     Route::post('/movimentos', 'MovimentoController@store');
-    Route::get('/movimentos/estatisticas', 'MovimentoController@estatisticas')->name("movimentos.estatisticas");
+    Route::get('/movimentos/estatisticas', 'MovimentoController@mostrarEstatisticas')->name("movimentos.estatisticas");
 
 
 //socios

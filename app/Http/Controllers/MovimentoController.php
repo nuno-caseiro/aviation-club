@@ -691,24 +691,191 @@ class MovimentoController extends Controller
 
     }
 
+    public function mostrarEstatisticas(){
+        $chart = null;
+        $nome = request()->Nome;
+        $eixoX = request()->eixoX;
+        $eixoY = request()->eixoY;
 
-    public function estatisticas(){
-        $users = User::where(DB::raw("(DATE_FORMAT(created_at,'%Y'))"),date('Y'))
-            ->get();
-        $chart = Charts::database($users, 'bar', 'highcharts')
-            ->title("Monthly new Register Users")
-            ->elementLabel("Total Users")
-            ->dimensions(1000, 500)
-            ->responsive(false)
-            ->groupByMonth(date('Y'), true);
 
-        $pie  =  Charts::create('pie', 'highcharts')
-            ->title('My nice chart')
-            ->labels(['First', 'Second', 'Third'])
-            ->values([5,10,20])
+        $datas_ano = DB::table('movimentos')
+            ->select(DB::raw('distinct DATE_FORMAT(data,"%Y") as date'))
+            ->orderByRaw('date asc')->get();
+
+        $datas_mes = DB::table('movimentos')
+            ->select(DB::raw('distinct DATE_FORMAT(data,"%Y/%m") as date'))
+            ->orderByRaw('date asc')->get();
+
+        //aeronave mes
+
+        $aux = array(array(), array());
+
+        $aeronaves = DB::table('movimentos')
+            ->select(DB::raw('distinct aeronave'))
+            ->orderByRaw('aeronave asc')->get()->toArray();
+
+        $i = 0;
+        foreach ($aeronaves as $aeronave) {
+            $movimentosAMes[$i] = array(0 => $aeronave->aeronave);
+            $i++;
+        }
+
+        $aux_movimentos = DB::table('movimentos')
+            ->select(DB::raw('sum(TIMESTAMPDIFF(MINUTE, hora_descolagem, hora_aterragem)/60) as "Total_Flight_Hours", DATE_FORMAT(data,"%Y") as date, aeronave'))
+            ->groupBy('date', 'aeronave')
+            ->orderByRaw('aeronave asc, date asc')->get();
+
+
+        $i=0;
+        foreach ($aux_movimentos as $movimento) {
+            foreach ($movimentosAMes as $aux) {
+                if($aux[0] == $movimento->aeronave) {
+                    break;
+                }
+                $i++;
+            }
+            $movimentosAMes[$i] += [$movimento->date => $movimento->Total_Flight_Hours];
+            $i=0;
+        }
+        //aeronave ano
+
+        $aux = array(array(), array());
+
+        $aeronaves = DB::table('movimentos')
+            ->select(DB::raw('distinct aeronave'))
+            ->orderByRaw('aeronave asc')->get()->toArray();
+
+        $i = 0;
+        foreach ($aeronaves as $aeronave) {
+            $movimentosAAno[$i] = array(0 => $aeronave->aeronave);
+            $i++;
+        }
+
+        $aux_movimentos = DB::table('movimentos')
+            ->select(\DB::raw('sum(TIMESTAMPDIFF(MINUTE, hora_descolagem, hora_aterragem)/60) as "Total_Flight_Hours", DATE_FORMAT(data,"%Y") as date, aeronave'))
+            ->groupBy('date', 'aeronave')
+            ->orderByRaw('aeronave asc, date asc')->get();
+
+        $i=0;
+        foreach ($aux_movimentos as $movimento) {
+            foreach ($movimentosAAno as $aux) {
+                if($aux[0] == $movimento->aeronave) {
+                    break;
+                }
+                $i++;
+            }
+            $movimentosAAno[$i] += [$movimento->date => $movimento->Total_Flight_Hours];
+            $i=0;
+        }
+
+
+        //mes piloto
+
+        $aux = array(array(), array());
+
+        $pilotos_ids = \DB::table('movimentos')
+            ->select(\DB::raw('distinct piloto_id'))
+            ->orderByRaw('piloto_id asc')->get()->toArray();
+
+        $i = 0;
+        foreach ($pilotos_ids as $id) {
+            $movimentosPMes[$i] = array(0 => $id->piloto_id);
+            $i++;
+        }
+
+        $aux_movimentos = \DB::table('movimentos')
+            ->select(\DB::raw('sum(TIMESTAMPDIFF(MINUTE, hora_descolagem, hora_aterragem)/60) as "Total_Flight_Hours", DATE_FORMAT(data,"%Y/%m") as date, piloto_id'))
+            ->groupBy('date', 'piloto_id')
+            ->orderByRaw('piloto_id asc, date asc')->get();
+
+        $i=0;
+        foreach ($aux_movimentos as $movimento) {
+            foreach ($movimentosPMes as $aux) {
+                if($aux[0] == $movimento->piloto_id) {
+                    break;
+                }
+                $i++;
+            }
+            $movimentosPMes[$i] += [$movimento->date => $movimento->Total_Flight_Hours];
+            $i=0;
+        }
+
+        //ano piloto
+
+        $aux = array(array(), array());
+
+        $pilotos_ids = DB::table('movimentos')
+            ->select(DB::raw('distinct piloto_id'))
+            ->orderByRaw('piloto_id asc')->get()->toArray();
+
+        $i = 0;
+        foreach ($pilotos_ids as $id) {
+            $movimentosPAno[$i] = array(0 => $id->piloto_id);
+            $i++;
+        }
+
+        $aux_movimentos = DB::table('movimentos')
+            ->select(DB::raw('sum(TIMESTAMPDIFF(MINUTE, hora_descolagem, hora_aterragem)/60) as "Total_Flight_Hours", DATE_FORMAT(data,"%Y") as date, piloto_id'))
+            ->groupBy('date', 'piloto_id')
+            ->orderByRaw('piloto_id asc, date asc')->get();
+
+        $i=0;
+        foreach ($aux_movimentos as $movimento) {
+            foreach ($movimentosPAno as $aux) {
+                if($aux[0] == $movimento->piloto_id) {
+                    break;
+                }
+                $i++;
+            }
+            $movimentosPAno[$i] += [$movimento->date => $movimento->Total_Flight_Hours];
+            $i=0;
+        }
+
+        if($nome == null && $eixoY == null && $eixoX == null){
+            return view('movimentos.estatisticas', compact('chart', 'movimentosAAno','movimentosAMes', 'movimentosPAno' ,  'movimentosPMes', 'datas_ano', 'datas_mes'));
+        }
+
+        $chart = $this->estatisticas($nome, $eixoX, $eixoY);
+
+        return view('movimentos.estatisticas', compact('chart', 'movimentosAAno', 'movimentosPAno', 'movimentosAMes', 'movimentosPMes', 'datas_ano', 'datas_mes'));
+
+    }
+
+
+    public function estatisticas($nome, $eixoX, $eixoY){
+
+        //query para ir buscar os dados que preciso para fazer o grafico
+        $query_chart=DB::table('movimentos');
+        if(strcmp($eixoX, "Ano") == 0){
+            $query_chart = $query_chart->select(\DB::raw('sum(TIMESTAMPDIFF(MINUTE, hora_descolagem, hora_aterragem)/60) as "Total_Flight_Hours", DATE_FORMAT(data,"%Y") as date'));
+        }
+        if(strcmp($eixoX, "Mes") == 0){
+            $query_chart = $query_chart->select(\DB::raw('sum(TIMESTAMPDIFF(MINUTE, hora_descolagem, hora_aterragem)/60) as "Total_Flight_Hours", DATE_FORMAT(data,"%m/%Y") as date'));
+        }
+        if(strcmp($eixoY, "Piloto") == 0){
+            $id_piloto = "";
+            $user=User::where('nome_informal', 'like', $nome)->first();
+            if($user != null){
+                $id_piloto .= $user->id;
+            }
+
+            $query_chart = $query_chart->where('piloto_id', $id_piloto);
+        }
+        if(strcmp($eixoX, "Aeronave") == 0){
+            $query_chart = $query_chart->where('aeronave', 'like', $nome);
+        }
+        $query_chart = $query_chart->groupBy('data')->get();
+
+
+        $chart = Charts::create('line', 'highcharts')
+            ->title("Total de horas por ". $eixoX . "/" . $eixoY . " (" . $nome . ")")
+            ->elementLabel("Total Flight Hours")
+            ->labels($query_chart->pluck('date'))
+            ->values($query_chart->pluck('Total_Flight_Hours'))
             ->dimensions(1000,500)
-            ->responsive(false);
-        return view('movimentos.estatisticas',compact('chart','pie'));
+            ->responsive(true);
+
+        return $chart;
     }
 
     public function calculos($movimento){

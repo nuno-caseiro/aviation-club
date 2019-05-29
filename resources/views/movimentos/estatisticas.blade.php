@@ -1,3 +1,8 @@
+@php
+    use App\User;
+
+@endphp
+
 @extends('layouts.app')
 @section('content')
 
@@ -10,12 +15,12 @@
     <form action="{{route('movimentos.estatisticas')}}" method="GET">
         <div class="card-body">
             Total de horas por
-            <select name = "Xaxis" value="{{Request::input('Xaxis')}}" required>
+            <select name = "eixoX" value="{{Request::input('eixoX')}}" required>
                 <option  value="Ano" selected>Ano</option>
                 <option  value="Mes">Mês</option>
             </select>
             da/do
-            <select name = "Yaxis" value="{{Request::input('Yaxis')}}" required>
+            <select name = "eixoY" value="{{Request::input('eixoY')}}" required>
                 <option  value="Aeronave" selected>Aeronave</option>
                 <option  value="Piloto">Piloto</option>
             </select>
@@ -32,7 +37,7 @@
         @endif
     </div>
 
-{{--
+
     <div class="card-header">{{ __('Estatisticas Total de horas por Ano das aeronaves') }}</div>
     <div class="table-responsive">
         <table id="tabela_paginada" class="table table-striped">
@@ -46,7 +51,7 @@
             </tr>
             </thead>
             <tbody>
-            @foreach ($movimentos_A_A as $movimento)
+            @foreach ($movimentosAAno as $movimento)
                 <tr>
                     <th>{{$movimento[0]}}</th>
                     @php
@@ -80,7 +85,7 @@
             </tr>
             </thead>
             <tbody>
-            @foreach ($movimentos_P_A as $movimento)
+            @foreach ($movimentosPAno as $movimento)
                 @php
                     $nome = User::where('id', '=', $movimento[0])->first()->nome_informal;
                 @endphp
@@ -117,7 +122,7 @@
             </tr>
             </thead>
             <tbody>
-            @foreach ($movimentos_A_M as $movimento)
+            @foreach ($movimentosAMes as $movimento)
                 <tr>
                     <th>{{$movimento[0]}}</th>
                     @php
@@ -152,7 +157,7 @@
             </tr>
             </thead>
             <tbody>
-            @foreach ($movimentos_P_M as $movimento)
+            @foreach ($movimentosPMes as $movimento)
                 @php
                     $nome = User::where('id', '=', $movimento[0])->first()->nome_informal;
                 @endphp
@@ -177,5 +182,5 @@
     </div>
 
 
---}}
+
 @endsection
