@@ -117,9 +117,13 @@
         <div>
             <label for="inputSexo">Sexo</label>
             <select name="sexo" id="inputSexo" >
-                <option value="F" @if((Auth::user()->can('socio_normal',App\User::class))) {{ ($user->sexo=="F")? "selected" : "disabled" }} @endif
+                <option value="F" @if((Auth::user()->can('socio_normal',App\User::class))) {{ ($user->sexo=="F")? "selected" : "disabled" }} @else
+                    {{ ($user->sexo=="F")? "selected" : "" }}
+                        @endif
                           >Feminino</option>
-                <option value="M" @if((Auth::user()->can('socio_normal',App\User::class))) {{ ($user->sexo=="M")? "selected" : "disabled" }} @endif
+                <option value="M" @if((Auth::user()->can('socio_normal',App\User::class))) {{ ($user->sexo=="M")? "selected" : "disabled" }}@else
+                    {{ ($user->sexo=="M")? "selected" : "" }}
+                        @endif
                         >Masculino</option>
             </select>
         </div>
@@ -314,7 +318,7 @@
               <div>
 
 
-               {{--<a class="btn btn-xs btn-primary" href="{{ route('socios.sendEmail', $user->id) }}">Send Email</a>--}}
+               <a class="btn btn-xs btn-primary" href="{{ action('UserController@sendReactivateEmail', $user->id) }}">Send Email</a>
 
 
 

@@ -100,9 +100,9 @@
         </script>
 
 <script>
-function precoVoo(array,movimentos) {
+function precoVoo(array) {
 var selectedValue=document.getElementById("aeronave").value;
-   var valores = {!! json_encode($valores) !!};//aeronaves array com os valores dos precos
+     var valores = {!! json_encode($valores) !!};//aeronaves array com os valores dos precos
 console.log(valores);
 if(selectedValue!=null){
 array.forEach(function(element) {
@@ -162,7 +162,7 @@ if(conta_horas_minutos!=0){
         <div>Hora Aterragem</div><input id="hora_aterragem" type="time" name="hora_aterragem" @if (isset($movimento)) value={{$movimento->hora_aterragem}} @endif>
 
         <label >Aeronave</label>
-        <select name="aeronave"  id="aeronave" onchange="precoVoo({{$aeronaves}},{{$movimentos}})">
+        <select name="aeronave"  id="aeronave" onchange="precoVoo({{$aeronaves}})">
             <option></option>
             @foreach ($aeronaves as $aeronave)
                 <option value="{{ $aeronave->matricula }}"@if (isset($movimento)) 
@@ -177,7 +177,7 @@ if(conta_horas_minutos!=0){
 
         <div>
             <label for="inputNumDiario">Numero Diario</label>
-            <input type="number" name="num_diario" id="inputNumDiario"  @if (isset($movimento)) value={{$movimento->num_diario}} @endif  placeholder="Numero Diario" >
+            <input type="number" name="num_diario" id="inputNumDiario"  @if (isset($movimento)) value="{{$movimento->num_diario}}" @endif  placeholder="Numero Diario" >
         </div>
 
         <div>
@@ -187,7 +187,7 @@ if(conta_horas_minutos!=0){
 
         @if (isset($movimento))
 
-            <div>
+
             <label >Piloto ID</label>
             <select name="piloto_id" id="piloto_id" onchange="myLabelsSocio({{$socios}})">
                 <option></option>
@@ -218,7 +218,7 @@ if(conta_horas_minutos!=0){
         <label id="socio_label" readonly="readonly"> </label>
 
 
-        <div></div>
+
 
 
         <label> Natureza</label>
@@ -308,7 +308,7 @@ if(conta_horas_minutos!=0){
 
         <div>
             <label for="num_aterragens">Numero Aterragens</label>
-            <input  type="number" name="num_aterragens" id="num_aterragens"  @if (isset($movimento)) value={{$movimento->num_aterragens}} @endif placeholder="Numero de Aterragens"  >
+            <input  type="number" name="num_aterragens" id="num_aterragens"  @if (isset($movimento)) value="{{$movimento->num_aterragens}}" @endif placeholder="Numero de Aterragens"  >
         </div>
 
 
@@ -322,7 +322,7 @@ if(conta_horas_minutos!=0){
 
         <div>
             <label for="inputDescolagens">Numero de Pessoas</label>
-            <input type="number" name="num_pessoas" id="num_pessoas"  @if (isset($movimento)) value={{$movimento->num_pessoas}} @endif  placeholder="Numero de Pessoas" >
+            <input type="number" name="num_pessoas" id="num_pessoas"  @if (isset($movimento)) value="{{$movimento->num_pessoas}}" @endif  placeholder="Numero de Pessoas" >
         </div>
 
 
@@ -331,7 +331,7 @@ if(conta_horas_minutos!=0){
 
         <div>
             <label for="inputDescolagens">Conta Horas Inicio</label>
-            <input type="text" name="conta_horas_inicio" id="conta_horas_inicio"  placeholder="Conta Horas Inicio"  @if (isset($movimento)) value={{$movimento->conta_horas_inicio}} @endif onchange="precoVoo({{$aeronaves}},{{$movimentos}})">
+            <input type="text" name="conta_horas_inicio" id="conta_horas_inicio"  placeholder="Conta Horas Inicio"  @if (isset($movimento)) value={{$movimento->conta_horas_inicio}} @endif onchange="precoVoo({{$aeronaves}})">
         </div>
 
 
@@ -341,7 +341,7 @@ if(conta_horas_minutos!=0){
 
         <div>
             <label for="inputDescolagens">Conta Horas Fim</label>
-            <input type="number" name="conta_horas_fim" id="conta_horas_fim"  placeholder="Conta Horas Fim"  @if (isset($movimento)) value={{$movimento->conta_horas_fim}} @endif onchange="precoVoo({{$aeronaves}},{{$movimentos}})">
+            <input type="number" name="conta_horas_fim" id="conta_horas_fim"  placeholder="Conta Horas Fim"  @if (isset($movimento)) value={{$movimento->conta_horas_fim}} @endif onchange="precoVoo({{$aeronaves}})">
         </div>
 
 
@@ -350,7 +350,7 @@ if(conta_horas_minutos!=0){
 
         <div>
             <label >Tempo de voo</label>
-            <input  type="number" name="tempo_voo" id="tempo_voo"  @if (isset($movimento)) value={{$movimento->tempo_voo}} @endif placeholder="Tempo de Voo" readonly>
+            <input  type="number" name="tempo_voo" id="tempo_voo"  @if (isset($movimento)) value="{{$movimento->tempo_voo}}" @endif placeholder="Tempo de Voo" readonly>
         </div>
 
 
@@ -360,7 +360,7 @@ if(conta_horas_minutos!=0){
 
         <div>
             <label>Preço de voo</label>
-            <input   type="number" name="preco_voo" id="preco_voo"   @if (isset($movimento)) value={{$movimento->preco_voo}} @endif placeholder="Preço do Voo"  readonly>
+            <input   type="number" name="preco_voo" id="preco_voo"   @if (isset($movimento)) value="{{$movimento->preco_voo}}" @endif placeholder="Preço do Voo"  readonly>
         </div>
 
 
@@ -417,7 +417,7 @@ if(conta_horas_minutos!=0){
 
         <div>
             <label for="inputDescolagens">Numero de Recibo</label>
-            <input  type="number"  name="num_recibo" id="inputNumDescolagens"  @if (isset($movimento)) value={{$movimento->num_recibo}} @endif  placeholder="Numero de Recibo" >
+            <input  type="number"  name="num_recibo" id="inputNumDescolagens"  @if (isset($movimento)) value="{{$movimento->num_recibo}}" @endif  placeholder="Numero de Recibo" >
         </div>
 
 
