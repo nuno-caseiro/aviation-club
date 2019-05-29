@@ -21,7 +21,13 @@ class AeronaveController extends Controller
         $this->authorize('listar', Auth::user());
 
         if(Auth::user()->can('socio_Direcao', Auth::user())) {
-            $aeronaves = Aeronave::all();
+            $aeronaves = Aeronave::paginate(20)->appends([
+                'matricula' => request('matricula'),
+                'marca' => request('marca'),
+                'num_lugares' => request('num_lugares'),
+                'conta_horas' => request('conta_horas'),
+                'preco_hora' => request('preco_hora'),
+                ]);
             //meter paginate
         }elseif(Auth::user()->can('socio_Piloto', Auth::user())) {
             $aeronavesMatriculas= DB::table('aeronaves_pilotos')->select('matricula')->where('piloto_id',Auth::id())->pluck('matricula');
@@ -30,7 +36,13 @@ class AeronaveController extends Controller
             }
 
         }else{
-            $aeronaves = Aeronave::all();
+            $aeronaves = Aeronave::paginate(20)->appends([
+                'matricula' => request('matricula'),
+                'marca' => request('marca'),
+                'num_lugares' => request('num_lugares'),
+                'conta_horas' => request('conta_horas'),
+                'preco_hora' => request('preco_hora'),
+            ]);
 
         }
 

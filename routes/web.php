@@ -20,63 +20,63 @@ Auth::routes(['verify' => true]);
 
 Route::get('/', 'HomeController@index')->middleware('verified')->name('home');
 //aeronaves
-Route::get('/aeronaves', 'AeronaveController@index')->name('aeronaves.index');//->middleware('auth'); //vê se está autenticado
-Route::get('aeronaves/create', 'AeronaveController@create');
-Route::post('aeronaves', 'AeronaveController@store');
-Route::get('aeronaves/{aeronave}/edit','AeronaveController@edit');
-Route::put('/aeronaves/{aeronave}','AeronaveController@update');
-Route::delete('/aeronaves/{aeronave}', 'AeronaveController@destroy');
-Route::get('/aeronaves/{aeronave}/pilotos', 'AeronaveController@pilotosAutorizados');
-Route::post('/aeronaves/{aeronave}/pilotos/{piloto}', 'AeronaveController@addPilotoAutorizado');
-Route::delete('/aeronaves/{aeronave}/pilotos/{piloto}', 'AeronaveController@removePilotoAutorizado');
-Route::get('/aeronaves/{aeronave}/precos_tempos', 'AeronaveController@precosTempos');
 
+Route::middleware(['auth','verified', 'ative'])->group(function () {
+
+    Route::get('/password', 'UserController@showEditPassword')->name('showEditPassword');
+    Route::patch('/password', 'UserController@editPassword')->name('editPassword');
+
+    Route::middleware(['passwordVerify'])->group(function () {
+
+    Route::get('/aeronaves', 'AeronaveController@index')->name('aeronaves.index');//->middleware('auth'); //vê se está autenticado
+    Route::get('aeronaves/create', 'AeronaveController@create');
+    Route::post('aeronaves', 'AeronaveController@store');
+    Route::get('aeronaves/{aeronave}/edit', 'AeronaveController@edit');
+    Route::put('/aeronaves/{aeronave}', 'AeronaveController@update');
+    Route::delete('/aeronaves/{aeronave}', 'AeronaveController@destroy');
+    Route::get('/aeronaves/{aeronave}/pilotos', 'AeronaveController@pilotosAutorizados');
+    Route::post('/aeronaves/{aeronave}/pilotos/{piloto}', 'AeronaveController@addPilotoAutorizado');
+    Route::delete('/aeronaves/{aeronave}/pilotos/{piloto}', 'AeronaveController@removePilotoAutorizado');
+    Route::get('/aeronaves/{aeronave}/precos_tempos', 'AeronaveController@precosTempos');
 
 
 //movimentos
-Route::get('movimentos', 'MovimentoController@index')->name("movimentos.index");
-Route::get('movimentos/{movimento}/edit', 'MovimentoController@edit');
-Route::put('movimentos/{movimento}', 'MovimentoController@update');
-Route::delete('/movimentos/{movimento}', 'MovimentoController@destroy');
-Route::get('/movimentos/create','MovimentoController@create');
-Route::post('/movimentos', 'MovimentoController@store');
-Route::get('/movimentos/estatisticas','MovimentoController@estatisticas');
-
-
+    Route::get('movimentos', 'MovimentoController@index')->name("movimentos.index");
+    Route::get('movimentos/{movimento}/edit', 'MovimentoController@edit');
+    Route::put('movimentos/{movimento}', 'MovimentoController@update');
+    Route::delete('/movimentos/{movimento}', 'MovimentoController@destroy');
+    Route::get('/movimentos/create', 'MovimentoController@create');
+    Route::post('/movimentos', 'MovimentoController@store');
+    Route::get('/movimentos/estatisticas', 'MovimentoController@estatisticas')->name("movimentos.estatisticas");
 
 
 //socios
 
-Route::middleware('verified')->group(function () {
-    Route::get('socios', 'UserController@index') ->name("socios.index");
-    Route::get('socios/{socio}/edit', 'UserController@edit')->name("socios.edit");
-    Route::get('socios/create', 'UserController@create')->name('socios.create');
-    Route::post('socios', 'UserController@store')->name('socios.store');
-    Route::put('socios/{socio}', 'UserController@update')->name('socios.update');
-    Route::delete('socios/{socio}', 'UserController@destroy')->name('socios.delete');
-    Route::patch('socios/{socio}/ativo','UserController@ativarDesativar')->name('socios.ativar');
-    Route::patch('socios/{socio}/quota','UserController@quotaPaga')->name('socios.quota');
-    Route::patch('/socios/reset_quotas', 'UserController@resetQuotas')->name('socios.resetQuota');
-    Route::patch('/socios/desativar_sem_quotas', 'UserController@resetAtivosSemQuota')->name('socios.resetAtivosSemQuota');
-    Route::post('socios/{socio}/send_reactivate_mail','UserController@sendReactivateEmail')->name('socios.sendEmail');
 
+        Route::get('socios', 'UserController@index')->name("socios.index");
+        Route::get('socios/{socio}/edit', 'UserController@edit')->name("socios.edit");
+        Route::get('socios/create', 'UserController@create')->name('socios.create');
+        Route::post('socios', 'UserController@store')->name('socios.store');
+        Route::put('socios/{socio}', 'UserController@update')->name('socios.update');
+        Route::delete('socios/{socio}', 'UserController@destroy')->name('socios.delete');
+        Route::patch('socios/{socio}/ativo', 'UserController@ativarDesativar')->name('socios.ativar');
+        Route::patch('socios/{socio}/quota', 'UserController@quotaPaga')->name('socios.quota');
+        Route::patch('/socios/reset_quotas', 'UserController@resetQuotas')->name('socios.resetQuota');
+        Route::patch('/socios/desativar_sem_quotas', 'UserController@resetAtivosSemQuota')->name('socios.resetAtivosSemQuota');
+        Route::post('socios/{socio}/send_reactivate_mail', 'UserController@sendReactivateEmail')->name('socios.sendEmail');
+
+
+
+
+
+    Route::get('pilotos/{piloto}/certificado', 'UserController@certificado')->name('certificado');
+    Route::get('pilotos/{piloto}/licenca', 'UserController@licenca')->name('licenca');
+
+    Route::get('pilotos/{piloto}/licenca_pdf', 'UserController@licenca_pdf')->name('licenca_pdf');
+    Route::get('pilotos/{piloto}/certificado_pdf', 'UserController@certificado_pdf')->name('certificado_pdf');
+
+    });
 });
-
-
-
-
-Route::get('/password', 'UserController@showEditPassword')->name('showEditPassword');
-Route::patch('/password', 'UserController@editPassword')->name('editPassword');
-
-Route::get('pilotos/{piloto}/certificado','UserController@certificado')->name('certificado');
-Route::get('pilotos/{piloto}/licenca','UserController@licenca')->name('licenca');
-
-Route::get('pilotos/{piloto}/licenca_pdf','UserController@licenca_pdf')->name('licenca_pdf');
-Route::get('pilotos/{piloto}/certificado_pdf','UserController@certificado_pdf')->name('certificado_pdf');
-
-
-
-
 
 
 
