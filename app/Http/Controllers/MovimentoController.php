@@ -625,10 +625,18 @@ class MovimentoController extends Controller
 
 
               if( $m->conta_horas_fim==$contaHorasInicial){
-                    $m->tipo_conflito=null;
+             
                     //se por acaso tivesse conflito passava para null passa primeiro por sobreposicao por isso nao ha problena 
                 $aux=1;//encontrado o conta kilometros final
              
+              }
+
+              if($contaHorasFinal==$m->contaHorasInicial){
+                    if($m->tipo_conflito=="B"){
+                        $m->tipo_conflito=null;
+                    }
+
+
               }
             }
        
