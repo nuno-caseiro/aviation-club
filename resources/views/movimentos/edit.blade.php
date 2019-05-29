@@ -6,14 +6,13 @@
         @include('shared.errors')
     @endif
 
-
-
+<!--perguntar ao nuno como por em acess forbidden nao quero assim
 
     @can(Auth::user()->can('isDirecao', Auth::user()) || (auth()->user()->id==$movimento->piloto_id) || (auth()->user()->id==$movimento->instrutor_id)) 
   @endcan
 
 
-
+-->
 
 @if($movimento->confirmado=="1")
     <h1>Movimento nao pode ser alterado porque ja foi confirmado</h1>
@@ -100,7 +99,7 @@ array.forEach(function(element) {
     <form method="POST" action="{{action('MovimentoController@update', $movimento->id)}}"  >
         @csrf
 
-        <input type="hidden" name="method" value="PUT">
+        <input type="hidden" name="_method" value="PUT">
 
         <input type="text" name="confirmar" value="0">
 
@@ -179,6 +178,7 @@ array.forEach(function(element) {
       
           <label id='tipo_instrucao'>Tipo Instruçao</label>
           <select id="tipo_instrucao_select" name="tipo_instrucao" required>
+  
             <option value="{{$movimento->tipo_instrucao}}">@if ($movimento->tipo_instrucao=='D') Duplo @endif
               @if($movimento->tipo_instrucao=='S')
               Simples
