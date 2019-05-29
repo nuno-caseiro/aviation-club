@@ -599,7 +599,7 @@ class MovimentoController extends Controller
               $aux=0; 
               foreach ($movimentos as $m) {
                 foreach ($aeronaves as $aeronave) {
-                    # code...
+                    # code... //mudar para movimento
                 if($m->aeronave == $aeronave->matricula){
                 if(($m->conta_horas_inicio<=$contaHorasInicial)  && ($m->conta_horas_fim >= $contaHorasFinal)){ // faltam validaçoes se estiver a meio cenas desse genero
             
@@ -637,11 +637,11 @@ class MovimentoController extends Controller
             $valores[]=Aeronave::findOrFail($aeronave->matricula)->aeronaveValores()->get()->toArray();
             }
               //buraco
-                 $movimento->hora_aterragem=$request->query('hora_aterragem');
-                 $momvimento->hora_descolagem=$request->query('hora_descolagem');  
+                 $hora_inicio=$request->hora_aterragem;
+                 $hora_fim=$request->hora_descolagem;  
                  $title="Conflito Buraco Temporal ";
                  $conflito="B";
-                return view('movimentos.create',compact('title','aeronaves','socios','aerodromos','movimentos','valores','conflito','movimento'));
+                return view('movimentos.create',compact('title','aeronaves','socios','aerodromos','movimentos','valores','conflito','movimento','hora_inicio','hora_fim'));
           }
 
 
