@@ -5,90 +5,92 @@
         @include('shared.errors')
     @endif
 
-  {{--  <script>
-        function myFunction() {
-            var selectedValue=document.getElementById("inputTipoSocio").value;
-
-            if(selectedValue != "P") {
-                document.getElementById("inputNrLicenca").style="display: none;"
-                document.getElementById("labelInputNrLicensa").style="display: none;"
-                document.getElementById("labeValidadeLicenca").style="display: none;"
-                document.getElementById("validade_licenca").style="display: none;"
-                document.getElementById("labelInputTipoLicensa").style="display: none;"
-                document.getElementById("inputTipoLicenca").style="display: none;"
-                document.getElementById("labelinputInstrutor").style="display: none;"
-                document.getElementById("inputInstrutor").style="display: none;"
-                document.getElementById("labeValidadeLicenca").style="display: none;"
-                document.getElementById("validade_licenca").style="display: none;"
-                document.getElementById("labelInoutLicencaConfirmada").style="display: none;"
-                document.getElementById("inputLicencaConfirmada1").style="display: none;"
-                document.getElementById("inputLicencaConfirmada2").style="display: none;"
-                document.getElementById("labelLicencaConf").style="display: none;"
-                document.getElementById("labelLicencaNaoConf").style="display: none;"
-                document.getElementById("labelCopia").style="display: none;"
-                document.getElementById("hrefDownload").style="display: none;"
-                document.getElementById("classe_certificado").style="display: none;"
-                document.getElementById("labelCertificado").style="display: none;"
-                document.getElementById("inputNrCertificado").style="display: none;"
-                document.getElementById("labelNrCerificado").style="display: none;"
-                document.getElementById("validade_certificado").style="display: none;"
-                document.getElementById("inputValidadeCertificado").style="display: none;"
-                document.getElementById("inputCertificadoPorConfirmar").style="display: none;"
-                document.getElementById("naoConfirmado").style="display: none;"
-                document.getElementById("inputCertificadoConfirmado").style="display: none;"
-                document.getElementById("confirmado").style="display: none;"
-                document.getElementById("labelCertificadoConfirmado").style="display: none;"
-                document.getElementById("labelCopiaDigital").style="display: none;"
-//Antonio Tens de meter tudo com Inputs a null aqui ou metes no controller a null baseado no tipoSocio
-                document.getElementById("inputCertificadoConfirmado").value=null;
-                document.getElementById("inputNrLicenca").value=null;
-                document.getElementById("inputTipoLicenca").value=null;
-                document.getElementById("inputInstrutor").value=null;
-                document.getElementById("inputLicencaConfirmada1").value=null;
-                document.getElementById("inputLicencaConfirmada2").value=null;
-                document.getElementById("inputNrCertificado").value=null;
-                document.getElementById("inputValidadeCertificado").value=null;
-                document.getElementById("inputCertificadoPorConfirmar").value=null;
-                document.getElementById("inputCertificadoConfirmado").value=null;
 
 
+    {{--  <script>
+          function myFunction() {
+              var selectedValue=document.getElementById("inputTipoSocio").value;
 
-            }else{
-                document.getElementById("inputNrLicenca").style="display: ?;"
-                document.getElementById("labelInputNrLicensa").style="display: ?;"
-                document.getElementById("labeValidadeLicenca").style="display: ?;"
-                document.getElementById("validade_licenca").style="display: ?;"
-                document.getElementById("labelInputTipoLicensa").style="display: ?;"
-                document.getElementById("inputTipoLicenca").style="display: ?;"
-                document.getElementById("labelinputInstrutor").style="display: ?;"
-                document.getElementById("inputInstrutor").style="display: ?;"
-                document.getElementById("labeValidadeLicenca").style="display: ?;"
-                document.getElementById("validade_licenca").style="display: ?;"
-                document.getElementById("labelInoutLicencaConfirmada").style="display: ?;"
-                document.getElementById("inputLicencaConfirmada1").style="display: ?;"
-                document.getElementById("inputLicencaConfirmada2").style="display: ?;"
-                document.getElementById("labelLicencaConf").style="display: ?;"
-                document.getElementById("labelLicencaNaoConf").style="display: ?;"
-                document.getElementById("labelCopia").style="display: ?;"
-                document.getElementById("hrefDownload").style="display: ?;"
-                document.getElementById("classe_certificado").style="display: ?;"
-                document.getElementById("labelCertificado").style="display: ?;"
-                document.getElementById("inputNrCertificado").style="display: ?;"
-                document.getElementById("labelNrCerificado").style="display: ?;"
-                document.getElementById("validade_certificado").style="display: ?;"
-                document.getElementById("inputValidadeCertificado").style="display: ?;"
-                document.getElementById("inputCertificadoPorConfirmar").style="display: ?;"
-                document.getElementById("naoConfirmado").style="display: ?;"
-                document.getElementById("inputCertificadoConfirmado").style="display: ?;"
-                document.getElementById("confirmado").style="display: ?;"
-                document.getElementById("labelCertificadoConfirmado").style="display: ?;"
-                document.getElementById("labelCopiaDigital").style="display: ?;"
+              if(selectedValue != "P") {
+                  document.getElementById("inputNrLicenca").style="display: none;"
+                  document.getElementById("labelInputNrLicensa").style="display: none;"
+                  document.getElementById("labeValidadeLicenca").style="display: none;"
+                  document.getElementById("validade_licenca").style="display: none;"
+                  document.getElementById("labelInputTipoLicensa").style="display: none;"
+                  document.getElementById("inputTipoLicenca").style="display: none;"
+                  document.getElementById("labelinputInstrutor").style="display: none;"
+                  document.getElementById("inputInstrutor").style="display: none;"
+                  document.getElementById("labeValidadeLicenca").style="display: none;"
+                  document.getElementById("validade_licenca").style="display: none;"
+                  document.getElementById("labelInoutLicencaConfirmada").style="display: none;"
+                  document.getElementById("inputLicencaConfirmada1").style="display: none;"
+                  document.getElementById("inputLicencaConfirmada2").style="display: none;"
+                  document.getElementById("labelLicencaConf").style="display: none;"
+                  document.getElementById("labelLicencaNaoConf").style="display: none;"
+                  document.getElementById("labelCopia").style="display: none;"
+                  document.getElementById("hrefDownload").style="display: none;"
+                  document.getElementById("classe_certificado").style="display: none;"
+                  document.getElementById("labelCertificado").style="display: none;"
+                  document.getElementById("inputNrCertificado").style="display: none;"
+                  document.getElementById("labelNrCerificado").style="display: none;"
+                  document.getElementById("validade_certificado").style="display: none;"
+                  document.getElementById("inputValidadeCertificado").style="display: none;"
+                  document.getElementById("inputCertificadoPorConfirmar").style="display: none;"
+                  document.getElementById("naoConfirmado").style="display: none;"
+                  document.getElementById("inputCertificadoConfirmado").style="display: none;"
+                  document.getElementById("confirmado").style="display: none;"
+                  document.getElementById("labelCertificadoConfirmado").style="display: none;"
+                  document.getElementById("labelCopiaDigital").style="display: none;"
+  //Antonio Tens de meter tudo com Inputs a null aqui ou metes no controller a null baseado no tipoSocio
+                  document.getElementById("inputCertificadoConfirmado").value=null;
+                  document.getElementById("inputNrLicenca").value=null;
+                  document.getElementById("inputTipoLicenca").value=null;
+                  document.getElementById("inputInstrutor").value=null;
+                  document.getElementById("inputLicencaConfirmada1").value=null;
+                  document.getElementById("inputLicencaConfirmada2").value=null;
+                  document.getElementById("inputNrCertificado").value=null;
+                  document.getElementById("inputValidadeCertificado").value=null;
+                  document.getElementById("inputCertificadoPorConfirmar").value=null;
+                  document.getElementById("inputCertificadoConfirmado").value=null;
 
-            }
-        }
-    </script>
 
---}}
+
+              }else{
+                  document.getElementById("inputNrLicenca").style="display: ?;"
+                  document.getElementById("labelInputNrLicensa").style="display: ?;"
+                  document.getElementById("labeValidadeLicenca").style="display: ?;"
+                  document.getElementById("validade_licenca").style="display: ?;"
+                  document.getElementById("labelInputTipoLicensa").style="display: ?;"
+                  document.getElementById("inputTipoLicenca").style="display: ?;"
+                  document.getElementById("labelinputInstrutor").style="display: ?;"
+                  document.getElementById("inputInstrutor").style="display: ?;"
+                  document.getElementById("labeValidadeLicenca").style="display: ?;"
+                  document.getElementById("validade_licenca").style="display: ?;"
+                  document.getElementById("labelInoutLicencaConfirmada").style="display: ?;"
+                  document.getElementById("inputLicencaConfirmada1").style="display: ?;"
+                  document.getElementById("inputLicencaConfirmada2").style="display: ?;"
+                  document.getElementById("labelLicencaConf").style="display: ?;"
+                  document.getElementById("labelLicencaNaoConf").style="display: ?;"
+                  document.getElementById("labelCopia").style="display: ?;"
+                  document.getElementById("hrefDownload").style="display: ?;"
+                  document.getElementById("classe_certificado").style="display: ?;"
+                  document.getElementById("labelCertificado").style="display: ?;"
+                  document.getElementById("inputNrCertificado").style="display: ?;"
+                  document.getElementById("labelNrCerificado").style="display: ?;"
+                  document.getElementById("validade_certificado").style="display: ?;"
+                  document.getElementById("inputValidadeCertificado").style="display: ?;"
+                  document.getElementById("inputCertificadoPorConfirmar").style="display: ?;"
+                  document.getElementById("naoConfirmado").style="display: ?;"
+                  document.getElementById("inputCertificadoConfirmado").style="display: ?;"
+                  document.getElementById("confirmado").style="display: ?;"
+                  document.getElementById("labelCertificadoConfirmado").style="display: ?;"
+                  document.getElementById("labelCopiaDigital").style="display: ?;"
+
+              }
+          }
+      </script>
+
+  --}}
 
 
 
@@ -240,9 +242,6 @@
 
 
 
-
-        </div>
-
         <div>
             <label id="labelinputAluno"for="inputAluno"> Aluno </label>
             <input type="text" name="aluno" id="inputAluno" value="{{$user->aluno}}">
@@ -282,7 +281,7 @@
                 <input type="text" name="num_certificado" id="inputNrCertificado" @if((!Auth::user()->can('socio_piloto',App\User::class))) readonly @endif  value="{{$user->num_certificado}}">
             </div>
 
-
+                <div>
                 <label for="inputClasseCertificado" id="labelCertificado">Classe do certificado </label>
                 <select name="classe_certificado" id="classe_certificado">
                     @foreach($classes as $classe)
@@ -292,6 +291,8 @@
 
                 </select>
                  <label for="" id="">{{$user->classe_certificado}} </label>
+                </div>
+
                 <div>
                     <label id="validade_certificado">Validade do certificado </label>
                     <input type="date" id="inputValidadeCertificado" name="validade_certificado" value="{{$user->validade_certificado}}" @if((Auth::user()->can('socio_piloto',App\User::class))) readonly @endif  >
@@ -315,23 +316,20 @@
                     <input type="file" name="file_certificado">
                  </div>
 
-              <div>
-
-
-               <a class="btn btn-xs btn-primary" href="{{ action('UserController@sendReactivateEmail', $user->id) }}">Send Email</a>
-
-
-
-
-              </div>
-
                     @endif
                   @endcan
 
               <div>
-                  <button class="btn btn-xs btn-primary" type="submit" name="ok">Save</button>
+                  <button type="submit" class="btn btn-xs btn-primary"  name="ok">Save</button>
                   <button type="button" class="btn btn-primary" onclick="window.history.back();">Cancel</button>
               </div>
       </form>
+
+    <form method="POST" action="{{ action('UserController@sendReactivateEmail', $user->id) }}" >
+
+        @csrf
+        <button type="submit" class="btn btn-xs btn-primary" >Send Email</button>
+
+    </form>
 
   @endsection

@@ -43,7 +43,7 @@
                 }
             }
         </script>
-<!--
+{{--
         <script type="text/javascript">
             function countHoras() {
                 var horaDescolagem=document.getElementById("hora_descolagem").value;
@@ -66,7 +66,7 @@
                 }
             }
         </script>
-    -->
+    --}}
 
 
         <script>

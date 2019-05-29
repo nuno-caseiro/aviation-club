@@ -6,13 +6,14 @@
         @include('shared.errors')
     @endif
 
-<!--perguntar ao nuno como por em acess forbidden nao quero assim
+
+
 
     @can(Auth::user()->can('isDirecao', Auth::user()) || (auth()->user()->id==$movimento->piloto_id) || (auth()->user()->id==$movimento->instrutor_id)) 
   @endcan
 
 
--->
+
 
 @if($movimento->confirmado=="1")
     <h1>Movimento nao pode ser alterado porque ja foi confirmado</h1>
