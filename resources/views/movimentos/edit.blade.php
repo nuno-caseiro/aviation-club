@@ -100,7 +100,7 @@ array.forEach(function(element) {
     <form method="POST" action="{{action('MovimentoController@update', $movimento->id)}}"  >
         @csrf
 
-        <input type="hidden" name="method" value="PUT">
+        <input type="hidden" name="_method" value="PUT">
 
         <input type="text" name="confirmar" value="0">
 

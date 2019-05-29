@@ -32,9 +32,13 @@
     <div class="card-body">
 
         @if($chart != null)
-            {!! $chart->render() !!}
+
+            {!! $chart->html() !!}
+            {!! Charts::scripts() !!}
+            {!! $chart->script() !!}
 
         @endif
+
     </div>
 
 
@@ -109,7 +113,7 @@
     </div>
 
 
-    <div class="card-header">{{ __('Estatisticas Total de horas por mês das aeronaves') }}</div>
+    <div class="card-header">{{ __('Estatisticas Total de horas por Mês das aeronaves') }}</div>
     <div class="table-responsive">
         <table id="tabela_paginada" class="table table-striped">
 

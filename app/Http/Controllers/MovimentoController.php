@@ -638,7 +638,7 @@ class MovimentoController extends Controller
             }
               //buraco
                  $movimento->hora_aterragem=$request->query('hora_aterragem');
-                 $momvimento->hora_descolagem=$request->query('hora_descolagem');  
+                 $movimento->hora_descolagem=$request->query('hora_descolagem');
                  $title="Conflito Buraco Temporal ";
                  $conflito="B";
                 return view('movimentos.create',compact('title','aeronaves','socios','aerodromos','movimentos','valores','conflito','movimento'));
@@ -688,20 +688,20 @@ class MovimentoController extends Controller
         $eixoY = request()->eixoY;
 
 
-        $datas_ano = DB::table('movimentos')
-            ->select(DB::raw('distinct DATE_FORMAT(data,"%Y") as date'))
+        $datas_ano = \DB::table('movimentos')
+            ->select(\DB::raw('distinct DATE_FORMAT(data,"%Y") as date'))
             ->orderByRaw('date asc')->get();
 
-        $datas_mes = DB::table('movimentos')
-            ->select(DB::raw('distinct DATE_FORMAT(data,"%Y/%m") as date'))
+        $datas_mes = \DB::table('movimentos')
+            ->select(\DB::raw('distinct DATE_FORMAT(data,"%Y/%m") as date'))
             ->orderByRaw('date asc')->get();
 
         //aeronave mes
 
         $aux = array(array(), array());
 
-        $aeronaves = DB::table('movimentos')
-            ->select(DB::raw('distinct aeronave'))
+        $aeronaves = \DB::table('movimentos')
+            ->select(\DB::raw('distinct aeronave'))
             ->orderByRaw('aeronave asc')->get()->toArray();
 
         $i = 0;
@@ -710,8 +710,8 @@ class MovimentoController extends Controller
             $i++;
         }
 
-        $aux_movimentos = DB::table('movimentos')
-            ->select(DB::raw('sum(TIMESTAMPDIFF(MINUTE, hora_descolagem, hora_aterragem)/60) as "Total_Flight_Hours", DATE_FORMAT(data,"%Y") as date, aeronave'))
+        $aux_movimentos = \DB::table('movimentos')
+            ->select(\DB::raw('sum(TIMESTAMPDIFF(MINUTE, hora_descolagem, hora_aterragem)/60) as "Total_Flight_Hours", DATE_FORMAT(data,"%Y") as date, aeronave'))
             ->groupBy('date', 'aeronave')
             ->orderByRaw('aeronave asc, date asc')->get();
 
@@ -731,8 +731,8 @@ class MovimentoController extends Controller
 
         $aux = array(array(), array());
 
-        $aeronaves = DB::table('movimentos')
-            ->select(DB::raw('distinct aeronave'))
+        $aeronaves = \DB::table('movimentos')
+            ->select(\DB::raw('distinct aeronave'))
             ->orderByRaw('aeronave asc')->get()->toArray();
 
         $i = 0;
@@ -741,7 +741,7 @@ class MovimentoController extends Controller
             $i++;
         }
 
-        $aux_movimentos = DB::table('movimentos')
+        $aux_movimentos = \DB::table('movimentos')
             ->select(\DB::raw('sum(TIMESTAMPDIFF(MINUTE, hora_descolagem, hora_aterragem)/60) as "Total_Flight_Hours", DATE_FORMAT(data,"%Y") as date, aeronave'))
             ->groupBy('date', 'aeronave')
             ->orderByRaw('aeronave asc, date asc')->get();
@@ -794,8 +794,8 @@ class MovimentoController extends Controller
 
         $aux = array(array(), array());
 
-        $pilotos_ids = DB::table('movimentos')
-            ->select(DB::raw('distinct piloto_id'))
+        $pilotos_ids = \DB::table('movimentos')
+            ->select(\DB::raw('distinct piloto_id'))
             ->orderByRaw('piloto_id asc')->get()->toArray();
 
         $i = 0;
@@ -804,8 +804,8 @@ class MovimentoController extends Controller
             $i++;
         }
 
-        $aux_movimentos = DB::table('movimentos')
-            ->select(DB::raw('sum(TIMESTAMPDIFF(MINUTE, hora_descolagem, hora_aterragem)/60) as "Total_Flight_Hours", DATE_FORMAT(data,"%Y") as date, piloto_id'))
+        $aux_movimentos = \DB::table('movimentos')
+            ->select(\DB::raw('sum(TIMESTAMPDIFF(MINUTE, hora_descolagem, hora_aterragem)/60) as "Total_Flight_Hours", DATE_FORMAT(data,"%Y") as date, piloto_id'))
             ->groupBy('date', 'piloto_id')
             ->orderByRaw('piloto_id asc, date asc')->get();
 
@@ -821,13 +821,14 @@ class MovimentoController extends Controller
             $i=0;
         }
 
+        $title="";
         if($nome == null && $eixoY == null && $eixoX == null){
-            return view('movimentos.estatisticas', compact('chart', 'movimentosAAno','movimentosAMes', 'movimentosPAno' ,  'movimentosPMes', 'datas_ano', 'datas_mes'));
+            return view('movimentos.estatisticas', compact('title','chart', 'movimentosAAno','movimentosAMes', 'movimentosPAno' ,  'movimentosPMes', 'datas_ano', 'datas_mes'));
         }
 
         $chart = $this->estatisticas($nome, $eixoX, $eixoY);
 
-        return view('movimentos.estatisticas', compact('chart', 'movimentosAAno', 'movimentosPAno', 'movimentosAMes', 'movimentosPMes', 'datas_ano', 'datas_mes'));
+        return view('movimentos.estatisticas', compact('title','chart', 'movimentosAAno', 'movimentosPAno', 'movimentosAMes', 'movimentosPMes', 'datas_ano', 'datas_mes'));
 
     }
 
@@ -837,10 +838,10 @@ class MovimentoController extends Controller
         //query para ir buscar os dados que preciso para fazer o grafico
         $query_chart=DB::table('movimentos');
         if(strcmp($eixoX, "Ano") == 0){
-            $query_chart = $query_chart->select(\DB::raw('sum(TIMESTAMPDIFF(MINUTE, hora_descolagem, hora_aterragem)/60) as "Total_Flight_Hours", DATE_FORMAT(data,"%Y") as date'));
+            $query_chart = $query_chart->select(DB::raw('sum(TIMESTAMPDIFF(MINUTE, hora_descolagem, hora_aterragem)/60) as "Total_Flight_Hours", DATE_FORMAT(data,"%Y") as date'));
         }
         if(strcmp($eixoX, "Mes") == 0){
-            $query_chart = $query_chart->select(\DB::raw('sum(TIMESTAMPDIFF(MINUTE, hora_descolagem, hora_aterragem)/60) as "Total_Flight_Hours", DATE_FORMAT(data,"%m/%Y") as date'));
+            $query_chart = $query_chart->select(DB::raw('sum(TIMESTAMPDIFF(MINUTE, hora_descolagem, hora_aterragem)/60) as "Total_Flight_Hours", DATE_FORMAT(data,"%m/%Y") as date'));
         }
         if(strcmp($eixoY, "Piloto") == 0){
             $id_piloto = "";
