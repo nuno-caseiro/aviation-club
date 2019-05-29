@@ -73,7 +73,6 @@ class MovimentoController extends Controller
             $filtro = $filtro->where('piloto_id',$piloto);
         }
 
-
         if (isset($instrutor)) {
             $filtro = $filtro->where('instrutor_id',$instrutor);
         }
@@ -95,10 +94,11 @@ class MovimentoController extends Controller
             if(!is_null($checkboxConfirmado)){
                 foreach ($checkboxConfirmado as $checked) {
                     $movimento= Movimento::findOrFail($checked);
+                    $movimento->tipo_conflito=null;
                     foreach($aeronaves as $aeronave){
                         if($aeronave->matricula=$movimento->aeronave){
                             $aeronave2=Aeronave::findOrFail($movimento->aeronave);
-                            $aeronave2->conta_horas+=$movimento->conta_horas_fim-$movimento->conta_horas_inicio;
+                            $aeronave2->conta_horas+= $movimento->conta_horas_fim-$movimento->conta_horas_inicio;
                                 $aeronave2->save();
                         }
                     }
@@ -293,7 +293,7 @@ class MovimentoController extends Controller
                 $movimentoModel->hora_descolagem = $this->parseDate($request->data . $request->hora_descolagem);
                 $movimentoModel = $this->calculos($movimentoModel);
 
-                $movimentoModel->save();
+            
             }
 
                 if (($request->natureza == 'I' && $movimentoModel->confirmado == 0)) {
@@ -323,7 +323,7 @@ class MovimentoController extends Controller
                     $movimentoModel->hora_descolagem = $this->parseDate($request->data . $request->hora_descolagem);
 
                     $movimentoModel = $this->calculos($movimentoModel);
-                    $movimentoModel->save();
+                
 
                 }
             }
@@ -334,118 +334,74 @@ class MovimentoController extends Controller
 
 
 
-//se for direcao pode fazer tudo
-        //se for piloto tem que ser os  seus movimentos...
-  /*  if ($request->natureza != 'I' && $movimentoModel->confirmado == 0) {
-        if(Auth::user()->direcao==1){
-            $movimentoModel->fill($request->except(['created_at', 'updated_at']));
-            if($movimentoModel->piloto_id!=$request->piloto_id){
-                $newPilot = User::findOrFail($request->piloto_id);
-                $movimentoModel->num_licenca_piloto = $newPilot->num_licenca;
-                $movimentoModel->tipo_licenca_piloto = $newPilot->tipo_licenca;
-                $movimentoModel->validade_licenca_piloto = $newPilot->validade_licenca;
-                $movimentoModel->num_certificado_piloto = $newPilot->num_certificado;
-                $movimentoModel->classe_certificado_piloto = $newPilot->classe_certificado;
-                $movimentoModel->validade_certificado_piloto = $newPilot->validade_certificado;
-            }
-            else{
-                $movimentoModel->fill($request->except(['created_at', 'updated_at']));
-
-            }
-
-            $movimentoModel->hora_aterragem = $this->parseDate($request->data . $request->hora_aterragem);
-            $movimentoModel->hora_descolagem = $this->parseDate($request->data . $request->hora_descolagem);
-            $movimentoModel = $this->calculos($movimentoModel);
-
-            $movimentoModel->save();
-
-        }else{
-            if($movimentoModel->piloto_id==$request->piloto_id || $movimentoModel->instrutor_id==$request->piloto_id ){
-                $movimentoModel->fill($request->except(['created_at', 'updated_at']));
-
-            }
-
-            $movimentoModel->hora_aterragem = $this->parseDate($request->data . $request->hora_aterragem);
-            $movimentoModel->hora_descolagem = $this->parseDate($request->data . $request->hora_descolagem);
-            $movimentoModel = $this->calculos($movimentoModel);
-
-            $movimentoModel->save();
-        }
-
-
-    }
-
-    if ($request->natureza == 'I' && $movimentoModel->confirmado == 0  ){
-        if(Auth::user()->direcao==1){
-            $movimentoModel->fill($request->except(['created_at', 'updated_at']));
-            if($movimentoModel->piloto_id!=$request->piloto_id){
-                $piloto = User::findOrFail($request->piloto_id);
-                $movimentoModel->fill($request->except(['created_at', 'updated_at']));
-                $movimentoModel->num_licenca_piloto = $piloto->num_licenca;
-                $movimentoModel->tipo_licenca_piloto = $piloto->tipo_licenca;
-                $movimentoModel->validade_licenca_piloto = $piloto->validade_licenca;
-                $movimentoModel->num_certificado_piloto = $piloto->num_certificado;
-                $movimentoModel->classe_certificado_piloto = $piloto->classe_certificado;
-                $movimentoModel->validade_certificado_piloto = $piloto->validade_certificado;
-
-            }
-            if($movimentoModel->instrutor_id!=$request->instrutor_id){
-                $instrutor = User::findOrFail($request->instrutor_id);
-                $movimentoModel->num_licenca_instrutor = $instrutor->num_licenca;
-                $movimentoModel->tipo_licenca_instrutor = $instrutor->tipo_licenca;
-                $movimentoModel->validade_licenca_instrutor = $instrutor->validade_licenca;
-                $movimentoModel->num_certificado_instrutor = $instrutor->num_certificado;
-                $movimentoModel->classe_certificado_instrutor = $instrutor->classe_certificado;
-                $movimentoModel->validade_certificado_instrutor = $instrutor->validade_certificado;
-            }
-
-
-                $movimentoModel->hora_aterragem = $this->parseDate($request->data . $request->hora_aterragem);
-                $movimentoModel->hora_descolagem = $this->parseDate($request->data . $request->hora_descolagem);
 
 
 
-            $movimentoModel = $this->calculos($movimentoModel);
-            $movimentoModel->save();
-        }
-
-        if(Auth::id()==$movimentoModel->piloto_id || Auth::id()==$movimentoModel->instrutor_id){
-                if($movimentoModel->piloto_id==$request->piloto_id || $movimentoModel->instrutor_id==$request->instrutor_id ){
-                    $movimentoModel->fill($request->except(['created_at', 'updated_at']));
-                    if($movimentoModel->piloto_id!=$request->piloto_id){
-                        $piloto = User::findOrFail($request->piloto_id);
-
-                        $movimentoModel->num_licenca_piloto = $piloto->num_licenca;
-                        $movimentoModel->tipo_licenca_piloto = $piloto->tipo_licenca;
-                        $movimentoModel->validade_licenca_piloto = $piloto->validade_licenca;
-                        $movimentoModel->num_certificado_piloto = $piloto->num_certificado;
-                        $movimentoModel->classe_certificado_piloto = $piloto->classe_certificado;
-                        $movimentoModel->validade_certificado_piloto = $piloto->validade_certificado;
-
-                    }
 
 
-                    if($movimentoModel->instrucao_id!=$request->instrucao_id){
-                        $instrutor = User::findOrFail($request->instrutor_id);
-                        $movimentoModel->num_licenca_instrutor = $instrutor->num_licenca;
-                        $movimentoModel->tipo_licenca_instrutor = $instrutor->tipo_licenca;
-                        $movimentoModel->validade_licenca_instrutor = $instrutor->validade_licenca;
-                        $movimentoModel->num_certificado_instrutor = $instrutor->num_certificado;
-                        $movimentoModel->classe_certificado_instrutor = $instrutor->classe_certificado;
-                        $movimentoModel->validade_certificado_instrutor = $instrutor->validade_certificado;
-                    }
-                    $movimentoModel->hora_aterragem = $this->parseDate($request->data . $request->hora_aterragem);
-                    $movimentoModel->hora_descolagem = $this->parseDate($request->data . $request->hora_descolagem);
-
-                    $movimentoModel = $this->calculos($movimentoModel);
-                    $movimentoModel->save();
-                }
 
 
-            }
 
-        }
-*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+              $movimentoModel->save();
+
+
+
+
+
 
 
 
@@ -478,7 +434,7 @@ class MovimentoController extends Controller
 
 
 
-        return view('movimentos.create',compact('title','aeronaves','socios','aerodromos','movimentos','valores'));
+        return view('movimentos.create',compact('title','aeronaves','socios','aerodromos','valores'));
     }
 
 
@@ -611,6 +567,23 @@ class MovimentoController extends Controller
          
            $movimento->save();
 
+
+
+
+            foreach ($movimentos as $m) {
+                foreach ($aeronaves as $aeronave) {
+                    # code...
+                if($m->aeronave == $aeronave->matricula){
+                if(($m->conta_horas_inicio<=$contaHorasInicial)  && ($m->conta_horas_fim >= $contaHorasFinal) && $m->confirmado!="1"){ // faltam validaçoes se estiver a meio cenas desse genero
+                $m->tipo_conflito="S";
+                           
+              }
+            }
+        }
+    }
+
+
+
              return redirect()->action('MovimentoController@index');
           }else{
              $movimento->tipo_conflito="B";
@@ -630,14 +603,21 @@ class MovimentoController extends Controller
                 if($m->aeronave == $aeronave->matricula){
                 if(($m->conta_horas_inicio<=$contaHorasInicial)  && ($m->conta_horas_fim >= $contaHorasFinal)){ // faltam validaçoes se estiver a meio cenas desse genero
             
-        
+                
                 $valores[]=Aeronave::findOrFail($aeronave->matricula)->aeronaveValores()->get()->toArray();
-          
+            
                 $title="Conflito sobreposicao";
                 # code...
-                  //sobreposicao
-               $conflito="S";
-                   return view('movimentos.create',compact('title','aeronaves','socios','aerodromos','movimentos','valores','conflito','movimento'));
+                //sobreposicao
+            
+
+
+                    $conflito="S";
+
+                    $hora_inicio=$request->hora_aterragem;
+                    $hora_fim=$request->hora_aterragem;
+
+                   return view('movimentos.create',compact('title','aeronaves','socios','aerodromos','movimentos','valores','conflito','movimento','hora_inicio','hora_fim'));
                          }
               }
           }
@@ -645,7 +625,8 @@ class MovimentoController extends Controller
 
 
               if( $m->conta_horas_fim==$contaHorasInicial){
-          
+                    $m->tipo_conflito=null;
+                    //se por acaso tivesse conflito passava para null passa primeiro por sobreposicao por isso nao ha problena 
                 $aux=1;//encontrado o conta kilometros final
              
               }
@@ -656,6 +637,8 @@ class MovimentoController extends Controller
             $valores[]=Aeronave::findOrFail($aeronave->matricula)->aeronaveValores()->get()->toArray();
             }
               //buraco
+                 $movimento->hora_aterragem=$request->query('hora_aterragem');
+                 $momvimento->hora_descolagem=$request->query('hora_descolagem');  
                  $title="Conflito Buraco Temporal ";
                  $conflito="B";
                 return view('movimentos.create',compact('title','aeronaves','socios','aerodromos','movimentos','valores','conflito','movimento'));
@@ -679,6 +662,13 @@ class MovimentoController extends Controller
     public function destroy($id){
         $movimento= Movimento::findOrFail($id);
         $user= User::findOrFail(Auth::id());
+
+
+
+
+
+
+
         if(($movimento->piloto_id==Auth::id()|| $user->direcao) && $movimento->confirmado==0 ){
 
             $movimento->delete();
@@ -879,9 +869,15 @@ class MovimentoController extends Controller
     }
 
     public function calculos($movimento){
+        $minutos=0;
+        $preco=0;
+
         $valor=($movimento->conta_horas_fim)-($movimento->conta_horas_inicio);
         $horas=(integer)$valor/10;
+        
         $unidades= $valor%10;
+        
+
         if($unidades!=0){
             $minutos= DB::table('aeronaves_valores')->select('minutos')->where('matricula',$movimento->aeronave)->where('unidade_conta_horas', $unidades)->value('minutos');
             $preco = DB::table('aeronaves_valores')->select('preco')->where('matricula',$movimento->aeronave)->where('unidade_conta_horas',$unidades )->first()->preco;
@@ -894,6 +890,9 @@ class MovimentoController extends Controller
 
         return $movimento;
     }
+
+
+
 
 
 

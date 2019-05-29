@@ -26,13 +26,10 @@ if(selectedValue != "I") {
     document.getElementById("instrutor_label").style="display: none;"
     if(document.getElementById("instrutorEsp")!=null){
     document.getElementById("instrutorEsp").style="display: none;"
-    
-    }
+        }
     document.getElementById("tipo_instrucao").style="display: none;"
      if(document.getElementById("tipo_instrucao_select")!=null){
     document.getElementById("tipo_instrucao_select").style="display: none;"
-
-
 }
    
 }else{
@@ -83,7 +80,9 @@ array.forEach(function(element) {
 
 <script>
 function myLabelsInstrutor(array) {
+
 var selectedValue=document.getElementById("instrutor_id").value;
+console.log(selectedValue);
 array.forEach(function(element) {
     var value=element.id;
   if(selectedValue==value )
@@ -101,13 +100,35 @@ array.forEach(function(element) {
     <form method="POST" action="{{action('MovimentoController@update', $movimento->id)}}"  >
         @csrf
 
-        <input type="hidden" name="_method" value="PUT">
+        <input type="hidden" name="method" value="PUT">
 
         <input type="text" name="confirmar" value="0">
 
 {{$instrutorEsp=null}}
 {{$socioEsp=null}}
         <div class="card-header">Editar Movimento</div>
+
+
+
+        @if (isset($conflitos))
+        <label>$title</label>
+        <input type="text" name="tipo_conflito" value="{{$movimento->tipo_conflito}}"> 
+         <div>
+            <label for="exampleFormControlTextarea1">Razao Conflito</label>
+            <textarea name="justificacao_conflito" id="exampleFormControlTextarea1" rows="3" cols="50">{{$movimento->justificacao_conflito}}</textarea>
+        </div>
+        @endif
+
+
+
+
+
+
+
+
+
+
+
 
             <label >Aeronave</label>
             <select name="aeronave">
@@ -155,12 +176,15 @@ array.forEach(function(element) {
 
 
 
-       {{--
+      
           <label id='tipo_instrucao'>Tipo Instruçao</label>
           <select id="tipo_instrucao_select" name="tipo_instrucao" required>
             <option value="{{$movimento->tipo_instrucao}}">@if ($movimento->tipo_instrucao=='D') Duplo @endif
               @if($movimento->tipo_instrucao=='S')
               Simples
+              @endif
+              @if (is_null($movimento->tipo_instrucao))
+
               @endif
             </option>
                  @if ($movimento->tipo_instrucao!='D')
@@ -173,12 +197,9 @@ array.forEach(function(element) {
                    </option> @endif
 
           </select>
-        --}}
+      
 
-            <div>
-                <input name="tipo_instrucao" value="{{$movimento->tipo_instrucao}}">
-            </div>
-
+          
 
 
 
@@ -321,7 +342,7 @@ array.forEach(function(element) {
 
             <div>
                 <label >Observacoes</label>
-                <textarea name="observacoes" cols="3" rows="1">{{$movimento->observacoes}}</textarea>
+                <textarea name="observacoes"  rows="3" cols="50">{{$movimento->observacoes}}</textarea>
             </div>
 
             <div>

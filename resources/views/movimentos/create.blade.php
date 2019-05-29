@@ -171,19 +171,18 @@ if(conta_horas_minutos!=0){
 }
 }</script>
 
-
-
+   
 
 
        <h1>{{$title}}</h1>
   
        <input id="title"  name="title" value=@if ($title=="Conflito sobreposicao")   S   @else   B   @endif readonly>
 
-        <div>Date:</div></label><input type="date" name="data"  @if (isset($movimento)) value={{$movimento->data}} @endif>
+        <div>Date:</div></label><input type="date" name="data"  @if (isset($movimento)) value="{{$movimento->data}}" @endif>
 
-        <div>Hora Descolagem:</div><input id="hora_descolagem" type="time" name="hora_descolagem"  @if (isset($movimento)) value={{$movimento->hora_descolagem}} @endif >
+        <div>Hora Descolagem:</div><input id="hora_descolagem" type="time" name="hora_descolagem"  @if (isset($movimento)) value="{{$hora_inicio}}" @endif >
 
-        <div>Hora Aterragem</div><input id="hora_aterragem" type="time" name="hora_aterragem" @if (isset($movimento)) value={{$movimento->hora_aterragem}} @endif>
+        <div>Hora Aterragem</div><input id="hora_aterragem" type="time" name="hora_aterragem" @if (isset($movimento)) value="{{$hora_fim}}" @endif>
 
         <label >Aeronave</label>
         <select name="aeronave"  id="aeronave" onchange="precoVoo({{$aeronaves}})">
@@ -210,8 +209,6 @@ if(conta_horas_minutos!=0){
         </div>
 
         @if (isset($movimento))
-
-
             <label >Piloto ID</label>
             <select name="piloto_id" id="piloto_id" onchange="myLabelsSocio({{$socios}})">
                 <option></option>
@@ -340,7 +337,7 @@ if(conta_horas_minutos!=0){
 
         <div>
             <label for="inputDescolagens">Numero de Descolagens</label>
-            <input type="number" name="num_descolagens" id="num_descolagens"  placeholder="Numero de Descolagens"   @if (isset($movimento)) value={{$movimento->num_descolagens}} @endif>
+            <input type="number" name="num_descolagens" id="num_descolagens"  placeholder="Numero de Descolagens"   @if (isset($movimento)) value={{$movimento->num_descolagens}} @endif>   
         </div>
 
 
@@ -355,7 +352,7 @@ if(conta_horas_minutos!=0){
 
         <div>
             <label for="inputDescolagens">Conta Horas Inicio</label>
-            <input type="text" name="conta_horas_inicio" id="conta_horas_inicio"  placeholder="Conta Horas Inicio"  @if (isset($movimento)) value={{$movimento->conta_horas_inicio}} @endif onchange="precoVoo({{$aeronaves}})">
+            <input type="text" name="conta_horas_inicio" id="conta_horas_inicio"  placeholder="Conta Horas Inicio"  @if (isset($movimento)) value="{{$movimento->conta_horas_inicio}}" @endif onchange="precoVoo({{$aeronaves}})">
         </div>
 
 
@@ -364,7 +361,7 @@ if(conta_horas_minutos!=0){
 
 
         <div>
-            <label for="inputDescolagens">Conta Horas Fim</label>
+            <label for="inputDescolagens">Conta <HEAD></HEAD>oras Fim</label>
             <input type="number" name="conta_horas_fim" id="conta_horas_fim"  placeholder="Conta Horas Fim"  @if (isset($movimento)) value={{$movimento->conta_horas_fim}} @endif onchange="precoVoo({{$aeronaves}})">
         </div>
 
@@ -517,7 +514,7 @@ if(conta_horas_minutos!=0){
 @if(isset($movimento))
        <div>
             <label for="exampleFormControlTextarea1">Razao Conflito</label>
-            <textarea name="justificacao_conflito" id="exampleFormControlTextarea1" rows="3"></textarea>
+            <textarea name="justificacao_conflito" id="exampleFormControlTextarea1" rows="3" cols="50"></textarea>
         </div>
 
 
