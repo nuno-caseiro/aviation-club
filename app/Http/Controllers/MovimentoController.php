@@ -42,10 +42,12 @@ class MovimentoController extends Controller
         $meusMovimentos=request()->query('meus_movimentos');
 
         $filtro = Movimento::where('id','>=','1');
-
+        $confirmarVarios=request()->query('confirmarVarios');
+        if(!$confirmarVarios){
         if (isset($movimento_id)) {
             $filtro = $filtro->where('id', $movimento_id);
         }
+    }
 
         if(isset($data_inf)){
             $filtro = $filtro->where('data','>=', $data_inf);
@@ -83,14 +85,24 @@ class MovimentoController extends Controller
 
 
 
-
+        $aeronaves=Aeronave::all();
         $pressed=request()->query('movimentos');
         //meus movimentos
-        $confirmarVarios=request()->query('confirmarVarios');
+       
+
+        
         if(!is_null($confirmarVarios) && $confirmarVarios=="true"){
             if(!is_null($checkboxConfirmado)){
                 foreach ($checkboxConfirmado as $checked) {
                     $movimento= Movimento::findOrFail($checked);
+                    foreach($aeronaves as $aeronave){
+                        if($aeronave->matricula=$movimento->aeronave){
+                            $aeronave2=Aeronave::findOrFail($movimento->aeronave);
+                            $aeronave2->conta_horas+=$movimento->conta_horas_fim-$movimento->conta_horas_inicio;
+                                $aeronave2->save();
+                        }
+                    }
+
                     $movimento->confirmado="1";
                     //conflitos
                     $movimento->save();
@@ -104,7 +116,7 @@ class MovimentoController extends Controller
 
         if(Auth::user()->can('socio_piloto', Auth::user())){
             $users=User::all();
-            $aeronaves=Aeronave::all();
+            
             $movimentos = $filtro->paginate(15)->appends([
                 'movimento_id' => request('movimento_id'),
                 'instrucao' => request('instrucao'),
@@ -644,7 +656,7 @@ class MovimentoController extends Controller
             $valores[]=Aeronave::findOrFail($aeronave->matricula)->aeronaveValores()->get()->toArray();
             }
               //buraco
-                 $title="Conflito Buraco Temporal blalblalbla coisa parecida";
+                 $title="Conflito Buraco Temporal ";
                  $conflito="B";
                 return view('movimentos.create',compact('title','aeronaves','socios','aerodromos','movimentos','valores','conflito','movimento'));
           }
@@ -652,7 +664,7 @@ class MovimentoController extends Controller
 
 
 
-
+          //sem conflitos
            $movimento->save();
 
 

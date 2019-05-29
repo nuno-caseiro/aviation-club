@@ -123,21 +123,41 @@ if(conta_horas_minutos!=0){
           console.log("entrou matricula" +valores[i][j]['matricula']);
         if(valores[i][j]['unidade_conta_horas']==conta_horas_minutos){
             //conta correta aqui por fazer 
+          var minutos=valores[i][j]['minutos'];
           console.log("entrou");
           console.log(valores[i][j]['matricula']);
           preco=valores[i][j]['preco'];
           console.log(conta_horas_minutos);
-          console.log(preco);
+          console.log(preco);//preco dos minutos
       }
       }
   }
   }
 }
   console.log(hora);//hora 
- 
-  var tempo_voo=horas;
+    console.log("hora"+hora);
+    console.log("minutos"+conta_horas_minutos);
+  if(conta_horas_minutos==0){
+  var tempo_voo=hora*60;
+  console.log(tempo_voo);
+}else{
+  var tempo_voo=hora*60+minutos;
+  console.log(tempo_voo);
+}
+
+  console.log(tempo_voo);
     document.getElementById("tempo_voo").value=tempo_voo;
-    document.getElementById("preco_voo").value=element.preco_hora*hora+(preco);
+
+
+    console.log((element.preco_hora*hora+(preco)));
+
+    var preco_hora=parseInt(element.preco_hora);
+    var preco_minuto=parseInt(preco);
+
+    var preco_final=preco_hora+preco_minuto;
+
+
+    document.getElementById("preco_voo").value=preco_final;
     }
  
   }

@@ -151,8 +151,7 @@
 
             @endif
 
-        </form>
-
+   
 <table class="table table-striped table-bordered" style="width: 100%">
         <thead>
         <tr >
@@ -283,7 +282,9 @@
 
 
                 @else
-                    @if(Auth::user()->can('socio_DP', Auth::user())  || auth()->user()->id==$movimento->piloto_id || auth()->user()->id==$movimento->instrutor)
+                    @if(Auth::user()->can('socio_DP', Auth::user())  || auth()->user()->id==$movimento->piloto_id || 
+                    auth()->user()->id==$movimento->instrutor)
+                    
                     <td> <input type="checkbox" name="checkboxConfirmado[]" value="{{$movimento->id}}"><label>Confirmado</label></td>
 
                     <td><a class="btn btn-xs btn-primary" href="{{ action('MovimentoController@edit', $movimento->id) }}">Edit</a></td>
@@ -311,7 +312,7 @@
 
         </tbody>
     </table>
-
+</form>
 
 
    {!! $movimentos->links(); !!}
