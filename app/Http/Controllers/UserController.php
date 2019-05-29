@@ -584,13 +584,19 @@ class UserController extends Controller
 
     }
 
-    public function sendReactivateEmail(Request $request,$id)
-    {
-       $this->authorize('socio_direcao', User::findOrFail($id), Auth::user());
-        $user = User::findOrFail($id);
-        $user->fill($request->only('email'));
-        $user->resend();
+    public function sendReactivateEmail($id)
 
+    {
+
+
+
+       $this->authorize('socio_direcao', User::findOrFail($id));
+        $user = User::findOrFail($id);
+
+        $user->sendEmailVerificationNotification();
+        return redirect()->back();
+            //->action('UserController@update')
+            //->with('success', 'Send email successfully!');
 
     }
 

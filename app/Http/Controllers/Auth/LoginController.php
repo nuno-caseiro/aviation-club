@@ -41,8 +41,6 @@ class LoginController extends Controller
 
     protected function authenticated(Request $request, $user)
     {
-        //dd($request->user()->hasVerifiedEmail());
-        //dd($user->hasVerifiedEmail());
 
         if($user->hasVerifiedEmail() && $user->password_inicial==1){
 

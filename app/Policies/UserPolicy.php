@@ -44,7 +44,7 @@ class UserPolicy
 
     public function socio_DP(User $auth)
     {
-        return ($auth->isDirecao()|| $auth->isPiloto()) && $auth->hasVerifiedEmail() && $auth->isAtivo();
+        return ($auth->isDirecao()|| $auth->isPiloto()) && $auth->hasVerifiedEmail() && $auth->isAtivo() && $auth->password_inicial==0;
     }
 
   /*  public function updateMov(User $auth, Movimento $movimento)

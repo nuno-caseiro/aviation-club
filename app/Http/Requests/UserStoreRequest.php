@@ -50,7 +50,7 @@ class UserStoreRequest extends FormRequest
             'sexo' => 'required|in:M,F',
             'certificado_confirmado'=>'nullable|in:0,1',
             'licenca_confirmada'=>'nullable|in:0,1',
-            //'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+
 
         ];
 

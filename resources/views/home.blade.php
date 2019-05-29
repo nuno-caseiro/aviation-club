@@ -19,7 +19,7 @@
         line-height: 50px;
         display: block;
         text-align: center;
-        font-size: 14px;
+        font-size: 16px;
     }
     .nav-side-menu .toggle-btn {
         display: none;
@@ -161,7 +161,7 @@
         text-align: left;
         text-decoration: none;
         display: inline-block;
-        font-size: 15px;
+        font-size: 13px;
         margin: 4px 2px;
         cursor: pointer;
     }
@@ -217,13 +217,13 @@
                 </a>
             </li>
             <li>
-                <a href="{{route("aeronaves.index")}}">
-                    <i class="fa fa-users fa-lg"></i> Aeronaves
+                <a class="button" href="{{route("aeronaves.index")}}">
+                     Aeronaves
                 </a>
             </li>
             <li>
-                <a href="{{route("movimentos.index")}}">
-                    <i class="fa fa-users fa-lg"></i> Movimentos
+                <a class="button" href="{{route("movimentos.index")}}">
+                     Movimentos
                 </a>
             </li>
         </ul>

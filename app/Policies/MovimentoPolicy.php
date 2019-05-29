@@ -43,7 +43,7 @@ class MovimentoPolicy
     public function update(User $user, Movimento $movimento)
     {
 
-        return ($user->isDirecao() || ($movimento->piloto_id==$user->id || $movimento->instrutor_id==$user->id)) && $user->hasVerifiedEmail() && $user->isAtivo();
+        return ($user->isDirecao() || ($movimento->piloto_id==$user->id || $movimento->instrutor_id==$user->id)) && $user->hasVerifiedEmail() && $user->isAtivo() && $user->password_inicial==0;
 
     }
 
