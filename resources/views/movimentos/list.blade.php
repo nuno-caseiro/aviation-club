@@ -151,6 +151,8 @@
 
             @endif
 
+
+
    
 <table class="table table-striped table-bordered" style="width: 100%">
         <thead>
@@ -265,6 +267,40 @@
                   @else
                   -
                   @endif
+
+                    @if(Auth::user()->can('socio_DP', Auth::user())  || auth()->user()->id==$movimento->piloto_id || 
+                    auth()->user()->id==$movimento->instrutor)
+            
+                @if($movimento->confirmado==1)
+                            <td> <input type="checkbox"
+                            checked="true" onclick="return false;"
+                            value={{$movimento->id}}>Confirmar</td>
+
+
+
+
+                  @else
+
+                    <td> <input type="checkbox" name="checkboxConfirmado[]" value="{{$movimento->id}}"><label>Confirmado</label></td>
+            
+                    @endif
+
+
+
+
+
+                    @endif
+
+
+
+
+
+
+</form>
+
+
+
+
                 </td>
                 @if($movimento->confirmado=='1' ) <!--confirmados-->
                     @if(Auth::user()->can('socio_DP', Auth::user()) || auth()->user()->id==$movimento->piloto_id || auth()->user()->id==$movimento->instrutor)
@@ -276,16 +312,13 @@
                         <input type="submit" value="Delete" disabled>
                     </td>
                     @endif
-                <td> <input type="checkbox"
-                            checked="true" onclick="return false;"
-                            value={{$movimento->id}}>Confirmar</td>
+        
 
 
                 @else
                     @if(Auth::user()->can('socio_DP', Auth::user())  || auth()->user()->id==$movimento->piloto_id || 
                     auth()->user()->id==$movimento->instrutor)
                     
-                    <td> <input type="checkbox" name="checkboxConfirmado[]" value="{{$movimento->id}}"><label>Confirmado</label></td>
 
                     <td><a class="btn btn-xs btn-primary" href="{{ action('MovimentoController@edit', $movimento->id) }}">Edit</a></td>
 
@@ -312,10 +345,7 @@
 
         </tbody>
     </table>
-</form>
 
-
-   {!! $movimentos->links(); !!}
 
     <a href="{{ action('MovimentoController@create') }}"class="btn btn-primary">Adicionar Movimento</a>
 
@@ -323,7 +353,7 @@
 
 
 
-
+   {!! $movimentos->links(); !!}
 
 
 

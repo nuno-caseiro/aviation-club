@@ -216,10 +216,7 @@ if(conta_horas_minutos!=0){
                     <option value="{{$socio->id}}" {{(  $socio->id == $movimento->piloto_id) ? 'selected' : $movimento->piloto_id }}> {{ $socio->id }}
                     </option>
 
-                    @if ($socio->id==$movimento->piloto_id)
-                  {{$socioEsp=$socio->name}}
-                    @endif
-
+              
 
                 @endforeach    </select>
 
@@ -361,8 +358,8 @@ if(conta_horas_minutos!=0){
 
 
         <div>
-            <label for="inputDescolagens">Conta <HEAD></HEAD>oras Fim</label>
-            <input type="number" name="conta_horas_fim" id="conta_horas_fim"  placeholder="Conta Horas Fim"  @if (isset($movimento)) value={{$movimento->conta_horas_fim}} @endif onchange="precoVoo({{$aeronaves}})">
+            <label for="inputDescolagens">Conta Horas Fim</label>
+            <input type="number" name="conta_horas_fim" id="conta_horas_fim"  placeholder="Conta Horas Fim"  @if (isset($movimento)) value="{{$movimento->conta_horas_fim}}" @endif onchange="precoVoo({{$aeronaves}})">
         </div>
 
 

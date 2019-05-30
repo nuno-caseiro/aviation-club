@@ -26,6 +26,8 @@ class MovimentoController extends Controller
     public function index()
     {
 
+
+
         $this->authorize('listar', Auth::user());
 
         $movimento_id=request()->query('id');
@@ -182,8 +184,17 @@ class MovimentoController extends Controller
         $socios=User::all();
         $aerodromos=Aerodromo::all();
 
+
+
+          foreach ($aeronaves as $aeronave) {
+            $valores[]=Aeronave::findOrFail($aeronave->matricula)->aeronaveValores()->get()->toArray();
+        }
+
+
+
+
         if(Auth::user()->direcao==1 || $movimento->piloto_id== Auth::id() || $movimento->instrutor_id==Auth::id() ){
-            return view('movimentos.edit', compact('title', 'movimento','aeronaves','socios','aerodromos'));
+            return view('movimentos.edit', compact('title', 'movimento','aeronaves','socios','aerodromos','valores'));
         }
         else{
 
@@ -206,11 +217,35 @@ class MovimentoController extends Controller
 
         $movimentoModel= Movimento::findOrFail($id);
         $this->authorize('update', $movimentoModel ) ;
+        $movimentos=Movimento::all();
+
+        $contaHorasInicial=$request->conta_horas_inicio;
+        $contaHorasFinal=$request->conta_horas_fim;
+
+
+
+
+
+         $aeronaves=Aeronave::all();
+        $socios=User::all();
+        $aerodromos=Aerodromo::all();
+
+
+
+
 
 
         if ($request->has('cancel')) {
             return redirect()->action('MovimentoController@index');
         }
+
+
+          if ($request->has('confirmar')) {
+            $movimentoModel->confirmado=1;
+            $movimentoModel->save();
+            return redirect()->action('MovimentoController@index');
+        }
+
 
 
 
@@ -339,6 +374,140 @@ class MovimentoController extends Controller
 
 
 
+                    $movimento=new Movimento();
+                    $movimento=$movimentoModel;
+
+
+
+
+
+
+
+
+
+
+
+            //podia ter feito uma funcao a ver se tinha conflito
+
+
+          if($request->has('comConflitos')){       //&& $movAlterado->conta_horas_inicio!=$request->query('conta_horas_inicio') || $movAlterado->conta_horas_fim!=$request->query('conta_horas_fim') adicioanr para ver se ele alterou alguma coisa do conta horas se nao quero correr verificacoes de nvo
+    
+          $textConflito=$request->razaoConflito;
+
+        
+          if($request->tipo_conflito=="S"){
+           $movimento->tipo_conflito="S";
+            $movimento->justificacao_conflito=$request->justificacao_conflito;
+         
+           $movimento->save();
+
+
+
+
+            foreach ($movimentos as $m) {
+                foreach ($aeronaves as $aeronave) {
+                    # code...
+                if($m->aeronave == $aeronave->matricula){
+                if(($m->conta_horas_inicio<=$contaHorasInicial)  && ($m->conta_horas_fim >= $contaHorasFinal) && $m->confirmado!="1"){ // faltam validaçoes se estiver a meio cenas desse genero
+                $m->tipo_conflito="S";
+                           
+              }
+            }
+        }
+    }
+
+
+
+             return redirect()->action('MovimentoController@index');
+          }else{
+             $movimento->tipo_conflito="B";
+            $movimento->justificacao_conflito=$request->justificacao_conflito;
+               $movimento->save();
+             return redirect()->action('MovimentoController@index');
+          }
+          
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+              $aux=0; 
+              foreach ($movimentos as $m) {
+                if($m->matricula==$movimento->matricula){
+                if(($m->conta_horas_inicio<=$contaHorasInicial)  && ($m->conta_horas_fim >= $contaHorasFinal)){ // faltam validaçoes se estiver a meio cenas desse genero
+            
+                
+                $valores[]=Aeronave::findOrFail($movimento->aeronave)->aeronaveValores()->get()->toArray();
+            
+                $title="Conflito sobreposicao";
+                # code...
+                //sobreposicao
+            
+
+
+                    $tipo_conflito="S";
+
+                    $hora_inicio=$request->hora_aterragem;
+                    $hora_fim=$request->hora_aterragem;
+                 return view('movimentos.edit', compact('title', 'movimento','aeronaves','socios','aerodromos','valores','tipo_conflito'));
+                         }
+              }
+       
+
+
+
+              if( $m->conta_horas_fim==$contaHorasInicial){
+             
+                    //se por acaso tivesse conflito passava para null passa primeiro por sobreposicao por isso nao ha problena 
+                $aux=1;//encontrado o conta kilometros final
+             
+              }
+
+              if($contaHorasFinal==$m->contaHorasInicial){
+                    if($m->tipo_conflito=="B"){
+                        $m->tipo_conflito=null;
+                    }
+
+
+              }
+            }
+       
+
+
+            if($aux==0){
+            foreach ($aeronaves as $aeronave) {
+            $valores[]=Aeronave::findOrFail($aeronave->matricula)->aeronaveValores()->get()->toArray();
+            }
+              //buraco
+
+                 $hora_inicio=$request->hora_aterragem;
+                 $hora_fim=$request->hora_descolagem;  
+
+              
+                 $title="Conflito Buraco Temporal ";
+                 $conflito="B";
+                   return view('movimentos.edit', compact('title', 'movimento','aeronaves','socios','aerodromos','valores','tipo_conflito'));
+          }
 
 
 
@@ -429,7 +598,7 @@ class MovimentoController extends Controller
 
 
         foreach ($aeronaves as $aeronave) {
-            $valores[]=Aeronave::findOrFail($aeronave->matricula)->aeronaveValores()->get()->toArray();
+            $valores[]=Aeronave::findOrFail($movimento->aeronave)->aeronaveValores()->get()->toArray();
         }
 
 
@@ -598,9 +767,7 @@ class MovimentoController extends Controller
 
               $aux=0; 
               foreach ($movimentos as $m) {
-                foreach ($aeronaves as $aeronave) {
-                    # code... //mudar para movimento
-                if($m->aeronave == $aeronave->matricula){
+                if($m->matricula==$movimento->matricula){
                 if(($m->conta_horas_inicio<=$contaHorasInicial)  && ($m->conta_horas_fim >= $contaHorasFinal)){ // faltam validaçoes se estiver a meio cenas desse genero
             
                 
@@ -620,7 +787,7 @@ class MovimentoController extends Controller
                    return view('movimentos.create',compact('title','aeronaves','socios','aerodromos','movimentos','valores','conflito','movimento','hora_inicio','hora_fim'));
                          }
               }
-          }
+       
 
 
 
@@ -640,13 +807,18 @@ class MovimentoController extends Controller
               }
             }
        
-            if(!is_null($m->conta_horas_fim)&&$aux==0){
+
+
+            if($aux==0){
             foreach ($aeronaves as $aeronave) {
             $valores[]=Aeronave::findOrFail($aeronave->matricula)->aeronaveValores()->get()->toArray();
             }
               //buraco
+
                  $hora_inicio=$request->hora_aterragem;
                  $hora_fim=$request->hora_descolagem;  
+
+             
                  $title="Conflito Buraco Temporal ";
                  $conflito="B";
                 return view('movimentos.create',compact('title','aeronaves','socios','aerodromos','movimentos','valores','conflito','movimento','hora_inicio','hora_fim'));
@@ -675,9 +847,21 @@ class MovimentoController extends Controller
 
 
 
-
-
         if(($movimento->piloto_id==Auth::id()|| $user->direcao) && $movimento->confirmado==0 ){
+
+            if($movimento->tipo_conflito=='S'){
+                foreach ($movimentos as $m) {
+                    # code...
+                    if($movimento->aeronave == $m->aeronave){
+                      if(($m->conta_horas_inicio<=$contaHorasInicial)  && ($m->conta_horas_fim >= $contaHorasFinal)){ 
+                        $m->tipo_conflito=null; //limpar a sobreposicao problema se houver 3 fazer outro for? fazer como se fossem 2 conflitos
+                        $m->tipo_conflito=null;
+                      }
+                  }
+
+                }
+            }
+
 
             $movimento->delete();
 
@@ -690,23 +874,208 @@ class MovimentoController extends Controller
     }
 
 
-    public function estatisticas(){
-        $users = User::where(DB::raw("(DATE_FORMAT(created_at,'%Y'))"),date('Y'))
-            ->get();
-        $chart = Charts::database($users, 'bar', 'highcharts')
-            ->title("Monthly new Register Users")
-            ->elementLabel("Total Users")
-            ->dimensions(1000, 500)
-            ->responsive(false)
-            ->groupByMonth(date('Y'), true);
 
-        $pie  =  Charts::create('pie', 'highcharts')
-            ->title('My nice chart')
-            ->labels(['First', 'Second', 'Third'])
-            ->values([5,10,20])
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    public function mostrarEstatisticas(){
+        $chart = null;
+        $nome = request()->Nome;
+        $eixoX = request()->eixoX;
+        $eixoY = request()->eixoY;
+
+
+        $datas_ano = \DB::table('movimentos')
+            ->select(\DB::raw('distinct DATE_FORMAT(data,"%Y") as date'))
+            ->orderByRaw('date asc')->get();
+
+        $datas_mes = \DB::table('movimentos')
+            ->select(\DB::raw('distinct DATE_FORMAT(data,"%Y/%m") as date'))
+            ->orderByRaw('date asc')->get();
+
+        //aeronave mes
+
+        $aux = array(array(), array());
+
+        $aeronaves = \DB::table('movimentos')
+            ->select(\DB::raw('distinct aeronave'))
+            ->orderByRaw('aeronave asc')->get()->toArray();
+
+        $i = 0;
+        foreach ($aeronaves as $aeronave) {
+            $movimentosAMes[$i] = array(0 => $aeronave->aeronave);
+            $i++;
+        }
+
+        $aux_movimentos = \DB::table('movimentos')
+            ->select(\DB::raw('sum(TIMESTAMPDIFF(MINUTE, hora_descolagem, hora_aterragem)/60) as "Total_Flight_Hours", DATE_FORMAT(data,"%Y") as date, aeronave'))
+            ->groupBy('date', 'aeronave')
+            ->orderByRaw('aeronave asc, date asc')->get();
+
+
+        $i=0;
+        foreach ($aux_movimentos as $movimento) {
+            foreach ($movimentosAMes as $aux) {
+                if($aux[0] == $movimento->aeronave) {
+                    break;
+                }
+                $i++;
+            }
+            $movimentosAMes[$i] += [$movimento->date => $movimento->Total_Flight_Hours];
+            $i=0;
+        }
+        //aeronave ano
+
+        $aux = array(array(), array());
+
+        $aeronaves = \DB::table('movimentos')
+            ->select(\DB::raw('distinct aeronave'))
+            ->orderByRaw('aeronave asc')->get()->toArray();
+
+        $i = 0;
+        foreach ($aeronaves as $aeronave) {
+            $movimentosAAno[$i] = array(0 => $aeronave->aeronave);
+            $i++;
+        }
+
+        $aux_movimentos = \DB::table('movimentos')
+            ->select(\DB::raw('sum(TIMESTAMPDIFF(MINUTE, hora_descolagem, hora_aterragem)/60) as "Total_Flight_Hours", DATE_FORMAT(data,"%Y") as date, aeronave'))
+            ->groupBy('date', 'aeronave')
+            ->orderByRaw('aeronave asc, date asc')->get();
+
+        $i=0;
+        foreach ($aux_movimentos as $movimento) {
+            foreach ($movimentosAAno as $aux) {
+                if($aux[0] == $movimento->aeronave) {
+                    break;
+                }
+                $i++;
+            }
+            $movimentosAAno[$i] += [$movimento->date => $movimento->Total_Flight_Hours];
+            $i=0;
+        }
+
+
+        //mes piloto
+
+        $aux = array(array(), array());
+
+        $pilotos_ids = \DB::table('movimentos')
+            ->select(\DB::raw('distinct piloto_id'))
+            ->orderByRaw('piloto_id asc')->get()->toArray();
+
+        $i = 0;
+        foreach ($pilotos_ids as $id) {
+            $movimentosPMes[$i] = array(0 => $id->piloto_id);
+            $i++;
+        }
+
+        $aux_movimentos = \DB::table('movimentos')
+            ->select(\DB::raw('sum(TIMESTAMPDIFF(MINUTE, hora_descolagem, hora_aterragem)/60) as "Total_Flight_Hours", DATE_FORMAT(data,"%Y/%m") as date, piloto_id'))
+            ->groupBy('date', 'piloto_id')
+            ->orderByRaw('piloto_id asc, date asc')->get();
+
+        $i=0;
+        foreach ($aux_movimentos as $movimento) {
+            foreach ($movimentosPMes as $aux) {
+                if($aux[0] == $movimento->piloto_id) {
+                    break;
+                }
+                $i++;
+            }
+            $movimentosPMes[$i] += [$movimento->date => $movimento->Total_Flight_Hours];
+            $i=0;
+        }
+
+        //ano piloto
+
+        $aux = array(array(), array());
+
+        $pilotos_ids = \DB::table('movimentos')
+            ->select(\DB::raw('distinct piloto_id'))
+            ->orderByRaw('piloto_id asc')->get()->toArray();
+
+        $i = 0;
+        foreach ($pilotos_ids as $id) {
+            $movimentosPAno[$i] = array(0 => $id->piloto_id);
+            $i++;
+        }
+
+        $aux_movimentos = \DB::table('movimentos')
+            ->select(\DB::raw('sum(TIMESTAMPDIFF(MINUTE, hora_descolagem, hora_aterragem)/60) as "Total_Flight_Hours", DATE_FORMAT(data,"%Y") as date, piloto_id'))
+            ->groupBy('date', 'piloto_id')
+            ->orderByRaw('piloto_id asc, date asc')->get();
+
+        $i=0;
+        foreach ($aux_movimentos as $movimento) {
+            foreach ($movimentosPAno as $aux) {
+                if($aux[0] == $movimento->piloto_id) {
+                    break;
+                }
+                $i++;
+            }
+            $movimentosPAno[$i] += [$movimento->date => $movimento->Total_Flight_Hours];
+            $i=0;
+        }
+
+        $title="";
+        if($nome == null && $eixoY == null && $eixoX == null){
+            return view('movimentos.estatisticas', compact('title','chart', 'movimentosAAno','movimentosAMes', 'movimentosPAno' ,  'movimentosPMes', 'datas_ano', 'datas_mes'));
+        }
+
+        $chart = $this->estatisticas($nome, $eixoX, $eixoY);
+
+        return view('movimentos.estatisticas', compact('title','chart', 'movimentosAAno', 'movimentosPAno', 'movimentosAMes', 'movimentosPMes', 'datas_ano', 'datas_mes'));
+
+    }
+
+
+    public function estatisticas($nome, $eixoX, $eixoY){
+
+        //query para ir buscar os dados que preciso para fazer o grafico
+        $query_chart=DB::table('movimentos');
+        if(strcmp($eixoX, "Ano") == 0){
+            $query_chart = $query_chart->select(DB::raw('sum(TIMESTAMPDIFF(MINUTE, hora_descolagem, hora_aterragem)/60) as "Total_Flight_Hours", DATE_FORMAT(data,"%Y") as date'));
+        }
+        if(strcmp($eixoX, "Mes") == 0){
+            $query_chart = $query_chart->select(DB::raw('sum(TIMESTAMPDIFF(MINUTE, hora_descolagem, hora_aterragem)/60) as "Total_Flight_Hours", DATE_FORMAT(data,"%m/%Y") as date'));
+        }
+        if(strcmp($eixoY, "Piloto") == 0){
+            $id_piloto = "";
+            $user=User::where('nome_informal', 'like', $nome)->first();
+            if($user != null){
+                $id_piloto .= $user->id;
+            }
+
+            $query_chart = $query_chart->where('piloto_id', $id_piloto);
+        }
+        if(strcmp($eixoX, "Aeronave") == 0){
+            $query_chart = $query_chart->where('aeronave', 'like', $nome);
+        }
+        $query_chart = $query_chart->groupBy('data')->get();
+
+
+        $chart = Charts::create('line', 'highcharts')
+            ->title("Total de horas por ". $eixoX . "/" . $eixoY . " (" . $nome . ")")
+            ->elementLabel("Total Flight Hours")
+            ->labels($query_chart->pluck('date'))
+            ->values($query_chart->pluck('Total_Flight_Hours'))
             ->dimensions(1000,500)
-            ->responsive(false);
-        return view('movimentos.estatisticas',compact('chart','pie'));
+            ->responsive(true);
+
+        return $chart;
     }
 
     public function calculos($movimento){
