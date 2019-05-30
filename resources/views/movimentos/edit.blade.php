@@ -353,26 +353,6 @@ if(conta_horas_minutos!=0){
 
 
 
-                   <label id="tipo_instrucao">Tipo Instruçao</label>
-          <select id="tipo_instrucao_select" name="tipo_instrucao" >
-            <option value="{{$movimento->tipo_instrucao}}">@if ($movimento->tipo_instrucao=='D') Duplo @endif
-              @if($movimento->tipo_instrucao=='S')
-              Simples
-              @endif
-            </option>
-                 @if ($movimento->tipo_instrucao!='D')
-                <option value="D">
-                        Duplo
-                  </option>  @endif
-                  @if($movimento->tipo_instrucao!='S')
-                    <option value="S">
-                        Simples
-                   </option>
-                   @endif
-
-          </select>
-
-
 
 
 
