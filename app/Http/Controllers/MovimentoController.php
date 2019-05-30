@@ -491,7 +491,7 @@ class MovimentoController extends Controller
 
 
 
-              if( $m->conta_horas_fim==$contaHorasInicial){
+              if( $m->id != $movimento->id && $m->conta_horas_fim==$contaHorasInicial ){
              
                     //se por acaso tivesse conflito passava para null passa primeiro por sobreposicao por isso nao ha problena 
                 $aux=1;//encontrado o conta kilometros final
@@ -501,6 +501,7 @@ class MovimentoController extends Controller
               if($contaHorasFinal==$m->contaHorasInicial){
                     if($m->tipo_conflito=="B"){
                         $m->tipo_conflito=null;
+                        //nao sei se necessario por a jsutificacao a 0
                     }
 
 
