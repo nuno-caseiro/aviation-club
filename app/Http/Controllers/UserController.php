@@ -79,7 +79,7 @@ class UserController extends Controller
                 'direcao' => request('direcao'),
                 'quotas_pagas' => request('quotas_pagas'),
                 'ativo' => request('ativo'),
-                'num_licenca' => request('num_licenca'),
+
 
             ]);
 

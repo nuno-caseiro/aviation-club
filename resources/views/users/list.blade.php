@@ -8,8 +8,7 @@
 
 
 
-<table class="table table-striped table-bordered" style="width: 100%" id="mydatatable">
-    <a class="btn btn-xs btn-primary" href="{{ action('UserController@create') }}">Add User</a>
+
 
 
 
@@ -31,13 +30,14 @@
 
        <div>
            Tipo de Sócio :
-           <select name="tipo" id="inputTipoSocio">
+           <select  id="inputTipoSocio" name="tipo" >
                <option  value=""></option>
                <option  value="P">Piloto</option>
                <option  value="NP">Não Piloto</option>
                <option  value="A" >Aeromodelista</option>
            </select>
        </div>
+
         <div>
             Direção:
             <input id="direcao" type="text" class="form-control{{ $errors->has('direcao') ? ' is-invalid' : '' }}" name="direcao" value="" >
@@ -45,24 +45,31 @@
 
         @can('socio_Direcao', App\User::class)
             <div>Quotas em dia:
-                <input id="quotas_pagas" type="text" class="form-control{{ $errors->has('quotas_pagas') ? ' is-invalid' : '' }}" name="quotas_pagas" value="{{ old('quotas_pagas') }}" ></div>
+                <input id="quotas_pagas" type="text" class="form-control{{ $errors->has('quotas_pagas') ? ' is-invalid' : '' }}" name="quotas_pagas" value="{{ old('quotas_pagas') }}" >
+            </div>
             <div>
-            Sócio ativo: <br>
+            Sócio ativo:
                 <input id="ativo" type="text" class="form-control{{ $errors->has('ativo') ? ' is-invalid' : '' }}" name="ativo" value="{{ old('ativo') }}" >
             </div>
         @endcan
 
         <div class="form-group row mb-0">
             <div class="col-md-6 offset-md-5">
+
                 <br>
                 <button type="submit" class="btn btn-primary">
-                    {{ __('Aplicar filtro') }}
+                    {{ __('Aplicar filtro')}}
                 </button>
+
             </div>
+
         </div>
         <br>
+
     </form>
 
+    <table class="table table-striped table-bordered" style="width: 100%" id="mydatatable">
+        <a class="btn btn-xs btn-primary" href="{{ action('UserController@create') }}">Add User</a>
 
 
     <thead>
@@ -147,7 +154,8 @@
                                 @endif
                             </form>
                         </td>
-                        <td> <form method="POST" action="{{action('UserController@ativarDesativar', $utilizador->id)}}">
+                        <td>
+                            <form method="POST" action="{{action('UserController@ativarDesativar', $utilizador->id)}}">
                                 @csrf
                                 <input type="hidden" name="_method" value="patch">
                                 <input type="hidden" name="ativo" value="{{!$utilizador->ativo}}">
@@ -162,9 +170,10 @@
 
 
 
-                <td><a class="btn btn-xs btn-primary" href="{{ action('UserController@edit', $utilizador->id) }}">Edit</a></td>
+                <td><a class="btn btn-xs btn-primary" href="{{ action('UserController@edit', $utilizador->id) }}">Editar</a></td>
 
-                <td><form action="{{ action('UserController@destroy', $utilizador->id) }}"
+                <td>
+                    <form action="{{ action('UserController@destroy', $utilizador->id) }}"
                     method="post">
                   @csrf
                   @method('delete')
@@ -180,10 +189,10 @@
 
 
 </tbody>
-           </table>
+</table>
            <div class="text-center">
 
                {!! $users->links(); !!}
-    </div>
+            </div>
 
 @endsection

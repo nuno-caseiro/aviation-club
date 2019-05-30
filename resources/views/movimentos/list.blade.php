@@ -151,9 +151,9 @@
 
             @endif
 
+        </form>
 
 
-   
 <table class="table table-striped table-bordered" style="width: 100%">
         <thead>
         <tr >
@@ -268,9 +268,9 @@
                   -
                   @endif
 
-                    @if(Auth::user()->can('socio_DP', Auth::user())  || auth()->user()->id==$movimento->piloto_id || 
+                    @if(Auth::user()->can('socio_DP', Auth::user())  || auth()->user()->id==$movimento->piloto_id ||
                     auth()->user()->id==$movimento->instrutor)
-            
+
                 @if($movimento->confirmado==1)
                             <td> <input type="checkbox"
                             checked="true" onclick="return false;"
@@ -282,7 +282,7 @@
                   @else
 
                     <td> <input type="checkbox" name="checkboxConfirmado[]" value="{{$movimento->id}}"><label>Confirmado</label></td>
-            
+
                     @endif
 
 
@@ -302,7 +302,7 @@
 
 
                 </td>
-                @if($movimento->confirmado=='1' ) <!--confirmados-->
+                @if($movimento->confirmado=='1' )
                     @if(Auth::user()->can('socio_DP', Auth::user()) || auth()->user()->id==$movimento->piloto_id || auth()->user()->id==$movimento->instrutor)
                     <td><a class="btn btn-xs btn-primary" disabled >Edit</a></td>
                     <td>
@@ -312,13 +312,13 @@
                         <input type="submit" value="Delete" disabled>
                     </td>
                     @endif
-        
+
 
 
                 @else
                     @if(Auth::user()->can('socio_DP', Auth::user())  || auth()->user()->id==$movimento->piloto_id || 
                     auth()->user()->id==$movimento->instrutor)
-                    
+
 
                     <td><a class="btn btn-xs btn-primary" href="{{ action('MovimentoController@edit', $movimento->id) }}">Edit</a></td>
 
@@ -345,6 +345,7 @@
 
         </tbody>
     </table>
+
 
 
     <a href="{{ action('MovimentoController@create') }}"class="btn btn-primary">Adicionar Movimento</a>

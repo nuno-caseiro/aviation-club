@@ -7,45 +7,56 @@
 
 
 
-    {{--  <script>
+     <script>
           function myFunction() {
               var selectedValue=document.getElementById("inputTipoSocio").value;
 
               if(selectedValue != "P") {
                   document.getElementById("inputNrLicenca").style="display: none;"
-                  document.getElementById("labelInputNrLicensa").style="display: none;"
-                  document.getElementById("labeValidadeLicenca").style="display: none;"
-                  document.getElementById("validade_licenca").style="display: none;"
-                  document.getElementById("labelInputTipoLicensa").style="display: none;"
+                  document.getElementById("labelInputNrLicenca").style="display: none;"
+                  document.getElementById("labelInputTipoLicenca").style="display: none;"
                   document.getElementById("inputTipoLicenca").style="display: none;"
-                  document.getElementById("labelinputInstrutor").style="display: none;"
-                  document.getElementById("inputInstrutor").style="display: none;"
+                  document.getElementById("labelInputAluno").style="display: none;"
+                  document.getElementById("inputAluno").style="display: none;"
+                  document.getElementById("labelInputInstrutor").style="display: none;"
+
+                  document.getElementById("labelInstrutor").style="display: none;"
                   document.getElementById("labeValidadeLicenca").style="display: none;"
                   document.getElementById("validade_licenca").style="display: none;"
-                  document.getElementById("labelInoutLicencaConfirmada").style="display: none;"
+                  document.getElementById("labelInputLicencaConfirmada").style="display: none;"
                   document.getElementById("inputLicencaConfirmada1").style="display: none;"
                   document.getElementById("inputLicencaConfirmada2").style="display: none;"
-                  document.getElementById("labelLicencaConf").style="display: none;"
-                  document.getElementById("labelLicencaNaoConf").style="display: none;"
                   document.getElementById("labelCopia").style="display: none;"
                   document.getElementById("hrefDownload").style="display: none;"
+                  document.getElementById("hrefDownload1").style="display: none;"
+                  document.getElementById("inputNrCertificado").style="display: none;"
+                  document.getElementById("labelNrCertificado").style="display: none;"
+
                   document.getElementById("classe_certificado").style="display: none;"
                   document.getElementById("labelCertificado").style="display: none;"
-                  document.getElementById("inputNrCertificado").style="display: none;"
-                  document.getElementById("labelNrCerificado").style="display: none;"
+
                   document.getElementById("validade_certificado").style="display: none;"
                   document.getElementById("inputValidadeCertificado").style="display: none;"
+
+                  document.getElementById("labelCertificadoConfirmado").style="display: none;"
+                  document.getElementById("inputCertificadoConfirmado").style="display: none;"
+
                   document.getElementById("inputCertificadoPorConfirmar").style="display: none;"
                   document.getElementById("naoConfirmado").style="display: none;"
-                  document.getElementById("inputCertificadoConfirmado").style="display: none;"
+
                   document.getElementById("confirmado").style="display: none;"
-                  document.getElementById("labelCertificadoConfirmado").style="display: none;"
-                  document.getElementById("labelCopiaDigital").style="display: none;"
+
+                  document.getElementById("labelCopia1").style="display: none;"
+                  document.getElementById("hrefDownload2").style="display: none;"
+                  document.getElementById("hrefDownload3").style="display: none;"
+                  document.getElementById("file_certificado").style="display: none;"
+
   //Antonio Tens de meter tudo com Inputs a null aqui ou metes no controller a null baseado no tipoSocio
                   document.getElementById("inputCertificadoConfirmado").value=null;
                   document.getElementById("inputNrLicenca").value=null;
                   document.getElementById("inputTipoLicenca").value=null;
                   document.getElementById("inputInstrutor").value=null;
+                  document.getElementById("inputAluno").value=null;
                   document.getElementById("inputLicencaConfirmada1").value=null;
                   document.getElementById("inputLicencaConfirmada2").value=null;
                   document.getElementById("inputNrCertificado").value=null;
@@ -56,41 +67,48 @@
 
 
               }else{
-                  document.getElementById("inputNrLicenca").style="display: ?;"
-                  document.getElementById("labelInputNrLicensa").style="display: ?;"
-                  document.getElementById("labeValidadeLicenca").style="display: ?;"
-                  document.getElementById("validade_licenca").style="display: ?;"
-                  document.getElementById("labelInputTipoLicensa").style="display: ?;"
+                  document.getElementById("labelInputNrLicenca").style="display: ?;"
+                  document.getElementById("labelInputTipoLicenca").style="display: ?;"
                   document.getElementById("inputTipoLicenca").style="display: ?;"
-                  document.getElementById("labelinputInstrutor").style="display: ?;"
-                  document.getElementById("inputInstrutor").style="display: ?;"
+                  document.getElementById("labelInputAluno").style="display: ?;"
+                  document.getElementById("inputAluno").style="display: ?;"
+                  document.getElementById("labelInputInstrutor").style="display: ?;"
+                  document.getElementById("labelInstrutor").style="display: ?;"
                   document.getElementById("labeValidadeLicenca").style="display: ?;"
                   document.getElementById("validade_licenca").style="display: ?;"
-                  document.getElementById("labelInoutLicencaConfirmada").style="display: ?;"
+                  document.getElementById("labelInputLicencaConfirmada").style="display: ?;"
                   document.getElementById("inputLicencaConfirmada1").style="display: ?;"
                   document.getElementById("inputLicencaConfirmada2").style="display: ?;"
-                  document.getElementById("labelLicencaConf").style="display: ?;"
-                  document.getElementById("labelLicencaNaoConf").style="display: ?;"
                   document.getElementById("labelCopia").style="display: ?;"
                   document.getElementById("hrefDownload").style="display: ?;"
+                  document.getElementById("hrefDownload1").style="display: ?;"
+                  document.getElementById("inputNrCertificado").style="display: ?;"
+                  document.getElementById("labelNrCertificado").style="display: ?;"
+
                   document.getElementById("classe_certificado").style="display: ?;"
                   document.getElementById("labelCertificado").style="display: ?;"
-                  document.getElementById("inputNrCertificado").style="display: ?;"
-                  document.getElementById("labelNrCerificado").style="display: ?;"
+
                   document.getElementById("validade_certificado").style="display: ?;"
                   document.getElementById("inputValidadeCertificado").style="display: ?;"
+
+                  document.getElementById("labelCertificadoConfirmado").style="display: ?;"
+                  document.getElementById("inputCertificadoConfirmado").style="display: ?;"
+
                   document.getElementById("inputCertificadoPorConfirmar").style="display: ?;"
                   document.getElementById("naoConfirmado").style="display: ?;"
-                  document.getElementById("inputCertificadoConfirmado").style="display: ?;"
+
                   document.getElementById("confirmado").style="display: ?;"
-                  document.getElementById("labelCertificadoConfirmado").style="display: ?;"
-                  document.getElementById("labelCopiaDigital").style="display: ?;"
+
+                  document.getElementById("labelCopia1").style="display: ?;"
+                  document.getElementById("hrefDownload2").style="display: ?;"
+                  document.getElementById("hrefDownload3").style="display: ?;"
+                  document.getElementById("file_certificado").style="display: ?;"
 
               }
           }
       </script>
 
-  --}}
+
 
 
 
@@ -152,7 +170,7 @@
         </div>
         <div>
             <label for="inputTipoSocio">Tipo de Sócio </label>
-            <select name="tipo_socio" id="inputTipoSocio">
+            <select name="tipo_socio" id="inputTipoSocio" onchange="myFunction()">
                 <option value="P" @if((Auth::user()->can('socio_normal',App\User::class))) {{($user->tipo_socio=="P")? "selected" : "disabled" }} @endif >Piloto</option>
                 <option value="NP"@if((Auth::user()->can('socio_normal',App\User::class))) {{($user->tipo_socio=="NP")? "selected" : "disabled" }} @endif >Não Piloto</option>
                 <option value="A" @if((Auth::user()->can('socio_normal',App\User::class))) {{($user->tipo_socio=="A")? "selected" : "disabled" }} @endif>Aeromodelista</option>
@@ -220,42 +238,41 @@
 
 
         @can('socio_DP', Auth::user())
-        @if($user->tipo_socio=='P')
+
 
 
             <div>
-                <label id="labelInputNrLicensa" for="inputNrLicenca"> Número de licença </label>
+                <label id="labelInputNrLicenca" for="inputNrLicenca"> Número de licença </label>
                 <input type="text" name="num_licenca" id="inputNrLicenca"  value="{{$user->num_licenca}}">
             </div>
 
 
             <div>
-                <label id="labelInputTipoLicensa"for="inputTipoLicenca">Tipo de licença</label>
+                <label id="labelInputTipoLicenca"for="inputTipoLicenca">Tipo de licença</label>
                 <select name="tipo_licenca" id="inputTipoLicenca">
                     @foreach($licencas as $licenca)
                         <option id="inputTipoLicenca" value="{{$licenca->code}}" {{($user->tipo_licenca==$licenca->code)? "selected" : "" }} >{{$licenca->nome}}</option>
                     @endforeach
 
                 </select>
-                <a href="">{{$user->tipo_licenca}}</a>
             </div>
 
 
 
         <div>
-            <label id="labelinputAluno"for="inputAluno"> Aluno </label>
+            <label id="labelInputAluno"for="inputAluno"> Aluno </label>
             <input type="text" name="aluno" id="inputAluno" value="{{$user->aluno}}">
 
         </div>
 
         <div>
-            <label id="labelinputInstrutor"for="inputInstrutor"> Instrutor </label>
+            <label id="labelInputInstrutor"for="inputInstrutor"> Instrutor </label>
             <input type="text" name="instrutor" id="inputInstrutor" value="{{$user->instrutor}}">
         </div>
 
             <div>
                 <label id="labeValidadeLicenca">Validade da licença</label>
-                <input id="validade_licenca"type="date" name="validade_licenca" value="{{$user->validade_licenca}}" @if((Auth::user()->can('socio_piloto',App\User::class))) readonly @endif  >
+                <input id="validade_licenca"type="date" name="validade_licenca" value="{{$user->validade_licenca}}") >
             </div>
 
             <div>
@@ -272,7 +289,7 @@
             <div>
                 <label id="labelCopia" for=""> Cópia digitial da licença </label>
                 <a id="hrefDownload" href="{{route('licenca',$user->id)}}" class="btn btn-success mb-2"> Ver PDF</a>
-                <a id="hrefDownload" href="{{route('licenca_pdf',$user->id)}}" class="btn btn-success mb-2"> Download</a>
+                <a id="hrefDownload1" href="{{route('licenca_pdf',$user->id)}}" class="btn btn-success mb-2"> Download</a>
                 <input type="file" name="file_licenca">
             </div>
 
@@ -295,7 +312,7 @@
 
                 <div>
                     <label id="validade_certificado">Validade do certificado </label>
-                    <input type="date" id="inputValidadeCertificado" name="validade_certificado" value="{{$user->validade_certificado}}" @if((Auth::user()->can('socio_piloto',App\User::class))) readonly @endif  >
+                    <input type="date" id="inputValidadeCertificado" name="validade_certificado" value="{{$user->validade_certificado}}" >
                 </div>
 
                 <div>
@@ -310,13 +327,13 @@
                 </div>
 
                 <div>
-                    <label id="labelCopiaDigital"> Cópia digital certificado </label>
-                    <a id="hrefDownload" href="{{route('certificado',$user->id)}}" class="btn btn-success mb-2"> Ver PDF</a>
-                    <a id="hrefDownload" href="{{route('certificado_pdf',$user->id)}}" class="btn btn-success mb-2"> Download</a>
+                    <label id="labelCopia1"> Cópia digital certificado </label>
+                    <a id="hrefDownload2" href="{{route('certificado',$user->id)}}" class="btn btn-success mb-2"> Ver PDF</a>
+                    <a id="hrefDownload3" href="{{route('certificado_pdf',$user->id)}}" class="btn btn-success mb-2"> Download</a>
                     <input type="file" name="file_certificado">
                  </div>
 
-                    @endif
+
                   @endcan
 
               <div>

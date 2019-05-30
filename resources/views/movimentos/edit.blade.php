@@ -6,13 +6,14 @@
         @include('shared.errors')
     @endif
 
-<!--perguntar ao nuno como por em acess forbidden nao quero assim
+
+
 
     @can(Auth::user()->can('isDirecao', Auth::user()) || (auth()->user()->id==$movimento->piloto_id) || (auth()->user()->id==$movimento->instrutor_id)) 
   @endcan
 
 
--->
+
 
 @if($movimento->confirmado=="1")
     <h1>Movimento nao pode ser alterado porque ja foi confirmado</h1>
@@ -120,7 +121,7 @@ if(conta_horas_minutos!=0){
       if(valores[i][j]['matricula']==selectedValue){
           console.log("entrou matricula" +valores[i][j]['matricula']);
         if(valores[i][j]['unidade_conta_horas']==conta_horas_minutos){
-            //conta correta aqui por fazer 
+            //conta correta aqui por fazer
           var minutos=valores[i][j]['minutos'];
           console.log("entrou");
           console.log(valores[i][j]['matricula']);
@@ -132,7 +133,7 @@ if(conta_horas_minutos!=0){
   }
   }
 }
-  console.log(hora);//hora 
+  console.log(hora);//hora
     console.log("hora"+hora);
     console.log("minutos"+conta_horas_minutos);
   if(conta_horas_minutos==0){
@@ -147,7 +148,7 @@ if(conta_horas_minutos!=0){
     document.getElementById("tempo_voo").value=tempo_voo;
 
 
-    
+
 
     var preco_hora=parseInt(element.preco_hora*hora);
     var preco_minuto=parseInt(preco);
@@ -159,17 +160,17 @@ if(conta_horas_minutos!=0){
     console.log(preco_final);
 
     document.getElementById("preco_voo").value=(preco_final);
-    
+
     }
- 
+
   }
 });
- 
- 
+
+
 }
 }</script>
 
-   
+
 
 
       <label>{{$title}}</label>
@@ -212,9 +213,9 @@ if(conta_horas_minutos!=0){
         <select name="aeronave"  id="aeronave" onchange="precoVoo({{$aeronaves}})">
             <option></option>
             @foreach ($aeronaves as $aeronave)
-                <option value="{{ $aeronave->matricula }}"@if (isset($movimento)) 
-                    {{ 
-                    ( $aeronave->matricula == $movimento->aeronave) ? 'selected' : $movimento->aeronave 
+                <option value="{{ $aeronave->matricula }}"@if (isset($movimento))
+                    {{
+                    ( $aeronave->matricula == $movimento->aeronave) ? 'selected' : $movimento->aeronave
                 }}
                 @endif>
                      {{ $aeronave->matricula }} </option>
@@ -229,12 +230,12 @@ if(conta_horas_minutos!=0){
    <div>Hora Aterragem</div><input type="time" name="hora_aterragem" value="{{date('H:i', strtotime($movimento->hora_aterragem)) }}">
 
 
-          
 
-      
+
+
 
         <label> Natureza</label>
-   
+
          <select   name="natureza" id="natureza" onchange="myFunction();">
                 <option value="{{ $movimento->natureza}}">@if ($movimento->natureza=='I')
                         Instruçao
@@ -265,6 +266,23 @@ if(conta_horas_minutos!=0){
 
 
 
+          <label id='tipo_instrucao'>Tipo Instruçao</label>
+          <select id="tipo_instrucao_select" name="tipo_instrucao" required>
+            <option value="{{$movimento->tipo_instrucao}}">@if ($movimento->tipo_instrucao=='D') Duplo @endif
+              @if($movimento->tipo_instrucao=='S')
+              Simples
+              @endif
+            </option>
+                 @if ($movimento->tipo_instrucao!='D')
+                <option value="D">
+                        Duplo
+                  </option>  @endif
+                  @if($movimento->tipo_instrucao!='S')
+                    <option value="S">
+                        Simples
+                   </option> @endif
+
+          </select>
 
 
 
@@ -282,7 +300,7 @@ if(conta_horas_minutos!=0){
                     <option value="{{$socio->id}}" {{(  $socio->id == $movimento->piloto_id) ? 'selected' : $movimento->piloto_id }}> {{ $socio->id }}
                     </option>
 
-              
+
 
                 @endforeach    </select>
 
@@ -310,11 +328,11 @@ if(conta_horas_minutos!=0){
 
 
                  <label id="instrutor_label1">Instrutor</label>
-       
+
          <select name="instrutor_id" id="instrutor_id" onload="myFunction()" onchange="myLabelsInstrutor({{$socios}})" >
                     <option></option>
                     @foreach ($socios as $socio)
-                   @if (Auth::user()->can('socio_Piloto', Auth::user()) && $movimento->instrutor_id==auth()->user()->id) 
+                   @if (Auth::user()->can('socio_Piloto', Auth::user()) && $movimento->instrutor_id==auth()->user()->id)
                   @if (auth()->user()->id==$socio->id)
                       <option value="{{$socio->id}}" {{(  $socio->id == $movimento->instrutor_id) ? 'selected' : $movimento->instrutor_id }}> {{ $socio->id }}
                     </option>
@@ -343,13 +361,13 @@ if(conta_horas_minutos!=0){
               @endif
             </option>
                  @if ($movimento->tipo_instrucao!='D')
-                <option value="D"> 
+                <option value="D">
                         Duplo
                   </option>  @endif
                   @if($movimento->tipo_instrucao!='S')
                     <option value="S">
                         Simples
-                   </option> 
+                   </option>
                    @endif
 
           </select>
@@ -358,7 +376,7 @@ if(conta_horas_minutos!=0){
 
 
 
-               <label> Aerodromo Chegada:</label>    
+               <label> Aerodromo Chegada:</label>
                <select name="aerodromo_chegada">
               <option></option>
                 @foreach ($aerodromos as $aerodromo)
@@ -409,7 +427,7 @@ if(conta_horas_minutos!=0){
                 <input type="number" name="num_pessoas" id="num_pessoas"  placeholder="Numero de Pessoas" value="{{old('num_pessoas',$movimento->num_pessoas)}}" >
             </div>
 
-         
+
         <div>
             <label for="inputDescolagens">Conta Horas Inicio</label>
             <input type="text" name="conta_horas_inicio" id="conta_horas_inicio"  placeholder="Conta Horas Inicio"  @if (isset($movimento)) value="{{$movimento->conta_horas_inicio}}" @endif onchange="precoVoo({{$aeronaves}})">
@@ -491,9 +509,9 @@ if(conta_horas_minutos!=0){
 
 
         @if (isset($tipo_conflito))
-       
-       <input type="text" name="tipo_conflito" value="{{$tipo_conflito}}"> 
-     
+
+       <input type="text" name="tipo_conflito" value="{{$tipo_conflito}}">
+
 
 
 

@@ -86,6 +86,8 @@ class MovimentoController extends Controller
 
 
 
+
+
         $aeronaves=Aeronave::all();
         $pressed=request()->query('movimentos');
         //meus movimentos
@@ -128,6 +130,11 @@ class MovimentoController extends Controller
                 'piloto' => request('piloto'),
                 'instrutor' => request('instrutor'),
                 'meus_movimentos'=>request('meus_movimentos'),
+                'aeronave'=>request('aeronave'),
+                'natureza'=>request('natureza'),
+                'data_inf'=>request('data_inf'),
+                'data_sup'=>request('data_sup'),
+
 
             ]);
         }else{
@@ -148,6 +155,10 @@ class MovimentoController extends Controller
                     'piloto' => request('piloto'),
                     'instrutor' => request('instrutor'),
                     'meus_movimentos'=>request('meus_movimentos'),
+                    'aeronave'=>request('aeronave'),
+                    'natureza'=>request('natureza'),
+                    'data_inf'=>request('data_inf'),
+                    'data_sup'=>request('data_sup'),
 
                 ]);
             }
@@ -327,8 +338,10 @@ class MovimentoController extends Controller
                 $movimentoModel->hora_aterragem = $this->parseDate($request->data . $request->hora_aterragem);
                 $movimentoModel->hora_descolagem = $this->parseDate($request->data . $request->hora_descolagem);
                 $movimentoModel = $this->calculos($movimentoModel);
+                $movimentoModel->save();
 
-            
+
+
             }
 
                 if (($request->natureza == 'I' && $movimentoModel->confirmado == 0)) {
@@ -358,7 +371,8 @@ class MovimentoController extends Controller
                     $movimentoModel->hora_descolagem = $this->parseDate($request->data . $request->hora_descolagem);
 
                     $movimentoModel = $this->calculos($movimentoModel);
-                
+
+                    $movimentoModel->save();
 
                 }
             }
@@ -410,6 +424,7 @@ class MovimentoController extends Controller
                 if($m->aeronave == $aeronave->matricula){
                 if(($m->conta_horas_inicio<=$contaHorasInicial)  && ($m->conta_horas_fim >= $contaHorasFinal) && $m->confirmado!="1"){ // faltam validaçoes se estiver a meio cenas desse genero
                 $m->tipo_conflito="S";
+                $m->save();
                            
               }
             }
@@ -598,7 +613,7 @@ class MovimentoController extends Controller
 
 
         foreach ($aeronaves as $aeronave) {
-            $valores[]=Aeronave::findOrFail($movimento->aeronave)->aeronaveValores()->get()->toArray();
+            $valores[]=Aeronave::findOrFail($aeronave->matricula)->aeronaveValores()->get()->toArray();
         }
 
 
@@ -771,7 +786,7 @@ class MovimentoController extends Controller
                 if(($m->conta_horas_inicio<=$contaHorasInicial)  && ($m->conta_horas_fim >= $contaHorasFinal)){ // faltam validaçoes se estiver a meio cenas desse genero
             
                 
-                $valores[]=Aeronave::findOrFail($aeronave->matricula)->aeronaveValores()->get()->toArray();
+                $valores[]=Aeronave::findOrFail($movimento->aeronave)->aeronaveValores()->get()->toArray();
             
                 $title="Conflito sobreposicao";
                 # code...

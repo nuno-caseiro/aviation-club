@@ -8,19 +8,7 @@
 
 
 
-
-
-    <form action="{{action('MovimentoController@store')}}" method="post">
-        @csrf
-        data,
-        hora_descolagem, hora_aterragem, aeronave, num_diario,
-        num_servico, piloto_id, natureza, aerodromo_partida,
-        aerodromo_chegada, num_aterragens, num_descolagens,
-        num_pessoas, conta_horas_inicio, conta_horas_fim, tempo_voo,
-        preco_voo, modo_pagamento, num_recibo, observacoes,
-        tipo_instrucao, instrutor_id
-
-        <script>
+    <script>
             function myFunction() {
                 var selectedValue=document.getElementById("natureza").value;
                 if(selectedValue != "I") {
@@ -171,8 +159,9 @@ if(conta_horas_minutos!=0){
 }
 }</script>
 
-   
 
+    <form action="{{action('MovimentoController@store')}}" method="post">
+        @csrf
 
        <h1>{{$title}}</h1>
   
