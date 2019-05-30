@@ -329,7 +329,7 @@ if(conta_horas_minutos!=0){
 
                  <label id="instrutor_label1">Instrutor</label>
 
-         <select name="instrutor_id" id="instrutor_id" onload="myFunction()" onchange="myLabelsInstrutor({{$socios}})" >
+         <select name="instrutor_id" id="instrutor_id" >
                     <option></option>
                     @foreach ($socios as $socio)
                    @if (Auth::user()->can('socio_Piloto', Auth::user()) && $movimento->instrutor_id==auth()->user()->id)
