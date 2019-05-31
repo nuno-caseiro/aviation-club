@@ -10,6 +10,10 @@ use App\Movimento;
 class AssuntosPendentesController extends Controller
 {
   
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
 
     /**
      * Display a listing of the resource.
@@ -19,6 +23,8 @@ class AssuntosPendentesController extends Controller
     public function index()
     {
         
+        $this->authorize('socio_Direcao', Auth::user());
+
         $movimentosComConflitos = Movimento::where('tipo_conflito','S')->orwhere('tipo_conflito','B')->get();
         $movimentosPorConfirmar = Movimento::where('confirmado', '0')->get();
         $usersComLicencasPorValidar = User::where('licenca_confirmada', '0')->get();

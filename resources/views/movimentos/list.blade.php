@@ -308,8 +308,8 @@
 
 
                 @else
-                    @if(Auth::user()->can('socio_Direcao', Auth::user())  || auth()->user()->id==$movimento->piloto_id || 
-                    auth()->user()->id==$movimento->instrutor)
+                @if(Auth::user()->can('socio_Direcao', Auth::user())  || auth()->user()->id==$movimento->piloto_id || 
+                auth()->user()->id==$movimento->instrutor)
 
 
                     <td><a class="btn btn-xs btn-primary" href="{{ action('MovimentoController@edit', $movimento->id) }}">Edit</a></td>
@@ -337,9 +337,11 @@
     </table>
 
 
+
+                    @if(Auth::user()->can('socio_Direcao', Auth::user())  ||  Auth::user()->can('socio_Piloto', Auth::user()))
     <a href="{{ action('MovimentoController@create') }}"class="btn btn-primary">Adicionar Movimento</a>
 
-
+    @endif
 
 
 
