@@ -541,13 +541,9 @@ if(conta_horas_minutos!=0){
 
 
 
-        @if (isset($tipo_conflito))
+        @if (!is_null($movimento->tipo_conflito))
 
        <input type="text" name="tipo_conflito" value="{{$tipo_conflito}}">
-
-
-
-
 
          <div>
             <label for="exampleFormControlTextarea1">Razao Conflito</label>
@@ -555,10 +551,9 @@ if(conta_horas_minutos!=0){
         </div>
 
 
-  <div>
-        <button type="submit" name="comConflitos">SaveWithConflicts</button>
-    </div>
-
+      <div>
+          <button type="submit" name="comConflitos">SaveWithConflicts</button>
+      </div>
 
 
 
@@ -568,7 +563,7 @@ if(conta_horas_minutos!=0){
             <div>
                 <button type="submit" name="ok">Save</button>
             </div>
-            @endif
+          
 
 
  
@@ -579,6 +574,18 @@ if(conta_horas_minutos!=0){
             <button type="submit" name="cancel">Cancel</button>
 
         </div>
+
+
+
+        @if(Auth::user()->can('socio_Direcao', Auth::user()))
+
+         <div>
+            <button type="submit" name="confirmar">Confirmar</button>
+
+        </div>
+        @endif
+
+  @endif
 
 @endsection
 

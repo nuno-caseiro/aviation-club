@@ -230,11 +230,21 @@ class MovimentoController extends Controller
 
 
 
+
+        $movimentoModel= Movimento::findOrFail($id);
+        $this->authorize('update', $movimentoModel ) ;
+
+
+        
+
         if ($request->has('cancel')) {
             return redirect()->action('MovimentoController@index');
         }
 
-            if ($request->has('confirmar')) {
+          
+
+
+               if ($request->has('confirmar')) {
             $movimentoModel->confirmado=1;
             $movimentoModel->tipo_conflito=null;
             $movimentoModel->justificacao_conflito=null;
@@ -244,9 +254,17 @@ class MovimentoController extends Controller
 
 
 
-        $movimentoModel= Movimento::findOrFail($id);
-        $this->authorize('update', $movimentoModel ) ;
+
         $movimentos=Movimento::all();
+
+
+   
+
+
+
+
+
+
 
         $contaHorasInicial=$request->conta_horas_inicio;
         $contaHorasFinal=$request->conta_horas_fim;
@@ -509,6 +527,7 @@ class MovimentoController extends Controller
               if($contaHorasFinal==$m->contaHorasInicial){
                     if($m->tipo_conflito=="B"){
                         $m->tipo_conflito=null;
+
                         //nao sei se necessario por a jsutificacao a 0
                     }
 
