@@ -109,7 +109,7 @@ class MovimentoController extends Controller
 
                     $movimento->confirmado="1";
                     $movimento->tipo_conflito=null;
-                    $Movimento->justificacao_conflito=null;
+                    $movimento->justificacao_conflito=null;
                     //conflitos
                     $movimento->save();
                 }
@@ -235,7 +235,7 @@ class MovimentoController extends Controller
         $this->authorize('update', $movimentoModel ) ;
 
 
-        
+
 
         if ($request->has('cancel')) {
             return redirect()->action('MovimentoController@index');

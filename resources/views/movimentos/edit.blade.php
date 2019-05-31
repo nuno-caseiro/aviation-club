@@ -479,7 +479,7 @@ if(conta_horas_minutos!=0){
 
             <div>
                 <label >Tempo de voo</label>
-                <input  type="number" name="tempo_voo" id="tempo_voo"  placeholder="Tempo de Voo" value="{{old('tempo_voo',$movimento->tempo_voo)}}" >
+                <input  type="number" name="tempo_voo" id="tempo_voo"  placeholder="Tempo de Voo" value="{{old('tempo_voo',$movimento->tempo_voo)}}" readonly>
             </div>
 
 
@@ -551,24 +551,29 @@ if(conta_horas_minutos!=0){
         </div>
 
 
-      <div>
+     
+
+ 
+
+  @endif
+
+    @if (isset($tipo_conflito))
+
+   <div>
           <button type="submit" name="comConflitos">SaveWithConflicts</button>
       </div>
 
 
-
-        @else
-
+      @else
 
             <div>
                 <button type="submit" name="ok">Save</button>
             </div>
           
+        @endif
 
 
- 
 
-  @endif
 
        <div>
             <button type="submit" name="cancel">Cancel</button>
