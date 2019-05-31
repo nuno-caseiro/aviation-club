@@ -40,7 +40,7 @@
                             @endif > {{ $aeronave->matricula }} </option>
                 @endforeach    </select>
 
-
+                «
             <div>
                 <label>Natureza</label>
                 <select name="natureza" id="natureza">
@@ -265,44 +265,37 @@
                   {{$movimento->justificacao_conflito}}
                   @else
                   -
+
+
+
                   @endif
 
-                    @if(Auth::user()->can('socio_DP', Auth::user())  || auth()->user()->id==$movimento->piloto_id ||
-                    auth()->user()->id==$movimento->instrutor)
 
+
+
+                    @if(Auth::user()->can('socio_Direcao', Auth::user()) )
                 @if($movimento->confirmado==1)
                             <td> <input type="checkbox"
                             checked="true" onclick="return false;"
                             value={{$movimento->id}}>Confirmar</td>
-
-
-
-
                   @else
-
                     <td> <input type="checkbox" name="checkboxConfirmado[]" value="{{$movimento->id}}"><label>Confirmado</label></td>
-
+                    @endif
                     @endif
 
 
-
-
-
-                    @endif
-
+                    </form>
 
 
 
 
-
-</form>
 
 
 
 
                 </td>
                 @if($movimento->confirmado=='1' )
-                    @if(Auth::user()->can('socio_DP', Auth::user()) || auth()->user()->id==$movimento->piloto_id || auth()->user()->id==$movimento->instrutor)
+                    @if(Auth::user()->can('socio_Direcao', Auth::user()) || auth()->user()->id==$movimento->piloto_id || auth()->user()->id==$movimento->instrutor)
                     <td><a class="btn btn-xs btn-primary" disabled >Edit</a></td>
                     <td>
                         @csrf
@@ -315,7 +308,7 @@
 
 
                 @else
-                    @if(Auth::user()->can('socio_DP', Auth::user())  || auth()->user()->id==$movimento->piloto_id || 
+                    @if(Auth::user()->can('socio_Direcao', Auth::user())  || auth()->user()->id==$movimento->piloto_id || 
                     auth()->user()->id==$movimento->instrutor)
 
 
@@ -325,17 +318,15 @@
 
 
 
-
-                    <td><form action="{{ action('MovimentoController@destroy', $movimento->id) }}"
-                              method="post">
-                            @csrf
-
-
-
-                            <input type="hidden" name="id" value="{{$movimento->id}}">
-                            <input type="submit" value="Delete" >
-                            </form>
-                    </td>
+                     <td>
+                    <form action="{{ action('MovimentoController@destroy', $movimento->id) }}"
+                    method="post">
+                  @csrf
+                  @method('delete')
+                  <input type="hidden" name="id" value="{{$movimento->id}}">
+                  <input class="btn btn-xs btn-primary" onclick="return confirm('Tem a certeza que deseja eleminar o movimento '+{{$movimento->id}})" type="submit" value="Delete">
+                    </form>
+                </td>
                     @endif
                 @endif
 
@@ -344,7 +335,6 @@
 
         </tbody>
     </table>
-
 
 
     <a href="{{ action('MovimentoController@create') }}"class="btn btn-primary">Adicionar Movimento</a>

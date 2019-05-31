@@ -80,6 +80,8 @@ Route::middleware(['auth','verified', 'ative'])->group(function () {
 
 
 
+Route::get('/pendentes','AssuntosPendentesController@index')->name('pendentes.index');
+
 
 
 // Authentication Routes... -- penso q o auth faz isto tudo internamente

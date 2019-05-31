@@ -9,9 +9,6 @@
 
 
 
-    @can(Auth::user()->can('isDirecao', Auth::user()) || (auth()->user()->id==$movimento->piloto_id) || (auth()->user()->id==$movimento->instrutor_id)) 
-  @endcan
-
 
 
 
@@ -19,7 +16,8 @@
     <h1>Movimento nao pode ser alterado porque ja foi confirmado</h1>
 @else
 
-        <script>
+
+    <script>
             function myFunction() {
                 var selectedValue=document.getElementById("natureza").value;
                 if(selectedValue != "I") {
@@ -42,6 +40,28 @@
                 }
             }
         </script>
+
+{{--
+
+  <script>
+            function myLabelsSocio(array) {
+                var selectedValue=document.getElementById("piloto_id").value;
+                console.log(selectedValue);
+
+                array.forEach(function(element) {
+                    var value=element.id; 
+                    if(selectedValue==value  ){
+                        document.getElementById("socio_label").innerHTML=element.name;
+                    }
+                      if(selectedValue==""){
+                        document.getElementById("socio_label").innerHTML=element.name;
+                    }
+                   
+                });
+            }
+        </script>
+
+--}}
 {{--
         <script type="text/javascript">
             function countHoras() {
@@ -68,20 +88,7 @@
     --}}
 
 
-        <script>
-            function myLabelsSocio(array) {
-                var selectedValue=document.getElementById("piloto_id").value;
-                array.forEach(function(element) {
-                    var value=element.id;
-                    if(selectedValue==value){
-                        document.getElementById("socio_label").innerHTML=element.name;
-                    }
-                    if(selectedValue==""){
-                        document.getElementById("socio_label").innerHTML="";
-                    }
-                });
-            }
-        </script>
+      
 
         <script>
             function myLabelsInstrutor(array) {
@@ -121,7 +128,7 @@ if(conta_horas_minutos!=0){
       if(valores[i][j]['matricula']==selectedValue){
           console.log("entrou matricula" +valores[i][j]['matricula']);
         if(valores[i][j]['unidade_conta_horas']==conta_horas_minutos){
-            //conta correta aqui por fazer
+            //conta correta aqui por fazer 
           var minutos=valores[i][j]['minutos'];
           console.log("entrou");
           console.log(valores[i][j]['matricula']);
@@ -133,7 +140,7 @@ if(conta_horas_minutos!=0){
   }
   }
 }
-  console.log(hora);//hora
+  console.log(hora);//hora 
     console.log("hora"+hora);
     console.log("minutos"+conta_horas_minutos);
   if(conta_horas_minutos==0){
@@ -148,7 +155,7 @@ if(conta_horas_minutos!=0){
     document.getElementById("tempo_voo").value=tempo_voo;
 
 
-
+    
 
     var preco_hora=parseInt(element.preco_hora*hora);
     var preco_minuto=parseInt(preco);
@@ -160,13 +167,13 @@ if(conta_horas_minutos!=0){
     console.log(preco_final);
 
     document.getElementById("preco_voo").value=(preco_final);
-
+    
     }
-
+ 
   }
 });
-
-
+ 
+ 
 }
 }</script>
 
@@ -266,45 +273,58 @@ if(conta_horas_minutos!=0){
 
 
 
-          <label id='tipo_instrucao'>Tipo Instruçao</label>
-          <select id="tipo_instrucao_select" name="tipo_instrucao" required>
-            <option value="{{$movimento->tipo_instrucao}}">@if ($movimento->tipo_instrucao=='D') Duplo @endif
-              @if($movimento->tipo_instrucao=='S')
-              Simples
-              @endif
-            </option>
-                 @if ($movimento->tipo_instrucao!='D')
-                <option value="D">
-                        Duplo
-                  </option>  @endif
-                  @if($movimento->tipo_instrucao!='S')
-                    <option value="S">
-                        Simples
-                   </option> @endif
-
-          </select>
 
 
 
 
+       
+        <label id="instrutor_label1"  @if ( $movimento->natureza!="I") style="display: none;" @endif >Instrutor</label>
+        
+         <select name="instrutor_id" id="instrutor_id"  onchange="myLabelsInstrutor({{$socios}})"  @if ($movimento->natureza!="I") style="display: none;" @endif >
+                    <option></option>
+                    @foreach ($socios as $socio)
+                   @if (Auth::user()->can('socio_Piloto', Auth::user()) && $movimento->instrutor_id==auth()->user()->id) 
+                  @if (auth()->user()->id==$socio->id)
+                      <option value="{{$socio->id}}" {{(  $socio->id == $movimento->instrutor_id) ? 'selected' : $movimento->instrutor_id }}> {{ $socio->id }}
+                    </option>
+                  @endif
+                 @else
+                  @if ($socio->tipo_socio=='P' && $socio->instrutor==1)
+                   <option value="{{$socio->id}}" {{(  $socio->id == $movimento->instrutor_id) ? 'selected' : $movimento->instrutor_id }}> {{ $socio->id }}
+                    </option>
+                    @endif
+                    @endif
+              
+                    @endforeach    </select>
+
+
+<div></div>
+  <label id="instrutor_label" readonly="readonly "></label>
 
 
 
 
 
 
-       <label >Piloto ID</label>
-            <select name="piloto_id" id="piloto_id" onchange="myLabelsSocio({{$socios}})">
+
+
+
+
+
+
+
+
+   <label >Piloto ID</label>
+            <select name="piloto_id" id="piloto_id">
                 <option></option>
                 @foreach ($socios as $socio)
                     <option value="{{$socio->id}}" {{(  $socio->id == $movimento->piloto_id) ? 'selected' : $movimento->piloto_id }}> {{ $socio->id }}
                     </option>
 
-
-
                 @endforeach    </select>
 
 
+<label id="socio_label" readonly></label>
 
 
 
@@ -326,10 +346,9 @@ if(conta_horas_minutos!=0){
 
 
 
+                 <label id="instrutor_label1" @if ($movimento->natureza!="I") style="display: none;"  @endif>Instrutor</label>
 
-                 <label id="instrutor_label1">Instrutor</label>
-
-         <select name="instrutor_id" id="instrutor_id" >
+         <select name="instrutor_id" id="instrutor_id" @if ($movimento->natureza!="I") style="display: none;"  @endif >
                     <option></option>
                     @foreach ($socios as $socio)
                    @if (Auth::user()->can('socio_Piloto', Auth::user()) && $movimento->instrutor_id==auth()->user()->id)
@@ -347,6 +366,40 @@ if(conta_horas_minutos!=0){
                         {{$instrutorEsp=$socio->name}}
                         @endif
                     @endforeach    </select>
+
+
+
+  <label id="instrutor_label" readonly="readonly "></label>
+
+
+
+
+
+
+
+
+
+       <label id="tipo_instrucao"   @if ($movimento->natureza!="I") style="display: none;" @endif >Tipo Instruçao</label>
+          <select id="tipo_instrucao_select" name="tipo_instrucao"  @if ($movimento->natureza!="I") style="display: none;" @endif>
+            
+            <option value="{{$movimento->tipo_instrucao}}">@if ($movimento->tipo_instrucao=='D') Duplo @endif
+              @if($movimento->tipo_instrucao=='S')
+              Simples
+              @endif
+            </option>
+                 @if ($movimento->tipo_instrucao!='D')
+                <option value="D"> 
+                        Duplo
+                  </option>  @endif
+                  @if($movimento->tipo_instrucao!='S')
+                    <option value="S">
+                        Simples
+                   </option> @endif
+
+          </select>
+
+
+
 
 
 
@@ -517,10 +570,8 @@ if(conta_horas_minutos!=0){
             </div>
             @endif
 
-        <div>
-          <button type="submit" name ="confirmar" value="confirmar">Confirmar</button>
-      </div>
-    </form>
+
+ 
 
   @endif
 
@@ -530,3 +581,7 @@ if(conta_horas_minutos!=0){
         </div>
 
 @endsection
+
+
+
+
