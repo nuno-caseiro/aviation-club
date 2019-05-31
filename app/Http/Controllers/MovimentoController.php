@@ -345,6 +345,8 @@ class MovimentoController extends Controller
         }
 
 
+
+
         if($user->direcao==1) {
             if ($request->natureza != 'I' && $movimentoModel->confirmado == 0) {
                 $movimentoModel->fill($request->except(['created_at', 'updated_at']));
@@ -711,19 +713,14 @@ class MovimentoController extends Controller
 
                 $movimento->hora_aterragem = $this->parseDate($request->data . $request->hora_aterragem);
                 $movimento->hora_descolagem = $this->parseDate($request->data . $request->hora_descolagem);
-                 $movimentoModel = $this->calculos($movimento);
+      
+
+                 $movimento = $this->calculos($movimento);
+      
+
+                   dd($movimento);
             }
         }
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -755,15 +752,14 @@ class MovimentoController extends Controller
                 $movimento->hora_aterragem = $this->parseDate($request->data . $request->hora_aterragem);
                 $movimento->hora_descolagem = $this->parseDate($request->data . $request->hora_descolagem);
 
-                       $movimentoModel = $this->calculos($movimento);
+                       $movimento = $this->calculos($movimento);
              
 
             }
         }
 
 
-
-
+      
 
             //podia ter feito uma funcao a ver se tinha conflito
 
