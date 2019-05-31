@@ -21,7 +21,7 @@ Auth::routes(['verify' => true]);
 Route::get('/', 'HomeController@index')->middleware('verified')->name('home');
 //aeronaves
 
-Route::middleware(['auth','verified', 'ative'])->group(function () {
+Route::middleware(['auth','verified', 'active'])->group(function () {
 
     Route::get('/password', 'UserController@showEditPassword')->name('showEditPassword');
     Route::patch('/password', 'UserController@editPassword')->name('editPassword');

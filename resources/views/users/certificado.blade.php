@@ -1,4 +1,4 @@
-
+{{--
 
 
 <a href="{{route('certificado_pdf',$user->id)}}" class="btn btn-success mb-2"> Download</a>
@@ -31,3 +31,5 @@
 
 
 </table>
+
+--}}

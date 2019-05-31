@@ -1,4 +1,4 @@
-
+{{--
 
 
     <a href="{{route('licenca_pdf',$user->id)}}" class="btn btn-success mb-2"> Download</a>
@@ -34,3 +34,4 @@
 
 
     </table>
+--}}

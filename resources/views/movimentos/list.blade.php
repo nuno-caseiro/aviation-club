@@ -308,7 +308,7 @@
 
 
                 @else
-                @if(Auth::user()->can('socio_Direcao', Auth::user())  || auth()->user()->id==$movimento->piloto_id || 
+                @if(Auth::user()->can('socio_Direcao', Auth::user())  || auth()->user()->id==$movimento->piloto_id ||
                 auth()->user()->id==$movimento->instrutor)
 
 
