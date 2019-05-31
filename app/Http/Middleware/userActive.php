@@ -7,7 +7,7 @@ use Closure;
 use Illuminate\Support\Facades\Auth;
 use \Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 
-class userAtive
+class userActive
 {
     /**
      * Handle an incoming request.

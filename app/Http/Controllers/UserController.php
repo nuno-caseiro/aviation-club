@@ -432,6 +432,13 @@ class UserController extends Controller
 
                 return $pdf->stream();
         */
+        $pdf = PDF::loadView('users.licencaPdf', compact('user'));
+
+
+        $content = $pdf->download('licenca_' . $user->id . '.pdf')->getOriginalContent();
+
+        Storage::put('docs_piloto/' . 'licenca_' . $user->id . '.pdf', $content);
+
         $path = storage_path('app/docs_piloto/licenca_' . $user->id . '.pdf');
         return response()->file($path);
 
@@ -500,7 +507,7 @@ class UserController extends Controller
         $this->authorize('socio_Direcao', Auth::user());
         $user = User::findOrFail($id);
         if ($user->quota_paga != $request->quota_paga) {
-            $user->quota_paga = !$user->quota_paga;
+            $user->quota_paga =!$user->quota_paga;
         }
 
         $user->save();
@@ -526,6 +533,12 @@ class UserController extends Controller
                // return $pdf->stream();
 
                 return $pdf->stream();*/
+
+        $pdf = PDF::loadView('users.certificadoPdf', compact('user'));
+
+        $content = $pdf->download('certificado_' . $user->id . '.pdf')->getOriginalContent();
+
+        Storage::put('docs_piloto/' . 'certificado_' . $user->id . '.pdf', $content);
 
         $path = storage_path('app/docs_piloto/certificado_' . $user->id . '.pdf');
         return response()->file($path);
@@ -569,7 +582,7 @@ class UserController extends Controller
 
         $filename = 'licenca_' . $user->id . '.pdf';
         //$headers = [ 'Content-Length' => '3028' ];
-        $file = storage_path('app/docs_piloto/certificado_' . $user->id . '.pdf');
+        //$file = storage_path('app/docs_piloto/certificado_' . $user->id . '.pdf');
         //$contents = Storage::get('app/docs_piloto/certificado_' . $user->id . '.pdf');
 
         //$size = filesize($contents);
