@@ -543,7 +543,7 @@ if(conta_horas_minutos!=0){
 
         @if (!is_null($movimento->tipo_conflito))
 
-       <input type="text" name="tipo_conflito" value="{{$tipo_conflito}}">
+       <input type="text" name="tipo_conflito" value="{{$movimento->tipo_conflito}}">
 
          <div>
             <label for="exampleFormControlTextarea1">Razao Conflito</label>
