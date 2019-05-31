@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 use App\Aeronave;
+use App\AeronavePilotos;
 use App\Http\Requests\MovimentoCreate;
 use App\Http\Requests\MovimentoUpdate;
 use App\User;
@@ -231,8 +232,22 @@ class MovimentoController extends Controller
 
 
 
+
         $movimentoModel= Movimento::findOrFail($id);
+
+
+      
+       
+             //    dd($request->conta_horas_inicio != $movimentoModel->conta_horas_inicio || $request->conta_horas_fim != $movimentoModel->conta_horas_fim);
+
+
+
+
         $this->authorize('update', $movimentoModel ) ;
+
+
+
+
 
 
 
@@ -276,25 +291,32 @@ class MovimentoController extends Controller
          $aeronaves=Aeronave::all();
         $socios=User::all();
         $aerodromos=Aerodromo::all();
-
-
-
-
-
-
-
-      
-
-
         $user=User::findOrFail(Auth::id());
 
 
+
+
+
+
+
+        
+
+
+
+
+
+
+
+
+
+
+
+
         if($user->direcao==0) {
-            if(Auth::id()==$movimentoModel->piloto_id ) {
+            if(Auth::id()==$movimentoModel->piloto_id){
             if ($request->natureza != 'I' && $movimentoModel->confirmado == 0) {
                 if (($request->piloto_id == $movimentoModel->piloto_id) == Auth::id() ) {
-
-                    //  $movimentoModel->fill($request->except('tipo_conflito','justificacao_conflito','updated_at','created_at','classe_certificado_instrutor','validade_certificado_instrutor','num_certificado_instrutor','tipo_licenca_instrutor','validade_licenca_instrutor', 'num_licenca_instrutor', 'instrutor_id','tipo_instrucao', 'classe_licenca_piloto' ));
+                    //  $movimentoModel->fill($request->except('tipo_conflito','justificacao_conflito','updated_at','created_at','classe_certificado_instrutor','validade_certificado_instrutor','num_certificado_instrutor','tipo_licenca_instrutor','validade_licenca_instrutor', 'num_licenca_instrutor', 'instrutor_id','tipo_instrucao', 'classe_licenca_piloto'));
                     $movimentoModel->fill($request->except(['created_at', 'updated_at']));
                     $piloto = User::findOrFail($request->piloto_id);
                     $movimentoModel->num_licenca_piloto = $piloto->num_licenca;
@@ -306,8 +328,7 @@ class MovimentoController extends Controller
                     $movimentoModel->hora_aterragem = $this->parseDate($request->data . $request->hora_aterragem);
                     $movimentoModel->hora_descolagem = $this->parseDate($request->data . $request->hora_descolagem);
                     $movimentoModel = $this->calculos($movimentoModel);
-
-                    $movimentoModel->save();
+                  
 
                     }
                 }
@@ -336,9 +357,8 @@ class MovimentoController extends Controller
                           $movimentoModel->hora_aterragem = $this->parseDate($request->data . $request->hora_aterragem);
                           $movimentoModel->hora_descolagem = $this->parseDate($request->data . $request->hora_descolagem);
                           $movimentoModel = $this->calculos($movimentoModel);
-
-                          $movimentoModel->save();
-
+                        
+                        
                       }
                   }
               }
@@ -352,6 +372,7 @@ class MovimentoController extends Controller
                 $movimentoModel->fill($request->except(['created_at', 'updated_at']));
                 if ($movimentoModel->piloto_id != $request->piloto_id) {
                     $newPilot = User::findOrFail($request->piloto_id);
+
                     $movimentoModel->num_licenca_piloto = $newPilot->num_licenca;
                     $movimentoModel->tipo_licenca_piloto = $newPilot->tipo_licenca;
                     $movimentoModel->validade_licenca_piloto = $newPilot->validade_licenca;
@@ -366,7 +387,7 @@ class MovimentoController extends Controller
                 $movimentoModel->hora_aterragem = $this->parseDate($request->data . $request->hora_aterragem);
                 $movimentoModel->hora_descolagem = $this->parseDate($request->data . $request->hora_descolagem);
                 $movimentoModel = $this->calculos($movimentoModel);
-                $movimentoModel->save();
+                
 
 
 
@@ -386,6 +407,7 @@ class MovimentoController extends Controller
 
                     }
                     if ($movimentoModel->instrutor_id != $request->instrutor_id) {
+                        dd($movimentoModel);
                         $instrutor = User::findOrFail($request->instrutor_id);
                         $movimentoModel->num_licenca_instrutor = $instrutor->num_licenca;
                         $movimentoModel->tipo_licenca_instrutor = $instrutor->tipo_licenca;
@@ -399,11 +421,77 @@ class MovimentoController extends Controller
                     $movimentoModel->hora_descolagem = $this->parseDate($request->data . $request->hora_descolagem);
 
                     $movimentoModel = $this->calculos($movimentoModel);
-
-                    $movimentoModel->save();
+               
+            
 
                 }
             }
+
+
+
+
+
+
+
+              //O gajo nao é autorizado nesta aeronave
+/*
+        $aeronavesPilotos=AeronavePilotos::all()->where('matricula',$request->aeronave)->where('piloto_id',$request->piloto_id);
+
+        if(!is_null($request->instrutor_id)){
+         $aeronavesInstrutor=AeronavePilotos::all()->where('matricula',$request->aeronave)->where('piloto_id',$request->instrutor_id);
+}
+
+
+
+     
+         $pilotoAutorizado=isset($aeronavesPilotos[0]->id);
+          $instrutorAutorizado=isset($aeronavesInstrutor[0]->id);
+
+          if(!$pilotoAutorizado || !$instrutorAutorizado){
+
+       
+                $movimento=$movimentoModel; 
+                $valores[]=Aeronave::findOrFail($movimento->aeronave)->aeronaveValores()->get()->toArray();
+
+                if(!$pilotoAutorizado){
+                $pilotoErrado="Piloto Invalido.Nao tem acesso a Aeronave";
+                }
+
+                if(isset($aeronavesInstrutor)&&!$instrutorAutorizado){
+                $instrutorErrado="instrutor Invalido.Nao tem acesso a Aeronave";
+            }
+
+                $title="Editar movimentos";
+             
+
+                if(!$pilotoAutorizado && isset($aeronavesInstrutor)&&!$instrutorAutorizado){
+
+                return view('movimentos.edit', compact('title', 'movimento','aeronaves','socios','aerodromos','valores','instrutorErrado','pilotoErrado'));
+
+            }
+
+            if(!$pilotoAutorizado){
+                   return view('movimentos.edit', compact('title', 'movimento','aeronaves','socios','aerodromos','valores','pilotoErrado'));
+            }
+
+
+
+            if(isset($aeronavesInstrutor)&&!$instrutorAutorizado){
+                  return view('movimentos.edit', compact('title', 'movimento','aeronaves','socios','aerodromos','valores','instrutorErrado'));
+            }
+
+
+            
+          }
+
+
+     
+
+*/
+   
+
+
+
 
 
 
@@ -430,7 +518,7 @@ class MovimentoController extends Controller
  
 
             //podia ter feito uma funcao a ver se tinha conflito
-
+           
 
           if($request->has('comConflitos') ) {       //&& $movAlterado->conta_horas_inicio!=$request->query('conta_horas_inicio') || $movAlterado->conta_horas_fim!=$request->query('conta_horas_fim') adicioanr para ver se ele alterou alguma coisa do conta horas se nao quero correr verificacoes de nvo
     
@@ -449,8 +537,9 @@ class MovimentoController extends Controller
             foreach ($movimentos as $m) {
                 foreach ($aeronaves as $aeronave) {
                     # code...
-                if($m->aeronave == $aeronave->matricula){
-                if(($m->conta_horas_inicio<=$contaHorasInicial)  && ($m->conta_horas_fim >= $contaHorasFinal) && $m->confirmado!="1"){ // faltam validaçoes se estiver a meio cenas desse genero
+                if($m->aeronave == $aeronave->matricula){//podia ser so com os movimentos so fazeiamos com que nao fosse == ao id do actual
+                if(($m->conta_horas_inicio<=$contaHorasInicial)  && ($m->conta_horas_fim >= $contaHorasFinal) && $m->confirmado!="1"){ // faltam validaçoes se estiver
+
                 $m->tipo_conflito="S";
                 $m->save();
                            

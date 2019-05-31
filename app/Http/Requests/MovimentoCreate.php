@@ -27,7 +27,7 @@ class MovimentoCreate extends FormRequest
             'data'=>'required|date_format:Y-m-d',
             'hora_descolagem'=>'required|date_format:H:i',
             'hora_aterragem'=>'required|date_format:H:i',
-            'aeronave' => 'required|exists:aeronaves,matricula',
+            'aeronave' => 'required|exists:aeronaves,matricula' ,
             'num_diario'=>'required|integer',
             'num_servico'=>'required|integer',
             'piloto_id'=>'required|exists:users,id,tipo_socio,P',

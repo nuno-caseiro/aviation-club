@@ -7,7 +7,13 @@
     @endif
 
 
+    @if (isset($pilotoErrado))
+    <label>Piloto Errado</label>
+    @endif
 
+    @if (isset($instrutorErrado))
+    <label>Instrutor Errado</label>
+    @endif
 
 
 
