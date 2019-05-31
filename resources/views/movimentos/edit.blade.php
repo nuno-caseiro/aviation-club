@@ -486,10 +486,9 @@ if(conta_horas_minutos!=0){
             {{--tempo voo e preco voo deveriam ser hidden inputs, calculados posteriormente na funcao calculos--}}
 
 
-
             <div>
                 <label>Preço de voo</label>
-                <input   type="number" name="preco_voo" id="preco_voo"  placeholder="Preço do Voo"  value="{{old('preco_voo',$movimento->preco_voo)}}"   >
+                <input   type="number" name="preco_voo" id="preco_voo"  placeholder="Preço do Voo"  value="{{$movimento->preco_voo}}"   >
             </div>
 
             <label>Forma de Pagamento</label>
