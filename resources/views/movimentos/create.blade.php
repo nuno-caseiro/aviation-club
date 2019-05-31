@@ -499,8 +499,7 @@ if(conta_horas_minutos!=0){
                 @endif
                 @else
                  @if ($socio->tipo_socio=='P' && $socio->instrutor==1)
-                          <option value="{{$socio->id}}"> {{ $socio->id }}</option> {{ $socio->id }}
-                    </option>
+                          <option value="{{$socio->id}}"> {{ $socio->id }} </option>
 
                 @endif
             @endif

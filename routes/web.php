@@ -38,7 +38,8 @@ Route::middleware(['auth','verified', 'active'])->group(function () {
     Route::post('/aeronaves/{aeronave}/pilotos/{piloto}', 'AeronaveController@addPilotoAutorizado');
     Route::delete('/aeronaves/{aeronave}/pilotos/{piloto}', 'AeronaveController@removePilotoAutorizado');
     Route::get('/aeronaves/{aeronave}/precos_tempos', 'AeronaveController@precosTempos');
-
+    Route::get('aeronaves/{aeronave}/linha_temporal', 'AeronaveController@timeLine');
+    ///aeronaves/{aeronave}/linha_temporal
 
 //movimentos
     Route::get('movimentos', 'MovimentoController@index')->name("movimentos.index");

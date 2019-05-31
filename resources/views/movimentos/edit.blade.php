@@ -287,21 +287,23 @@ if(conta_horas_minutos!=0){
         <label id="instrutor_label1"  @if ( $movimento->natureza!="I") style="display: none;" @endif >Instrutor</label>
         
          <select name="instrutor_id" id="instrutor_id"  onchange="myLabelsInstrutor({{$socios}})"  @if ($movimento->natureza!="I") style="display: none;" @endif >
-                    <option></option>
-                    @foreach ($socios as $socio)
-                   @if (Auth::user()->can('socio_Piloto', Auth::user()) && $movimento->instrutor_id==auth()->user()->id) 
-                  @if (auth()->user()->id==$socio->id)
-                      <option value="{{$socio->id}}" {{(  $socio->id == $movimento->instrutor_id) ? 'selected' : $movimento->instrutor_id }}> {{ $socio->id }}
-                    </option>
-                  @endif
-                 @else
-                  @if ($socio->tipo_socio=='P' && $socio->instrutor==1)
-                   <option value="{{$socio->id}}" {{(  $socio->id == $movimento->instrutor_id) ? 'selected' : $movimento->instrutor_id }}> {{ $socio->id }}
-                    </option>
-                    @endif
-                    @endif
-              
-                    @endforeach    </select>
+
+
+               @foreach ($socios as $socio)
+               @if (Auth::user()->can('socio_Piloto', Auth::user()) && $movimento->instrutor_id==auth()->user()->id)
+              @if (auth()->user()->id==$socio->id)
+                  <option value="{{$socio->id}}" {{(  $socio->id == $movimento->instrutor_id) ? 'selected' : $movimento->instrutor_id }}> {{ $socio->id }}
+                </option>
+              @endif
+             @else
+              @if ($socio->tipo_socio=='P' && $socio->instrutor==1)
+               <option value="{{$socio->id}}" {{(  $socio->id == $movimento->instrutor_id) ? 'selected' : $movimento->instrutor_id }}> {{ $socio->id }}
+                </option>
+                @endif
+                @endif
+
+                @endforeach
+         </select>
 
 
 <div></div>
@@ -331,55 +333,6 @@ if(conta_horas_minutos!=0){
 
 
 <label id="socio_label" readonly></label>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                 <label id="instrutor_label1" @if ($movimento->natureza!="I") style="display: none;"  @endif>Instrutor</label>
-
-         <select name="instrutor_id" id="instrutor_id" @if ($movimento->natureza!="I") style="display: none;"  @endif >
-                    <option></option>
-                    @foreach ($socios as $socio)
-                   @if (Auth::user()->can('socio_Piloto', Auth::user()) && $movimento->instrutor_id==auth()->user()->id)
-                  @if (auth()->user()->id==$socio->id)
-                      <option value="{{$socio->id}}" {{(  $socio->id == $movimento->instrutor_id) ? 'selected' : $movimento->instrutor_id }}> {{ $socio->id }}
-                    </option>
-                  @endif
-                 @else
-                  @if ($socio->tipo_socio=='P' && $socio->instrutor==1)
-                   <option value="{{$socio->id}}" {{(  $socio->id == $movimento->instrutor_id) ? 'selected' : $movimento->instrutor_id }}> {{ $socio->id }}
-                    </option>
-                    @endif
-                    @endif
-                    @if ($socio->id==$movimento->instrutor_id)
-                        {{$instrutorEsp=$socio->name}}
-                        @endif
-                    @endforeach    </select>
-
-
-
-  <label id="instrutor_label" readonly="readonly "></label>
-
-
-
-
 
 
 

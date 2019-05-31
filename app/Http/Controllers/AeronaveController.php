@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\AeronaveCreate;
 use App\Http\Requests\AeronaveUpdate;
+use App\Movimento;
 use DB;
 use App\Aeronave;
 use App\AeronaveValores;
@@ -198,6 +199,18 @@ class AeronaveController extends Controller
         $aeronaveValores= Aeronave::findOrFail($matricula)->aeronaveValores()->get()->toJson();
       
         return view('aeronaves.precoValores',compact('aeronaveValores', 'title', 'matricula'));
+
+    }
+
+
+    public function timeLine($matricula){
+
+
+    $result=DB::table('movimentos')->where('aeronave', $matricula)->orderByRaw('data desc' )->get();
+
+    return view('aeronaves.timeline ', compact('result'));
+
+
 
     }
 
