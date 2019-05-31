@@ -718,7 +718,7 @@ class MovimentoController extends Controller
                  $movimento = $this->calculos($movimento);
       
 
-                   dd($movimento);
+
             }
         }
 
@@ -759,7 +759,7 @@ class MovimentoController extends Controller
         }
 
 
-      
+ 
 
             //podia ter feito uma funcao a ver se tinha conflito
 
@@ -1119,6 +1119,8 @@ class MovimentoController extends Controller
     }
 
     public function calculos($movimento){
+        
+
         $minutos=0;
         $preco=0;
 
@@ -1130,14 +1132,14 @@ class MovimentoController extends Controller
 
         if($unidades!=0){
             $minutos= DB::table('aeronaves_valores')->select('minutos')->where('matricula',$movimento->aeronave)->where('unidade_conta_horas', $unidades)->value('minutos');
-            $preco = DB::table('aeronaves_valores')->select('preco')->where('matricula',$movimento->aeronave)->where('unidade_conta_horas',$unidades )->first()->preco;
+            $preco = DB::table('aeronaves_valores')->select('preco')->where('matricula',$movimento->aeronave)->where('unidade_conta_horas',$unidades)->first()->preco;
         }
         $minutos += 60*(integer)$horas;
-        $preco_hora=DB::table('aeronaves')->select('preco_hora')->where('matricula',$movimento->matricula)->value('preco_hora');
+        $preco_hora=DB::table('aeronaves')->select('preco_hora')->where('matricula',$movimento->aeronave)->value('preco_hora');
         $preco += (integer)$horas*$preco_hora;
         $movimento->preco_voo = $preco;
         $movimento->tempo_voo = $minutos;
-
+         
         return $movimento;
     }
 
