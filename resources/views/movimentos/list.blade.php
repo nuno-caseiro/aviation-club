@@ -40,7 +40,7 @@
                             @endif > {{ $aeronave->matricula }} </option>
                 @endforeach    </select>
 
-
+                «
             <div>
                 <label>Natureza</label>
                 <select name="natureza" id="natureza">
@@ -151,12 +151,11 @@
 
             @endif
 
-        </form>
 
 
 <table class="table table-striped table-bordered" style="width: 100%">
         <thead>
-        <tr>
+        <tr >
 
             <th>ID</th>
             <th>Data</th>
@@ -257,90 +256,81 @@
                 <td>{{$movimento->num_servico}}</td>
                 <td>{{$movimento->num_diario}}</td>
                 <td>@if($movimento->tipo_conflito!=null)
-                        {{$movimento->tipo_conflito}}
-                    @else
-                        -
-                    @endif
+                  {{$movimento->tipo_conflito}}
+                  @else
+                  -
+                  @endif
                 </td>
-                <td>@if($movimento->justificao_conflito!=null)
-                        {{$movimento->justificacao_conflito}}
-                    @else
-                        -
-                @endif
+              <td>@if($movimento->justificao_conflito!=null)
+                  {{$movimento->justificacao_conflito}}
+                  @else
+                  -
 
-                @if(Auth::user()->can('socio_DP', Auth::user())  || auth()->user()->id==$movimento->piloto_id ||
+
+
+                  @endif
+
+
+
+
+                    @if(Auth::user()->can('socio_Direcao', Auth::user()) )
+                @if($movimento->confirmado==1)
+                            <td> <input type="checkbox"
+                            checked="true" onclick="return false;"
+                            value={{$movimento->id}}>Confirmar</td>
+                  @else
+                    <td> <input type="checkbox" name="checkboxConfirmado[]" value="{{$movimento->id}}"><label>Confirmado</label></td>
+                    @endif
+                    @endif
+
+
+                    </form>
+
+
+
+
+
+
+
+
+                </td>
+                @if($movimento->confirmado=='1' )
+                    @if(Auth::user()->can('socio_Direcao', Auth::user()) || auth()->user()->id==$movimento->piloto_id || auth()->user()->id==$movimento->instrutor)
+                    <td><a class="btn btn-xs btn-primary" disabled >Edit</a></td>
+                    <td>
+                        @csrf
+                        @method('delete')
+                        <input type="hidden" name="id" >
+                        <input type="submit" value="Delete" disabled>
+                    </td>
+                    @endif
+
+
+
+                @else
+                @if(Auth::user()->can('socio_Direcao', Auth::user())  || auth()->user()->id==$movimento->piloto_id ||
                 auth()->user()->id==$movimento->instrutor)
 
-                    @if($movimento->confirmado==1)
-                        <td> <input type="checkbox"
-                                    checked="true" onclick="return false;"
-                                    value={{$movimento->id}}>Confirmar</td>
 
-
-
-
-                    @else
-
-                        <td> <input type="checkbox" name="checkboxConfirmado[]" value="{{$movimento->id}}"><label>Confirmado</label></td>
-
-                        @endif
+                    <td><a class="btn btn-xs btn-primary" href="{{ action('MovimentoController@edit', $movimento->id) }}">Edit</a></td>
 
 
 
 
 
-                        @endif
+                     <td>
+                    <form action="{{ action('MovimentoController@destroy', $movimento->id) }}"
+                    method="post">
+                  @csrf
+                  @method('delete')
+                  <input type="hidden" name="id" value="{{$movimento->id}}">
+                  <input class="btn btn-xs btn-primary" onclick="return confirm('Tem a certeza que deseja eleminar o movimento '+{{$movimento->id}})" type="submit" value="Delete">
+                    </form>
+                </td>
+                    @endif
+                @endif
 
-
-
-
-
-
-
-
-
-
-
-                        </td>
-                        @if($movimento->confirmado=='1' )
-                            @if(Auth::user()->can('socio_DP', Auth::user()) || auth()->user()->id==$movimento->piloto_id || auth()->user()->id==$movimento->instrutor)
-                                <td><a class="btn btn-xs btn-primary" disabled >Edit</a></td>
-                                <td>
-                                    @csrf
-                                    @method('delete')
-                                    <input type="hidden" name="id" >
-                                    <input type="submit" value="Delete" disabled>
-                                </td>
-                            @endif
-
-
-
-                        @else
-                            @if(Auth::user()->can('socio_DP', Auth::user())  || auth()->user()->id==$movimento->piloto_id ||
-                            auth()->user()->id==$movimento->instrutor)
-
-
-                                <td><a class="btn btn-xs btn-primary" href="{{ action('MovimentoController@edit', $movimento->id) }}">Edit</a></td>
-
-
-
-
-
-
-                                <td><form action="{{ action('MovimentoController@destroy', $movimento->id) }}"
-                                          method="post">
-                                        @csrf
-
-
-
-                                        <input type="hidden" name="id" value="{{$movimento->id}}">
-                                        <input type="submit" value="Delete" >
-                                    </form>
-                                </td>
-                            @endif
-                        @endif
-
-            </tr>
+                    </tr>
         @endforeach
 
         </tbody>
@@ -348,9 +338,10 @@
 
 
 
+                    @if(Auth::user()->can('socio_Direcao', Auth::user())  ||  Auth::user()->can('socio_Piloto', Auth::user()))
     <a href="{{ action('MovimentoController@create') }}"class="btn btn-primary">Adicionar Movimento</a>
 
-
+    @endif
 
 
 

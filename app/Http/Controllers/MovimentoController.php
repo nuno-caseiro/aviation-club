@@ -49,7 +49,7 @@ class MovimentoController extends Controller
         if (isset($movimento_id)) {
             $filtro = $filtro->where('id', $movimento_id);
         }
-    }
+
 
         if(isset($data_inf)){
             $filtro = $filtro->where('data','>=', $data_inf);
@@ -85,7 +85,7 @@ class MovimentoController extends Controller
         }
 
 
-
+            }
 
 
         $aeronaves=Aeronave::all();
@@ -108,6 +108,8 @@ class MovimentoController extends Controller
                     }
 
                     $movimento->confirmado="1";
+                    $movimento->tipo_conflito=null;
+                    $movimento->justificacao_conflito=null;
                     //conflitos
                     $movimento->save();
                 }
@@ -226,9 +228,43 @@ class MovimentoController extends Controller
 
     public function update(MovimentoUpdate $request, $id){
 
+
+
+
         $movimentoModel= Movimento::findOrFail($id);
         $this->authorize('update', $movimentoModel ) ;
+
+
+
+
+        if ($request->has('cancel')) {
+            return redirect()->action('MovimentoController@index');
+        }
+
+          
+
+
+               if ($request->has('confirmar')) {
+            $movimentoModel->confirmado=1;
+            $movimentoModel->tipo_conflito=null;
+            $movimentoModel->justificacao_conflito=null;
+            $movimentoModel->save();
+            return redirect()->action('MovimentoController@index');
+        }
+
+
+
+
         $movimentos=Movimento::all();
+
+
+   
+
+
+
+
+
+
 
         $contaHorasInicial=$request->conta_horas_inicio;
         $contaHorasFinal=$request->conta_horas_fim;
@@ -246,18 +282,8 @@ class MovimentoController extends Controller
 
 
 
-        if ($request->has('cancel')) {
-            return redirect()->action('MovimentoController@index');
-        }
 
-
-          if ($request->has('confirmar')) {
-            $movimentoModel->confirmado=1;
-            $movimentoModel->save();
-            return redirect()->action('MovimentoController@index');
-        }
-
-
+      
 
 
         $user=User::findOrFail(Auth::id());
@@ -317,6 +343,8 @@ class MovimentoController extends Controller
                   }
               }
         }
+
+
 
 
         if($user->direcao==1) {
@@ -469,7 +497,7 @@ class MovimentoController extends Controller
               $aux=0; 
               foreach ($movimentos as $m) {
                 if($m->matricula==$movimento->matricula){
-                if(($m->conta_horas_inicio<=$contaHorasInicial)  && ($m->conta_horas_fim >= $contaHorasFinal)){ // faltam validaçoes se estiver a meio cenas desse genero
+                if(($m->conta_horas_inicio<$contaHorasInicial)  && ($m->conta_horas_fim > $contaHorasFinal)){ // faltam validaçoes se estiver a meio cenas desse genero
             
                 
                 $valores[]=Aeronave::findOrFail($movimento->aeronave)->aeronaveValores()->get()->toArray();
@@ -491,7 +519,7 @@ class MovimentoController extends Controller
 
 
 
-              if( $m->conta_horas_fim==$contaHorasInicial){
+              if( $m->id != $movimento->id && $m->conta_horas_fim==$contaHorasInicial ){
              
                     //se por acaso tivesse conflito passava para null passa primeiro por sobreposicao por isso nao ha problena 
                 $aux=1;//encontrado o conta kilometros final
@@ -501,6 +529,8 @@ class MovimentoController extends Controller
               if($contaHorasFinal==$m->contaHorasInicial){
                     if($m->tipo_conflito=="B"){
                         $m->tipo_conflito=null;
+
+                        //nao sei se necessario por a jsutificacao a 0
                     }
 
 
@@ -517,7 +547,7 @@ class MovimentoController extends Controller
 
                  $hora_inicio=$request->hora_aterragem;
                  $hora_fim=$request->hora_descolagem;  
-
+                   $tipo_conflito="B";
               
                  $title="Conflito Buraco Temporal ";
                  $conflito="B";
@@ -683,19 +713,14 @@ class MovimentoController extends Controller
 
                 $movimento->hora_aterragem = $this->parseDate($request->data . $request->hora_aterragem);
                 $movimento->hora_descolagem = $this->parseDate($request->data . $request->hora_descolagem);
+      
 
+                 $movimento = $this->calculos($movimento);
+      
+
+                   dd($movimento);
             }
         }
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -727,15 +752,14 @@ class MovimentoController extends Controller
                 $movimento->hora_aterragem = $this->parseDate($request->data . $request->hora_aterragem);
                 $movimento->hora_descolagem = $this->parseDate($request->data . $request->hora_descolagem);
 
-
+                       $movimento = $this->calculos($movimento);
              
 
             }
         }
 
 
-
-
+      
 
             //podia ter feito uma funcao a ver se tinha conflito
 
@@ -857,8 +881,9 @@ class MovimentoController extends Controller
     public function destroy($id){
         $movimento= Movimento::findOrFail($id);
         $user= User::findOrFail(Auth::id());
-
-
+        $movimentos=Movimento::all();
+        $contaHorasInicial=$movimento->conta_horas_inicio;
+        $contaHorasFinal=$movimento->conta_horas_fim;
 
 
 
@@ -868,8 +893,8 @@ class MovimentoController extends Controller
                 foreach ($movimentos as $m) {
                     # code...
                     if($movimento->aeronave == $m->aeronave){
-                      if(($m->conta_horas_inicio<=$contaHorasInicial)  && ($m->conta_horas_fim >= $contaHorasFinal)){ 
-                        $m->tipo_conflito=null; //limpar a sobreposicao problema se houver 3 fazer outro for? fazer como se fossem 2 conflitos
+                      if(($m->conta_horas_inicio<$contaHorasInicial)  && ($m->conta_horas_fim > $contaHorasFinal)){ 
+                        $m->tipo_conflito=null; //limpar a sobreposicao problema se houver 3 fazer outro for? fiz  como se fossem 2 conflitos tem problemas
                         $m->tipo_conflito=null;
                       }
                   }

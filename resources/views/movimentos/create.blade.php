@@ -165,7 +165,7 @@ if(conta_horas_minutos!=0){
 
        <h1>{{$title}}</h1>
   
-       <input id="title"  name="title" value=@if ($title=="Conflito sobreposicao")   S   @else   B   @endif readonly>
+     
 
         <div>Date:</div></label><input type="date" name="data"  @if (isset($movimento)) value="{{$movimento->data}}" @endif>
 
@@ -212,13 +212,14 @@ if(conta_horas_minutos!=0){
         @else
         <label>ID Piloto:</label>
         <select id="piloto_id"name="piloto_id" onchange="myLabelsSocio({{$socios}})">
-            <option></option>
-            @foreach ($socios as $socio)
-                @if($socio->tipo_socio=='P')
+      
+             @foreach ($socios as $socio)
+             
                     <option value="{{$socio->id}}"> {{ $socio->id }}
-                        @endif
-                    </option>
-                    @endforeach
+ 
+         @endforeach
+        
+        
         </select>
         @endif
 
@@ -435,9 +436,13 @@ if(conta_horas_minutos!=0){
             <label for="exampleFormControlTextarea1">Observacoes</label>
             <textarea  name="observacoes" id="exampleFormControlTextarea1" rows="3"> @if (isset($movimento)) {{$movimento->observacoes}} @endif</textarea>
         </div>
-      <label id="tipo_instrucao">Tipo Instruçao</label>
+
+
+
+
+      <label id="tipo_instrucao" @if (isset($movimento) && $movimento->natureza!="I") style="display: none;" @endif >Tipo Instruçao</label>
          @if(isset($movimento))
-          <select id="tipo_instrucao_select" name="tipo_instrucao" >
+          <select id="tipo_instrucao_select" name="tipo_instrucao"   @if (isset($movimento) && $movimento->natureza!="I") style="display: none;" @endif>
             <option></option>
             <option value="{{$movimento->tipo_instrucao}}">@if ($movimento->tipo_instrucao=='D') Duplo @endif
               @if($movimento->tipo_instrucao=='S')
@@ -456,16 +461,16 @@ if(conta_horas_minutos!=0){
           </select>
          @else
   
-        <select name="tipo_instrucao" id="tipo_instrucao_select">
+        <select name="tipo_instrucao" id="tipo_instrucao_select"  @if (isset($movimento) && $movimento->natureza!="I") style="display: none;" @endif>
             <option value="S">Simples</option>
             <option value="D">Duplo</option>
         </select>
         @endif
 
 
-        <label id="instrutor_label1">Instrutor</label>
+        <label id="instrutor_label1"  @if (isset($movimento) && $movimento->natureza!="I") style="display: none;" @endif >Instrutor</label>
          @if(isset($movimento))
-         <select name="instrutor_id" id="instrutor_id" onload="myFunction()" onchange="myLabelsInstrutor({{$socios}})" >
+         <select name="instrutor_id" id="instrutor_id" onload="myFunction()" onchange="myLabelsInstrutor({{$socios}})"  @if (isset($movimento) && $movimento->natureza!="I") style="display: none;" @endif >
                     <option></option>
                     @foreach ($socios as $socio)
                    @if (Auth::user()->can('socio_Piloto', Auth::user()) && $movimento->instrutor_id==auth()->user()->id) 
@@ -486,10 +491,19 @@ if(conta_horas_minutos!=0){
 @else
         <select name="instrutor_id" id="instrutor_id" onchange="myLabelsInstrutor({{$socios}})">
             <option></option>
+
             @foreach ($socios as $socio)
-                @if ($socio->tipo_socio=='P' && $socio->instrutor==1)
+                   @if (Auth::user()->can('socio_Piloto', Auth::user())) 
+                  @if (auth()->user()->id==$socio->id)
                     <option value="{{$socio->id}}"> {{ $socio->id }}</option>
                 @endif
+                @else
+                 @if ($socio->tipo_socio=='P' && $socio->instrutor==1)
+                          <option value="{{$socio->id}}"> {{ $socio->id }}</option> {{ $socio->id }}
+                    </option>
+
+                @endif
+            @endif
             @endforeach
         </select>
 @endif
@@ -504,11 +518,11 @@ if(conta_horas_minutos!=0){
         </div>
 
 
-
+  <input id="title"  name="title" value=@if ($title=="Conflito sobreposicao")   S   @else   B   @endif readonly>
 
 
   <div>
-        <button type="submit" name="comConflitos">SaveConflicts</button>
+        <button type="submit" name="comConflitos">Save</button>
     </div>
 
 @else
