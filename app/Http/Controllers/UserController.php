@@ -193,6 +193,7 @@ class UserController extends Controller
         if ($request->tipo_socio != "P") {
             $user = new User();
             $user->fill($request->only(['name', 'nome_informal', 'email','ativo', 'data_nascimento', 'nif', 'telefone', 'endereco', 'num_socio', 'quota_paga', 'sexo', 'tipo_socio', 'direcao', 'instrutor', 'aluno']));
+
             $user->password = $request->data_nascimento;//Hash::make($request->data_nascimento);
             $user->password_inicial = true;
 
@@ -204,6 +205,10 @@ class UserController extends Controller
                 $path = $request->file('file_foto')->storeAs('public/fotos', $name);
                 $user->foto_url = $name;
             }
+
+
+
+
             $user->save();
             $user->sendEmailVerificationNotification();
 
@@ -223,7 +228,23 @@ class UserController extends Controller
                 $path = $request->file('file_foto')->storeAs('public/fotos', $name);
                 $user->foto_url = $name;
             }
+
             $user->save();
+            if (!is_null($request['file_certificado'])) {
+
+
+                $path = Storage::putFileAs('docs_piloto', $request->file('file_certificado'), 'certificado_' . $user->id . '.pdf');
+
+            }
+
+            if (!is_null($request['file_licenca'])) {
+
+                $path = Storage::putFileAs('docs_piloto', $request->file('file_licenca'), 'licenca_' . $user->id . '.pdf');
+
+            }
+
+
+
             $user->sendEmailVerificationNotification();
 
         }
@@ -339,6 +360,14 @@ class UserController extends Controller
         if (Auth::user()->can('socio_Direcao', Auth::user())) {
 
             $user->fill($request->all());
+
+            if($user->tipo_socio!="P"){
+                $user->tipo_licenca = null;
+                $user->classe_certificado=null;
+
+            }
+
+
             $user->save();
 
 

@@ -56,8 +56,8 @@ class UserStoreRequest extends FormRequest
 
         //Input::get('aluno')!=0 && Input::get('instrutor')!=0  &&
         if (Input::get('instrutor')==0 && Input::get('aluno')==0) {
-            $rules+=['aluno' => 'in:0',
-                'instrutor'=>'in:0'];
+            $rules+=['aluno' => 'in:0|nullable',
+                'instrutor'=>'in:0|nullable'];
         }else{
             $rules+=['aluno' => 'in:0,1|different:instrutor',
                 'instrutor'=>'in:0,1|different:aluno'];
