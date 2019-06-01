@@ -163,10 +163,10 @@ if(conta_horas_minutos!=0){
     <form action="{{action('MovimentoController@store')}}" method="post">
         @csrf
 
-    <div @if ($title=="Conflito Buraco Temporal ") class="p-3 mb-2 bg-warning text-dark" @endif  @if ($title=="Conflito sobreposicao") class="p-3 mb-2 bg-danger text-white" @endif   @if ($title=="Adicionar Movimento") class="p-3 mb-2 bg-primary text-white" @endif >{{$title}}</div>
-      
+<div @if ($title=="Conflito Buraco Temporal ") class="p-3 mb-2 bg-warning text-dark" @endif  @if ($title=="Conflito sobreposicao") class="p-3 mb-2 bg-danger text-white" @endif   @if ($title=="Adicionar Movimento") class="p-3 mb-2 bg-primary text-white" @endif >{{$title}}</div>
+  
 
-      
+  
      
 
         <div>Date:</div></label><input type="date" name="data"  @if (isset($movimento)) value="{{$movimento->data}}" @endif>
