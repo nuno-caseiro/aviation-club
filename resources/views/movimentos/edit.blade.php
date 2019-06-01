@@ -218,8 +218,6 @@ if(conta_horas_minutos!=0){
 
 
 
-
-
               <label >Aeronave</label>
         <select name="aeronave"  id="aeronave" onchange="precoVoo({{$aeronaves}})">
             <option></option>
@@ -503,20 +501,21 @@ if(conta_horas_minutos!=0){
 
 
 
+
+
               <label>Tipo Conflito</label>
        <select   name="tipo_conflito" id="tipo_conflito">
-                <option value="{{ $movimento->tipo_conflito}}">@if ($movimento->tipo_conflito=='B')
+                <option value="{{ $movimento->tipo_conflito}}">@if ($tipo_conflito=='B')
                         Buraco
                     @endif
-                    @if ($movimento->tipo_conflito=='S')
+                    @if ($tipo_conflito=='S')
                         Sobreposicao
                     @endif          
                 </option>
         
             </select>
 
-
-
+           
 
 
 
