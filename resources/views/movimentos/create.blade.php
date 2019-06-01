@@ -163,7 +163,12 @@ if(conta_horas_minutos!=0){
     <form action="{{action('MovimentoController@store')}}" method="post">
         @csrf
 
+<<<<<<< HEAD
    <div @if ($title=="Conflito Buraco Temporal") class="p-3 mb-2 bg-warning text-dark" @endif  @if ($title=="Conflito sobreposicao") class="p-3 mb-2 bg-danger text-white" @endif>{{$title}}</div>
+=======
+<div @if ($title=="Conflito Buraco Temporal ") class="p-3 mb-2 bg-warning text-dark" @endif  @if ($title=="Conflito sobreposicao") class="p-3 mb-2 bg-danger text-white" @endif   @if ($title=="Adicionar Movimento") class="p-3 mb-2 bg-primary text-white" @endif >{{$title}}</div>
+  
+>>>>>>> parent of dbd3ab7... jkjk
 
   
      

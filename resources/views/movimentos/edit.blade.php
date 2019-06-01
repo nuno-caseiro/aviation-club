@@ -495,13 +495,9 @@ if(conta_horas_minutos!=0){
 
 
 
-      @if (!is_null($movimento->tipo_conflito))
-
     
 
-
-
-
+      @if (isset($tipo_conflito))
 
               <label>Tipo Conflito</label>
        <select   name="tipo_conflito" id="tipo_conflito">
@@ -529,16 +525,15 @@ if(conta_horas_minutos!=0){
 
  
 
-  @endif
 
-    @if (isset($tipo_conflito))
+
 
    <div>
           <button type="submit" name="comConflitos">Save</button>
       </div>
 
 
-      @else
+    
 
             <div>
                 <button type="submit" name="ok">Save</button>
