@@ -5,30 +5,7 @@
 
 
 
-{{--
-            @if(Auth::user()->can('socio_DP', Auth::user()))
-                @if(is_null($pressed) || $pressed=='false' )
-                    <div class="form-group row mb-0">
-                        <div class="col-md-6 offset-md-5">
-                            <br>
 
-                            <button type="submit" class="btn btn-primary" name = "movimentos" value = "true">Meus Movimentos</button>
-                        </div>
-                    </div>
-
-                @endif
-                @if($pressed=='true')
-                    <div class="form-group row mb-0">
-                        <div class="col-md-6 offset-md-5">
-                            <br>
-
-                            <button type="submit" class="btn btn-primary" name = "movimentos" value = "false">Todos Movimentos</button>
-                        </div>
-                    </div>
-
-                @endif
-            @endif
---}}
 
 
 
@@ -289,6 +266,92 @@
 
         </tbody>
     </table>
+
+
+
+
+
+
+<H1>Tabela Certificados Por Validar User</H1>
+
+<table class="table table-striped table-bordered" style="width: 100%" id="mydatatable">
+    <thead>
+    <tr>
+        <th>Nome User</th>
+        <th>Número do certificado</th>
+        <th>Classe do certificado</th>
+        <th>Validade do certificado</th>
+        <th>Confirmação do certificado</th>
+    </tr>
+    </thead>
+    @foreach ($usersComCertificadosPorValidar as $user)
+
+    <thead>
+    <tr>
+        <td><a href="pilotos/{{$user->id}}/certificado">{{$user->name}}</a></td>
+        <td>{{ $user->num_certificado}}</td>
+        <td>{{ $user->classe_certificado}}</td>
+        <td>{{ $user->validade_certificado}}</td>
+        <td>{{ $user->certificado_confirmado}}</td>
+
+
+    </tr>
+
+    </thead>
+@endforeach
+
+</table>
+
+
+
+
+<H1>Tabela Licensas Por Validar User</H1>
+
+<table class="table table-striped table-bordered" style="width: 100%" id="mydatatable">
+    <thead>
+
+    <tr>
+        <th>Nome User</th>
+        <th>Número de Licença</th>
+        <th>Tipo de Licença</th>
+        <th>Instrutor</th>
+        <th>Validade de licença</th>
+        <th>Confirmação de licença</th>
+
+
+
+    </tr>
+    </thead>
+    @foreach ($usersComLicencasPorValidar as $user)
+
+        <thead>
+
+        <tr>
+            <td><a href="pilotos/{{$user->id}}/licenca">{{$user->name}}</a></td>
+            <td>{{ $user->num_licenca }}</td>
+            <td>{{ $user->tipo_licenca }}</td>
+            <td>{{ $user->instrutor}}</td>
+            <td>{{ $user->validade_licenca}}</td>
+            <td>{{ $user->licenca_confirmada}}</td>
+
+
+        </tr>
+
+        </thead>
+
+@endforeach
+
+
+</table>
+
+
+
+
+
+
+
+
+
 
 
 

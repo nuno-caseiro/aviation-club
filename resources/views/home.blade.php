@@ -226,6 +226,27 @@
                      Movimentos
                 </a>
             </li>
+
+            <li>
+
+                <a class="button" href="{{ url('/movimentos/estatisticas') }}">
+                    Estatisticas
+                </a>
+
+
+            </li>
+
+            <li>
+
+                @can('socio_Direcao', App\User::class)
+                    <a class="button" href="{{ url('/pendentes') }}">
+                        Pendentes
+                    </a>
+                @endcan
+
+            </li>
+
+
         </ul>
     </div>
 </div>

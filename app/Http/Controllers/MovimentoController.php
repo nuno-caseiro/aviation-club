@@ -95,7 +95,7 @@ class MovimentoController extends Controller
 
 
         if(!is_null($confirmarVarios) && $confirmarVarios=="true"){
-            dd(request()->all());
+
             if(!is_null($checkboxConfirmado)){
                 foreach ($checkboxConfirmado as $checked) {
                     $movimento= Movimento::findOrFail($checked);
