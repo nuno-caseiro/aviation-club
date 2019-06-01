@@ -276,8 +276,9 @@
                     @endif
 
 
-                </form>
 
+
+        </form>
 
 
 
@@ -293,8 +294,8 @@
                     @endif
 
                 @else
-
-                    <form action="{{ action('MovimentoController@destroy', $movimento->id) }}"
+                    <td><a class="btn btn-xs btn-primary" href="{{action("MovimentoController@edit", $movimento->id)}}" >Edit</a></td>
+                    <td><form action="{{ action('MovimentoController@destroy', $movimento->id) }}"
                     method="post">
                   @csrf
                   @method('delete')
@@ -304,13 +305,12 @@
 
                     @endif
 
-
+    </td>
 
         @endforeach
 
         </tbody>
     </table>
-
 
 
                     @if(Auth::user()->can('socio_Direcao', Auth::user())  ||  Auth::user()->can('socio_Piloto', Auth::user()))
