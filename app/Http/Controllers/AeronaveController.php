@@ -205,10 +205,22 @@ class AeronaveController extends Controller
 
     public function timeLine($matricula){
 
+        $data_inf=request()->query('data_inf');
+        $data_sup=request()->query('data_sup');
+
+
 
     $result=DB::table('movimentos')->where('aeronave', $matricula)->orderByRaw('data desc' )->get();
 
-    return view('aeronaves.timeline ', compact('result'));
+        if(isset($data_inf)){
+            $result = $result->where('data','>=', $data_inf);
+        }
+
+        if(isset($data_sup)){
+            $result = $result->where('data','<=', $data_sup);
+        }
+
+    return view('aeronaves.timeline ', compact('result', 'matricula'));
 
 
 

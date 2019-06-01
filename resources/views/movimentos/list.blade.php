@@ -261,16 +261,9 @@
                   -
                   @endif
                 </td>
-              <td>@if($movimento->justificao_conflito!=null)
-                  {{$movimento->justificacao_conflito}}
-                  @else
-                  -
-
-
-
-                  @endif
-
-
+              <td>
+                      {{$movimento->justificacao_conflito}}
+              </td>
 
 
                     @if(Auth::user()->can('socio_Direcao', Auth::user()) )
@@ -293,7 +286,7 @@
 
 
 
-                </td>
+
                 @if($movimento->confirmado=='1' )
                     @if(Auth::user()->can('socio_Direcao', Auth::user()) || auth()->user()->id==$movimento->piloto_id || auth()->user()->id==$movimento->instrutor)
                     <td><a class="btn btn-xs btn-primary" disabled >Edit</a></td>
@@ -324,13 +317,13 @@
                   @csrf
                   @method('delete')
                   <input type="hidden" name="id" value="{{$movimento->id}}">
-                  <input class="btn btn-xs btn-primary" onclick="return confirm('Tem a certeza que deseja eleminar o movimento '+{{$movimento->id}})" type="submit" value="Delete">
+                  <input class="btn btn-xs btn-primary" onclick="return confirm('Tem a certeza que deseja eleminar o movimento '{{$movimento->id}})" type="submit" value="Delete">
                     </form>
                 </td>
                     @endif
                 @endif
 
-                    </tr>
+
         @endforeach
 
         </tbody>
