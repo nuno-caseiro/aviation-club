@@ -493,8 +493,7 @@ if(conta_horas_minutos!=0){
             </div>
 
 
-          
-
+        
       @if (isset($tipo_conflito))
               <label>Tipo Conflito</label>
        <select   name="tipo_conflito" id="tipo_conflito">
@@ -521,8 +520,9 @@ if(conta_horas_minutos!=0){
 
  
 
+  @endif
 
-
+    @if (isset($tipo_conflito))
 
    <div>
           <button type="submit" name="comConflitos">SaveComConflitos</button>

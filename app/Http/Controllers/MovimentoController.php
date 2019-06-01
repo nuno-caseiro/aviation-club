@@ -506,8 +506,7 @@ class MovimentoController extends Controller
 
 
 
-
-            //podia ter feito uma funcao a ver se tinha conflito
+//podia ter feito uma funcao a ver se tinha conflito
            
 
           if($request->has('comConflitos')) {       //&& $movAlterado->conta_horas_inicio!=$request->query('conta_horas_inicio') || $movAlterado->conta_horas_fim!=$request->query('conta_horas_fim') adicioanr para ver se ele alterou alguma coisa do conta horas se nao quero correr verificacoes de nvo
@@ -629,6 +628,20 @@ class MovimentoController extends Controller
                  $conflito="B";
                    return view('movimentos.edit', compact('title', 'movimento','aeronaves','socios','aerodromos','valores','tipo_conflito'));
           }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
