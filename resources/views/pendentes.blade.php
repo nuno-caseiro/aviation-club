@@ -288,7 +288,7 @@
 
     <thead>
     <tr>
-        <td><a href="pilotos/{{$user->id}}/certificado">{{$user->name}}</a></td>
+        <td><a href="socios/{{$user->id}}/edit">{{$user->name}}</a></td>
         <td>{{ $user->num_certificado}}</td>
         <td>{{ $user->classe_certificado}}</td>
         <td>{{ $user->validade_certificado}}</td>
@@ -327,7 +327,7 @@
         <thead>
 
         <tr>
-            <td><a href="pilotos/{{$user->id}}/licenca">{{$user->name}}</a></td>
+            <td><a href="socios/{{$user->id}}/edit">{{$user->name}}</a></td>
             <td>{{ $user->num_licenca }}</td>
             <td>{{ $user->tipo_licenca }}</td>
             <td>{{ $user->instrutor}}</td>
