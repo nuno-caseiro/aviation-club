@@ -5,6 +5,46 @@
         @include('shared.errors')
     @endif
     
+<script type="text/javascript">
+     function preco_hora_label() {
+        var inputMinuto=document.getElementById("inputMinuto[10]").value;
+           var inputPreco=document.getElementById("inputPreco[10]").value;
+       
+        if(inputMinuto!="" && inputPreco!=""){    
+     document.getElementById("inputPrecoHora").value=inputPreco;
+        }
+
+     }
+
+
+
+</script>
+
+
+
+
+
+
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     <form method="POST" action="{{action('AeronaveController@store')}}" >
         @method("POST")
         @csrf
@@ -31,7 +71,7 @@
         </div>
         <div>
             <label for="inputPrecoHora">Preco hora</label>
-            <input type="text" name="preco_hora" id="inputPrecoHora"  placeholder="Preco hora" >
+            <input type="text" name="preco_hora" id="inputPrecoHora"  placeholder="Preco hora"  readonly>
         </div>
 
         <div>
@@ -52,8 +92,8 @@
                 @for($i=1; $i<=10; $i++)
                     <tr>
                         <th>{{$i}}</th>
-                        <th> <input type="text" name="tempos[{{$i}}]" id="inputMinuto" value="" placeholder="" >    </th>
-                        <th> <input type="text" name="precos[{{$i}}]" id="inputPreco" value="" placeholder="" >    </th>
+                        <th> <input type="text" name="tempos[{{$i}}]" id="inputMinuto[{{$i}}]" value="" placeholder="" onchange="preco_hora_label()" >    </th>
+                        <th> <input type="text" name="precos[{{$i}}]" id="inputPreco[{{$i}}]" value="" placeholder="" onchange="preco_hora_label()" >    </th>
 
                     </tr>
 

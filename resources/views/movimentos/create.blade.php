@@ -224,7 +224,7 @@ if(conta_horas_minutos!=0){
         @endif
 
         <label id="socio_label" readonly="readonly"> </label>
-
+        <div></div>
 
 
 
@@ -443,7 +443,6 @@ if(conta_horas_minutos!=0){
       <label id="tipo_instrucao" @if (isset($movimento) && $movimento->natureza!="I") style="display: none;" @endif >Tipo Instruçao</label>
          @if(isset($movimento))
           <select id="tipo_instrucao_select" name="tipo_instrucao"   @if (isset($movimento) && $movimento->natureza!="I") style="display: none;" @endif>
-            <option></option>
             <option value="{{$movimento->tipo_instrucao}}">@if ($movimento->tipo_instrucao=='D') Duplo @endif
               @if($movimento->tipo_instrucao=='S')
               Simples
