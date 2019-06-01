@@ -40,7 +40,7 @@
                             @endif > {{ $aeronave->matricula }} </option>
                 @endforeach    </select>
 
-            
+
             <div>
                 <label>Natureza</label>
                 <select name="natureza" id="natureza">
@@ -151,6 +151,8 @@
 
             @endif
 
+
+
 <table class="table table-striped table-bordered" style="width: 100%">
         <thead>
         <tr >
@@ -171,10 +173,8 @@
             <th>Numero Pessoas</th>
             <th>Conta Horas Inicio</th>
             <th>Conta Horas Fim</th>
-            @cannot('normal_ativo', Auth::id())
-                <th>Tempo de Voo</th>
-                <th>Preço Voo</th>
-            @endcannot
+            <th>Tempo de Voo</th>
+            <th>Preço Voo</th>
             <th>Confirmado</th>
             <th>Tipo Instrucao</th>
             <th>Instrutor</th>
@@ -182,8 +182,10 @@
             <th>Numero Descolagens</th>
             <th>Numero Servico</th>
             <th>Numero Diario</th>
+            @cannot('socio_normal', Auth::user())
             <th>Tipo Conflito</th>
             <th>Razao Conflito</th>
+                @endcannot
         </tr>
         </thead>
 
@@ -194,21 +196,21 @@
                 <td>{{$movimento->data}}</td>
                 <td>{{$movimento->hora_descolagem}}</td>
                 <td>{{$movimento->hora_aterragem}}</td>
-                @cannot('normal_ativo', Auth::id())
+
                     <td>{{$movimento->aeronave}}</td>
-                @endcannot
+
                 @foreach($users as $user)
                     @if($movimento->piloto_id== $user->id)
                         <td>{{$user->nome_informal}}</td>
                     @endif
                 @endforeach
-                @cannot('normal_ativo', Auth::id())
+
 
                     @if ($movimento->natureza=='E')   <td>Especial</td> @endif
                     @if ($movimento->natureza=='T')     <td>Treino</td> @endif
                     @if ($movimento->natureza=='I')  <td>Instrução</td> @endif
 
-                @endcannot
+
 
                 @foreach($aerodromos as $aerodromo)
                     @if ($movimento->aerodromo_partida == $aerodromo->code)
@@ -222,11 +224,11 @@
                 <td>{{$movimento->num_pessoas}}</td>
                 <td>{{$movimento->conta_horas_inicio}}</td>
                 <td>{{$movimento->conta_horas_fim}}</td>
-                @cannot('normal_ativo', Auth::id())
+
                     <td>{{$movimento->tempo_voo}}</td>
                     <td>{{$movimento->preco_voo}}</td>
 
-                @endcannot
+
 
                 @if($movimento->confirmado=='1')
                     <td> Confirmado</td>
@@ -253,6 +255,7 @@
                 <td>{{$movimento->num_descolagens}}</td>
                 <td>{{$movimento->num_servico}}</td>
                 <td>{{$movimento->num_diario}}</td>
+                @cannot('socio_normal', Auth::user())
                 <td>@if($movimento->tipo_conflito!=null)
                   {{$movimento->tipo_conflito}}
                   @else
@@ -262,26 +265,18 @@
               <td>
                       {{$movimento->justificacao_conflito}}
               </td>
+            @endcannot
 
+                    @if(Auth::user()->can('socio_Direcao', Auth::user()))
+                        @if($movimento->confirmado==1)
+                            <td> <input type="checkbox"  checked="true" onclick="return false;" value={{$movimento->id}}>Confirmar</td>
+                        @else
+                            <td> <input type="checkbox" name="checkboxConfirmado[]" value="{{$movimento->id}}"><label>Confirmado</label></td>
+                        @endif
+                    @endif
 
-                    @if(Auth::user()->can('socio_Direcao', Auth::user()) )
-                @if($movimento->confirmado==1)
-                            <td> <input type="checkbox"
-                            checked="true" onclick="return false;"
-                            value={{$movimento->id}}>Confirmar</td>
-                  @else
-                    <td> <input type="checkbox" name="checkboxConfirmado[]" value="{{$movimento->id}}"><label>Confirmado</label></td>
-                 
-                    @endif
-                    @endif
 
                 </form>
-                 
-
-
-
-
-
 
 
 
@@ -297,20 +292,8 @@
                     </td>
                     @endif
 
-
-
                 @else
-                @if(Auth::user()->can('socio_Direcao', Auth::user())  || auth()->user()->id==$movimento->piloto_id ||
-                auth()->user()->id==$movimento->instrutor)
 
-
-                    <td><a class="btn btn-xs btn-primary" href="{{ action('MovimentoController@edit', $movimento->id) }}">Edit</a></td>
-
-
-
-
-
-                     <td>
                     <form action="{{ action('MovimentoController@destroy', $movimento->id) }}"
                     method="post">
                   @csrf
@@ -318,9 +301,9 @@
                   <input type="hidden" name="id" value="{{$movimento->id}}">
                   <input class="btn btn-xs btn-primary" onclick="return confirm('Tem a certeza que deseja eleminar o movimento '{{$movimento->id}})" type="submit" value="Delete">
                     </form>
-                </td>
+
                     @endif
-                @endif
+
 
 
         @endforeach

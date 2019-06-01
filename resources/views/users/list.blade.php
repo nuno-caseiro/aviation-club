@@ -166,21 +166,22 @@
                             @endif
                         </form>
                         </td>
+
+                        <td><a class="btn btn-xs btn-primary" href="{{ action('UserController@edit', $utilizador->id) }}">Editar</a></td>
+
+                        <td>
+                            <form action="{{ action('UserController@destroy', $utilizador->id) }}"
+                                  method="post">
+                                @csrf
+                                @method('delete')
+                                <input type="hidden" name="id" value="{{$utilizador->id}}">
+                                <input class="btn btn-xs btn-primary" type="submit" value="Delete">
+                            </form>
+                        </td>
                     @endcan
 
 
 
-                <td><a class="btn btn-xs btn-primary" href="{{ action('UserController@edit', $utilizador->id) }}">Editar</a></td>
-
-                <td>
-                    <form action="{{ action('UserController@destroy', $utilizador->id) }}"
-                    method="post">
-                  @csrf
-                  @method('delete')
-                  <input type="hidden" name="id" value="{{$utilizador->id}}">
-                  <input class="btn btn-xs btn-primary" type="submit" value="Delete">
-                    </form>
-                </td>
 
                
 

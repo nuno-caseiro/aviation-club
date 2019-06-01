@@ -162,6 +162,13 @@
 
         <input type="hidden" value="{{$user->id}}" name="id">
 
+        <div>
+        @if($user->foto_url!=null)
+            <img src="{{Storage::url('public/fotos'.'/'.$user->foto_url)}}">
+        @else
+
+        @endif
+        </div>
 
         <div>
             <label for="num_socio">Número de socio</label>
