@@ -186,7 +186,7 @@ if(conta_horas_minutos!=0){
 
 
 
-      <label>{{$title}}</label>
+ <div class="card-header">{{$title}}</div>
 
 
     <form method="POST" action="{{action('MovimentoController@update', $movimento->id)}}"  >
@@ -197,7 +197,7 @@ if(conta_horas_minutos!=0){
 
 {{$instrutorEsp=null}}
 {{$socioEsp=null}}
-        <div class="card-header">Editar Movimento</div>
+
 
 
 
