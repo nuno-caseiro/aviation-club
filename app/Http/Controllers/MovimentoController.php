@@ -510,7 +510,7 @@ class MovimentoController extends Controller
             //podia ter feito uma funcao a ver se tinha conflito
            
 
-          if($request->has('comConflitos') && $alterado_conta_horas_fim && $alterado_conta_horas_inicial ) {       //&& $movAlterado->conta_horas_inicio!=$request->query('conta_horas_inicio') || $movAlterado->conta_horas_fim!=$request->query('conta_horas_fim') adicioanr para ver se ele alterou alguma coisa do conta horas se nao quero correr verificacoes de nvo
+          if($request->has('comConflitos')) {       //&& $movAlterado->conta_horas_inicio!=$request->query('conta_horas_inicio') || $movAlterado->conta_horas_fim!=$request->query('conta_horas_fim') adicioanr para ver se ele alterou alguma coisa do conta horas se nao quero correr verificacoes de nvo
     
           $textConflito=$request->razaoConflito;
 
