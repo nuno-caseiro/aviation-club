@@ -94,8 +94,7 @@ class MovimentoController extends Controller
         //meus movimentos
 
 
-        if(!is_null($confirmarVarios) && $confirmarVarios=="true"){
-
+        if(!is_null($confirmarVarios) && $confirmarVarios=="true"){ 
             if(!is_null($checkboxConfirmado)){
                 foreach ($checkboxConfirmado as $checked) {
                     $movimento= Movimento::findOrFail($checked);
@@ -228,6 +227,7 @@ class MovimentoController extends Controller
 
 
     public function update(MovimentoUpdate $request, $id){
+
 
 
 
@@ -406,7 +406,7 @@ class MovimentoController extends Controller
 
                     }
                     if ($movimentoModel->instrutor_id != $request->instrutor_id) {
-                        dd($movimentoModel);
+
                         $instrutor = User::findOrFail($request->instrutor_id);
                         $movimentoModel->num_licenca_instrutor = $instrutor->num_licenca;
                         $movimentoModel->tipo_licenca_instrutor = $instrutor->tipo_licenca;
@@ -439,9 +439,6 @@ class MovimentoController extends Controller
         if(!is_null($request->instrutor_id)){
          $aeronavesInstrutor=AeronavePilotos::all()->where('matricula',$request->aeronave)->where('piloto_id',$request->instrutor_id);
 }
-
-
-
      
          $pilotoAutorizado=isset($aeronavesPilotos[0]->id);
           $instrutorAutorizado=isset($aeronavesInstrutor[0]->id);
@@ -486,8 +483,8 @@ class MovimentoController extends Controller
 
      
 
-
-   */
+*/
+   
 
 
 
@@ -852,11 +849,10 @@ class MovimentoController extends Controller
 
           if($request->has('comConflitos')){       //&& $movAlterado->conta_horas_inicio!=$request->query('conta_horas_inicio') || $movAlterado->conta_horas_fim!=$request->query('conta_horas_fim') adicioanr para ver se ele alterou alguma coisa do conta horas se nao quero correr verificacoes de nvo
     
-          $textConflito=$request->razaoConflito;
-
+          
         
-          if($request->title=="S"){
-           $movimento->tipo_conflito="S";
+          if($request->tipo_conflito=="S"){
+            $movimento->tipo_conflito="S";
             $movimento->justificacao_conflito=$request->justificacao_conflito;
          
            $movimento->save();
@@ -904,12 +900,11 @@ class MovimentoController extends Controller
             
 
 
-                    $conflito="S";
-
+                           $tipo_conflito="S";
                     $hora_inicio=$request->hora_aterragem;
                     $hora_fim=$request->hora_aterragem;
 
-                   return view('movimentos.create',compact('title','aeronaves','socios','aerodromos','movimentos','valores','conflito','movimento','hora_inicio','hora_fim'));
+                   return view('movimentos.create',compact('title','aeronaves','socios','aerodromos','movimentos','valores','tipo_conflito','movimento','hora_inicio','hora_fim'));
                          }
               }
        
@@ -945,8 +940,8 @@ class MovimentoController extends Controller
 
              
                  $title="Conflito Buraco Temporal ";
-                 $conflito="B";
-                return view('movimentos.create',compact('title','aeronaves','socios','aerodromos','movimentos','valores','conflito','movimento','hora_inicio','hora_fim'));
+                 $tipo_conflito="B";
+                return view('movimentos.create',compact('title','aeronaves','socios','aerodromos','movimentos','valores','tipo_conflito','movimento','hora_inicio','hora_fim'));
           }
 
 
@@ -1046,9 +1041,10 @@ class MovimentoController extends Controller
         }
 
         $aux_movimentos = \DB::table('movimentos')
-            ->select(\DB::raw('sum(TIMESTAMPDIFF(MINUTE, hora_descolagem, hora_aterragem)/60) as "Total_Flight_Hours", DATE_FORMAT(data,"%Y/%m") as date, aeronave'))
+            ->select(\DB::raw('sum(TIMESTAMPDIFF(MINUTE, hora_descolagem, hora_aterragem)/60) as "Total_Flight_Hours", DATE_FORMAT(data,"%Y") as date, aeronave'))
             ->groupBy('date', 'aeronave')
             ->orderByRaw('aeronave asc, date asc')->get();
+
 
         $i=0;
         foreach ($aux_movimentos as $movimento) {
@@ -1186,10 +1182,10 @@ class MovimentoController extends Controller
 
             $query_chart = $query_chart->where('piloto_id', $id_piloto);
         }
-        if(strcmp($eixoY, "Aeronave") == 0){
+        if(strcmp($eixoX, "Aeronave") == 0){
             $query_chart = $query_chart->where('aeronave', 'like', $nome);
         }
-        $query_chart = $query_chart->groupBy('date')->get();
+        $query_chart = $query_chart->groupBy('data')->get();
 
 
         $chart = Charts::create('line', 'highcharts')

@@ -517,7 +517,20 @@ if(conta_horas_minutos!=0){
         </div>
 
 
-  <input id="title"  name="title" value=@if ($title=="Conflito sobreposicao")   S   @else   B   @endif readonly>
+   
+              <label>Tipo Conflito</label>
+       <select  name="tipo_conflito" id="tipo_conflito" >
+                <option value="{{$tipo_conflito}}">@if ($tipo_conflito=='B')
+                        Buraco
+                    @endif
+                    @if ($tipo_conflito=='S')
+                        Sobreposicao
+                    @endif                  
+                </option>
+
+
+            </select>
+
 
 
   <div>

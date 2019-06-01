@@ -499,9 +499,28 @@ if(conta_horas_minutos!=0){
 
 
 
-        @if (!is_null($movimento->tipo_conflito))
+      @if (!is_null($movimento->tipo_conflito))
 
-       <input type="text" name="tipo_conflito" value="{{$movimento->tipo_conflito}}">
+    
+
+
+
+              <label>Tipo Conflito</label>
+       <select   name="tipo_conflito" id="tipo_conflito">
+                <option value="{{ $movimento->tipo_conflito}}">@if ($movimento->tipo_conflito=='B')
+                        Buraco
+                    @endif
+                    @if ($movimento->tipo_conflito=='S')
+                        Sobreposicao
+                    @endif          
+                </option>
+        
+            </select>
+
+
+
+
+
 
          <div>
             <label for="exampleFormControlTextarea1">Razao Conflito</label>
