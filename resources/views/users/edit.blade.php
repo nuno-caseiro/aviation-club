@@ -170,6 +170,8 @@
         @endif
         </div>
 
+        <br>
+
         <div>
             <label for="num_socio">Número de socio</label>
             <input id="num_socio" type="text" name="num_socio" value="{{ $user->num_socio }}" >

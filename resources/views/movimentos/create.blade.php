@@ -163,12 +163,10 @@ if(conta_horas_minutos!=0){
     <form action="{{action('MovimentoController@store')}}" method="post">
         @csrf
 
-<<<<<<< HEAD
-   <div @if ($title=="Conflito Buraco Temporal") class="p-3 mb-2 bg-warning text-dark" @endif  @if ($title=="Conflito sobreposicao") class="p-3 mb-2 bg-danger text-white" @endif>{{$title}}</div>
-=======
+
+
 <div @if ($title=="Conflito Buraco Temporal ") class="p-3 mb-2 bg-warning text-dark" @endif  @if ($title=="Conflito sobreposicao") class="p-3 mb-2 bg-danger text-white" @endif   @if ($title=="Adicionar Movimento") class="p-3 mb-2 bg-primary text-white" @endif >{{$title}}</div>
-  
->>>>>>> parent of dbd3ab7... jkjk
+
 
   
      
@@ -178,7 +176,7 @@ if(conta_horas_minutos!=0){
         <div>Hora Descolagem:</div><input id="hora_descolagem" type="time" name="hora_descolagem"  @if (isset($movimento)) value="{{$hora_inicio}}" @endif >
 
         <div>Hora Aterragem</div><input id="hora_aterragem" type="time" name="hora_aterragem" @if (isset($movimento)) value="{{$hora_fim}}" @endif>
-
+    <div></div>
         <label >Aeronave</label>
         <select name="aeronave"  id="aeronave" onchange="precoVoo({{$aeronaves}})">
             <option></option>
@@ -539,19 +537,19 @@ if(conta_horas_minutos!=0){
 
 
   <div>
-        <button type="submit" name="comConflitos">Save</button>
+        <button type="submit" class="btn btn-primary" name="comConflitos">Save</button>
     </div>
 
 @else
         <div>
-            <button type="submit" name="ok">Save</button>
+            <button type="submit" class="btn btn-primary" name="ok">Save</button>
 
         </div>
 @endif
 
 
           <div>
-            <button type="submit" name="cancel">Cancel</button>
+            <button type="submit" class="btn btn-primary" name="cancel">Cancel</button>
 
         </div>
 

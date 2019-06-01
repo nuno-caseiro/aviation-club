@@ -529,23 +529,23 @@ if(conta_horas_minutos!=0){
 
 
    <div>
-          <button type="submit" name="comConflitos">Save</button>
+          <button type="submit" name="comConflitos" class="btn btn-primary">Save</button>
       </div>
 
 
-    
+        @endif
 
             <div>
-                <button type="submit" name="ok">Save</button>
+                <button type="submit" class="btn btn-primary" name="ok">Save</button>
             </div>
           
-        @endif
+
 
 
 
 
        <div>
-            <button type="submit" name="cancel">Cancel</button>
+            <button type="submit" class="btn btn-primary" name="cancel">Cancel</button>
 
         </div>
 
@@ -554,7 +554,7 @@ if(conta_horas_minutos!=0){
         @if(Auth::user()->can('socio_Direcao', Auth::user()))
 
          <div>
-            <button type="submit" name="confirmar">Confirmar</button>
+            <button type="submit" name="confirmar" class="btn btn-primary">Confirmar</button>
 
         </div>
         @endif

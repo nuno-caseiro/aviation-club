@@ -184,12 +184,12 @@ class AeronaveController extends Controller
     public function addPilotoAutorizado($matricula, $piloto){
 
         DB::table('aeronaves_pilotos')->insert(['matricula'=>$matricula, 'piloto_id' =>$piloto]);
-        return redirect()->action('AeronaveController@index');
+        return redirect()->back();
     }
 
     public function removePilotoAutorizado($matricula, $piloto){
         DB::table('aeronaves_pilotos')->where('matricula', $matricula)->where('piloto_id', $piloto)->delete();
-        return redirect()->action('AeronaveController@index');
+        return redirect()->back();
 
     }
 
