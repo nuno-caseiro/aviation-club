@@ -64,10 +64,10 @@
                   document.getElementById("inputNrLicenca").value=null;
                   document.getElementById("inputTipoLicenca").value=null;
 
-                  document.getElementById("inputAluno").value=0;
+                  document.getElementById("inputAluno").value=null;
 
 
-                  document.getElementById("inputInstrutor").value=0;
+                  document.getElementById("inputInstrutor").value=null;
 
 
 
@@ -292,7 +292,7 @@
 
         @can('socio_DP', Auth::user())
 
-{{--@if ($user->tipo_socio!="P") style="display: none;" @endif--}}
+
 
             <div>
                 <label id="labelInputNrLicenca" for="inputNrLicenca" @if ($user->tipo_socio!="P") style="display: none;" @endif> Número de licença </label>
@@ -395,11 +395,15 @@
               </div>
       </form>
 
+    @can('socio_DP', Auth::user())
+
     <form method="POST" action="{{ action('UserController@sendReactivateEmail', $user->id) }}" >
 
         @csrf
         <button type="submit" class="btn btn-xs btn-primary" >Send Email</button>
 
     </form>
+
+    @endcan
 
   @endsection

@@ -69,8 +69,9 @@
     </form>
 
     <table class="table table-striped table-bordered" style="width: 100%" id="mydatatable">
+        @can('socio_Direcao', App\User::class)
         <a class="btn btn-xs btn-primary" href="{{ action('UserController@create') }}">Add User</a>
-
+        @endcan
 
     <thead>
     <tr>
