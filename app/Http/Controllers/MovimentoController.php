@@ -1182,8 +1182,11 @@ class MovimentoController extends Controller
 
             $query_chart = $query_chart->where('piloto_id', $id_piloto);
         }
-        if(strcmp($eixoX, "Aeronave") == 0){
+         
+        if(strcmp($eixoY,"Aeronave") == 0){
             $query_chart = $query_chart->where('aeronave', 'like', $nome);
+        
+             
         }
         $query_chart = $query_chart->groupBy('date')->get();
 
