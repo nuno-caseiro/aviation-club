@@ -324,7 +324,7 @@
                   @csrf
                   @method('delete')
                   <input type="hidden" name="id" value="{{$movimento->id}}">
-                  <input class="btn btn-xs btn-primary" onclick="return confirm('Tem a certeza que deseja eleminar o movimento '+{{$movimento->id}})" type="submit" value="Delete">
+                  <input class="btn btn-xs btn-primary" onclick="return confirm('Tem a certeza que deseja eleminar o movimento '{{$movimento->id}})" type="submit" value="Delete">
                     </form>
                 </td>
                     @endif

@@ -16,12 +16,16 @@
                   document.getElementById("labelInputNrLicenca").style="display: none;"
                   document.getElementById("labelInputTipoLicenca").style="display: none;"
                   document.getElementById("inputTipoLicenca").style="display: none;"
-                  document.getElementById("labelInputAluno").style="display: none;"
+                  document.getElementById("labelAluno").style="display: none;"
                   document.getElementById("inputAluno").style="display: none;"
-                  document.getElementById("labelInputInstrutor").style="display: none;"
-
                   document.getElementById("labelInstrutor").style="display: none;"
-                  document.getElementById("labeValidadeLicenca").style="display: none;"
+
+
+                  document.getElementById("inputInstrutor").style="display: none;"
+
+
+
+                  document.getElementById("labelValidadeLicenca").style="display: none;"
                   document.getElementById("validade_licenca").style="display: none;"
                   document.getElementById("labelInputLicencaConfirmada").style="display: none;"
                   document.getElementById("inputLicencaConfirmada1").style="display: none;"
@@ -38,6 +42,7 @@
                   document.getElementById("validade_certificado").style="display: none;"
                   document.getElementById("inputValidadeCertificado").style="display: none;"
 
+
                   document.getElementById("labelCertificadoConfirmado").style="display: none;"
                   document.getElementById("inputCertificadoConfirmado").style="display: none;"
 
@@ -45,36 +50,71 @@
                   document.getElementById("naoConfirmado").style="display: none;"
 
                   document.getElementById("confirmado").style="display: none;"
+                  document.getElementById("confirmado1").style="display: none;"
+                  document.getElementById("naoConfirmado1").style="display: none;"
 
                   document.getElementById("labelCopia1").style="display: none;"
                   document.getElementById("hrefDownload2").style="display: none;"
                   document.getElementById("hrefDownload3").style="display: none;"
                   document.getElementById("file_certificado").style="display: none;"
+                  document.getElementById("file_licenca").style="display: none;"
 
-  //Antonio Tens de meter tudo com Inputs a null aqui ou metes no controller a null baseado no tipoSocio
-                  document.getElementById("inputCertificadoConfirmado").value=null;
+
+
                   document.getElementById("inputNrLicenca").value=null;
                   document.getElementById("inputTipoLicenca").value=null;
-                  document.getElementById("inputInstrutor").value=null;
-                  document.getElementById("inputAluno").value=null;
+
+                  document.getElementById("inputAluno").value=0;
+
+
+                  document.getElementById("inputInstrutor").value=0;
+
+
+
+
+                  document.getElementById("validade_licenca").value=null;
                   document.getElementById("inputLicencaConfirmada1").value=null;
                   document.getElementById("inputLicencaConfirmada2").value=null;
+
+
+                  document.getElementById("hrefDownload").value=null;
+                  document.getElementById("hrefDownload1").value=null;
                   document.getElementById("inputNrCertificado").value=null;
+
+
+                  document.getElementById("classe_certificado").value=null;
+
+
+                  document.getElementById("validade_certificado").value=null;
                   document.getElementById("inputValidadeCertificado").value=null;
-                  document.getElementById("inputCertificadoPorConfirmar").value=null;
+
+
                   document.getElementById("inputCertificadoConfirmado").value=null;
+
+                  document.getElementById("inputCertificadoPorConfirmar").value=null;
+
+
+
+
+                  document.getElementById("hrefDownload2").value=null;
+                  document.getElementById("hrefDownload3").value=null;
+                  document.getElementById("file_certificado").value=null;
+                  document.getElementById("file_licenca").value=null;
+
+
 
 
 
               }else{
                   document.getElementById("labelInputNrLicenca").style="display: ?;"
+                  document.getElementById("inputNrLicenca").style="display: ?;"
                   document.getElementById("labelInputTipoLicenca").style="display: ?;"
                   document.getElementById("inputTipoLicenca").style="display: ?;"
-                  document.getElementById("labelInputAluno").style="display: ?;"
+                  document.getElementById("labelAluno").style="display: ?;"
                   document.getElementById("inputAluno").style="display: ?;"
-                  document.getElementById("labelInputInstrutor").style="display: ?;"
+                  document.getElementById("inputInstrutor").style="display: ?;"
                   document.getElementById("labelInstrutor").style="display: ?;"
-                  document.getElementById("labeValidadeLicenca").style="display: ?;"
+                  document.getElementById("labelValidadeLicenca").style="display: ?;"
                   document.getElementById("validade_licenca").style="display: ?;"
                   document.getElementById("labelInputLicencaConfirmada").style="display: ?;"
                   document.getElementById("inputLicencaConfirmada1").style="display: ?;"
@@ -96,13 +136,16 @@
 
                   document.getElementById("inputCertificadoPorConfirmar").style="display: ?;"
                   document.getElementById("naoConfirmado").style="display: ?;"
+                  document.getElementById("naoConfirmado1").style="display: ?;"
 
                   document.getElementById("confirmado").style="display: ?;"
+                  document.getElementById("confirmado1").style="display: ?;"
 
                   document.getElementById("labelCopia1").style="display: ?;"
                   document.getElementById("hrefDownload2").style="display: ?;"
                   document.getElementById("hrefDownload3").style="display: ?;"
                   document.getElementById("file_certificado").style="display: ?;"
+                  document.getElementById("file_licenca").style="display: ?;"
 
               }
           }
@@ -171,9 +214,12 @@
         <div>
             <label for="inputTipoSocio">Tipo de Sócio </label>
             <select name="tipo_socio" id="inputTipoSocio" onchange="myFunction()">
-                <option value="P" @if((Auth::user()->can('socio_normal',App\User::class))) {{($user->tipo_socio=="P")? "selected" : "disabled" }} @endif >Piloto</option>
-                <option value="NP"@if((Auth::user()->can('socio_normal',App\User::class))) {{($user->tipo_socio=="NP")? "selected" : "disabled" }} @endif >Não Piloto</option>
-                <option value="A" @if((Auth::user()->can('socio_normal',App\User::class))) {{($user->tipo_socio=="A")? "selected" : "disabled" }} @endif>Aeromodelista</option>
+                <option value="P" @if((Auth::user()->can('socio_normal',App\User::class))) {{($user->tipo_socio=="P")? "selected" : "disabled" }} @endif
+                @if((Auth::user()->can('socio_direcao',App\User::class))) {{($user->tipo_socio=="P")? "selected" : "" }} @endif>Piloto</option>
+                <option value="NP"@if((Auth::user()->can('socio_normal',App\User::class))) {{($user->tipo_socio=="NP")? "selected" : "disabled" }} @endif
+                @if((Auth::user()->can('socio_direcao',App\User::class))) {{($user->tipo_socio=="NP")? "selected" : "" }} @endif>Não Piloto</option>
+                <option value="A" @if((Auth::user()->can('socio_normal',App\User::class))) {{($user->tipo_socio=="A")? "selected" : "disabled" }} @endif
+                @if((Auth::user()->can('socio_direcao',App\User::class))) {{($user->tipo_socio=="A")? "selected" : "" }} @endif>Aeromodelista</option>
             </select>
         </div>
 
@@ -239,17 +285,17 @@
 
         @can('socio_DP', Auth::user())
 
-
+{{--@if ($user->tipo_socio!="P") style="display: none;" @endif--}}
 
             <div>
-                <label id="labelInputNrLicenca" for="inputNrLicenca"> Número de licença </label>
-                <input type="text" name="num_licenca" id="inputNrLicenca"  value="{{$user->num_licenca}}">
+                <label id="labelInputNrLicenca" for="inputNrLicenca" @if ($user->tipo_socio!="P") style="display: none;" @endif> Número de licença </label>
+                <input type="text" name="num_licenca" id="inputNrLicenca" @if ($user->tipo_socio!="P") style="display: none;" @endif value="{{$user->num_licenca}}">
             </div>
 
 
             <div>
-                <label id="labelInputTipoLicenca"for="inputTipoLicenca">Tipo de licença</label>
-                <select name="tipo_licenca" id="inputTipoLicenca">
+                <label id="labelInputTipoLicenca"for="inputTipoLicenca" @if ($user->tipo_socio!="P") style="display: none;" @endif>Tipo de licença</label>
+                <select name="tipo_licenca" id="inputTipoLicenca" @if ($user->tipo_socio!="P") style="display: none;" @endif>
                     @foreach($licencas as $licenca)
                         <option id="inputTipoLicenca" value="{{$licenca->code}}" {{($user->tipo_licenca==$licenca->code)? "selected" : "" }} >{{$licenca->nome}}</option>
                     @endforeach
@@ -260,77 +306,77 @@
 
 
         <div>
-            <label id="labelInputAluno"for="inputAluno"> Aluno </label>
-            <input type="text" name="aluno" id="inputAluno" value="{{$user->aluno}}">
+            <label id="labelAluno"for="inputAluno" @if ($user->tipo_socio!="P") style="display: none;" @endif> Aluno </label>
+            <input type="text" name="aluno" id="inputAluno" @if ($user->tipo_socio!="P") style="display: none;" @endif value="{{$user->aluno}}">
 
         </div>
 
         <div>
-            <label id="labelInputInstrutor"for="inputInstrutor"> Instrutor </label>
-            <input type="text" name="instrutor" id="inputInstrutor" value="{{$user->instrutor}}">
+            <label id="labelInstrutor"for="inputInstrutor" @if ($user->tipo_socio!="P") style="display: none;" @endif> Instrutor </label>
+            <input type="text" name="instrutor" id="inputInstrutor" @if ($user->tipo_socio!="P") style="display: none;" @endif value="{{$user->instrutor}}" >
         </div>
 
             <div>
-                <label id="labeValidadeLicenca">Validade da licença</label>
-                <input id="validade_licenca"type="date" name="validade_licenca" value="{{$user->validade_licenca}}") >
+                <label id="labelValidadeLicenca" @if ($user->tipo_socio!="P") style="display: none;" @endif>Validade da licença</label>
+                <input id="validade_licenca"type="date" name="validade_licenca" @if ($user->tipo_socio!="P") style="display: none;" @endif value="{{$user->validade_licenca}}") >
             </div>
 
             <div>
-                <label id="labelInputLicencaConfirmada"for="inputLicencaConfirmada">Licença confirmada</label>
-                <input id="inputLicencaConfirmada1" type="radio" name="licenca_confirmada" value="1" @if((Auth::user()->can('socio_piloto',App\User::class))) {{ ($user->licenca_confirmada=="1")? "checked" : "disabled" }}@else
+                <label id="labelInputLicencaConfirmada"for="inputLicencaConfirmada" @if ($user->tipo_socio!="P") style="display: none;" @endif>Licença confirmada</label>
+                <input id="inputLicencaConfirmada1" type="radio" name="licenca_confirmada" @if ($user->tipo_socio!="P") style="display: none;" @endif value="1" @if((Auth::user()->can('socio_piloto',App\User::class))) {{ ($user->licenca_confirmada=="1")? "checked" : "disabled" }}@else
                         {{ ($user->licenca_confirmada=="1")? "checked" : "" }}
-                        @endif > Sim
-                <input type="radio"id="inputLicencaConfirmada2" name="licenca_confirmada" value="0" @if((Auth::user()->can('socio_piloto',App\User::class))) {{ ($user->licenca_confirmada=="0")? "checked" : "disabled" }} @else
+                        @endif > <label id="confirmado1" @if ($user->tipo_socio!="P") style="display: none;" @endif>Sim</label>
+                <input type="radio"id="inputLicencaConfirmada2" name="licenca_confirmada" @if ($user->tipo_socio!="P") style="display: none;" @endif value="0" @if((Auth::user()->can('socio_piloto',App\User::class))) {{ ($user->licenca_confirmada=="0")? "checked" : "disabled" }} @else
                     {{ ($user->licenca_confirmada=="0")? "checked" : "" }}
-                        @endif >Não
+                        @endif > <label id="naoConfirmado1" @if ($user->tipo_socio!="P") style="display: none;" @endif>Não</label>
 
             </div>
 
             <div>
-                <label id="labelCopia" for=""> Cópia digitial da licença </label>
-                <a id="hrefDownload" href="{{route('licenca',$user->id)}}" class="btn btn-success mb-2"> Ver PDF</a>
-                <a id="hrefDownload1" href="{{route('licenca_pdf',$user->id)}}" class="btn btn-success mb-2"> Download</a>
-                <input type="file" name="file_licenca">
+                <label id="labelCopia" for="" @if ($user->tipo_socio!="P") style="display: none;" @endif> Cópia digitial da licença </label>
+                <a id="hrefDownload" @if ($user->tipo_socio!="P") style="display: none;" @endif href="{{route('licenca',$user->id)}}" class="btn btn-success mb-2" > Ver PDF</a>
+                <a id="hrefDownload1" @if ($user->tipo_socio!="P") style="display: none;" @endif href="{{route('licenca_pdf',$user->id)}}" class="btn btn-success mb-2" > Download</a>
+                <input type="file" name="file_licenca" id="file_licenca" @if ($user->tipo_socio!="P") style="display: none;" @endif>
             </div>
 
             <div>
-                <label id="labelNrCerificado"for="inputNrCertificado"> Número de certificado </label>
-                <input type="text" name="num_certificado" id="inputNrCertificado" @if((!Auth::user()->can('socio_piloto',App\User::class))) readonly @endif  value="{{$user->num_certificado}}">
+                <label id="labelNrCertificado"for="inputNrCertificado" @if ($user->tipo_socio!="P") style="display: none;" @endif> Número de certificado </label>
+                <input type="text" name="num_certificado" id="inputNrCertificado" @if ($user->tipo_socio!="P") style="display: none;" @endif @if((!Auth::user()->can('socio_piloto',App\User::class))) readonly @endif  value="{{$user->num_certificado}}">
             </div>
 
                 <div>
-                <label for="inputClasseCertificado" id="labelCertificado">Classe do certificado </label>
-                <select name="classe_certificado" id="classe_certificado">
+                <label for="inputClasseCertificado" id="labelCertificado" @if ($user->tipo_socio!="P") style="display: none;" @endif>Classe do certificado </label>
+                <select name="classe_certificado" id="classe_certificado" @if ($user->tipo_socio!="P") style="display: none;" @endif >
                     @foreach($classes as $classe)
                         <option id="inputClasseCertificado" value="{{$classe->code}}" {{($user->classe_certificado==$classe->code)? "selected" : "" }}>{{$classe->nome}}</option>
                     @endforeach
 
 
                 </select>
-                 <label for="" id="">{{$user->classe_certificado}} </label>
+
                 </div>
 
                 <div>
-                    <label id="validade_certificado">Validade do certificado </label>
-                    <input type="date" id="inputValidadeCertificado" name="validade_certificado" value="{{$user->validade_certificado}}" >
+                    <label id="validade_certificado" @if ($user->tipo_socio!="P") style="display: none;" @endif>Validade do certificado </label>
+                    <input type="date" id="inputValidadeCertificado" name="validade_certificado" @if ($user->tipo_socio!="P") style="display: none;" @endif value="{{$user->validade_certificado}}" >
                 </div>
 
                 <div>
-                    <label id="labelCertificadoConfirmado" for="inputCertificadoConfirmado">Certificado confirmado</label>
-                    <input  id="inputCertificadoConfirmado" type="radio" name="certificado_confirmado" value="1" @if((Auth::user()->can('socio_piloto',App\User::class))) {{ ($user->certificado_confirmado=="1")? "checked" : "disabled" }}@else
+                    <label id="labelCertificadoConfirmado" for="inputCertificadoConfirmado" @if ($user->tipo_socio!="P") style="display: none;" @endif >Certificado confirmado</label>
+                    <input  id="inputCertificadoConfirmado" type="radio" name="certificado_confirmado" @if ($user->tipo_socio!="P") style="display: none;" @endif value="1" @if((Auth::user()->can('socio_piloto',App\User::class))) {{ ($user->certificado_confirmado=="1")? "checked" : "disabled" }}@else
                         {{ ($user->certificado_confirmado=="1")? "checked" : "" }}
-                            @endif   > <label id="confirmado">Sim</label>
-                    <input type="radio"id="inputCertificadoPorConfirmar" name="certificado_confirmado" value="0" @if((Auth::user()->can('socio_piloto',App\User::class))) {{ ($user->certificado_confirmado=="0")? "checked" : "disabled" }} @else
+                            @endif   > <label id="confirmado" @if ($user->tipo_socio!="P") style="display: none;" @endif>Sim</label>
+                    <input type="radio"id="inputCertificadoPorConfirmar" name="certificado_confirmado" @if ($user->tipo_socio!="P") style="display: none;" @endif value="0" @if((Auth::user()->can('socio_piloto',App\User::class))) {{ ($user->certificado_confirmado=="0")? "checked" : "disabled" }} @else
                         {{ ($user->certificado_confirmado=="0")? "checked" : "" }}
-                            @endif  > <label id="naoConfirmado">Não</label>
+                            @endif  > <label id="naoConfirmado" @if ($user->tipo_socio!="P") style="display: none;" @endif >Não</label>
 
                 </div>
 
                 <div>
-                    <label id="labelCopia1"> Cópia digital certificado </label>
-                    <a id="hrefDownload2" href="{{route('certificado',$user->id)}}" class="btn btn-success mb-2"> Ver PDF</a>
-                    <a id="hrefDownload3" href="{{route('certificado_pdf',$user->id)}}" class="btn btn-success mb-2"> Download</a>
-                    <input type="file" name="file_certificado">
+                    <label id="labelCopia1" @if ($user->tipo_socio!="P") style="display: none;" @endif> Cópia digital certificado </label>
+                    <a id="hrefDownload2" @if ($user->tipo_socio!="P") style="display: none;" @endif href="{{route('certificado',$user->id)}}" class="btn btn-success mb-2" > Ver PDF</a>
+                    <a id="hrefDownload3"  @if ($user->tipo_socio!="P") style="display: none;" @endif href="{{route('certificado_pdf',$user->id)}}" class="btn btn-success mb-2" > Download</a>
+                    <input type="file" name="file_certificado" id="file_certificado" @if ($user->tipo_socio!="P") style="display: none;" @endif >
                  </div>
 
 

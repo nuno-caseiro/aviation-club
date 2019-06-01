@@ -273,11 +273,8 @@
 
 
 <H1>Tabela Certificados Por Validar User</H1>
- @if($usersComCertificadosPorValidar->isEmpty())
-   <h2> Nada por Validar</h2>
-    @else
+
 <table class="table table-striped table-bordered" style="width: 100%" id="mydatatable">
-    @foreach ($usersComCertificadosPorValidar as $user)
     <thead>
     <tr>
         <th>Nome User</th>
@@ -287,6 +284,8 @@
         <th>Confirmação do certificado</th>
     </tr>
     </thead>
+    @foreach ($usersComCertificadosPorValidar as $user)
+
     <thead>
     <tr>
         <td><a href="pilotos/{{$user->id}}/certificado">{{$user->name}}</a></td>
@@ -300,32 +299,31 @@
 
     </thead>
 @endforeach
-@endif
 
+</table>
 
 
 
 
 <H1>Tabela Licensas Por Validar User</H1>
- @if($usersComLicencasPorValidar->isEmpty())
- <h2>Nada por Validar</h2>
- @else
+
 <table class="table table-striped table-bordered" style="width: 100%" id="mydatatable">
+    <thead>
+
+    <tr>
+        <th>Nome User</th>
+        <th>Número de Licença</th>
+        <th>Tipo de Licença</th>
+        <th>Instrutor</th>
+        <th>Validade de licença</th>
+        <th>Confirmação de licença</th>
+
+
+
+    </tr>
+    </thead>
     @foreach ($usersComLicencasPorValidar as $user)
-   <thead>
 
-        <tr>
-            <th>Nome User</th>
-            <th>Número de Licença</th>
-            <th>Tipo de Licença</th>
-            <th>Instrutor</th>
-            <th>Validade de licença</th>
-            <th>Confirmação de licença</th>
-
-
-
-        </tr>
-        </thead>
         <thead>
 
         <tr>
@@ -342,19 +340,6 @@
         </thead>
 
 @endforeach
-
-@endif
-
-
-
-
-
-
-
-
-
-
-
 
 
 </table>
