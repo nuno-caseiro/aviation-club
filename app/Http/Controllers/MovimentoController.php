@@ -1041,7 +1041,7 @@ class MovimentoController extends Controller
         }
 
         $aux_movimentos = \DB::table('movimentos')
-            ->select(\DB::raw('sum(TIMESTAMPDIFF(MINUTE, hora_descolagem, hora_aterragem)/60) as "Total_Flight_Hours", DATE_FORMAT(data,"%Y") as date, aeronave'))
+            ->select(\DB::raw('sum(TIMESTAMPDIFF(MINUTE, hora_descolagem, hora_aterragem)/60) as "Total_Flight_Hours", DATE_FORMAT(data,"%Y/%m") as date, aeronave'))
             ->groupBy('date', 'aeronave')
             ->orderByRaw('aeronave asc, date asc')->get();
 
@@ -1185,7 +1185,7 @@ class MovimentoController extends Controller
         if(strcmp($eixoX, "Aeronave") == 0){
             $query_chart = $query_chart->where('aeronave', 'like', $nome);
         }
-        $query_chart = $query_chart->groupBy('data')->get();
+        $query_chart = $query_chart->groupBy('date')->get();
 
 
         $chart = Charts::create('line', 'highcharts')
