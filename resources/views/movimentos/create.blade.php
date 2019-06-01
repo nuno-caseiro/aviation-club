@@ -163,7 +163,8 @@ if(conta_horas_minutos!=0){
     <form action="{{action('MovimentoController@store')}}" method="post">
         @csrf
 
-       <h1>{{$title}}</h1>
+   <div @if ($title=="Conflito Buraco Temporal") class="p-3 mb-2 bg-warning text-dark" @endif  @if ($title=="Conflito sobreposicao") class="p-3 mb-2 bg-danger text-white" @endif>{{$title}}</div>
+
   
      
 

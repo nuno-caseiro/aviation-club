@@ -185,10 +185,8 @@ if(conta_horas_minutos!=0){
 
 
 
-
- <div class="card-header">{{$title}}</div>
-
-
+<div @if ($title=="Conflito Buraco Temporal ") class="p-3 mb-2 bg-warning text-dark" @endif  @if ($title=="Conflito sobreposicao") class="p-3 mb-2 bg-danger text-white" @endif   @if ($title=="Editar movimentos ") class="p-3 mb-2 bg-primary text-white" @endif >{{$title}}</div>
+  
     <form method="POST" action="{{action('MovimentoController@update', $movimento->id)}}"  >
         @csrf
 

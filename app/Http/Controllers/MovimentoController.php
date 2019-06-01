@@ -290,7 +290,9 @@ class MovimentoController extends Controller
 
 
 
-
+        $alterado_conta_horas_inicial=($request->conta_horas_inicio == $movimentoModel->conta_horas_inicio);
+        $alterado_conta_horas_fim=($request->conta_horas_fim == $movimentoModel->conta_horas_fim);
+          
 
         
 
@@ -505,11 +507,10 @@ class MovimentoController extends Controller
 
 
 
-
             //podia ter feito uma funcao a ver se tinha conflito
            
 
-          if($request->has('comConflitos')) {       //&& $movAlterado->conta_horas_inicio!=$request->query('conta_horas_inicio') || $movAlterado->conta_horas_fim!=$request->query('conta_horas_fim') adicioanr para ver se ele alterou alguma coisa do conta horas se nao quero correr verificacoes de nvo
+          if($request->has('comConflitos') && $alterado_conta_horas_fim && $alterado_conta_horas_inicial ) {       //&& $movAlterado->conta_horas_inicio!=$request->query('conta_horas_inicio') || $movAlterado->conta_horas_fim!=$request->query('conta_horas_fim') adicioanr para ver se ele alterou alguma coisa do conta horas se nao quero correr verificacoes de nvo
     
           $textConflito=$request->razaoConflito;
 
@@ -573,8 +574,8 @@ class MovimentoController extends Controller
               $aux=0; 
               foreach ($movimentos as $m) {
                 if($m->matricula==$movimento->matricula){
-                if(($m->conta_horas_inicio<$contaHorasInicial)  && ($m->conta_horas_fim > $contaHorasFinal)){ // faltam validaçoes se estiver a meio cenas desse genero
-            
+                if(($m->conta_horas_inicio<=$contaHorasInicial)  && ($m->conta_horas_fim > $contaHorasFinal)){ // faltam validaçoes se estiver a meio cenas desse genero
+               
                 
                 $valores[]=Aeronave::findOrFail($movimento->aeronave)->aeronaveValores()->get()->toArray();
             
@@ -584,10 +585,11 @@ class MovimentoController extends Controller
             
 
 
-                    $tipo_conflito="S";
+                 
 
                     $hora_inicio=$request->hora_aterragem;
                     $hora_fim=$request->hora_aterragem;
+                       $tipo_conflito="S";
                  return view('movimentos.edit', compact('title', 'movimento','aeronaves','socios','aerodromos','valores','tipo_conflito'));
                          }
               }
@@ -595,8 +597,8 @@ class MovimentoController extends Controller
 
 
 
-              if( $m->id != $movimento->id && $m->conta_horas_fim==$contaHorasInicial ){
-             
+              if( $m->id != $movimento->id && $m->conta_horas_fim==$movimento->conta_horas_inicio && $m->aeronave == $movimento->aeronave){          
+            
                     //se por acaso tivesse conflito passava para null passa primeiro por sobreposicao por isso nao ha problena 
                 $aux=1;//encontrado o conta kilometros final
              
@@ -608,13 +610,11 @@ class MovimentoController extends Controller
 
                         //nao sei se necessario por a jsutificacao a 0
                     }
-
-
               }
             }
        
 
-
+           
             if($aux==0){
             foreach ($aeronaves as $aeronave) {
             $valores[]=Aeronave::findOrFail($aeronave->matricula)->aeronaveValores()->get()->toArray();
@@ -882,7 +882,7 @@ class MovimentoController extends Controller
               $aux=0; 
               foreach ($movimentos as $m) {
                 if($m->matricula==$movimento->matricula){
-                if(($m->conta_horas_inicio<=$contaHorasInicial)  && ($m->conta_horas_fim >= $contaHorasFinal)){ // faltam validaçoes se estiver a meio cenas desse genero
+                if(($m->conta_horas_inicio<=$contaHorasInicial)  && ($m->conta_horas_fim > $contaHorasFinal)){ // faltam validaçoes se estiver a meio cenas desse genero
             
                 
                 $valores[]=Aeronave::findOrFail($movimento->aeronave)->aeronaveValores()->get()->toArray();

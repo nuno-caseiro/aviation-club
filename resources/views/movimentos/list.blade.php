@@ -293,8 +293,8 @@
                     @endif
 
                 @else
-
-                    <form action="{{ action('MovimentoController@destroy', $movimento->id) }}"
+                
+                   <form action="{{ action('MovimentoController@destroy', $movimento->id) }}"
                     method="post">
                   @csrf
                   @method('delete')
