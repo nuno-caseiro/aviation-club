@@ -235,11 +235,6 @@ class MovimentoController extends Controller
         $movimentoModel= Movimento::findOrFail($id);
 
 
-      
-       
-             //    dd($request->conta_horas_inicio != $movimentoModel->conta_horas_inicio || $request->conta_horas_fim != $movimentoModel->conta_horas_fim);
-
-
 
 
         $this->authorize('update', $movimentoModel ) ;
@@ -291,7 +286,6 @@ class MovimentoController extends Controller
         $socios=User::all();
         $aerodromos=Aerodromo::all();
         $user=User::findOrFail(Auth::id());
-
 
 
 
@@ -511,12 +505,11 @@ class MovimentoController extends Controller
 
 
 
- 
 
             //podia ter feito uma funcao a ver se tinha conflito
            
 
-          if($request->has('comConflitos') ) {       //&& $movAlterado->conta_horas_inicio!=$request->query('conta_horas_inicio') || $movAlterado->conta_horas_fim!=$request->query('conta_horas_fim') adicioanr para ver se ele alterou alguma coisa do conta horas se nao quero correr verificacoes de nvo
+          if($request->has('comConflitos')) {       //&& $movAlterado->conta_horas_inicio!=$request->query('conta_horas_inicio') || $movAlterado->conta_horas_fim!=$request->query('conta_horas_fim') adicioanr para ver se ele alterou alguma coisa do conta horas se nao quero correr verificacoes de nvo
     
           $textConflito=$request->razaoConflito;
 

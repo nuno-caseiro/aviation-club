@@ -40,7 +40,7 @@
                             @endif > {{ $aeronave->matricula }} </option>
                 @endforeach    </select>
 
-                «
+            
             <div>
                 <label>Natureza</label>
                 <select name="natureza" id="natureza">
@@ -150,8 +150,6 @@
                 </div>
 
             @endif
-
-
 
 <table class="table table-striped table-bordered" style="width: 100%">
         <thead>
@@ -273,11 +271,12 @@
                             value={{$movimento->id}}>Confirmar</td>
                   @else
                     <td> <input type="checkbox" name="checkboxConfirmado[]" value="{{$movimento->id}}"><label>Confirmado</label></td>
+                 
                     @endif
                     @endif
 
-
-                    </form>
+                </form>
+                 
 
 
 

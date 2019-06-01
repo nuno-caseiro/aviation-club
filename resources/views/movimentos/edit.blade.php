@@ -246,7 +246,7 @@ if(conta_horas_minutos!=0){
 
 
 
-
+<div></div>
         <label> Natureza</label>
 
          <select   name="natureza" id="natureza" onchange="myFunction();">
@@ -367,7 +367,7 @@ if(conta_horas_minutos!=0){
 
 
 
-
+<div></div>
                <label> Aerodromo Chegada:</label>
                <select name="aerodromo_chegada">
               <option></option>
@@ -537,7 +537,7 @@ if(conta_horas_minutos!=0){
     @if (isset($tipo_conflito))
 
    <div>
-          <button type="submit" name="comConflitos">SaveWithConflicts</button>
+          <button type="submit" name="comConflitos">Save</button>
       </div>
 
 
